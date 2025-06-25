@@ -1,5 +1,6 @@
 package shop.main;
 
+import shop.main.GoodsDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -83,8 +84,8 @@ public class MainDAO {
 		return goodsList;
 	}
 
-	public List<String> search(String key) {
-		List<String> searchList = new ArrayList<>();
+	public List<GoodsDTO> search(String key) { //서치실행 메소드
+		List<GoodsDTO> list = new ArrayList<>();
 		try { 
 			conn = getConnection();
 			String sql = "select * from goods where gname like=? or gcontent like=?";
@@ -94,10 +95,16 @@ public class MainDAO {
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				searchList.add(rs.getString("gname")); 
-				searchList.add(rs.getString("gname")); 
-				searchList.add(rs.getString("gname")); 
-				searchList.add(rs.getString("gname")); 
+				GoodsDTO dto=new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGcontent(rs.getString("gcontent")); 
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setCount(rs.getInt("count"));
+				dto.setGread(rs.getInt("gread")); 
 
 			}
 		} catch (Exception e) {
@@ -105,6 +112,6 @@ public class MainDAO {
 		} finally {
 			endConnection();
 		}
-		return searchList;
+		return list;
 	}
 }
