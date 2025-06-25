@@ -11,7 +11,7 @@
 <form action="memberPro.jsp" method="post" onsubmit="return membercheck()">
 	<div align="center">
 		<input type="text" maxlength="100" id="mid" name="mid"placeholder="아이디 입력"> 
-		<input type="button" value="중복확인" onclick="midcheck()" /> <br /> 
+		<input type="button" value="중복확인" onclick="midCheck()" /> <br /> 
 		<input type="password"maxlength="100" id="pw" name="mpw" placeholder="비밀번호 입력" oninput="pwcheck()"><br />  
 		<input type="password" maxlength="100" id="pwch" name="mpwcheck" placeholder="비밀번호 확인" oninput="pwcheck()"><br />
 		<div id="pwmsg" style="margin-top: 5px; font-size: 14px;"></div> 
@@ -27,7 +27,7 @@
 	</div>
 	<div align="center">
 		<input type="submit" value="가입"> 
-		<input type="button" value="메인 페이지" onclick="window.location='main.main.jsp'">
+		<input type="button" value="메인 페이지" onclick="window.location='../main/main.jsp'">
 	</div>
 </form>
 </body>

@@ -21,7 +21,7 @@ function loginPwCheck() {
 		loginmpwmsg.style.color = "red";
 		return;
 	} else if (loginmpw.length < 8) {
-		loginmpwmsg.textContent = "아이디는 8자 이상입니다.";
+		loginmpwmsg.textContent = "비밀번호는 8자 이상입니다.";
 		loginmpwmsg.style.color = "red";
 		return;
 	} else {
