@@ -1,8 +1,8 @@
 //아이디 체크 js (팝업창)
-function midcheck() {
+function midCheck() {
 	mid = document.getElementById("mid").value;
-	url = "/shopping/member/midcheck.jsp?mid=" + mid;
-	open(url, "midcheck", "width=400,height=300");
+	url = "/shop/member/midCheck.jsp?mid=" + mid;
+	open(url, "midCheck", "width=400,height=300");
 }
 
 //비밀번호 체크 js(페이지화면 출력)
