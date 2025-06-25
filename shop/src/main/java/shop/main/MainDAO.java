@@ -85,7 +85,7 @@ public class MainDAO {
 
 	public List<String> search(String key) {
 		List<String> searchList = new ArrayList<>();
-		try {
+		try { 
 			conn = getConnection();
 			String sql = "select * from goods where gname like=? or gcontent like=?";
 			pstmt = conn.prepareStatement(sql);
