@@ -37,7 +37,7 @@ function phonecheck() {
 	const phoneNum = /^010\d{7,8}$/; //010부터 시작하고 숫자7~8자리 뜻함(정규표현식)
 
 	if (!phoneNum.test(phoneEl)) {
-		phonemsg.textContent = "010전화번호 형식으로 입력하세요.(특수문자,공백,문자는 허용되지 않습니다.)";
+		phonemsg.textContent = "010형식으로 입력하세요.(특수문자,공백,문자는 허용되지 않습니다.)";
 		phonemsg.style.color = "red";
 
 	} else {
