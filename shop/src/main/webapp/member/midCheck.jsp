@@ -11,7 +11,9 @@
   	mdto=mdao.getMidname(mdto.getMid());
   	if(mdto == null){
   %>	사용가능한 아이디입니다.
+  		<br />
   <%}else{ %>
   		이미 가입한 아이디입니다.
+  		<br />
   <%} %>
   <input type="button" value="닫기" onclick="self.close();" />

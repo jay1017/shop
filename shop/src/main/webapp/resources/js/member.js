@@ -1,8 +1,19 @@
 //아이디 체크 js (팝업창)
 function midCheck() {
-	mid = document.getElementById("mid").value;
-	url = "/shop/member/midCheck.jsp?mid=" + mid;
-	open(url, "midCheck", "width=400,height=300");
+	const midInput = document.getElementById("mid");
+	const mid = midInput.value.trim();
+	
+	if(mid === ""){
+		alert("아이디를 입력하세요.");
+		midInput.focus();
+		return;
+	}
+	
+	document.getElementById("butcheck").value = "true";
+	
+	url = "/shop/member/midCheck.jsp?mid=" + encodeURIComponent(mid); 
+	// encodeURIComponent -> 만약 아이디에 특수문자가 입력되었을 때 url주소로 잘못 넘어갈 수 있기에 사용
+	window.open(url, "midCheck", "width=400,height=300");
 }
 
 //비밀번호 체크 js(페이지화면 출력)
@@ -30,14 +41,26 @@ function pwcheck() {
 	}
 }
 
+function namecheck(){
+	const nameEl = document.getElementById("nameEl").value.trim();
+	const namemsg = document.getElementById("namemsg");
+	
+	if(nameEl === ""){
+		namemsg.textContent = "이름을 입력하세요.";
+		namemsg.style.color = "red";
+	}else{
+		namemsg.textContent = "";
+	}
+}
+
 //전화번호 형식체크(페이지화면 출력)
 function phonecheck() {
 	const phoneEl = document.getElementById("phoneEl").value.trim();
 	const phonemsg = document.getElementById("phonemsg");
-	const phoneNum = /^010\d{7,8}$/; //010부터 시작하고 숫자7~8자리 뜻함(정규표현식)
+	const phoneNum = /^01\d{8,9}$/; //010부터 시작하고 숫자7~8자리 뜻함(정규표현식)
 
 	if (!phoneNum.test(phoneEl)) {
-		phonemsg.textContent = "010형식으로 입력하세요.(특수문자,공백,문자는 허용되지 않습니다.)";
+		phonemsg.textContent = "핸드폰 번호로 입력하세요.(특수문자,공백,문자는 허용되지 않습니다.)";
 		phonemsg.style.color = "red";
 
 	} else {
@@ -66,25 +89,72 @@ function emailcheck() {
 	}
 }
 
-//빈 공백으로 둘 경우 가입 버튼을 눌렀을 때 alert창으로 경고메세지 보여줌
+//더블 체크를 하기 위해서 위에선 단순히 글로만 경고문구를 보여 줬지만
+//전부 무시하고 가입버튼을 누를수도 있기 때문에 별도로 가입 버튼을 눌렀을 때도 알림창으로 보여주고 다시 회원가입 페이지로 이동함
 //각각의 value값에 trim()을 적용하여 공백제거사용
 //=== -> 값 뿐만 아닌 형태도 같아야 적용되도록 사용(자동 형변환 방지)
 function membercheck() {
+	const mid = document.getElementById("mid");
+	const pw = document.getElementById("pw");
+	const pwch = document.getElementById("pwch");
 	const nameEl = document.getElementById("nameEl");
 	const phoneEl = document.getElementById("phoneEl");
 	const emailEl = document.getElementById("emailEl");
-	if (nameEl.value.trim() === "") {
+	const phoneNum = /^01\d{8,9}$/;
+	const emailStr = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	const butcheck = document.getElementById("butcheck").value;
+	if(mid.value.trim() === ""){
+		alert("아이디를 입력하세요.");
+		mid.focus();
+		return false;
+	}
+	if(butcheck !== "true"){
+		alert("아이디 중복확인을 해주세요.");
+		mid.focus();
+		return false;
+	}
+	if(pw.value.trim() === ""){
+		alert("비밀번호를 입력하세요.");
+		pw.focus();
+		return false;
+	}
+	if(pwch.value.trim() === ""){
+		alert("비밀번호를 확인하세요.");
+		pwch.focus();
+		return false;
+	}
+	if(pw.value.length < 8){
+		alert("비밀번호는 8자리 이상입니다.");
+		pw.focus();
+		return false;
+	}
+	if(pw.value !== pwch.value){
+		alert("비밀번호가 일치하지 않습니다.");
+		pw.focus();
+		return false;
+	}
+	if(nameEl.value.trim() === ""){
 		alert("이름을 입력하세요.");
 		nameEl.focus();
 		return false;
-	} else if (phoneEl.value.trim() === "") {
+	}
+	if(phoneEl.value.trim() === ""){
 		alert("전화번호를 입력하세요.");
 		phoneEl.focus();
 		return false;
-	} else if (emailEl.value.trim() === "") {
-		alert("이메일을 입력하세요.");
-		emailEl.focus();
+	}
+	if(!phoneNum.test(phoneEl.value.trim())){
+		// ▲전화번호 입력값이 해당 형식이 아니라면▲
+		alert("번호형식이 올바르지 않습니다. (예: 01012345678)");
+		phoneEl.focus();
 		return false;
+	}
+	if(emailEl.value.trim() !== ""){
+		if(!emailStr.test(emailEl.value.trim())){
+			alert("올바른 이메일 형식을 입력하세요.");
+			emailEl.focus();
+			return false;
+		}
 	}
 	return true;
 }
