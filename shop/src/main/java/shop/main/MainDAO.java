@@ -82,23 +82,29 @@ public class MainDAO {
 		}
 		return goodsList;
 	}
-	public List<GoodsDTO> search(String key) {
-		List<GoodsDTO> searchList=new ArrayList<GoodsDTO>();
+
+	public List<String> search(String key) {
+		List<String> searchList = new ArrayList<>();
 		try {
-			conn=getConnection();
-			String sql="select * from goods where gname like=? or gcontent=?";
-			pstmt=conn.prepareStatement(sql);
-			for(int i=1;i<=2;i++)
-				pstmt.setString(i, "%"+key+"%");
-				
-			rs=pstmt.executeQuery();
-			
-		}catch(Exception e) {
+			conn = getConnection();
+			String sql = "select * from goods where gname like=? or gcontent like=?";
+			pstmt = conn.prepareStatement(sql);
+			for (int i = 1; i <= 2; i++)
+				pstmt.setString(i, "%" + key + "%");
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				searchList.add(rs.getString("gname")); 
+				searchList.add(rs.getString("gname")); 
+				searchList.add(rs.getString("gname")); 
+				searchList.add(rs.getString("gname")); 
+
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
-		return searchList; 
+		return searchList;
 	}
 }
-
