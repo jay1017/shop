@@ -38,7 +38,6 @@
 	%>
 	<h1>옵션 리스트</h1>
 	<button onclick="location.href='/shop/admin/optionInsert.jsp'">옵션 등록</button>
-	<p></p>
 	<table border="1" cellspacing="0" cellpadding="0">
 		<% if(count == 0) { %>
 			<tr>
