@@ -27,7 +27,7 @@
 	</div>
 	<div align="center">
 		<input type="submit" value="가입"> 
-		<input type="button" value="메인 페이지" onclick="window.location='main.main.jsp'">
+		<input type="button" value="메인 페이지" onclick="window.location='../main/main.jsp'">
 	</div>
 </form>
 </body>
