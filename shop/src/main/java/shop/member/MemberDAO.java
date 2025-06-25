@@ -10,6 +10,7 @@ public class MemberDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
+	//db연결
 	private Connection getConnection() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -21,9 +22,11 @@ public class MemberDAO {
 		return conn;
 	}
 	
+	//midcheck.jsp에서 사용
+	//회원가입시 입력한 값과 db의 값을 비교하여 일치하는 mid가 있는지 확인하기 위해
+	//db에서 해당 mid값으로 정보가 있는지 조회
 	public MemberDTO getMid(String mid) {
 		MemberDTO mdto = null;
-		
 		try {
 			conn = getConnection();
 			String sql = "select * from member2 where mid=?";
@@ -46,7 +49,6 @@ public class MemberDAO {
 			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
-		
 		return mdto;
 	}
 	
