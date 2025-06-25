@@ -2,7 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
 
-
+<%
+String sid = (String) session.getAttribute("sid");
+%>
 
 
 <!DOCTYPE html>
@@ -13,7 +15,7 @@
 
 </head>
 <body>
-
+	<%--헤더--%>
 	<header>
 		<div>
 			<a href="">문의하기</a>
@@ -21,11 +23,23 @@
 		<div>
 			<h1>사이트 이름</h1>
 		</div>
+		<%
+		if (sid != null) {
+		%>
 		<div>
-			<a href="">마이페이지</a> | <a href="/shop/member/loginForm.jsp">로그인</a> |
-			<a href="/shop/member/memberForm.jsp">회원가입</a> | <a href="">장바구니</a>
-			| <a href="">주문내역</a> | <a href="">로그아웃</a>
+			<a href="">마이페이지</a> | <a href="">장바구니</a> | 
+			<a href="">주문내역</a> | <a href="">로그아웃</a>
 		</div>
+		<%
+		} else {
+		%>
+		<div>
+			<a href="/shop/member/loginForm.jsp">로그인</a> | 
+			<a	href="/shop/member/memberForm.jsp">회원가입</a> 
+		</div>
+		<%
+		}
+		%>
 		<nav>
 			<div>
 				<a href="categories.jsp">카테고리별보기</a>
@@ -43,7 +57,7 @@
 			</form>
 		</div>
 	</header>
-	<%--헤더에 넣을거 --%>
+	<%--헤더--%>
 
 	인기 상품
 	<div></div>
