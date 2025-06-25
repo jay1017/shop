@@ -8,7 +8,7 @@
   <%
   	//member.js에서 받은 mid값을 메서드를 통해 입력한 값과 db에 있는 mid값을 비교하여
   	//값이 있으면 사용불가를 보여주고 값이 없으면 사용가능을 보여줌
-  	mdto=mdao.getMid(mdto.getMid());
+  	mdto=mdao.getMidname(mdto.getMid());
   	if(mdto == null){
   %>	사용가능한 아이디입니다.
   <%}else{ %>
