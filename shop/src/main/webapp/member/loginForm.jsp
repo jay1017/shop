@@ -8,14 +8,16 @@
 	</head>
 	<body>
 	<h1 align="center">로그인</h1>
-	<form action="loginPro.jsp" align="center" method="post" onsubmit="return loginCheck()">
+	<form action="loginPro.jsp" align="center" method="post">
 		<span>아이디</span><br />
 		<div>
-			<input type="text" name="mid" oninput="loginIdCheck()"/>
+			<input type="text" id="loginmid" name="mid" oninput="loginIdCheck()"/>
+			<div id="loginmidmsg" style="margin-top: 5px; font-size: 14px;"></div>
 		</div>
 		<span>비밀번호</span><br />
 		<div>
-			<input type="text" name="mpw" oninput="loginPwCheck()"/>
+			<input type="password" id="loginpw" name="mpw" oninput="loginPwCheck()"/>
+			<div id="loginmpwmsg" style="margin-top: 5px; font-size: 14px;"></div>
 		</div>
 		<div>
 			<br />
@@ -24,4 +26,5 @@
 		</div>
 	</form>
 	</body>
+	<script src="<%=request.getContextPath()%>/resources/js/login.js"></script>
 </html>
