@@ -61,42 +61,38 @@ public class MainDAO {
 		}
 	}
 
-	// 트렌드(인기) 상품 목록을 가져오는 메소드 (예시)
-	public List<GoodsDTO> getTrendGoods() {
+	public List<GoodsDTO> getNewGoods() { // 신상품 목록의 상품번호,상품이름을 가져오는 메소드
 		List<GoodsDTO> goodsList = new ArrayList<>();
 		try {
-			conn=getConnection();
-			String sql="select * from goods where 구매횟수>50";
-			pstmt=conn.prepareStatement(sql);
-			
-			rs=pstmt.executeQuery();
-			
+			conn = getConnection();
+			String sql = "select gnum,gname from goods ORDER BY reg_date ";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				GoodsDTO goods = new GoodsDTO();
-				
-		}catch(Exception e) {
+				GoodsDTO dto = new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setGname(rs.getString("gname"));
+				goodsList.add(dto);
+			}
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
+		} finally {
 			endConnection();
 		}
 		return goodsList;
-		}
-		
 	}
-
-	/*
-	 * 신상품 목록을 가져오는 메소드 (예시) 그냥 상품을 가져오고 그 상품의 날짜를 조회하는게 더빠르지않을까? 상품등록일은 쿼리문에서
-	 * 조회해야하만 하나? 그냥 select * 해서 조회하고 dto에 담아서 return한다음에 List<GoodsDTO>
-	 * goods=dao.getGoods(); 그리고 jsp에서 if문처리하면 되지 않나? if(goods.getreg_date==sysdate)
-	 * { for(GoodsDTO dto:goods) { 새로운 상품목록:<div class=""> <%=dto.getImage()%>
-	 * <%=dto.getImage()%> <%=dto.getImage()%> </div> } } 구매횟수 많은 상품의 경우는?
-	 * if(goods.buycount>100) { for(GoodsDTO dto:goods) { <%=dto.getImage()%>
-	 * <%=dto.getGname()%> <%=dto.getGcount()%> 이런느낌 } }
-	 */
-	public List<GoodsDTO> getNewGoods() {
-		List<GoodsDTO> goodsList = new ArrayList<>();
-		// DB에 연결하여 신상품들을 조회하고 GoodsList에 추가
-
-		return goodsList;
+	public List<GoodsDTO> search(String key) {
+		List<GoodsDTO> searchList=new ArrayList<GoodsDTO>();
+		try {
+			conn=getConnection();
+			String sql="select * from goods where ";
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return searchList; 
 	}
 }
+
