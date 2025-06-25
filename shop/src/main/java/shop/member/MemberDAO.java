@@ -52,6 +52,7 @@ public class MemberDAO {
 		return mdto;
 	}
 	
+	//회원가입시 memberForm에서 받은 값을 db에 저장
 	public void InputMember(MemberDTO mdto) {
 		try {
 			conn = getConnection();
@@ -72,5 +73,33 @@ public class MemberDAO {
 			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
+	}
+	
+	//memberInfo.jsp 회원정보 확인
+	public MemberDTO getInfo(String sid) {
+		MemberDTO mdto = null;
+		try {
+			conn = getConnection();
+			String sql ="select * from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mdto = new MemberDTO();
+				mdto.setMid(rs.getString("mid"));
+				mdto.setMpw(rs.getString("mpw"));
+				mdto.setMname(rs.getString("mname"));
+				mdto.setMphone(rs.getString("mphone"));
+				mdto.setMemail(rs.getString("memail"));
+				mdto.setMgender(rs.getString("mgender"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return mdto;
 	}
 }

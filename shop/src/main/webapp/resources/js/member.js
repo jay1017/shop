@@ -41,6 +41,7 @@ function pwcheck() {
 	}
 }
 
+//이름 공백 체크(페이지화면 출력)
 function namecheck(){
 	const nameEl = document.getElementById("nameEl").value.trim();
 	const namemsg = document.getElementById("namemsg");
