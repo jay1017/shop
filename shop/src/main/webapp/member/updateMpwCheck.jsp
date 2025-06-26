@@ -9,6 +9,7 @@
 <html>
 	<head>
 		<title>회원정보 확인</title>
+		<link rel="stylesheet" href="/shop/resources/css/font.css" />
 	</head>
 	<form action="/shop/member/updateMpwCheckTest.jsp" method="post">
 	<h3>비밀번호 입력</h3>

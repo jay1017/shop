@@ -76,7 +76,6 @@ String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여
 .info-container {
 	width: 800px;
 	margin: 50px auto;
-	font-family: 'Arial', sans-serif;
 }
 
 .info-title {
@@ -96,6 +95,7 @@ String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여
 <html>
 <head>
 <title><%=mdto.getMname()%>님의 정보</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 </head>
 <body>
 	<a href="/shop/member/memberInfo.jsp">
