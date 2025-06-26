@@ -3,7 +3,6 @@
 
 <html>
 <head>
-<meta charset="UTF-8">
 <title>회원가입</title>
 </head>
 <body>
@@ -11,7 +10,7 @@
 <h5 style="margin-top: 5px; font-size: 14px;" align="right">(*)은 필수 항목입니다</h5>
 <form action="memberPro.jsp" method="post" onsubmit="return membercheck()">
 	<div align="center">
-		<input type="text" maxlength="100" id="mid" name="mid"placeholder="아이디 입력*"> 
+		<input type="text" maxlength="100" id="mid" name="mid" placeholder="아이디 입력*"> 
 		<input type="button" value="중복확인" onclick="midCheck()" /> <br /> 
 		<input type="hidden" id="butcheck" name="butcheck" value="false">
 		<input type="password"maxlength="100" id="pw" name="mpw" placeholder="비밀번호 입력*" oninput="pwcheck()"><br />  
