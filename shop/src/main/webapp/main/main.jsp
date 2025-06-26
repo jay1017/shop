@@ -28,7 +28,7 @@ String sid = (String) session.getAttribute("sid");
 		%>
 		<div>
 			<a href="/shop/member/memberInfo.jsp">마이페이지</a> | <a href="">장바구니</a> | <a href="">주문내역</a> | <a
-				href="">로그아웃</a>
+				href="/shop/member/logoutForm.jsp">로그아웃</a>
 		</div>
 		<%
 		} else {
