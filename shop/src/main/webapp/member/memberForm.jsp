@@ -4,6 +4,7 @@
 <html>
 <head>
 <title>회원가입</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 </head>
 <body>
 <h1 align="center">회원가입</h1><br />

@@ -130,4 +130,25 @@ public class MemberDAO {
 		return Gender;
 	}
 	
+	//회원정보 수정 메서드
+	public void updateMember(MemberDTO mdto) {
+		try {
+			conn = getConnection();
+			String sql = "update member2 set mpw=?, mname=?, mphone=?, memail=?, mgender=? where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mdto.getMpw());
+			pstmt.setString(2, mdto.getMname());
+			pstmt.setString(3, mdto.getMphone());
+			pstmt.setString(4, mdto.getMemail());
+			pstmt.setString(5, mdto.getMgender());
+			pstmt.setString(6, mdto.getMid());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+	}
 }

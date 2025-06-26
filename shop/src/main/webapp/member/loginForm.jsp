@@ -5,6 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>회원 로그인</title>
+		<link rel="stylesheet" href="/shop/resources/css/font.css" />
 	</head>
 	<body>
 	<h1 align="center">로그인</h1>

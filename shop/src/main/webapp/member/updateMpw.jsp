@@ -4,6 +4,7 @@
 <html>
 	<head>
 		<title>비밀번호 변경</title>
+		<link rel="stylesheet" href="/shop/resources/css/font.css" />
 	</head>
 	<body>
 		<h2>비밀번호 변경</h2>

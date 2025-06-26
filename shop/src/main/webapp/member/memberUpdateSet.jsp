@@ -34,6 +34,7 @@
 <head>
 <meta charset="UTF-8">
 <title><%=mdto.getMname()%>님의 정보</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 </head>
 <body>
 	<a href="/shop/main/main.jsp">
@@ -41,7 +42,7 @@
 			메인 페이지
 		</div>
 	</a>
-	<form action="memberUpdatePro.jsp" method="post">
+	<form action="memberUpdatePro.jsp" method="post" onsubmit="return UpdateMember()">
 	<div class="info-container">
 		<div class="info-title">회원정보 수정</div>
 		<br />
@@ -55,21 +56,24 @@
 			<tr>
 				<td>비밀번호</td>
 				<td><input type="button" value="비밀번호 설정" onclick="updateMpw()"></td>
-				<td>비밀번호 설정 후 변경사항을 저장해주세요.</td>
+				<td style="font-size: 12px; color: red;">비밀번호 변경 시 비밀번호 설정 후 변경사항을 저장해주세요.</td>
 				<td><input type="hidden" id="originalmpw" name="originalmpw" value="<%=mdto.getMpw()%>"></td><%--기존 비밀번호 --%>
 				<td><input type="hidden" id="mpw" name="mpw" value=""></td><%--수정 비밀번호 --%>
 			</tr>
 			<tr>
 				<td>이름*</td>
-				<td><input type="text" id="mname" name="mname" value="<%=mdto.getMname()%>" placeholder="이름 입력*"></td>
+				<td><input type="text" id="mname" name="mname" value="<%=mdto.getMname()%>" placeholder="이름 입력*" oninput="namecheck()"></td>
+				<td><div id="namemsg" style="margin-top: 5px; font-size: 14px;"></div></td>
 			</tr>
 			<tr>
 				<td>전화번호*</td>
-				<td><input type="text" id="mphone" name="mphone" value="<%=mdto.getMphone()%>" placeholder="전화번호 입력*"></td>
+				<td><input type="text" id="mphone" name="mphone" value="<%=mdto.getMphone()%>" placeholder="전화번호 입력*" oninput="phonecheck()"></td>
+				<td><div id="phonemsg" style="margin-top: 5px; font-size: 14px;"></div></td>
 			</tr>
 			<tr>
 				<td>이메일</td>
-				<td><input type="text" id="memail" name="memail" value="<%=mdto.getMemail()%>" placeholder="이메일 입력"></td>
+				<td><input type="text" id="memail" name="memail" value="<%=mdto.getMemail()%>" placeholder="이메일 입력" oninput="emailcheck()"></td>
+				<td><div id="emailmsg" style="margin-top: 5px; font-size: 14px;"></div></td>
 			</tr>
 			<tr>
 				<td>성별*</td>
@@ -86,5 +90,5 @@
 	</div>
 	</form>
 </body>
-<script src="<%=request.getContextPath()%>/resources/js/member.js"></script>
+<script src="<%=request.getContextPath()%>/resources/js/memberUpdate.js"></script>
 </html>
