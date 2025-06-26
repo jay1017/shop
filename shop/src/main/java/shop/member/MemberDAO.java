@@ -102,4 +102,31 @@ public class MemberDAO {
 		}
 		return mdto;
 	}
+	
+	//성별이 1이면 남자 2이면 여자 출력
+	public String setGender(String sid) {
+		String Gender = "";
+		try {
+			conn = getConnection();
+			String sql = "select mgender from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				String gendercode = rs.getString("mgender");
+				if("1".equals(gendercode)) {
+					Gender = "남자";
+				}else{
+					Gender = "여자";
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return Gender;
+	}
 }
