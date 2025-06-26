@@ -115,10 +115,14 @@ public class OptionDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "insert into goods_option values (goods_option_seq.nextVal, ?, ?)";
+			String sql = "insert into goods_option values (goods_option_seq.nextVal, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getGocolor());
-			pstmt.setString(2, dto.getGosize());
+			pstmt.setInt(1, dto.getGnum());
+			pstmt.setInt(2, dto.getCanum());
+			pstmt.setInt(3, dto.getGinum());
+			pstmt.setString(4, dto.getGocolor());
+			pstmt.setString(5, dto.getGosize());
+			pstmt.setInt(6, dto.getGocount());
 			pstmt.executeUpdate();
 			result = 1;
 		} catch(Exception e) {
@@ -131,7 +135,6 @@ public class OptionDAO {
 	
 	// 옵션을 불러오는 메소드
 	public OptionDTO select(int gonum) {
-		System.out.println(gonum);
 		OptionDTO dto = new OptionDTO();
 		try {
 			conn = getConnection();
@@ -142,6 +145,7 @@ public class OptionDAO {
 			if(rs.next()) {
 				dto.setGosize(rs.getString("gosize"));
 				dto.setGocolor(rs.getString("gocolor"));
+				dto.setGocount(rs.getInt("gocount"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -156,11 +160,13 @@ public class OptionDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "update goods_option set gosize = ?, gocolor = ? where gonum = ?";
+			String sql = "update goods_option set canum = ?, ginum = ?, gosize = ?, gocolor = ? where gonum = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getGosize());
-			pstmt.setString(2, dto.getGocolor());
-			pstmt.setInt(3, dto.getGonum());
+			pstmt.setInt(1, dto.getCanum());
+			pstmt.setInt(2, dto.getGinum());
+			pstmt.setString(3, dto.getGosize());
+			pstmt.setString(4, dto.getGocolor());
+			pstmt.setInt(5, dto.getGonum());
 			pstmt.executeUpdate();
 			result = 1;
 		} catch(Exception e) {
