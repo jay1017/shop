@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script language="JavaScript" src="/shop/resources/js/admin.js"></script>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 </head>
 <body>
 	<%!
@@ -36,7 +37,7 @@
 			list = dao.selectList(startRow, endRow);   
 		}
 	%>
-	<h1>상품 리스트</h1>
+	<h1>Goods List</h1>
 	<button onclick="location.href='/shop/admin/goodsInsert1.jsp'">상품 등록</button>
 
 	<table border="1" cellspacing="0" cellpadding="0">

@@ -9,15 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin Page</title>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-<link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
-<link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
-<link id="pagestyle" href="/shop/resources/assets/css/argon-dashboard.css?v=2.1.0" rel="stylesheet" />
-<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 <script language="JavaScript" src="/shop/resources/js/admin.js"></script>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 </head>
 <body>
-	<%-- <jsp:include page="/admin/include/sidebar.jsp"></jsp:include> --%>
 	<%!
 		int pageSize = 10;
 	%>
