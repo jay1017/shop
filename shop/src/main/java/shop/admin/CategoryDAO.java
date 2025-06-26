@@ -74,8 +74,7 @@ public class CategoryDAO {
 			String sql = "insert into category values(category_seq.nextval, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getCaname());
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -163,8 +162,7 @@ public class CategoryDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getCaname());
 			pstmt.setInt(2, dto.getCanum());
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -181,8 +179,7 @@ public class CategoryDAO {
 			String sql = "delete from category where canum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, canum);
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

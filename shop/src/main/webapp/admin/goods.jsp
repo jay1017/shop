@@ -64,10 +64,36 @@
 			<td><%=dto.getGosize() %></td> 
 			<td><%=dto.getGocount() %></td> 
 			<td><button onclick="location.href='/shop/admin/goodsUpdate1.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>&gonum=<%=dto.getGonum()%>'">수정</button></td>
-			<td><button onclick="deleteMsg('<%=dto.getGnum()%>', '/shop/admin/goodsDelete.jsp?gnum=');">삭제</button></td> 
+			<td><button onclick="deleteGoods('<%=dto.getGnum()%>', '<%=dto.getGinum()%>', '<%=dto.getGonum()%>', '/shop/admin/goodsDelete.jsp?gnum=', '&ginum=', '&gonum=');">삭제</button></td> 
 		</tr>
 		<% }
 		} %>
 	</table>
+	<div>
+		<%
+			if(count > 0) {
+				int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
+				
+				int startPage = (int) (currentPage / 10) * 10 + 1;
+				int pageBlock = 10;
+				int endPage = startPage + pageBlock - 1;
+				if(endPage > pageCount) {
+					endPage = pageCount;
+				}
+				
+				if(startPage > 10) { %>
+					<a href="category.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+				<% } 
+				
+				for(int i = startPage; i <= endPage; i++) { %>
+					<a href="category.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+				<% }
+				if(endPage < pageCount) { %>
+					<a href="category.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+				<%
+				}
+			}
+		%>
+	</div>
 </body>
 </html>

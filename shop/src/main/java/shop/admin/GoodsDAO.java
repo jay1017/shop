@@ -167,8 +167,8 @@ public class GoodsDAO {
 				pstmt.setInt(6, dto.getGinum());
 				pstmt.setInt(7, dto.getDiscount());
 				pstmt.setInt(8, 0);
-				pstmt.executeUpdate();
-				result.add(1);
+				int res = pstmt.executeUpdate();
+				result.add(res);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -218,8 +218,24 @@ public class GoodsDAO {
 			pstmt.setInt(5, dto.getDiscount());
 			pstmt.setInt(6, dto.getGinum());
 			pstmt.setInt(7, dto.getGnum());
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
+	}
+	
+	// 상품을 삭제하는 메소드
+	public int delete(int gnum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "delete from goods where gnum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

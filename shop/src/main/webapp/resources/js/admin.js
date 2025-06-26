@@ -65,3 +65,11 @@ function deleteMsg(num, url) {
 		window.location = url + num;
 	}
 }
+
+// 상품 삭제 메시지
+function deleteGoods(num1, num2, num3, url1, url2, url3) {
+	var con = confirm("정말 삭제하시겠습니까?");
+	if (con == true) {
+		window.location = url1 + num1 + url2 + num2 + url3 + num3;
+	}
+}

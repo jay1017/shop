@@ -123,8 +123,7 @@ public class OptionDAO {
 			pstmt.setString(4, dto.getGocolor());
 			pstmt.setString(5, dto.getGosize());
 			pstmt.setInt(6, dto.getGocount());
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -167,8 +166,7 @@ public class OptionDAO {
 			pstmt.setString(3, dto.getGosize());
 			pstmt.setString(4, dto.getGocolor());
 			pstmt.setInt(5, dto.getGonum());
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -185,8 +183,7 @@ public class OptionDAO {
 			String sql = "delete from goods_option where gonum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gonum);
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -91,8 +91,8 @@ public class GoodsImageDAO {
 				pstmt.setString(3, dto.getGidetail1());
 				pstmt.setString(4, dto.getGidetail2());
 				pstmt.setString(5, dto.getGidetail3());
-				pstmt.executeUpdate();
-				result.add(1);
+				int res = pstmt.executeUpdate();
+				result.add(res);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -138,8 +138,24 @@ public class GoodsImageDAO {
 			pstmt.setString(3, dto.getGidetail2());
 			pstmt.setString(4, dto.getGidetail3());
 			pstmt.setInt(5, dto.getGinum());
-			pstmt.executeUpdate();
-			result = 1;
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
+	}
+	
+	// 파일을 삭제하는 메소드
+	public int delete(int ginum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "delete from goods_image where ginum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ginum);
+			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
