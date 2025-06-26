@@ -11,6 +11,6 @@
 %>
 <script>
 	alert("가입하셨습니다.");
-	window.location="/shop/member/loginform.jsp";
+	window.location="/shop/member/loginForm.jsp";
 </script>
 

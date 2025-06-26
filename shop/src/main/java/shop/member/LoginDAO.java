@@ -29,19 +29,19 @@ private static LoginDAO instance = new LoginDAO();
 		}
 		return conn;
 	}
-	//db에 있는 아이디와 패스워드를 비교하여 값이 있으면 true 없으면 false 반환
+	//db에 있는 아이디와 패스워드를 비교하여 값이 있으면 1 없으면 0 반환
 	//로그인시 사용
-	public boolean LoginCheck(MemberDTO ldto) {
-		boolean result = false;
+	public int LoginCheck(MemberDTO ldto) {
+		int result = 0;
 		try {
 			conn = getConnection();
-			String sql ="select * from member2 mid=? and mpw=?";
+			String sql ="select * from member2 where mid=? and mpw=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, ldto.getMid());
 			pstmt.setString(2, ldto.getMpw());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				result = true;
+				result = 1;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

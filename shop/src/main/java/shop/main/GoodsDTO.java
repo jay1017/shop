@@ -1,26 +1,20 @@
 package shop.main;
 
-public class GoodsDTO { 
-    private int gnum; //상품번호
-    private int gonum; //옵션번호
-    private int canum; //카테고리번호 
-    private String gname;//상품명
-    private int gprice;//상품의 가격
-    private String gcontent; //상품내용
-    private int ginum; // 상품이미지 번호
-    private int gdnum; // 상품상세정보 번호
-    private int discount; // 할인율
+public class GoodsDTO {
+	private int gnum; // 상품번호
+	private int canum; // 카테고리번호
+	private String gname;// 상품명
+	private int gprice;// 상품의 가격
+	private String gcontent; // 상품설명 
+	private int ginum; // 상품이미지 번호
+	private int discount; //할인율
+	private int count; //남은 상품재고
+	private int gread; //조회수
 	public int getGnum() {
 		return gnum;
 	}
 	public void setGnum(int gnum) {
 		this.gnum = gnum;
-	}
-	public int getGonum() {
-		return gonum;
-	}
-	public void setGonum(int gonum) {
-		this.gonum = gonum;
 	}
 	public int getCanum() {
 		return canum;
@@ -52,19 +46,26 @@ public class GoodsDTO {
 	public void setGinum(int ginum) {
 		this.ginum = ginum;
 	}
-	public int getGdnum() {
-		return gdnum;
-	}
-	public void setGdnum(int gdnum) {
-		this.gdnum = gdnum;
-	}
 	public int getDiscount() {
 		return discount;
 	}
 	public void setDiscount(int discount) {
 		this.discount = discount;
 	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getGread() {
+		return gread;
+	}
+	public void setGread(int gread) {
+		this.gread = gread;
+	}
+	
 
-    
-    
+	 
+
 }
