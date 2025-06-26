@@ -13,9 +13,8 @@
 <%--검색된 상품의 목록--%>
 </head>
 <body>
-	<header></header>
-	
+							
 	<div></div>
-
+	
 </body>
 </html>
