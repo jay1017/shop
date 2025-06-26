@@ -15,6 +15,7 @@ List<CategoryDTO> list = dao.getCate();
 <head>
 <meta charset="UTF-8">
 <title>사이트 이름</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 
 </head>
 <body>

@@ -164,4 +164,47 @@ public class MainDAO {
 		}
 		return list;
 	}
+	public List<GoodsOptionDTO> getGoodsOption() { // 상품의 옵션정보를 가져오는 메소드
+		List<GoodsOptionDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from goods_option";
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GoodsOptionDTO dto = new GoodsOptionDTO();
+				dto.setGonum(rs.getInt("gonum"));
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setGocolor(rs.getString("gocolor"));
+				dto.setGosize(rs.getString("gosize"));
+				dto.setGocount(rs.getString("gocount"));  
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+	public void increaseGread(int gnum) {  //조회수 증가
+		try {
+			conn = getConnection();
+			String sql = "update goods set gread=gread+1 where gnum=? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, gnum);
+			rs = pstmt.executeQuery();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+	}
 }
