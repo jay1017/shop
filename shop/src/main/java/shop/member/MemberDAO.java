@@ -75,7 +75,7 @@ public class MemberDAO {
 		}
 	}
 	
-	//memberInfo.jsp 회원정보 확인
+	//memberInfo.jsp & updateMpwCheckTest.jsp 회원정보 확인
 	public MemberDTO getInfo(String sid) {
 		MemberDTO mdto = null;
 		try {
@@ -115,9 +115,9 @@ public class MemberDAO {
 			if(rs.next()) {
 				String gendercode = rs.getString("mgender");
 				if("1".equals(gendercode)) {
-					Gender = "남자";
+					Gender = "남성";
 				}else{
-					Gender = "여자";
+					Gender = "여성";
 				}
 			}
 		}catch(Exception e) {
@@ -129,4 +129,5 @@ public class MemberDAO {
 		}
 		return Gender;
 	}
+	
 }

@@ -1,3 +1,13 @@
+//회원정보 수정 시 비밀번호 변경 팝업창 연결
+function updateMpw(){
+	window.open("/shop/member/updateMpw.jsp", "비밀번호 변경", "width=500, height=250");
+}
+
+//회원정보 수정하기 전 비밀번호를 확인하는 팝업창 연결
+function updateMpwCheck(){
+	window.open("/shop/member/updateMpwCheck.jsp", "회원정보 수정", "width=500, height=250");
+}
+
 //아이디 체크 js (팝업창)
 function midCheck() {
 	const midInput = document.getElementById("mid");
