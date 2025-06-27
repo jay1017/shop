@@ -129,14 +129,71 @@ public class GoodsImageDAO {
 	// 파일을 수정하는 메소드
 	public int update(GoodsImageDTO dto) {
 		int result = 0;
+		String sql = "";
 		try {
+			String giname = "";
+			String gidetail1 = "";
+			String gidetail2 = "";
+			String gidetail3 = "";
+			
 			conn = getConnection();
-			String sql = "update goods_image set giname = ?, gidetail1 = ?, gidetail2= ?, gidetail3 = ? where ginum = ?";
+			
+			if(dto.getGiname() == null || dto.getGiname().equals("")) {
+				sql = "select giname from goods_image where ginum = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, dto.getGinum());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					giname = rs.getString("giname");
+				}
+			} else {
+				giname = dto.getGiname();
+			}
+			
+			System.out.println(giname);
+			
+			if(dto.getGidetail1() == null || dto.getGidetail1().equals("")) {
+				sql = "select gidetail1 from goods_image where ginum = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, dto.getGinum());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					gidetail1 = rs.getString("gidetail1");
+				}
+			} else {
+				gidetail1 = dto.getGidetail1();
+			}
+			
+			if(dto.getGidetail2() == null || dto.getGidetail2().equals("")) {
+				sql = "select gidetail2 from goods_image where ginum = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, dto.getGinum());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					gidetail2 = rs.getString("gidetail2");
+				}
+			} else {
+				gidetail2 = dto.getGidetail2();
+			}
+			
+			if(dto.getGidetail3() == null || dto.getGidetail3().equals("")) {
+				sql = "select gidetail3 from goods_image where ginum = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, dto.getGinum());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					gidetail3 = rs.getString("gidetail3");
+				}
+			} else {
+				gidetail3 = dto.getGidetail3();
+			}
+			
+			sql = "update goods_image set giname = ?, gidetail1 = ?, gidetail2= ?, gidetail3 = ? where ginum = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dto.getGiname());
-			pstmt.setString(2, dto.getGidetail1());
-			pstmt.setString(3, dto.getGidetail2());
-			pstmt.setString(4, dto.getGidetail3());
+			pstmt.setString(1, giname);
+			pstmt.setString(2, gidetail1);
+			pstmt.setString(3, gidetail2);
+			pstmt.setString(4, gidetail3);
 			pstmt.setInt(5, dto.getGinum());
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {

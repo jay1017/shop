@@ -58,6 +58,29 @@ function checkGoods2(event) {
 	}
 }
 
+function checkGoods3(event) {
+	var gname = document.getElementById("gosize");
+	if (gname.value.trim() == "") {
+		alert("사이즈를 입력 하십시오.");
+		event.preventDefault();
+		return false;
+	}
+
+	var gprice = document.getElementById("gocolor");
+	if (gprice.value.trim() == "") {
+		alert("색상을 입력 하십시오.");
+		event.preventDefault();
+		return false;
+	}
+	
+	var gprice = document.getElementById("gocount");
+		if (gprice.value.trim() <= 10) {
+			alert("최소 수량은 10개 이상입니다.");
+			event.preventDefault();
+			return false;
+		}
+}
+
 // 삭제 공통 메시지
 function deleteMsg(num, url) {
 	var con = confirm("정말 삭제하시겠습니까?");
