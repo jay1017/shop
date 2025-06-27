@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>검색</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
 <%--검색된 상품의 목록--%>
 </head>
 <body>

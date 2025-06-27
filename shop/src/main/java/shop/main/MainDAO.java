@@ -27,7 +27,6 @@ public class MainDAO {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "team02", "1234");
-			System.out.print("DB연결");
 		} catch (Exception e) {
 			System.out.print(e.toString());
 			e.printStackTrace();
@@ -83,6 +82,36 @@ public class MainDAO {
 		return goodsList;
 	}
 
+	public List<GoodsDTO> getGoods(int gnum) { // 상품의 모든정보를 가져오는 메소드
+		List<GoodsDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from goods where gnum=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GoodsDTO dto = new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGcontent(rs.getString("gcontent"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setGread(rs.getInt("gread"));
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+
 	public List<GoodsDTO> search(String key) { // 서치실행 메소드
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
@@ -102,7 +131,6 @@ public class MainDAO {
 				dto.setGcontent(rs.getString("gcontent"));
 				dto.setGinum(rs.getInt("ginum"));
 				dto.setDiscount(rs.getInt("discount"));
-				dto.setCount(rs.getInt("count"));
 				dto.setGread(rs.getInt("gread"));
 				list.add(dto);
 			}
@@ -112,5 +140,71 @@ public class MainDAO {
 			endConnection();
 		}
 		return list;
+	}
+
+	public List<CategoryDTO> getCate() { // 카테고리명들을 리스트로 받아오는 작업
+		List<CategoryDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from category";
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				CategoryDTO dto = new CategoryDTO();
+				dto.setCanum(rs.getInt("canum"));
+				dto.setCaname(rs.getString("caname"));
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+	public List<GoodsOptionDTO> getGoodsOption() { // 상품의 옵션정보를 가져오는 메소드
+		List<GoodsOptionDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from goods_option";
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GoodsOptionDTO dto = new GoodsOptionDTO();
+				dto.setGonum(rs.getInt("gonum"));
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setGocolor(rs.getString("gocolor"));
+				dto.setGosize(rs.getString("gosize"));
+				dto.setGocount(rs.getString("gocount"));  
+				list.add(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+	public void increaseGread(int gnum) {  //조회수 증가
+		try {
+			conn = getConnection();
+			String sql = "update goods set gread=gread+1 where gnum=? ";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, gnum);
+			rs = pstmt.executeQuery();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
 	}
 }
