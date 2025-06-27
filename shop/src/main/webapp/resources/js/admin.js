@@ -1,3 +1,18 @@
+// 로그인 확인
+function checkLogin(event) {
+	var mid = document.getElementById("mid");
+	if (mid.value.trim() == "") {
+		alert("아이디를 입력하세요.");
+		event.preventDefault();
+		return false;
+	}
+	var mpw = document.getElementById("mpw");
+	if (mpw.value.trim() == "") {
+		alert("비밀번호를 입력하세요.");
+		event.preventDefault();
+		return false;
+	}
+}
 
 // 카테고리 등록, 수정 화면 : 등록, 수정 시 값이 있는 지 확인
 function checkCategory(event) {
@@ -72,13 +87,13 @@ function checkGoods3(event) {
 		event.preventDefault();
 		return false;
 	}
-	
+
 	var gprice = document.getElementById("gocount");
-		if (gprice.value.trim() <= 10) {
-			alert("최소 수량은 10개 이상입니다.");
-			event.preventDefault();
-			return false;
-		}
+	if (gprice.value.trim() <= 10) {
+		alert("최소 수량은 10개 이상입니다.");
+		event.preventDefault();
+		return false;
+	}
 }
 
 // 삭제 공통 메시지
