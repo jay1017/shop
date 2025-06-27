@@ -154,7 +154,45 @@ public class MemberDAO {
 		}
 	}
 	
+	//회원탈퇴 정보 메서드
+	public int SelectMember(String mid, String mpw) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql ="select * from member2 where mid=? and mpw=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, mpw);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = 1;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return result;
+	}
 	
+	//회원 db삭제 메서드
+	public void DeleteMember(String mid) {
+		try {
+			conn = getConnection();
+			String sql = "delete from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+	}
 	
 	// =========================== admin ==========================================
 	// 회원의 수
