@@ -6,8 +6,13 @@
 
 <%
 	String sid = (String)session.getAttribute("sid");
-	mdto = mdao.getInfo(sid);
-	String SetGender = mdao.setGender(sid);
+	mdto = mdao.getInfo(sid); //세션에 저장된 아이디에 해당하는 모든 정도를 받음
+	String SetGender = mdao.setGender(sid); //gender의 값이 1또는 2이기에 1이면 남성, 2면 여성을 보여줌
+	String emailnull = mdto.getMemail(); // email이 null이면 사용자 화면에도 null로 보이기에 없다는 표시를 해줌
+	
+	if(emailnull == null){
+		emailnull = "";
+	}
 %>
 <style>
 .info-container {
@@ -72,7 +77,7 @@
 			</tr>
 			<tr>
 				<td>이메일</td>
-				<td><input type="text" id="memail" name="memail" value="<%=mdto.getMemail()%>" placeholder="이메일 입력" oninput="emailcheck()"></td>
+				<td><input type="text" id="memail" name="memail" value="<%=emailnull%>" placeholder="이메일 입력" oninput="emailcheck()"></td>
 				<td><div id="emailmsg" style="margin-top: 5px; font-size: 14px;"></div></td>
 			</tr>
 			<tr>
@@ -85,7 +90,7 @@
 		</table>
 		<div align="right">
 			<input type="submit" value="변경사항 저장">
-			<input type="button" value="회원 탈퇴" onclick="memberDelete.jsp">
+			<input type="button" value="회원 탈퇴" onclick="memberDelete()">
 		</div>
 	</div>
 	</form>

@@ -22,7 +22,7 @@ public boolean notEmpty(String str){
 	String mname = request.getParameter("mname");
 	String mphone = request.getParameter("mphone");
 	String memail = request.getParameter("memail");
-	String mgender = request.getParameter("mgender");
+	int mgender = Integer.parseInt(request.getParameter("mgender"));
 	
 	//비밀번호 처리 바뀐 정보가 있다면 바뀐값 없다면 기존값 세팅
 	String finalPw;

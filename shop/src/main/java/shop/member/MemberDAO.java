@@ -115,8 +115,8 @@ public class MemberDAO {
 			pstmt.setString(1, sid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				String gendercode = rs.getString("mgender");
-				if("1".equals(gendercode)) {
+				int gendercode = rs.getInt("mgender");
+				if(gendercode == 1) {
 					Gender = "남성";
 				}else{
 					Gender = "여성";
@@ -153,6 +153,8 @@ public class MemberDAO {
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
 	}
+	
+	
 	
 	// =========================== admin ==========================================
 	// 회원의 수
