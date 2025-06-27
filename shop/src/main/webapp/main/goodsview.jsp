@@ -49,10 +49,10 @@ for (GoodsDTO dto : list) {
     <!-- 상품명 + 가격 -->
     <div>
         <h2><%=dto.getGname()%></h2>
-        <% if (discount != 0) { %>
+        <% if (discount != 0) { %>		<%--취소선 나옴 --%>
             <span style="text-decoration: line-through;"><%=gprice%>원</span><br>
             <strong><%=disprice%>원</strong>
-        <% } else { %>
+        <% } else { %>  
             <strong><%=gprice%>원</strong>
         <% } %>
     </div>
