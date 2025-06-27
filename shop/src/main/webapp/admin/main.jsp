@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="shop.admin.GoodsDAO" %>
+<%@ page import="shop.member.MemberDAO" %>	
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -26,7 +28,7 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 					<h1 class="h3 mb-3">
-						<strong>Analytics</strong> Dashboard
+						<strong>쇼핑몰</strong> 대시보드
 					</h1>
 					<div class="row">
 						<div class="col-xl-6 col-xxl-5 d-flex">
@@ -37,21 +39,17 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Sales</h5>
+														<h5 class="card-title">총 판매 금액</h5>
 													</div>
-
 													<div class="col-auto">
 														<div class="stat text-primary">
 															<i class="align-middle" data-feather="truck"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">2.382</h1>
+												<h1 class="mt-1 mb-3">0</h1>
 												<div class="mb-0">
-													<span class="text-danger"> 
-														<i class="mdi mdi-arrow-bottom-right"></i> -3.65%
-													</span> 
-													<span class="text-muted">Since last week</span>
+													<span class="text-muted">Latest today</span>
 												</div>
 											</div>
 										</div>
@@ -59,21 +57,21 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Visitors</h5>
+														<h5 class="card-title">총 회원 수</h5>
 													</div>
-
 													<div class="col-auto">
 														<div class="stat text-primary">
 															<i class="align-middle" data-feather="users"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">14.212</h1>
+												<%
+													MemberDAO mdao = new MemberDAO();
+													int mcount = mdao.selectCount();
+												%>
+												<h1 class="mt-1 mb-3"><%=mcount %></h1>
 												<div class="mb-0">
-													<span class="text-success"> <i
-														class="mdi mdi-arrow-bottom-right"></i> 5.25%
-													</span> 
-													<span class="text-muted">Since last week</span>
+													<span class="text-muted">Latest today</span>
 												</div>
 											</div>
 										</div>
@@ -83,21 +81,17 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Earnings</h5>
+														<h5 class="card-title">총 주문 건수</h5>
 													</div>
-
 													<div class="col-auto">
 														<div class="stat text-primary">
 															<i class="align-middle" data-feather="dollar-sign"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">$21.300</h1>
+												<h1 class="mt-1 mb-3">0</h1>
 												<div class="mb-0">
-													<span class="text-success"> 
-														<i class="mdi mdi-arrow-bottom-right"></i> 6.65%
-													</span> 
-													<span class="text-muted">Since last week</span>
+													<span class="text-muted">Latest today</span>
 												</div>
 											</div>
 										</div>
@@ -105,21 +99,21 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Orders</h5>
+														<h5 class="card-title">총 상품 갯수</h5>
 													</div>
-
 													<div class="col-auto">
 														<div class="stat text-primary">
 															<i class="align-middle" data-feather="shopping-cart"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">64</h1>
+												<%
+													GoodsDAO dao = GoodsDAO.getDAO();
+													int count = dao.selectCount();
+												%>
+												<h1 class="mt-1 mb-3"><%=count %></h1>
 												<div class="mb-0">
-													<span class="text-danger"> 
-														<i class="mdi mdi-arrow-bottom-right"></i> -2.25%
-													</span> 
-													<span class="text-muted">Since last week</span>
+													<span class="text-muted">Latest today</span>
 												</div>
 											</div>
 										</div>
@@ -131,7 +125,7 @@
 						<div class="col-xl-6 col-xxl-7">
 							<div class="card flex-fill w-100">
 								<div class="card-header">
-									<h5 class="card-title mb-0">Recent Movement</h5>
+									<h5 class="card-title mb-0">일자별 매출액</h5>
 								</div>
 								<div class="card-body py-3">
 									<div class="chart chart-sm">
@@ -147,7 +141,7 @@
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Browser Usage</h5>
+									<h5 class="card-title mb-0">카테고리별 상품</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
@@ -192,7 +186,7 @@
 							<div class="card flex-fill">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Calendar</h5>
+									<h5 class="card-title mb-0">달력</h5>
 								</div>
 								<div class="card-body d-flex">
 									<div class="align-self-center w-100">
