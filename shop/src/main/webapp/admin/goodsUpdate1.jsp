@@ -78,7 +78,7 @@
 												<img src="/shop/resources/image/<%=dto.getGidetail3() %>" width="300"/><br />
 											<% } %>
 										</div>
-										<input type="submit" value="저장하고 다음 화면으로" />
+										<input type="submit" value="저장하고 다음 화면으로" class="btn btn-primary"/>
 									</form>
 								</div>
 							</div>

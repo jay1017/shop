@@ -60,7 +60,7 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">수량</label>
-											<input type="text" name="gocount" id="gocount"  value="<%=dto.getGocount()%>" class="form-control form-control-lg"/>
+											<input type="number" name="gocount" id="gocount"  value="<%=dto.getGocount()%>" class="form-control form-control-lg"/>
 										</div>
 										<input type="submit" value="저장"  class="btn btn-primary mt-3"/>
 									</form>

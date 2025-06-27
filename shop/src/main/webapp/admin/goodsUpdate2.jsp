@@ -73,7 +73,16 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">상품 설명</label>
-											<textarea name="gcontent"  class="form-control"><%=dto.getGcontent()%></textarea>
+											<textarea name="gcontent"  class="form-control">
+												<%
+													String gcontent = dto.getGcontent();
+													if(gcontent == null) { %>
+														
+													<% } else { %>
+														<%=gcontent %>
+													<% } %>
+												
+											</textarea>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">할인율</label>
