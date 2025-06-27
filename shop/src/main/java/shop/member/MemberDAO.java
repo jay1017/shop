@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MemberDAO {
 	Connection conn = null;
@@ -40,7 +42,7 @@ public class MemberDAO {
 				mdto.setMname(rs.getString("mname"));
 				mdto.setMphone(rs.getString("mphone"));
 				mdto.setMemail(rs.getString("memail"));
-				mdto.setMgender(rs.getString("mgender"));
+				mdto.setMgender(rs.getInt("mgender"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -64,7 +66,7 @@ public class MemberDAO {
 			pstmt.setString(3, mdto.getMname());
 			pstmt.setString(4, mdto.getMphone());
 			pstmt.setString(5, mdto.getMemail());
-			pstmt.setString(6, mdto.getMgender());
+			pstmt.setInt(6, mdto.getMgender());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -91,7 +93,7 @@ public class MemberDAO {
 				mdto.setMname(rs.getString("mname"));
 				mdto.setMphone(rs.getString("mphone"));
 				mdto.setMemail(rs.getString("memail"));
-				mdto.setMgender(rs.getString("mgender"));
+				mdto.setMgender(rs.getInt("mgender"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -140,7 +142,7 @@ public class MemberDAO {
 			pstmt.setString(2, mdto.getMname());
 			pstmt.setString(3, mdto.getMphone());
 			pstmt.setString(4, mdto.getMemail());
-			pstmt.setString(5, mdto.getMgender());
+			pstmt.setInt(5, mdto.getMgender());
 			pstmt.setString(6, mdto.getMid());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
@@ -150,5 +152,60 @@ public class MemberDAO {
 			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
+	}
+	
+	// =========================== admin ==========================================
+	// 회원의 수
+	public int selectCount() {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "select count(*) from member2";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	// 회원 리스트
+	public List<MemberDTO> selectList(int startRow, int endRow) {
+		List<MemberDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select r, mnum, mid, mname, mphone, memail, mgender "
+					+ "from (select rownum r, mnum, mid, mname, mphone, memail, mgender "
+					+ "from (select mnum, mid, mname, mphone, memail, mgender "
+					+ "from member2 order by mnum desc) order by mnum desc) where r >= ? and r <= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MemberDTO dto = new MemberDTO();
+				dto.setMnum(rs.getInt("mnum"));
+				dto.setMid(rs.getString("mid"));
+				dto.setMname(rs.getString("mname"));
+				dto.setMphone(rs.getString("mphone"));
+				dto.setMemail(rs.getString("memail"));
+				dto.setMgender(rs.getInt("mgender"));
+				list.add(dto);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return list;
 	}
 }
