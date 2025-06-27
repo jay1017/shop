@@ -7,7 +7,7 @@ public class MemberDTO {
 	private String mname;
 	private String mphone;
 	private String memail;
-	private String mgender;
+	private int mgender;
 	public int getMnum() {
 		return mnum;
 	}
@@ -44,10 +44,10 @@ public class MemberDTO {
 	public void setMemail(String memail) {
 		this.memail = memail;
 	}
-	public String getMgender() {
+	public int getMgender() {
 		return mgender;
 	}
-	public void setMgender(String mgender) {
+	public void setMgender(int mgender) {
 		this.mgender = mgender;
 	}
 	

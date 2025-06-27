@@ -159,13 +159,14 @@ public class OptionDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "update goods_option set canum = ?, ginum = ?, gosize = ?, gocolor = ? where gonum = ?";
+			String sql = "update goods_option set canum = ?, ginum = ?, gosize = ?, gocolor = ?, gocount = ? where gonum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCanum());
 			pstmt.setInt(2, dto.getGinum());
 			pstmt.setString(3, dto.getGosize());
 			pstmt.setString(4, dto.getGocolor());
-			pstmt.setInt(5, dto.getGonum());
+			pstmt.setInt(5, dto.getGocount());
+			pstmt.setInt(6, dto.getGonum());
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -1,25 +1,65 @@
-# Compiled class file
+# === Java build artifacts ===
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
 *.war
-*.nar
 *.ear
-*.zip
-*.tar.gz
-*.rar
+*.jar
+!lib/cos.jar
+!lib/ojdbc17.jar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# === Build directories ===
+/bin/
 /build/
+/target/
+/out/
+/dist/
+
+# === Eclipse / STS ===
+.settings/
+.springBeans
+.wtpmodules
+.metadata
+.mymetadata
+.factorypath
+
+# === Maven ===
+/.mvn/
+/.mvnw
+/mvnw.cmd
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+target/
+
+# === Gradle ===
+.gradle/
+/build/
+/!gradle/wrapper/gradle-wrapper.jar
+
+# === Web (Dynamic Web Project) specific ===
+/WEB-INF/classes/
+/WEB-INF/lib/*  # 제외할 경우 전체 삭제되므로 아래 예외 항목과 함께 사용
+!WEB-INF/lib/cos.jar
+!WEB-INF/lib/ojdbc17.jar
+
+# === Logs and temp files ===
+*.log
+*.tmp
+
+# === IDE and system files ===
+*.iml
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# === Node.js (JS 관리용 빌드 툴 사용 시) ===
+node_modules/
+package-lock.json
+yarn.lock
+
+# === Environment ===
+.env
+.env.*
+*.local.*

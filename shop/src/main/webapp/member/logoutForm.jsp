@@ -7,6 +7,6 @@
 %>
 <script>
 	alert("로그아웃 되었습니다.");
-	response.sendRedirect("/shop/main/main.jsp");
+	location.href="/shop/main/main.jsp";
 </script>
 

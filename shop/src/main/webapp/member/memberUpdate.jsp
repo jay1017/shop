@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:useBean id="mdto" class="shop.member.MemberDTO" />
-<jsp:useBean id="mdao" class="shop.member.MemberDAO" />
+<%@ page import="shop.member.MemberDTO" %>
+<%@ page import="shop.member.MemberDAO" %>
 <%
+MemberDTO mdto = new MemberDTO();
+MemberDAO mdao = new MemberDAO();
 String sid = (String) session.getAttribute("sid");
 mdto = mdao.getInfo(sid);
 String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여성으로 보여주기 위해 별도의 메서드 사용
@@ -63,7 +65,7 @@ String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여
 	//이메일 마스킹 처리
 	public String maskEmail(String email) {
 		if (email == null || !email.contains("@"))
-			return email; //이메일이 없거나 @가 포함된 값이 아니라면 원래 값 반환
+			return "없음"; //이메일이 없거나 @가 포함된 값이 아니라면 없음 반환
 		int index = email.indexOf("@"); //@가 들어간 자리의 인덱스번호 저장
 		String id = email.substring(0, index); //이메일의 첫 글자부터 @가 위치하기 전까지의 값 지정
 		if (id.length() <= 2) //아이디에 해당하는 길이가 2이하라면

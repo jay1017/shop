@@ -18,46 +18,44 @@
 	<link rel="stylesheet" href="/shop/resources/css/font.css" />
 	<script language="JavaScript" src="/shop/resources/js/admin.js"></script>
 </head>
-</head>
 <body>
-	<div class="wrapper">
-		<jsp:include page="/admin/include/sidebar.jsp"></jsp:include>
-		<div class="main">
-			<main class="content">
-				<div class="container-fluid p-0">
-					<div class="row">
-						<div class="col-12 col-lg-6">
-							<div class="card">
-								<div class="card-header">
-									<h5 class="card-title mb-0">상품 등록</h5>
-								</div>
-								<div class="card-body">
-									<form action="goodsInsertPro1.jsp" method="post" enctype="multipart/form-data" onsubmit="checkGoods1(event)">
+	<main class="d-flex w-100">
+		<div class="container d-flex flex-column">
+			<div class="row vh-100">
+				<div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+					<div class="d-table-cell align-middle">
+						<div class="text-center mt-4">
+							<h1 class="h2">어드민 페이지</h1>
+							<p class="lead">
+								관리자로 로그인을 진행 해 주세요.
+							</p>
+						</div>
+						<div class="card">
+							<div class="card-body">
+								<div class="m-sm-4">
+									<div class="text-center">
+										<img src="/shop/resources/img/login.jpg" alt="Charles Hall" class="img-fluid" width="132" height="132" />
+									</div>
+									<form action="loginPro.jsp" method="post" onsubmit="checkLogin(event)">
 										<div class="mb-3">
-											<label class="form-label">대표 이미지</label>
-											<input type="file" name="giname" class="form-control form-control-lg"/>
+											<label class="form-label">아이디</label>
+											<input class="form-control form-control-lg" type="text" name="mid" id="mid" placeholder="아이디를 입력하세요." />
 										</div>
 										<div class="mb-3">
-											<label class="form-label">상세 이미지1</label>
-											<input type="file" name="gidetail1" class="form-control form-control-lg"/>
+											<label class="form-label">비밀번호</label>
+											<input class="form-control form-control-lg" type="password" name="mpw" id="mpw" placeholder="비밀번호를 입력하세요." />
 										</div>
-										<div class="mb-3">
-											<label class="form-label">상세 이미지2</label>
-											<input type="file" name="gidetail2" class="form-control form-control-lg"/>
+										<div class="text-center mt-3">
+											<input type="submit" value="로그인" class="btn btn-lg btn-primary">
 										</div>
-										<div class="mb-3">
-											<label class="form-label">상세 이미지3</label>
-											<input type="file" name="gidetail3" class="form-control form-control-lg"/>
-										</div>
-										<input type="submit" value="저장하고 다음 화면으로" class="btn btn-primary mt-3"/>
 									</form>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</main>
+			</div>
 		</div>
-	</div>
+	</main>
 </body>
 </html>

@@ -17,8 +17,12 @@
 		
 		int canum = Integer.parseInt(request.getParameter("canum"));
 		int gprice = Integer.parseInt(request.getParameter("gprice"));
-		int discount = Integer.parseInt(request.getParameter("discount"));
+		int discount = 0;
 		int ginum = Integer.parseInt(request.getParameter("ginum"));
+		
+		if(request.getParameter("discount") != null) {
+			discount = Integer.parseInt(request.getParameter("discount"));
+		}
 		
 		dto.setCanum(canum);
 		dto.setGinum(ginum);

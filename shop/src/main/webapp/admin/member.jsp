@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="shop.admin.CategoryDTO" %>   
-<%@ page import="shop.admin.CategoryDAO" %>    
-<%@ page import="java.util.List" %> 
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="shop.member.MemberDAO" %>
+<%@ page import="shop.member.MemberDTO" %>
+<%@ page import="java.util.List" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +31,8 @@
 			pageNum = "1";
 		}
 
-		List<CategoryDTO> list = null;
-		CategoryDAO dao = CategoryDAO.getDAO();
+		List<MemberDTO> list = null;
+		MemberDAO dao = new MemberDAO();
 		
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage - 1) * pageSize + 1;
@@ -56,14 +55,13 @@
 						<div class="col-12 col-lg-8 col-xxl-9 d-flex">
 							<div class="card flex-fill">
 								<div class="card-header">
-									<h5 class="card-title mb-0">카테고리 리스트</h5>
-									<button class="btn btn-primary mt-2" onclick="location.href='/shop/admin/categoryInsert.jsp'">카테고리 등록</button>
+									<h5 class="card-title mb-0">회원 리스트</h5>
 								</div>
 								<% if(count == 0) { %>
 								<table class="table table-hover my-0">
 									<thead>
 										<tr>
-											<th colspan="4">등록된 카테고리가 없습니다.</th>
+											<th colspan="4">등록된 회원이 없습니다.</th>
 										</tr>
 									</thead>
 								</table>
@@ -72,21 +70,31 @@
 									<thead>
 										<tr>
 											<th>번호</th>
-											<th>카테고리명</th>
-											<th>수정</th>
+											<th>아이디</th>
+											<th>이름</th>
+											<th>휴대폰번호</th>
+											<th>이메일</th>
+											<th>성별</th>
 											<th>삭제</th>
 										</tr>
 									</thead>
 									<tbody>
-										<% for(CategoryDTO dto : list) { %>
+										<% for(MemberDTO dto : list) { %>
 											<tr>
 												<td class="ps-3"><%=number-- %></td>
-												<td class="ps-3"><%=dto.getCaname() %></td>
-												<td class="ps-0">
-													<button class="btn btn-success" onclick="location.href='/shop/admin/categoryUpdate.jsp?canum=<%=dto.getCanum()%>'">수정</button>
+												<td class="ps-3"><%=dto.getMid() %></td>
+												<td class="ps-3"><%=dto.getMname() %></td>
+												<td class="ps-3"><%=dto.getMphone() %></td>
+												<td class="ps-3"><%=dto.getMemail() %></td>
+												<td class="ps-3">
+													<% if(dto.getMgender() == 1) { %>
+														남자	
+													<% } else { %>
+														여자
+													<% } %>
 												</td>
 												<td class="ps-0">
-													<button class="btn btn-warning" onclick="deleteMsg('<%=dto.getCanum()%>', '/shop/admin/categoryDelete.jsp?canum=');">삭제</button>
+													<button class="btn btn-warning" onclick="deleteMsg('', '/shop/admin/categoryDelete.jsp?canum=');">삭제</button>
 												</td>
 											</tr>
 										<% }
@@ -106,14 +114,14 @@
 											}
 											
 											if(startPage > 10) { %>
-												<a href="category.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+												<a href="member.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
 											<% } 
 											
 											for(int i = startPage; i <= endPage; i++) { %>
-												<a href="category.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+												<a href="member.jsp?pageNum=<%= i %>">[<%= i %>]</a>
 											<% }
 											if(endPage < pageCount) { %>
-												<a href="category.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+												<a href="member.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
 											<%
 											}
 										}
@@ -126,6 +134,5 @@
 			</main>
 		</div>	
 	</div>
-	<script src="js/app.js"></script>
 </body>
 </html>

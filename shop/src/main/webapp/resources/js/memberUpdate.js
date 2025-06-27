@@ -110,13 +110,40 @@ function emailcheck() {
 
 //회원정보 수정시 변경사항 저장을 눌렀을 때
 function UpdateMember(){
-	const mname = document.getElementById("mname").value.trim();
-	const mphone = document.getElementById("mphone").value.trim();
-	const memail = document.getElementById("memail").value.trim();
-	
+	const mname = document.getElementById("mname");
+	const mphone = document.getElementById("mphone");
+	const memail = document.getElementById("memail");
+	const phoneNum = /^01\d{8,9}$/;
+	const emailStr = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	if(mname.value.trim() === ""){
+		alert("이름을 입력해주세요.");
+		mname.focus();
+		return false;
+	}
+	if(mphone.value.trim() === ""){
+		alert("전화번호를 입력해주세요.");
+		mphone.focus();
+		return false;
+	}
+	if(!phoneNum.test(mphone.value.trim())){
+		alert("전화번호 형식이 올바르지 않습니다. 예)01012345678");
+		mphone.focus();
+		return false;
+	}
+	if(memail.value.trim() !== ""){
+		if(!emailStr.test(memail.value.trim())){
+			alert("이메일 형식이 올바르지 않습니다.");
+			memail.focus();
+			return false;
+		}
+	}
+	return true;
 }
 
-
+//회원탈퇴시 팝업창 연결
+function memberDelete(){
+	window.open("/shop/member/memberDeleteCheck.jsp", "회원 탈퇴", "width=500, height=250");
+}
 
 
 
