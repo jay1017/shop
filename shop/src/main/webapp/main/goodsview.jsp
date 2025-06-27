@@ -2,7 +2,7 @@
 <%@ page import="shop.main.GoodsDTO,shop.main.MainDAO,java.util.List" %>
 <%@ page import="shop.main.GoodsOptionDTO" %>
 <%@ page import="shop.admin.GoodsImageDAO,shop.admin.GoodsImageDTO" %>
-
+  
 <%
     request.setCharacterEncoding("UTF-8");
     String sid = (String) session.getAttribute("sid");

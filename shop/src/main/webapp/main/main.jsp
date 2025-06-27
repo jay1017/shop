@@ -3,7 +3,7 @@
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
 <%@ page import="shop.main.CategoryDTO"%>
 <%@ page import="shop.admin.GoodsImageDAO,shop.admin.GoodsImageDTO"%>
-
+ 
 <%
 String sid = (String) session.getAttribute("sid");
 MainDAO dao = MainDAO.getInstance();
