@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
-<%@ page import="shop.main.CategoryDTO"%> 
+<%@ page import="shop.main.CategoryDTO"%>
+<%@ page import="shop.admin.GoodsImageDAO,shop.admin.GoodsImageDTO"%>
 
 <%
 String sid = (String) session.getAttribute("sid");
 MainDAO dao = MainDAO.getInstance();
+GoodsImageDAO idao = GoodsImageDAO.getDAO();
+
 List<CategoryDTO> list = dao.getCate();
+List<GoodsDTO> list2 = dao.getGoods(); //모든 상품의 정보를 출력
+List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력
 %>
 
 
@@ -46,12 +51,12 @@ List<CategoryDTO> list = dao.getCate();
 		%>
 		<nav>
 			<div>
-			<a href="categories.jsp">카테고리별 보기</a>
+				<a href="categories.jsp">카테고리별 보기</a>
 				<%
 				for (CategoryDTO dto : list) {
-				%> 
+				%>
 				<form action="categories.jsp" method="get">
-					 <input type="hidden" name="canum" value="<%=dto.getCanum()%>">
+					<input type="hidden" name="canum" value="<%=dto.getCanum()%>">
 					<button type="submit"><%=dto.getCaname()%></button>
 				</form>
 			</div>
@@ -67,11 +72,83 @@ List<CategoryDTO> list = dao.getCate();
 		</div>
 	</header>
 	<%--헤더--%>
+	<h2>인기상품</h2>
+	<%
+	for (GoodsDTO dto : tlist) {
+	%>
+	<%--인기상품 출력 --%>
+	인기상품
+	<%
+	int gprice = dto.getGprice();
+	int discount = dto.getDiscount();
+	int disprice = gprice; //할인된 가격
+	%>
+	<div
+		onclick="location.href='goodsview.jsp?gnum=<%=dto.getGnum()%>&&ginum=<%=dto.getGinum()%>';">
+		<div>
+			<img src="/shop/resources/image/">
+		</div>
+		<div><%=dto.getGname()%></div>
+		<div>
+			<%
+			if (dto.getDiscount() != 0) {
+				disprice = gprice - (gprice * discount / 100);
+			%>
+			<div><%=dto.getGprice()%>
+				<br />
+				<%=disprice%>
+			</div>
+		</div>
+		<%
+		} else {
+		%>
+		<div>
+			<%=dto.getGprice()%>
+		</div>
+		<%
+		}
+		%>
+	</div>
+	<h2>신상품</h2>
+	<%
+	}
+	for (GoodsDTO dto : list2) {
+	%>
+	<%--최신상품 출력 --%>
+	<%
+	int gprice = dto.getGprice();
+	int discount = dto.getDiscount();
+	int disprice = gprice; //할인된 가격
+	%>
+	<div
+		onclick="location.href='goodsview.jsp?gnum=<%=dto.getGnum()%>&&ginum=<%=dto.getGinum()%>';">
+		<div>
+			<img src="/shop/resources/image/">
+		</div>
+		<div><%=dto.getGname()%></div>
+		<div>
+			<%
+			if (dto.getDiscount() != 0) {
+				disprice = gprice - (gprice * discount / 100);
+			%>
+			<div><%=dto.getGprice()%>
+				<br />
+				<%=disprice%>
+			</div>
+		</div>
+		<%
+		} else {
+		%>
+		<div>
+			<%=dto.getGprice()%>
+		</div>
+		<%
+		}
+		%>
+	</div>
+	<%
+	}
+	%>
 
-	인기 상품
-	<%--조회수로 처리 --%>
-	<div></div>
-	최신 상품
-	<div></div>
 </body>
 </html>

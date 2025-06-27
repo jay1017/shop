@@ -144,7 +144,7 @@ public class OptionDAO {
 			if(rs.next()) {
 				dto.setGosize(rs.getString("gosize"));
 				dto.setGocolor(rs.getString("gocolor"));
-				dto.setGocount(rs.getInt("gocount"));
+				dto.setGocount(rs.getInt("gocount")); 
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

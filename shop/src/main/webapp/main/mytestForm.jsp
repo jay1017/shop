@@ -8,7 +8,9 @@
 </head>
 <body>
 <form action="goodsview.jsp">
-<input type="text" name="gnum"/>
+상품번호<input type="text" name="gnum"/> <br/>
+상품이미지번호<input type="text" name="ginum"/><br />
+상품옵션번호<input type="text" name="gonum"/>
 <input type="submit" value="상품번호입력" />
 </form>
 </body>

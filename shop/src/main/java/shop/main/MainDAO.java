@@ -2,6 +2,9 @@ package shop.main;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import shop.member.MemberDTO;
+
 import java.sql.*;
 
 public class MainDAO {
@@ -81,14 +84,71 @@ public class MainDAO {
 		}
 		return goodsList;
 	}
+	public List<GoodsDTO> getGoods() { // 모든 상품의 정보를 최신순서대로 가져오는 메소드
+		List<GoodsDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from goods order by gnum desc";
+			pstmt = conn.prepareStatement(sql);
+			
 
-	public List<GoodsDTO> getGoods(int gnum) { // 상품의 모든정보를 가져오는 메소드
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GoodsDTO dto = new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGcontent(rs.getString("gcontent"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setGread(rs.getInt("gread"));
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+	public List<GoodsDTO> getGoods(int gnum) { // 특정 상품의 모든정보를 가져오는 메소드
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
 			String sql = "select * from goods where gnum=? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GoodsDTO dto = new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGcontent(rs.getString("gcontent"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setGread(rs.getInt("gread"));
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+	public List<GoodsDTO> getTrendGoods() { // 특정 상품의 모든정보를 가져오는 메소드
+		List<GoodsDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from goods where gread>10";
+			pstmt = conn.prepareStatement(sql);
+			
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -164,12 +224,13 @@ public class MainDAO {
 		}
 		return list;
 	}
-	public List<GoodsOptionDTO> getGoodsOption() { // 상품의 옵션정보를 가져오는 메소드
+	public List<GoodsOptionDTO> getGoodsOption(int gnum) { // 상품의 옵션정보를 가져오는 메소드
 		List<GoodsOptionDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from goods_option";
+			String sql = "select * from goods_option where gnum=?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1,gnum);
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -206,5 +267,23 @@ public class MainDAO {
 		} finally {
 			endConnection();
 		}
+	}
+	public int getMnum(String sid) { //mnum 조회하는 메소드
+		int mnum=0;
+		try {
+			conn=getConnection();
+			String sql="select mnum from member2 where mid=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, sid); 
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				mnum=rs.getInt(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return mnum;
 	}
 }
