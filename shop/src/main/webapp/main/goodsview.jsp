@@ -113,12 +113,12 @@ for (GoodsDTO dto : list) {
         <input type="submit" value="구매하기">
     </form>
 
-    <!-- 상품 설명 -->
+    <%--상품 설명--%>
     <div>
         <%=dto.getGcontent()%>
     </div>
 
-    <!-- 상세 이미지들 -->
+    <%--상세 이미지들--%>
    
 	<img src="<%= request.getContextPath() %>/resources/image/<%= idto.getGidetail1() %>" />
 	<img src="<%= request.getContextPath() %>/resources/image/<%= idto.getGidetail2() %>" />
@@ -127,7 +127,9 @@ for (GoodsDTO dto : list) {
 
 <% } %>
 
-<!-- JavaScript: 옵션 선택 시 hidden 값 설정 -->
+	<%--여기에 리뷰페이지 --%>
+
+<%-- 옵션 선택 시 hidden 값 설정--%>
 <script>
 function setOptionValues() {
     const selected = document.getElementById("optionSelect").value; //위에서 합친 문자열을 받아옵니다 id=optionSelect인 value를 가져온다는 뜻입니다
