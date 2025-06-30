@@ -1,13 +1,11 @@
 package shop.cart;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class cartDAO {
 
@@ -63,27 +61,30 @@ public class cartDAO {
 			}
 		}
 	}
+
 //상품번호에 맞는 상품 cart로 가져오기
-	public List<cartDTO> getCart(int gnum) {
-		List<cartDTO> list = new ArrayList<>();
+
+	public cartDTO getCart(int gnum) {
+		cartDTO dto = null;
 		try {
 			conn = getConnection();
-			String sql = "select gname,gprice,ginum from goods where gnum=?";
-			pstmt=conn.prepareStatement(sql);
+			String sql = "select gnum, gname, gprice, giname, discount from goods where gnum=?";
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				cartDTO dto = new cartDTO();
+			if (rs.next()) {
+				dto = new cartDTO();
+				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setGiname(rs.getString("giname"));
-				list.add(dto);
+				dto.setDiscount(rs.getInt("discount"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			endConnection();
 		}
-		return list;
+		return dto;
 	}
 }
