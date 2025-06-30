@@ -146,7 +146,8 @@ public class MainDAO {
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select from goods where discount is not null and discount>0";
+			String sql = "select gnum,canum,gname,(gprice - (gprice * (discount / 100.0))) as discount,gprice,gcontent,ginum,gread from goods where "
+					+ "discount is not null and discount>0";
 			pstmt = conn.prepareStatement(sql);
 			
 

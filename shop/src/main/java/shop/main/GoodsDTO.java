@@ -10,6 +10,7 @@ public class GoodsDTO {
 	private int discount; // 할인율
 	private int gread; // 조회수
 	private String gplot;
+	private int disPrice; //할인된 가격 세팅
 
 	public int getGnum() {
 		return gnum;
@@ -81,6 +82,14 @@ public class GoodsDTO {
 
 	public void setGplot(String gplot) {
 		this.gplot = gplot;
+	}
+
+	public int getDisPrice() {
+		return disPrice;
+	}
+
+	public void setDisPrice(int disPrice) {
+		this.disPrice = disPrice;
 	}
 
 }
