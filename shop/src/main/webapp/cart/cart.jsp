@@ -33,7 +33,9 @@ List<cartDTO> list = dao.getCart(gnum);
 			<input type="button" value="구매" onclick="location.href='cash.jsp?gnum=<%=dto.getGnum()%>'">
 		</div>
 		<%} 
-		}%>
+		}else{%>
+		<p>장바구니에 담긴 상품이 없습니다.</p>
+		<%} %>
 	</div>
 </div>
 
