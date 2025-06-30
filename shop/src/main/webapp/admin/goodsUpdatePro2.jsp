@@ -29,6 +29,7 @@
 		dto.setGcontent(request.getParameter("gcontent"));
 		dto.setDiscount(discount);
 		dto.setGnum(gnum);
+		dto.setGplot(request.getParameter("gplot"));
 		
 		int result = dao.update(dto);  
 		if(result == 1) { %>

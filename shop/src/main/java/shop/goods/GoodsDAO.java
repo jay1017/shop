@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoodsDAO {
 	// DAO 객체 생성
@@ -92,5 +94,28 @@ public class GoodsDAO {
 			endConnection();
 		}
 		return dto;
+	}
+	
+	// 굿즈의 옵션을 불러오는 메소드
+	public List<OptionDTO> selectOption(int gnum) {
+		List<OptionDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select gonum, gosize from goods_option go, goods g where g.gnum = go.gnum and g.gnum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OptionDTO dto = new OptionDTO();
+				dto.setGonum(rs.getInt("gonum"));
+				dto.setGosize(rs.getString("gosize"));
+				list.add(dto);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
 	}
 }

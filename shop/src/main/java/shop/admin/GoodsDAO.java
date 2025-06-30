@@ -157,7 +157,7 @@ public class GoodsDAO {
 			}
 			
 			if(nextVal != 0) {
-				sql = "insert into goods values(?, ?, ?, ?, ?, ?, ?, ?)";
+				sql = "insert into goods values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, nextVal);
 				pstmt.setInt(2, dto.getCanum());
@@ -167,6 +167,7 @@ public class GoodsDAO {
 				pstmt.setInt(6, dto.getGinum());
 				pstmt.setInt(7, dto.getDiscount());
 				pstmt.setInt(8, 0);
+				pstmt.setString(9, dto.getGplot());
 				int res = pstmt.executeUpdate();
 				result.add(res);
 			}
@@ -192,6 +193,7 @@ public class GoodsDAO {
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGcontent(rs.getString("gcontent"));
+				dto.setGplot(rs.getString("gplot"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGread(rs.getInt("gread"));
 				dto.setCanum(rs.getInt("canum"));

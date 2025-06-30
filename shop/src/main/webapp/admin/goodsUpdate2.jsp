@@ -72,17 +72,23 @@
 											<input type="number" name="gprice" id="gprice" value="<%=dto.getGprice()%>" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
+											<label class="form-label">상품 요약</label>
+											<%
+												String gplot = dto.getGplot();
+												if(gplot == null) { %>
+											<textarea name="gplot" class="form-control"></textarea>
+												<% } else { %>
+											<textarea name="gplot" class="form-control"><%=gplot %></textarea>
+												<% } %>
+										</div>
+										<div class="mb-3">
 											<label class="form-label">상품 설명</label>
-											<textarea name="gcontent"  class="form-control">
-												<%
-													String gcontent = dto.getGcontent();
-													if(gcontent == null) { %>
-														
-													<% } else { %>
-														<%=gcontent %>
-													<% } %>
-												
-											</textarea>
+											<% String gcontent = dto.getGcontent();
+												if(gcontent != null) { %>
+												<textarea name="gcontent"  class="form-control"><%=gcontent %></textarea>
+											<% } else { %>
+												<textarea name="gcontent"  class="form-control"></textarea>
+											<% } %>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">할인율</label>
