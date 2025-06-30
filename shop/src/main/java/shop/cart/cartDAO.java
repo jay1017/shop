@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import shop.main.GoodsDTO;
+
 public class cartDAO {
 
 	private Connection conn;
@@ -63,8 +65,7 @@ public class cartDAO {
 	}
 
 //상품번호에 맞는 상품 정보 가져오기
-
-	public cartDTO getCart(int gnum) {
+	public cartDTO getCartGoods(int gnum) {
 		cartDTO dto = null;
 		try {
 			conn = getConnection();
@@ -87,4 +88,61 @@ public class cartDAO {
 		}
 		return dto;
 	}
+	//장바구니에 담기
+	public cartDTO getCartAdd(int gnum) {
+		cartDTO dto = null;
+		try {
+			conn = getConnection();
+			String sql = "select gnum, gname, gprice, giname, discount from goods";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dto = new cartDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGiname(rs.getString("giname"));
+				dto.setDiscount(rs.getInt("discount"));	
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return dto;
+	}
+//장바구니에 상품 넣기
+	public List<Integer> insertCart(cartDTO dto) {
+		List<Integer> result = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select cart_seq.nextval from dual";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			int nextVal = 0;
+			if(rs.next()) {
+				nextVal = rs.getInt(1);
+				result.add(nextVal);
+			}
+			if(nextVal != 0) {
+				sql = "insert into cart values(?, ?, ?, ?, ?, ?, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, nextVal);
+				pstmt.setInt(2, dto.getCnum());
+				pstmt.setInt(3, dto.getMnum());
+				pstmt.setInt(4, dto.getGnum());
+				pstmt.setInt(5, dto.getCanum());
+				pstmt.setInt(6, dto.getCcount());
+				pstmt.setInt(7, dto.getGinum());
+				int res = pstmt.executeUpdate();
+				result.add(res);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return result;
+	}
+	
 }

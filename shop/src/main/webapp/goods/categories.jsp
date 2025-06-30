@@ -48,7 +48,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
         <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
     <form action="/shop/goods/cartpro.jsp" method="post">
     	<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-    	<input type="submit" value="장바구니에 담기">
+    	<input type="submit" value="장바구니에 담기"> 
 	</form>
     </div>
 <%}

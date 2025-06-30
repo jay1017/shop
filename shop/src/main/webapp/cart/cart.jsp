@@ -22,7 +22,7 @@ cartDAO dao = cartDAO.getInstance();
 
 if (cartNums != null) {//상품정보 
     for (int gnum : cartNums) {
-        cartDTO dto = dao.getCart(gnum);
+        cartDTO dto = dao.getCartGoods(gnum);
         if (dto != null) {
             cartItems.add(dto);
         }
