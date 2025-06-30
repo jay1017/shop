@@ -50,9 +50,14 @@ if (cartNums != null) {//상품정보
 <% } else { 
     int total = 0;
     for (cartDTO dto : cartItems) {
+    	int disprice;
         int gprice = dto.getGprice();
         int discount = dto.getDiscount();
-        int disprice = discount != 0 ? gprice - (gprice * discount / 100) : gprice;
+        if (discount != 0) {
+			disprice = gprice - (gprice * discount / 100);
+		}else{
+			 disprice = gprice;
+		}
         total += disprice;
 %>
     <div class="item">

@@ -3,7 +3,7 @@
 <%@ page import="shop.goods.categoryDTO" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%
+<%//상품 장바구니로 넣기
     int gnum = Integer.parseInt(request.getParameter("gnum"));
 
     // 기존 장바구니 불러오기

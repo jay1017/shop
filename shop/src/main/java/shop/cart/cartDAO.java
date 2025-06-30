@@ -62,7 +62,7 @@ public class cartDAO {
 		}
 	}
 
-//상품번호에 맞는 상품 cart로 가져오기
+//상품번호에 맞는 상품 정보 가져오기
 
 	public cartDTO getCart(int gnum) {
 		cartDTO dto = null;
