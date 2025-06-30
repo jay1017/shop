@@ -113,6 +113,7 @@ public class cartDAO {
 	}
 //장바구니에 상품 넣기
 	public void insertCart(cartDTO dto) {
+		int result = 0;
 		try {
 			conn = getConnection();
 			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?)";
@@ -122,12 +123,31 @@ public class cartDAO {
 			pstmt.setInt(3, dto.getCanum());
 			pstmt.setInt(4, dto.getCcount());
 			pstmt.setInt(5, dto.getGinum());
-			rs = pstmt.executeQuery();
+			result = pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			endConnection();
 		}
+		return;
 	}
-	
+	//회원ID로 회원번호 조회
+	public int getMnum(String sid) {
+		int mnum=0;
+		try {
+			conn = getConnection();
+			String sql = "select mnum from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mnum = rs.getInt("mnum");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return mnum;
+	}
 }

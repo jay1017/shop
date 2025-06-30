@@ -9,7 +9,7 @@ public class cartDTO {
 	private int cnum;//장바구니 번호
 	private int mnum;//회원번호
 	private int canum;//카테고리 번호
-	private int ccount;//주문갯수
+	private int ccount;//주문수량
 	private int ginum;//이미지 번호
 	
 	public int getDiscount() {

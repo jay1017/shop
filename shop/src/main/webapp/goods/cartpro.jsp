@@ -3,6 +3,7 @@
 <%@ page import="shop.goods.categoryDTO"%>
 <%@ page import="shop.cart.cartDAO" %>
 <%@ page import="shop.cart.cartDTO" %>
+<%@ page import="shop.member.MemberDAO" %>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%--장바구니 담기 기능 페이지 --%>
@@ -12,11 +13,12 @@ String sid = (String) session.getAttribute("sid");
 int gnum = Integer.parseInt(request.getParameter("gnum"));
 cartDAO dao = cartDAO.getInstance();
 cartDTO dto = dao.getCartAdd(gnum);
-int count = 0;
+int mnum = dao.getMnum(sid);
+dto.setMnum(mnum);
 
 // 장바구니에 상품 추가
+dto.setCcount(1);//기본수량1
 dao.insertCart(dto);
-dto.setCcount(count++);
 %>
 
 <script>
