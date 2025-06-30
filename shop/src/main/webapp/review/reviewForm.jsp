@@ -23,7 +23,7 @@
 	<input type="hidden" name="mnum" value="<%=mnum%>"/>
 	<input type="hidden" name="canum" value="<%=canum%>"/>	
 	<input type="hidden" name="ginum" value="<%=ginum%>"/>
-	<input type="hidden" name="rnum" value="<%=rnum%>"/>		
+	<%--	<input type="hidden" name="rnum" value="<%=rnum%>"/>	 --%>	
 	<input type="submit" value="버튼"/>
 	</form> 
 	</div>
