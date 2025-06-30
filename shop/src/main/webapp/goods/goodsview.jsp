@@ -11,7 +11,7 @@
     // String sid = (String) session.getAttribute("sid");
 
     // int gnum = Integer.parseInt(request.getParameter("gnum"));
-    int gnum = 21;
+    int gnum = 266;
     
     GoodsDAO dao = GoodsDAO.getDAO();
     GoodsDTO goods = dao.select(gnum); 
@@ -21,7 +21,7 @@
     String gprice = numberFormat.format(goods.getGprice());
     String discount = numberFormat.format(goods.getDiscount());
     
-    List<OptionDTO> list = dao.selectOption(gnum);
+    List<OptionDTO> list = dao.selectOption(goods.getGname()); 
 %>
 
 <!DOCTYPE html>
@@ -124,9 +124,7 @@
                         <div class="product__details__text">
                             <h4><%=goods.getGname() %></h4>
                             <h3>&#8361; <%=discount %> <span><%=gprice %></span></h3>
-                            <p>Coat with quilted lining and an adjustable hood. Featuring long sleeves with adjustable
-                                cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
-                            with placket.</p>
+                            <p><%=goods.getGplot()%></p>
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>사이즈:</span>
@@ -148,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="margin-bottom: 40px;">
                     <div class="col-lg-12">
                         <div class="product__details__tab">
                             <ul class="nav nav-tabs" role="tablist">

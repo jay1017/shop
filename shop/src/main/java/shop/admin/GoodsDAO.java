@@ -213,7 +213,7 @@ public class GoodsDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "update goods set canum = ?, gname = ?, gprice = ?, gcontent = ?, discount = ?, ginum = ? where gnum = ?";
+			String sql = "update goods set canum = ?, gname = ?, gprice = ?, gcontent = ?, discount = ?, ginum = ?, gplot = ? where gnum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCanum());
 			pstmt.setString(2, dto.getGname());
@@ -221,7 +221,8 @@ public class GoodsDAO {
 			pstmt.setString(4, dto.getGcontent());
 			pstmt.setInt(5, dto.getDiscount());
 			pstmt.setInt(6, dto.getGinum());
-			pstmt.setInt(7, dto.getGnum());
+			pstmt.setString(7, dto.getGplot());
+			pstmt.setInt(8, dto.getGnum());
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
