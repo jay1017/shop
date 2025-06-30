@@ -195,7 +195,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             </div>
         </div>
     </section>
-	<!-- Banner Section end -->
+	<!-- Banner Section End -->
 
 	<!-- Product Section Begin -->
 <section class="product spad">
@@ -213,7 +213,10 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
         <div class="row product__filter">
             <%-- 인기 상품 출력 --%>
             <%
+            	int count=0;
                 for (GoodsDTO dto : tlist) {
+                	if(count>=8) break;
+                	count++;
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix popular">
                 <div class="product__item">
@@ -232,7 +235,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                         </div>
-                        <h5><%= dto.getGprice() %>원</h5>
+                        <h5>&#8361;<%= dto.getGprice() %></h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                             <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
@@ -246,7 +249,9 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             <%-- 할인 상품 출력 --%>
             <%
                 for (GoodsDTO dto : slist) {
-                    double discountedPrice = dto.getGprice() * (1 - dto.getDiscount() / 100.0);
+                	if(count>8) break;  //8개까지만 출력
+                	count++;
+                    int discountedPrice = dto.getGprice() * (1 - dto.getDiscount() / 100);
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix sale">
                 <div class="product__item">
@@ -266,8 +271,8 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                         </div>
                         <h5>
-                            <del><%= dto.getGprice() %></del>
-                            <%= String.format("%.2f", discountedPrice) %>원
+                            <del>&#8361;<%= dto.getGprice() %></del>
+                          	<%=discountedPrice%>
                         </h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
