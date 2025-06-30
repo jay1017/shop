@@ -15,7 +15,7 @@
 
     dao.increaseGread(gnum);
 
-    List<GoodsDTO> list = dao.getGoods(gnum);
+    List<GoodsDTO> list = dao.getGoods(gnum);	
     List<GoodsOptionDTO> olist = dao.getGoodsOption(gnum);
     GoodsImageDTO idto = idao.select(ginum); 
 

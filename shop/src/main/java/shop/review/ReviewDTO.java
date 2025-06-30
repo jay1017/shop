@@ -1,12 +1,12 @@
 package shop.review;
 
 public class ReviewDTO { //리뷰 테이블 DTO
-	private int rnum;
-	private int gnum;
-	private int mnum;
-	private int canum;
-	private int ginum;
-	private String rcontent;
+	private int rnum;	//리뷰번호
+	private int gnum;	//상품번호
+	private int mnum;	//회원번호
+	private int canum;	//카테고리번호
+	private int ginum;	//굿즈 이미지 번호
+	private String rcontent;//리뷰 내용
 	public int getRnum() {
 		return rnum;
 	}
