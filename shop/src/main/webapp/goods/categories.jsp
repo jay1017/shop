@@ -42,7 +42,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
 %> <%--상품상세로 가는 a태그로 가두기 상품명에 필재꺼 상품상세 --%>
     <div >
         <img src="image/<%=dto.getGiname() %>" alt="상품 이미지">
-        <h3><a href="goodslist.jsp?Gnum=<%=dto.getGnum()%>"><%= dto.getGname() %></h3></a>
+        <h3><a href="goodsview.jsp?Gnum=<%=dto.getGnum()%>"><%= dto.getGname() %></h3></a>
         <p>가격: <%= dto.getGprice() %>원</p> 
         <p>할인가: <%=disprice %>원</p>
         <a href="cash.jsp?gnum=<%= dto.getGnum() %>">구매하기</a>
