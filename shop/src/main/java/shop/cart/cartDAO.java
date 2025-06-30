@@ -93,7 +93,7 @@ public class cartDAO {
 		cartDTO dto = null;
 		try {
 			conn = getConnection();
-			String sql = "select gnum, gname, gprice, giname, discount from goods where gnum=?";
+			String sql = "select gnum, gname, gprice, ginum, discount from goods where gnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
@@ -102,7 +102,7 @@ public class cartDAO {
 				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
-				dto.setGiname(rs.getString("giname"));
+				dto.setGinum(rs.getInt("ginum"));
 				dto.setDiscount(rs.getInt("discount"));	
 			}
 		}catch(Exception e) {
