@@ -18,8 +18,14 @@ String sid = (String) session.getAttribute("sid");
 }
 </style>
 <%
-if (sid != null) {
+if (sid == null) {
 %>
+<script>
+alert("로그인 후 이용해주세요.");
+history.go(-1);
+</script>
+<%return;
+} %>
 <header>
 	<h1>장바구니</h1>
 </header>
@@ -57,10 +63,5 @@ if (sid != null) {
 	<input type="button" value="⇩" onclick="window.scrollTo(0,document.body.scrollHeight)"> 
 		<input type="button" value="고객센터" onclick="location.href='ascenter.jsp'">
 </div>
-<%} else {%>
-<script>
-	alert("로그인 후 이용해주세요");
-	history.go(-1);
-</script>
-<%}%>
+
 
