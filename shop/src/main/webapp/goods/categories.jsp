@@ -38,7 +38,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
 			}else{
 				 disprice = gprice;
 			}
-%> <%--상품상세로 가는 a태그로 가두기 상품명에 필재꺼 상품상세 --%>
+%> <%--상품상세로 가는 a태그로 가두기 상품명에  --%>
     <div >
         <img src="image/<%=dto.getGiname() %>" alt="상품 이미지">
         <h3><a href="goodsview.jsp?gnum=<%=dto.getGnum()%>"><%= dto.getGname() %></h3></a>
