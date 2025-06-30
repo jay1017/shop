@@ -36,7 +36,7 @@ List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력
 		if (sid != null) {
 		%>
 		<div>
-			<a href="/shop/member/memberInfo.jsp">마이페이지</a> | <a href="">장바구니</a>
+			<a href="/shop/member/memberInfo.jsp">마이페이지</a> | <a href="/shop/cart/cart.jsp">장바구니</a>
 			| <a href="">주문내역</a> | <a href="/shop/member/logoutForm.jsp">로그아웃</a>
 		</div>
 		<%
