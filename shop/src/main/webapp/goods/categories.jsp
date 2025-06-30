@@ -16,11 +16,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
     	list = dao.getGoodsList();
     }
 %>
-<script>
-function addCart(gnum){
-	
-}
-</script>
+
 <title>카테고리 별 상품</title>
 <header>
 <h1><%=dao.getCaname(canum) %></h1>
