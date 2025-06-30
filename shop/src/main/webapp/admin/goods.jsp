@@ -125,14 +125,14 @@
 										}
 										
 										if(startPage > 10) { %>
-											<a href="category.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+											<a href="goods.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
 										<% } 
 										
 										for(int i = startPage; i <= endPage; i++) { %>
-											<a href="category.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+											<a href="goods.jsp?pageNum=<%= i %>">[<%= i %>]</a>
 										<% }
 										if(endPage < pageCount) { %>
-											<a href="category.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+											<a href="goods.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
 										<%
 										}
 									}
