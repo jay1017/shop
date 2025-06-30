@@ -50,7 +50,7 @@ function addCart(gnum){
         <p>할인가: <%=disprice %>원</p>
         <a href="cash.jsp?gnum=<%= dto.getGnum() %>">구매하기</a>
         <input type="hidden" value="<%=dto.getGnum()%>">
-    <form action="/shop/cart/cartAdd.jsp" method="post">
+    <form action="/shop/cart/cartpro.jsp" method="post">
     	<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
     	<input type="submit" value="장바구니에 담기">
 	</form>
