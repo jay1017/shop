@@ -54,9 +54,8 @@ if (sid != null) {
 	<input type="button" value="검색" onclick="location.href='search.jsp'">
 	<input type="button" value="구매내역" onclick="location.href='buy.jsp'">
 	<input type="button" value="⇧" onclick="window.scrollTo(0,0)">
-	<input type="button" value="⇩"
-		onclick="window.scrollTo(0,document.body.scrollHeight)"> <input
-		type="button" value="고객센터" onclick="location.href='ascenter.jsp'">
+	<input type="button" value="⇩" onclick="window.scrollTo(0,document.body.scrollHeight)"> 
+		<input type="button" value="고객센터" onclick="location.href='ascenter.jsp'">
 </div>
 <%} else {%>
 <script>
