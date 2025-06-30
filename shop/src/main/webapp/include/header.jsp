@@ -34,7 +34,7 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
-                            <a href="#">로그인</a>
+                            <a href="/shop/member/loginForm.jsp">로그인</a>
                             <a href="#">문의게시판</a>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <li><a href="./shop.html">상품</a>
                         	<ul class="dropdown">
                                 <li><a href="./about.html">상품 목록</a></li>
-                                <li><a href="./shopping-cart.html">장바구니</a></li>
+                                <li><a href="/shop/cart/cart.jsp">장바구니</a></li>
                                 <li><a href="./checkout.html">주문서</a></li>
                             </ul>
                         </li>
@@ -81,8 +81,9 @@
 <div class="search-model">
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="search-close-switch">+</div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
+        <form action="search.jsp" class="search-model-form">
+            <input type="text" name="key" id="search-input" placeholder="Search here.....">
+            <input type="submit" value="검색">
         </form>
     </div>
 </div>

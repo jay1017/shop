@@ -142,7 +142,36 @@ public class MainDAO {
 		}
 		return list;
 	}
-	public List<GoodsDTO> getTrendGoods() { // 특정 상품의 모든정보를 가져오는 메소드
+	public List<GoodsDTO> getSaleGoods() { // 세일된 상품의 모든정보를 가져오는 메소드
+		List<GoodsDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from goods where discount is not null and discount>0";
+			pstmt = conn.prepareStatement(sql);
+			
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				GoodsDTO dto = new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGcontent(rs.getString("gcontent"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setGread(rs.getInt("gread"));
+				list.add(dto);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+	public List<GoodsDTO> getTrendGoods() { // 조회수가 일정이상인 상품의 모든정보를 가져오는 메소드
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();

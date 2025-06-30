@@ -71,13 +71,14 @@ public class GoodsDAO {
 		GoodsDTO dto = new GoodsDTO();
 		try {
 			conn = getConnection();
-			String sql = "select ca.canum, ca.caname, g.gnum, g.gname, g.gprice, g.gcontent, (g.gprice - (g.gprice * (g.discount / 100))) as discount, gi.giname, gi.gidetail1, gi.gidetail2, gi.gidetail3 from goods g, goods_image gi, category ca where g.canum = ca.canum and g.ginum = gi.ginum and gnum =  ?";
+			String sql = "select ca.canum, ca.caname, g.gplot, g.gnum, g.gname, g.gprice, g.gcontent, (g.gprice - (g.gprice * (g.discount / 100))) as discount, gi.giname, gi.gidetail1, gi.gidetail2, gi.gidetail3 from goods g, goods_image gi, category ca where g.canum = ca.canum and g.ginum = gi.ginum and gnum =  ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				dto.setCanum(rs.getInt("canum"));
 				dto.setCaname(rs.getString("caname"));
+				dto.setGplot(rs.getString("gplot"));
 				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
@@ -97,13 +98,12 @@ public class GoodsDAO {
 	}
 	
 	// 굿즈의 옵션을 불러오는 메소드
-	public List<OptionDTO> selectOption(int gnum) {
+	public List<OptionDTO> selectOption(String gname) {
 		List<OptionDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select gonum, gosize from goods_option go, goods g where g.gnum = go.gnum and g.gnum = ?";
+			String sql = "select gonum, gosize from goods_option go, goods g where g.gnum = go.gnum and g.gname like '%" + gname + "%'";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				OptionDTO dto = new OptionDTO();

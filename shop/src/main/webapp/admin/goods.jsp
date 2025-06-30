@@ -46,6 +46,9 @@
 		if(count > 0) {
 			list = dao.selectList(startRow, endRow);   
 		}
+		
+		System.out.println("startRow : " + startRow);
+		System.out.println("endRow : " + endRow);
 	%>
 	
 	<div class="wrapper">
@@ -102,7 +105,7 @@
 												<td><%=dto.getGosize() %></td> 
 												<td><%=dto.getGocount() %></td> 
 												<td>
-													<button class="btn btn-success" onclick="location.href='/shop/admin/goodsUpdate1.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>&gonum=<%=dto.getGonum()%>'">수정</button>
+													<button class="btn btn-success" onclick="location.href='/shop/admin/goodsUpdate1.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>&gonum=<%=dto.getGonum()%>&pageNum=<%=currentPage%>'">수정</button>
 												</td>
 												<td>
 													<button class="btn btn-warning" onclick="deleteGoods('<%=dto.getGnum()%>', '<%=dto.getGinum()%>', '<%=dto.getGonum()%>', '/shop/admin/goodsDelete.jsp?gnum=', '&ginum=', '&gonum=');">삭제</button>
@@ -125,14 +128,14 @@
 										}
 										
 										if(startPage > 10) { %>
-											<a href="category.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
+											<a href="goods.jsp?pageNum=<%= startPage - 10 %>">[이전]</a>
 										<% } 
 										
 										for(int i = startPage; i <= endPage; i++) { %>
-											<a href="category.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+											<a href="goods.jsp?pageNum=<%= i %>">[<%= i %>]</a>
 										<% }
 										if(endPage < pageCount) { %>
-											<a href="category.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
+											<a href="goods.jsp?pageNum=<%= startPage + 10 %>">[다음]</a>
 										<%
 										}
 									}

@@ -24,6 +24,7 @@
 		int gnum = Integer.parseInt(mr.getParameter("gnum"));
 		int ginum = Integer.parseInt(mr.getParameter("ginum"));
 		int gonum = Integer.parseInt(mr.getParameter("gonum")); 
+		int pageNum = Integer.parseInt(mr.getParameter("pageNum"));
 		
 		String giname = mr.getFilesystemName("giname");
 		String gidetail1 = mr.getFilesystemName("gidetail1");
@@ -81,7 +82,7 @@
 		if(result == 1) { %>
 		<script>
 			alert("저장 하였습니다.");
-			window.location="/shop/admin/goodsUpdate2.jsp?ginum=<%=ginum%>&gnum=<%=gnum%>&gonum=<%=gonum%>";
+			window.location="/shop/admin/goodsUpdate2.jsp?ginum=<%=ginum%>&gnum=<%=gnum%>&gonum=<%=gonum%>&pageNum=<%=pageNum%>";
 		</script>
 		<% } else { %>
 			<script>

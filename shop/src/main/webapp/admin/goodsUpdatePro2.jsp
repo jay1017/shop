@@ -21,6 +21,7 @@
 		int ginum = Integer.parseInt(request.getParameter("ginum"));
 		int gnum = Integer.parseInt(request.getParameter("gnum"));
 		int gonum = Integer.parseInt(request.getParameter("gonum"));
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		
 		dto.setCanum(canum);
 		dto.setGinum(ginum);
@@ -35,7 +36,7 @@
 		if(result == 1) { %>
 			<script>
 				alert("정상적으로 저장 되었습니다.");
-				location.href="/shop/admin/goodsUpdate3.jsp?canum=<%=canum%>&ginum=<%=ginum%>&gnum=<%=gnum%>&gonum=<%=gonum%>";
+				location.href="/shop/admin/goodsUpdate3.jsp?canum=<%=canum%>&ginum=<%=ginum%>&gnum=<%=gnum%>&gonum=<%=gonum%>&pageNum=<%=pageNum%>";
 			</script>
 		<% } else { %>
 			<script>

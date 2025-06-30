@@ -14,6 +14,7 @@ public class GoodsDTO {
 	private String gidetail1;
 	private String gidetail2;
 	private String gidetail3;
+	private String gplot;
 	
 	public int getGnum() {
 		return gnum;
@@ -92,5 +93,11 @@ public class GoodsDTO {
 	}
 	public void setGidetail3(String gidetail3) {
 		this.gidetail3 = gidetail3;
+	}
+	public String getGplot() {
+		return gplot;
+	}
+	public void setGplot(String gplot) {
+		this.gplot = gplot;
 	}
 }

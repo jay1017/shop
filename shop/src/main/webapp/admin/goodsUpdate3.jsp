@@ -27,6 +27,7 @@
 		int ginum = Integer.parseInt(request.getParameter("ginum"));
 		int gnum = Integer.parseInt(request.getParameter("gnum"));
 		int gonum = Integer.parseInt(request.getParameter("gonum"));
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		
 		System.out.println(gonum);
 		
@@ -50,6 +51,7 @@
 										<input type="hidden" value="<%=ginum%>" name="ginum"/>
 										<input type="hidden" value="<%=gnum%>" name="gnum"/>
 										<input type="hidden" value="<%=gonum%>" name="gonum"/>
+										<input type="hidden" value="<%=pageNum %>" name="pageNum" />
 										<div class="mb-3">
 											<label class="form-label">사이즈</label>
 											<input type="text" name="gosize" id="gosize" value="<%= dto.getGosize()%>" class="form-control form-control-lg"/>
