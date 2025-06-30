@@ -112,37 +112,22 @@ public class cartDAO {
 		return dto;
 	}
 //장바구니에 상품 넣기
-	public List<Integer> insertCart(cartDTO dto) {
-		List<Integer> result = new ArrayList<>();
+	public void insertCart(cartDTO dto) {
 		try {
 			conn = getConnection();
-			String sql = "select cart_seq.nextval from dual";
+			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getMnum());
+			pstmt.setInt(2, dto.getGnum());
+			pstmt.setInt(3, dto.getCanum());
+			pstmt.setInt(4, dto.getCcount());
+			pstmt.setInt(5, dto.getGinum());
 			rs = pstmt.executeQuery();
-			int nextVal = 0;
-			if(rs.next()) {
-				nextVal = rs.getInt(1);
-				result.add(nextVal);
-			}
-			if(nextVal != 0) {
-				sql = "insert into cart values(?, ?, ?, ?, ?, ?, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, nextVal);
-				pstmt.setInt(2, dto.getCnum());
-				pstmt.setInt(3, dto.getMnum());
-				pstmt.setInt(4, dto.getGnum());
-				pstmt.setInt(5, dto.getCanum());
-				pstmt.setInt(6, dto.getCcount());
-				pstmt.setInt(7, dto.getGinum());
-				int res = pstmt.executeUpdate();
-				result.add(res);
-			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			endConnection();
 		}
-		return result;
 	}
 	
 }

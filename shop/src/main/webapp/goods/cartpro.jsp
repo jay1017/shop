@@ -12,11 +12,11 @@ String sid = (String) session.getAttribute("sid");
 int gnum = Integer.parseInt(request.getParameter("gnum"));
 cartDAO dao = cartDAO.getInstance();
 cartDTO dto = dao.getCartAdd(gnum);
-
+int count = 0;
 
 // 장바구니에 상품 추가
 dao.insertCart(dto);
-
+dto.setCcount(count++);
 %>
 
 <script>
