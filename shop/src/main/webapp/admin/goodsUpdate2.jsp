@@ -29,6 +29,7 @@
 		int ginum = Integer.parseInt(request.getParameter("ginum"));
 		int gnum = Integer.parseInt(request.getParameter("gnum"));
 		int gonum = Integer.parseInt(request.getParameter("gonum"));
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		
 		GoodsDTO dto = new GoodsDTO();
 		dto = dao.select(gnum);
@@ -51,6 +52,7 @@
 										<input type="hidden" value="<%=gnum %>" name="gnum" />
 										<input type="hidden" value="<%=gonum %>" name="gonum" />
 										<input type="hidden" value="<%=ginum %>" name="ginum" />
+										<input type="hidden" value="<%=pageNum %>" name="pageNum" />
 										<div class="mb-3">
 											<label class="form-label">카테고리</label>
 											<select name="canum" class="form-select">

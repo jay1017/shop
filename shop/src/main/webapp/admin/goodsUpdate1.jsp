@@ -28,6 +28,7 @@
 		int ginum = Integer.parseInt(request.getParameter("ginum"));
 		int gnum = Integer.parseInt(request.getParameter("gnum"));
 		int gonum = Integer.parseInt(request.getParameter("gonum"));
+		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		dto = dao.select(ginum);
 	%>
 	<div class="wrapper">
@@ -46,6 +47,7 @@
 										<input type="hidden" name="ginum" value="<%= ginum%>"/>
 										<input type="hidden" name="gonum" value="<%= gonum%>"/>
 										<input type="hidden" name="gnum" value="<%= gnum%>"/>
+										<input type="hidden" name="pageNum" value="<%=pageNum %>" />
 										<div class="mb-3">
 											<label class="form-label">대표 이미지</label>
 											<input type="file" name="giname" class="form-control form-control-lg"/>

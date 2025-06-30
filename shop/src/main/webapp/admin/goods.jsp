@@ -105,7 +105,7 @@
 												<td><%=dto.getGosize() %></td> 
 												<td><%=dto.getGocount() %></td> 
 												<td>
-													<button class="btn btn-success" onclick="location.href='/shop/admin/goodsUpdate1.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>&gonum=<%=dto.getGonum()%>'">수정</button>
+													<button class="btn btn-success" onclick="location.href='/shop/admin/goodsUpdate1.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>&gonum=<%=dto.getGonum()%>&pageNum=<%=currentPage%>'">수정</button>
 												</td>
 												<td>
 													<button class="btn btn-warning" onclick="deleteGoods('<%=dto.getGnum()%>', '<%=dto.getGinum()%>', '<%=dto.getGonum()%>', '/shop/admin/goodsDelete.jsp?gnum=', '&ginum=', '&gonum=');">삭제</button>
