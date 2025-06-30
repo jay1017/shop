@@ -51,11 +51,11 @@ List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력
 		%>
 		<nav>
 			<div>
-				<a href="categories.jsp">카테고리별 보기</a>
+				<a href="/shop/goods/categories.jsp">카테고리별 보기</a>
 				<%
 				for (CategoryDTO dto : list) {
 				%>
-				<form action="categories.jsp" method="get">
+				<form action="/shop/goods/categories.jsp?canum=<%=dto.getCanum() %>" method="get">
 					<input type="hidden" name="canum" value="<%=dto.getCanum()%>">
 					<button type="submit"><%=dto.getCaname()%></button>
 				</form>
