@@ -21,7 +21,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
 <header>
 <h1><%=dao.getCaname(canum) %></h1>
 <input type="button" value="홈" onclick="location.href='/shop/main/main.jsp'">
-
+<input type="button" value="장바구니" onclick="location.href='shop/cart/cart.jsp'">
 </header>
 
 
