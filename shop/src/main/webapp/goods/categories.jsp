@@ -41,11 +41,11 @@ int canum = Integer.parseInt(request.getParameter("canum"));
 %> <%--상품상세로 가는 a태그로 가두기 상품명에  --%>
     <div >
         <img src="image/<%=dto.getGiname() %>" alt="상품 이미지">
-        <h3><a href="goodsview.jsp?gnum=<%=dto.getGnum()%>"><%= dto.getGname() %></h3></a>
+        <h3><a href="goodsview.jsp?gnum=<%=dto.getGnum()%>"><%= dto.getGname() %></a></h3>
         <p>가격: <%= dto.getGprice() %>원</p> 
         <p>할인가: <%=disprice %>원</p>
-        <a href="cash.jsp?gnum=<%= dto.getGnum() %>">구매하기</a>
-        <input type="hidden" value="<%=dto.getGnum()%>">
+        <a href="/shop/buy/cash.jsp?gnum=<%= dto.getGnum() %>">구매하기</a>
+        <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
     <form action="/shop/goods/cartpro.jsp" method="post">
     	<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
     	<input type="submit" value="장바구니에 담기">
@@ -55,4 +55,5 @@ int canum = Integer.parseInt(request.getParameter("canum"));
     } else {%>
     <p>해당 카테고리에 상품이 없습니다.</p>
 <%}%>
+</div>
 
