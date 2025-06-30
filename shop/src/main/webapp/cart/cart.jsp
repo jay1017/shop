@@ -33,11 +33,10 @@ if (cartNums != null) {//상품정보
     <title>장바구니</title>
     <style>
         .sidebar {
-            flex: 1;
-            padding: 1em;
-            background: #e4e4e4;
-            margin-top: 2em;
-        }
+	flex: 1;
+	padding: 1em;
+	background: #e4e4e4;
+}
     </style>
 </head>
 <body>
@@ -59,9 +58,9 @@ if (cartNums != null) {//상품정보
     <div class="item">
         <img src="img/<%=dto.getGiname()%>" alt="상품 이미지" width="150">
         <div>
-            <p><strong>상품명:</strong> <%=dto.getGname()%></p>
-            <p><strong>가격:</strong> ₩<%=gprice%></p>
-            <p><strong>할인가:</strong> ₩<%=disprice%></p>
+            <p>상품명: <%=dto.getGname()%></p>
+            <p>가격: ₩<%=gprice%></p>
+            <p>할인가: ₩<%=disprice%></p>
             <input type="button" value="구매하기" onclick="location.href='/shop/buy/cash.jsp?gnum=<%=dto.getGnum()%>'">
         </div>
     </div>
