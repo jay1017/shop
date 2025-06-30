@@ -117,7 +117,8 @@ public class cartDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?)";
+			String sql = "insert into cart(cnum, mnum, gnum, canum, ccount, ginum) "
+					+ "values(cart_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getMnum());
 			pstmt.setInt(2, dto.getGnum());
