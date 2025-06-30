@@ -7,6 +7,7 @@
 	request.setCharacterEncoding("UTF-8");
 
 	MemberDAO dao = new MemberDAO();
+	String sid = (String) session.getAttribute("sid");
 %>
 <title>구매내역 페이지</title>    
 <header>
