@@ -47,7 +47,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
         <p>할인가: <%=disprice %>원</p>
         <a href="cash.jsp?gnum=<%= dto.getGnum() %>">구매하기</a>
         <input type="hidden" value="<%=dto.getGnum()%>">
-        <input type="button" value="장바구니에 담기" onclick="location.href='cart.jsp?gnum=<%=dto.getGnum() %>'">
+        <input type="button" value="장바구니에 담기" onclick="location.href='/shop/cart/cart.jsp?gnum=<%=dto.getGnum() %>'">
     </div>
 <%}
     } else {%>
