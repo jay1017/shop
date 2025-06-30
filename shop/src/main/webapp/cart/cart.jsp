@@ -62,7 +62,7 @@ if (cartNums != null) {//상품정보
             <p><strong>상품명:</strong> <%=dto.getGname()%></p>
             <p><strong>가격:</strong> ₩<%=gprice%></p>
             <p><strong>할인가:</strong> ₩<%=disprice%></p>
-            <input type="button" value="구매하기" onclick="location.href='cash.jsp?gnum=<%=dto.getGnum()%>'">
+            <input type="button" value="구매하기" onclick="location.href='/shop/buy/cash.jsp?gnum=<%=dto.getGnum()%>'">
         </div>
     </div>
 <% } %>
@@ -73,9 +73,9 @@ if (cartNums != null) {//상품정보
 <% } %>
 
 <div class="sidebar">
-    <input type="button" value="홈" onclick="location.href='home.jsp'">
-    <input type="button" value="검색" onclick="location.href='search.jsp'">
-    <input type="button" value="구매내역" onclick="location.href='buy.jsp'">
+    <input type="button" value="홈" onclick="location.href='/shop/main/main.jsp'">
+    <input type="button" value="검색" onclick="location.href='/shop/main/search.jsp'">
+    <input type="button" value="구매내역" onclick="location.href='/shop/buy/buy.jsp'">
     <input type="button" value="⇧" onclick="window.scrollTo(0,0)">
     <input type="button" value="⇩" onclick="window.scrollTo(0,document.body.scrollHeight)"> 
     <input type="button" value="고객센터" onclick="location.href='ascenter.jsp'">
