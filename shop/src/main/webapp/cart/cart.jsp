@@ -9,7 +9,7 @@ if (sid == null) {
 %>
 <script>
     alert("로그인 후 이용해주세요.");
-    history.back();
+    window.location.href='/shop/member/loginForm.jsp'
 </script>
 <%
     return;
