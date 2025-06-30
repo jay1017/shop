@@ -13,6 +13,16 @@ String sid = (String) session.getAttribute("sid");
 int gnum = Integer.parseInt(request.getParameter("gnum"));
 cartDAO dao = cartDAO.getInstance();
 cartDTO dto = dao.getCartAdd(gnum);
+
+if (dto == null) {
+%>
+<script>
+    alert("해당 상품이 존재하지 않습니다.");
+    history.back();
+</script>
+<%
+    return;
+}
 int mnum = dao.getMnum(sid);
 dto.setMnum(mnum);
 
