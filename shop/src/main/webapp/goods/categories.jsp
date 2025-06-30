@@ -9,8 +9,6 @@ request.setCharacterEncoding("UTF-8");
 categoryDAO dao = categoryDAO.getInstance();
 int canum = Integer.parseInt(request.getParameter("canum"));
 
-%>
-<%
     List<categoryDTO> list = null;
     if (canum!=0) {
         list = dao.getGoodsList(canum);
@@ -18,6 +16,11 @@ int canum = Integer.parseInt(request.getParameter("canum"));
     	list = dao.getGoodsList();
     }
 %>
+<script>
+function addCart(gnum){
+	
+}
+</script>
 <title>카테고리 별 상품</title>
 <header>
 <h1><%=dao.getCaname(canum) %></h1>
@@ -47,7 +50,10 @@ int canum = Integer.parseInt(request.getParameter("canum"));
         <p>할인가: <%=disprice %>원</p>
         <a href="cash.jsp?gnum=<%= dto.getGnum() %>">구매하기</a>
         <input type="hidden" value="<%=dto.getGnum()%>">
-        <input type="button" value="장바구니에 담기" onclick="location.href='/shop/cart/cart.jsp?gnum=<%=dto.getGnum() %>'">
+    <form action="/shop/cart/cartAdd.jsp" method="post">
+    	<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+    	<input type="submit" value="장바구니에 담기">
+	</form>
     </div>
 <%}
     } else {%>
