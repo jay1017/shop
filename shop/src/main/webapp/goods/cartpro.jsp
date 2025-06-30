@@ -7,8 +7,6 @@
 <%
 //로그인 확인
 String sid = (String) session.getAttribute("sid");
-
-//상품 장바구니로 넣기
 int gnum = Integer.parseInt(request.getParameter("gnum"));
 
 // 기존 장바구니 불러오기

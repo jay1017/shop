@@ -42,7 +42,7 @@ if (cartNums != null) {//상품정보
 <body>
 
 <header>
-    <h1>🛒 장바구니</h1>
+    <h1> 장바구니</h1>
 </header>
 
 <% if (cartItems.isEmpty()) { %>
