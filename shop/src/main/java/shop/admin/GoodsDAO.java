@@ -92,8 +92,10 @@ public class GoodsDAO {
 			String sql = "select r, gnum, canum, ginum, gname, gprice, discount, gonum, gocolor, gosize, gocount "
 					+ "from (select rownum r, gnum, canum, ginum, gname, gprice, discount, gonum, gocolor, gosize, gocount "
 					+ "from (select go.gnum, go.canum, go.ginum, g.gname, g.gprice, g.discount, go.gonum, go.gocolor, go.gosize, go.gocount "
-					+ "from goods g, goods_option go where g.gnum = go.gnum order by gnum desc) order by gnum desc)";
+					+ "from goods g, goods_option go where g.gnum = go.gnum order by gnum desc) order by gnum desc) where r >= ? and r <= ?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				GoodsDTO dto = new GoodsDTO();

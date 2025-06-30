@@ -46,6 +46,9 @@
 		if(count > 0) {
 			list = dao.selectList(startRow, endRow);   
 		}
+		
+		System.out.println("startRow : " + startRow);
+		System.out.println("endRow : " + endRow);
 	%>
 	
 	<div class="wrapper">
