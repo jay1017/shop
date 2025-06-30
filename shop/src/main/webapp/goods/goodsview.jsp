@@ -1,155 +1,192 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="shop.main.GoodsDTO,shop.main.MainDAO,java.util.List" %>
-<%@ page import="shop.main.GoodsOptionDTO" %>
-<%@ page import="shop.admin.GoodsImageDAO,shop.admin.GoodsImageDTO" %>
-  
+<%@ page import="shop.goods.GoodsDTO" %>
+<%@ page import="shop.goods.GoodsDAO" %>
+<%@ page import="shop.goods.OptionDTO" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     request.setCharacterEncoding("UTF-8");
-    String sid = (String) session.getAttribute("sid");
+    // String sid = (String) session.getAttribute("sid");
 
-    int gnum = Integer.parseInt(request.getParameter("gnum"));
-    int ginum = Integer.parseInt(request.getParameter("ginum"));
-
-    MainDAO dao = MainDAO.getInstance();
-    GoodsImageDAO idao = GoodsImageDAO.getDAO();
-
-    dao.increaseGread(gnum);
-
-    List<GoodsDTO> list = dao.getGoods(gnum);
-    List<GoodsOptionDTO> olist = dao.getGoodsOption(gnum);
-    GoodsImageDTO idto = idao.select(ginum); 
-
-    int mnum = dao.getMnum(sid);
+    // int gnum = Integer.parseInt(request.getParameter("gnum"));
+    int gnum = 21;
+    
+    GoodsDAO dao = GoodsDAO.getDAO();
+    GoodsDTO goods = dao.select(gnum); 
+	
+    // 포맷팅
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
+    String gprice = numberFormat.format(goods.getGprice());
+    String discount = numberFormat.format(goods.getDiscount());
+    
+    List<OptionDTO> list = dao.selectOption(gnum);
 %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>상품 상세 페이지</title>
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Male-Fashion | Template</title>
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/font.css">
 </head>
 <body>
-
-<%
-for (GoodsDTO dto : list) {
-    int gprice = dto.getGprice();
-    int discount = dto.getDiscount();
-    int disprice = gprice;
-    if (discount != 0) {
-        disprice = gprice - (gprice * discount / 100);
-    }
-%>
-
-    <!-- 상품 이미지 -->
-    <div>
-        <img src="<%= request.getContextPath() %>/resources/image/<%= idto.getGiname() %>" width="300" />
-    
-    </div>
-
-    <%--상품의 가격을 표시,할인된 가격이 있다면 원가에 취소선을 긋고 할인된 가격을 표시 --%>
-    <div>
-        <h2><%=dto.getGname()%></h2>
-        <% if (discount != 0) { %>		
-            <span style="text-decoration: line-through;"><%=gprice%>원</span><br>
-            <strong><%=disprice%>원</strong>
-        <% } else { %>  
-            <strong><%=gprice%>원</strong>
-        <% } %>
-    </div>
-
-    <%--옵션 선택 칸,select를 이용해서 옵션을 한번에 출력합니다 --%>
-    <div>
-        <label>옵션 선택:</label>
-        <select id="optionSelect" onchange="setOptionValues()">
-            <% for (GoodsOptionDTO odto : olist) { %>	<%-- --%>
-                <option value="<%=odto.getGonum()%>,<%=odto.getGocolor()%>,<%=odto.getGosize()%>"> 
-                <%--원래 value 에는 하나의 문자열만이 들어갑니다 그래서
-                ,를 써서 odto.getGonum(),odto.getGocolor(),odto.getGosize()를 하나의 문자열로 변환합니다 이는 나중에 스크립트에서 다시 ,를 기준으로
-                분할됩니다 --%>
-                    <%=odto.getGosize()%> / <%=odto.getGocolor()%> / 재고: <%=odto.getGocount()%> <%--여기는 화면상에 표시되는 값입니다 --%>
-                </option>
-            <% } %>
-        </select>
-    </div>
-
-    <%--장바구니로 값을 넘기는 폼입니다 --%>
-    <form action="cart.jsp" method="post" id="cartForm">	
-        <input type="hidden" name="mnum" value="<%=mnum%>">
-        <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-        <input type="hidden" name="canum" value="<%=dto.getCanum()%>">
-        <input type="hidden" name="ginum" value="<%=dto.getGinum()%>">
-        <% if (discount != 0) { %>
-            <input type="hidden" name="gprice" value="<%=disprice%>">
-        <% } else { %>
-            <input type="hidden" name="gprice" value="<%=dto.getGprice()%>">
-        <% } %>
-
-        <%-- 옵션값 에 대한 처리입니다  --%>
-        <input type="hidden" name="gonum" id="cartGonum">
-        <input type="hidden" name="gocolor" id="cartGocolor">
-        <input type="hidden" name="gosize" id="cartGosize">
-
-        <input type="submit" value="장바구니">
-    </form>
-
-        <%--  구매페이지로 값을 넘깁니다  --%>
-    <form action="purchase.jsp" method="post" id="purchaseForm">
-        <input type="hidden" name="mnum" value="<%=mnum%>">
-        <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-        <input type="hidden" name="canum" value="<%=dto.getCanum()%>">
-        <input type="hidden" name="ginum" value="<%=dto.getGinum()%>">
-        <% if (discount != 0) { %>
-            <input type="hidden" name="gprice" value="<%=disprice%>">
-        <% } else { %>
-            <input type="hidden" name="gprice" value="<%=dto.getGprice()%>">
-        <% } %>
-
-        <%-- 여기도 옵션값 에 대한 처리입니다  --%>
-        <input type="hidden" name="gonum" id="purchaseGonum">
-        <input type="hidden" name="gocolor" id="purchaseGocolor">
-        <input type="hidden" name="gosize" id="purchaseGosize">
-
-        <input type="submit" value="구매하기">
-    </form>
-
-    <%--상품 설명--%>
-    <div>
-        <%=dto.getGcontent()%>
-    </div>
-
-    <%--상세 이미지들--%>
-   
-	<img src="<%= request.getContextPath() %>/resources/image/<%= idto.getGidetail1() %>" />
-	<img src="<%= request.getContextPath() %>/resources/image/<%= idto.getGidetail2() %>" />
-	<img src="<%= request.getContextPath() %>/resources/image/<%= idto.getGidetail3() %>" />
-    
-
-<% } %>
-
-	<%--여기에 리뷰페이지 --%>
-
-<%-- 옵션 선택 시 hidden 값 설정--%>
-<script>
-function setOptionValues() {
-    const selected = document.getElementById("optionSelect").value; //위에서 합친 문자열을 받아옵니다 id=optionSelect인 value를 가져온다는 뜻입니다
-    const [gonum, gocolor, gosize] = selected.split(",");  //여기서 위에서 합친 문자열을 다시 ,를 기준으로 분리합니다
-    //여기서 selected는 선택한 <option>의 value 값을 문자열로 받는건데 이 값은 한 번만 읽고 끝나는 용도니까  이후에 selected의 값을 바꿀 필요가 없습니다.
-
-    // 장바구니용 hidden
-    document.getElementById("cartGonum").value = gonum;	//id가 "cartGonum"인 것의 값에 gonum을 대입한다는 뜻입니다 밑에는 다 같은의미
-    document.getElementById("cartGocolor").value = gocolor;
-    document.getElementById("cartGosize").value = gosize;
-
-    // 구매용 hidden
-    document.getElementById("purchaseGonum").value = gonum;
-    document.getElementById("purchaseGocolor").value = gocolor;
-    document.getElementById("purchaseGosize").value = gosize;
-}
-
-// 페이지가 처음로드될때 setOptionValues함수가 자동으로 실행됩니다
-window.onload = setOptionValues;
-</script>
-
+	<jsp:include page="/include/header.jsp"></jsp:include>
+    <!-- Shop Details Section Begin -->
+    <section class="shop-details">
+        <div class="product__details__pic">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__details__breadcrumb">
+                            <a href="/shop/main/main.jsp">메인</a>
+                            <a href="/shop/goods/goodslist.jsp">상품 목록</a>
+                            <span>상품 상세</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
+                                    <div class="product__thumb__pic set-bg" data-setbg="/shop/resources/image/<%=goods.getGiname() %>"></div>
+                                </a>
+                            </li>
+                            <% if(goods.getGidetail1() != null) { %>
+                            	<li class="nav-item">
+	                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">
+	                                    <div class="product__thumb__pic set-bg" data-setbg="/shop/resources/image/<%=goods.getGidetail1() %>"></div>
+	                                </a>
+	                            </li>
+                            <% } %>
+                            <% if(goods.getGidetail2() != null) { %>
+                            	<li class="nav-item">
+	                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">
+	                                    <div class="product__thumb__pic set-bg" data-setbg="/shop/resources/image/<%=goods.getGidetail2() %>"></div>
+	                                </a>
+	                            </li>
+                            <% } %>
+                            <% if(goods.getGidetail3() != null) { %>
+                            	<li class="nav-item">
+	                                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">
+	                                    <div class="product__thumb__pic set-bg" data-setbg="/shop/resources/image/<%=goods.getGidetail3() %>"></div>
+	                                </a>
+	                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-md-9">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img src="/shop/resources/image/<%=goods.getGiname() %>" alt="">
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img src="/shop/resources/image/<%=goods.getGidetail1() %>" alt="">
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img src="/shop/resources/image/<%=goods.getGidetail2() %>" alt="">
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-4" role="tabpanel">
+                                <div class="product__details__pic__item">
+                                    <img src="/shop/resources/image/<%=goods.getGidetail3() %>" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product__details__content">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="product__details__text">
+                            <h4><%=goods.getGname() %></h4>
+                            <h3>&#8361; <%=discount %> <span><%=gprice %></span></h3>
+                            <p>Coat with quilted lining and an adjustable hood. Featuring long sleeves with adjustable
+                                cuff tabs, adjustable asymmetric hem with elastic side tabs and a front zip fastening
+                            with placket.</p>
+                            <div class="product__details__option">
+                                <div class="product__details__option__size">
+                                    <span>사이즈:</span>
+                                    <% for(OptionDTO dto : list) { %>
+                                    <label id="<%=dto.getGosize()%>"><%=dto.getGosize() %>
+                                    	<input type="radio" id="<%=dto.getGosize()%>" value="<%=dto.getGonum() %>">
+                                    </label>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <div class="product__details__cart__option">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" value="1">
+                                    </div>
+                                </div>
+                                <a href="#" class="primary-btn">장바구니 담기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product__details__tab">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#tabs-5" role="tab">상품 설명</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">리뷰</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tabs-5" role="tabpanel">
+                                    <div class="product__details__tab__content">
+                                        <div class="product__details__tab__content__item">
+                                            <h5>상품 설명</h5>
+                                            <p>
+                                            	<% if(goods.getGcontent() != null) { %>
+                                          			<%=goods.getGcontent() %>
+                                            	<% } %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tabs-6" role="tabpanel">
+                                    <div class="product__details__tab__content">
+                                        <div class="product__details__tab__content__item">
+                                            <%-- 여기에 작업 --%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Details Section End -->
+    <jsp:include page="/include/footer.jsp"></jsp:include>
 </body>
 </html>

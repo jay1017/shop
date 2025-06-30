@@ -13,6 +13,7 @@ public class GoodsDTO {
 	private String gocolor;
 	private String gosize;
 	private int gocount;
+	private String gplot;
 	
 	public int getGnum() {
 		return gnum;
@@ -85,5 +86,11 @@ public class GoodsDTO {
 	}
 	public void setGocount(int gocount) {
 		this.gocount = gocount;
+	}
+	public String getGplot() {
+		return gplot;
+	}
+	public void setGplot(String gplot) {
+		this.gplot = gplot;
 	}
 }

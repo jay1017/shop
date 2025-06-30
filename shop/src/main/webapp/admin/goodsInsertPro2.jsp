@@ -30,6 +30,7 @@
 		dto.setGprice(gprice);
 		dto.setGcontent(request.getParameter("gcontent"));
 		dto.setDiscount(discount);
+		dto.setGplot(request.getParameter("gplot"));
 		
 		List<Integer> result = dao.insert(dto); 
 		if(result.get(1) == 1) { %>

@@ -58,6 +58,10 @@
 											<input type="number" name="gprice" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
+											<label class="form-label">상품 요약</label>
+											<textarea name="gplot" class="form-control"></textarea>
+										</div>
+										<div class="mb-3">
 											<label class="form-label">상품 설명</label>
 											<textarea name="gcontent" class="form-control"></textarea>
 										</div>
