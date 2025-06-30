@@ -9,6 +9,7 @@ public class GoodsDTO {
 	private int ginum; // 상품이미지 번호
 	private int discount; // 할인율
 	private int gread; // 조회수
+	private String gplot;
 
 	public int getGnum() {
 		return gnum;
@@ -72,6 +73,14 @@ public class GoodsDTO {
 
 	public void setGread(int gread) {
 		this.gread = gread;
+	}
+
+	public String getGplot() {
+		return gplot;
+	}
+
+	public void setGplot(String gplot) {
+		this.gplot = gplot;
 	}
 
 }
