@@ -125,12 +125,6 @@ public class cartDAO {
 			pstmt.setInt(4, dto.getCcount());
 			pstmt.setInt(5, dto.getGinum());
 			result = pstmt.executeUpdate();
-			System.out.println("[DEBUG] insertCart 호출됨");
-			System.out.println("MNUM: " + dto.getMnum());
-			System.out.println("GNUM: " + dto.getGnum());
-			System.out.println("CANUM: " + dto.getCanum());
-			System.out.println("CCOUNT: " + dto.getCcount());
-			System.out.println("GINUM: " + dto.getGinum());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
