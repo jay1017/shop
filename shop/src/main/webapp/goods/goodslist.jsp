@@ -29,9 +29,10 @@ color 는 빼고
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) endPage = pageCount;
 	%> 
-    <header>
+    
+    <jsp:include page="/shop/include/header.jsp">
 <title>상품 전체 목록</title>
-</header>
+
 
 <h1>상품목록</h1>
 <h2>전체 상품 목록</h2>
@@ -77,3 +78,4 @@ color 는 빼고
   <button type="submit">검색</button>
 </form>
 		</div>
+		<jsp:include page="/shop/include/footer.jsp">
