@@ -34,7 +34,13 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
-                            <a href="/shop/member/loginForm.jsp">로그인</a>
+                        	<%
+                        		String sid = (String)session.getAttribute("sid");
+                        		if(sid != null) {%>
+                        			<a href="/shop/member/logoutForm.jsp">로그아웃</a>
+                        		<% } else { %>
+                        			<a href="/shop/member/loginForm.jsp">로그인</a>
+                        		<% } %>
                             <a href="#">문의게시판</a>
                         </div>
                     </div>

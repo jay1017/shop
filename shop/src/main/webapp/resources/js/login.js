@@ -28,3 +28,31 @@ function loginPwCheck() {
 		loginmpwmsg.textContent = "";
 	}
 }
+
+//아이디 찾기 팝업창 연결
+function idSearch(){
+	window.open("/shop/member/idSearch.jsp", "아이디 찾기", "width=500, height=250");
+}
+//비밀번호 찾기 팝업창 연결
+function pwSearch(){
+	window.open("/shop/member/pwSearch.jsp", "비밀번호 찾기", "width=500, height=250");
+}
+
+function toggleSearch(){
+	const selected = document.querySelector('input[name="searchType"]:checked').value;
+	const phoneForm = document.getElementById("phoneForm");
+	const emailForm = document.getElementById("emailForm");
+	
+	if(selected === 'phone'){
+		phoneForm.style.display = 'block';
+		emailForm.style.display = 'none';
+	}else{
+		phoneForm.style.display = 'none';
+		emailForm.style.display = 'block';
+	}
+}
+
+
+
+
+

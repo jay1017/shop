@@ -11,7 +11,7 @@
     // String sid = (String) session.getAttribute("sid");
 
     // int gnum = Integer.parseInt(request.getParameter("gnum"));
-    int gnum = 266;
+    int gnum = 140;
     
     GoodsDAO dao = GoodsDAO.getDAO();
     GoodsDTO goods = dao.select(gnum); 
@@ -32,7 +32,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>ODEZ</title>
     <!-- Css Styles -->
     <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css">
@@ -136,12 +136,27 @@
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </div>
-                                <a href="#" class="primary-btn">장바구니 담기</a>
+                            	<form action="/shop/cart/cartInsertPro.jsp" method="post" onsubmit="checkLogin(event)">
+                            		<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
+	                                <div class="quantity">
+	                                    <div class="pro-qty">
+	                                        <input type="text" value="1" name="ccount">
+	                                    </div>
+	                                </div>
+                                	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
+                                	<input type="submit" value="장바구니 담기" class="primary-btn" style="border: none;"/>
+                                </form>
+                                <script>
+                                	function checkLogin(event) {
+                                		var sid = document.getElementById("sid");
+                                		if(sid.value.trim() == 'null') {
+                                			alert("로그인 이후 가능합니다.");
+                                			event.preventDefault();
+                                			location.href="/shop/member/loginForm.jsp";
+                                		}
+                                	}
+                                </script>
+                                <a href="/buy/buyInsert.jsp?gnum=<%=goods.getGnum() %>" class="primary-btn">구매하기</a>
                             </div>
                         </div>
                     </div>

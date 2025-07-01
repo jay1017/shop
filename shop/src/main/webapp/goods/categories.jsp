@@ -2,11 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ page import="shop.goods.categoryDTO" %>
 <%@ page import="shop.goods.categoryDAO" %>
+<%@ page import="shop.cart.CartDAO" %>
+<%@ page import="shop.cart.CartDTO" %>
 <%@ page import="java.util.List" %>
 
 <%
 request.setCharacterEncoding("UTF-8");
 categoryDAO dao = categoryDAO.getInstance();
+CartDAO cdao = CartDAO.getInstance();
 int canum = Integer.parseInt(request.getParameter("canum"));
 
     List<categoryDTO> list = null;
@@ -48,7 +51,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
         <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
     <form action="/shop/goods/cartpro.jsp" method="post">
     	<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-    	<input type="submit" value="장바구니에 담기">
+    	<input type="submit" value="장바구니에 담기"> 
 	</form>
     </div>
 <%}

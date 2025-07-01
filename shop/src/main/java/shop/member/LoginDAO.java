@@ -52,4 +52,48 @@ private static LoginDAO instance = new LoginDAO();
 		}
 		return result;
 	}
+	
+	public String getIdEmail(String name, String email) {
+		String id = "";
+		try {
+			conn = getConnection();
+			String sql ="select mid from member2 where mname=? and memail=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(1, email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				id = rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return id;
+	}
+	
+	public String getIdPw(String name, String phone) {
+		String id = "";
+		try {
+			conn = getConnection();
+			String sql = "select mid from member2 where mname=? and mphone=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setString(2, phone);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				id = rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return id;
+	}
 }
