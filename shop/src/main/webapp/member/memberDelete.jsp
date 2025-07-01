@@ -1,33 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="shop.member.MemberDTO" %>
-<%@ page import="shop.member.MemberDAO" %>
+	pageEncoding="UTF-8"%>
+<%@ page import="shop.member.MemberDTO"%>
+<%@ page import="shop.member.MemberDAO"%>
 
 <%
-	String sid = (String)session.getAttribute("sid");
-	MemberDAO mdao = new MemberDAO();
-	MemberDTO mdto = mdao.getInfo(sid);
+String sid = (String) session.getAttribute("sid");
+MemberDAO mdao = new MemberDAO();
+MemberDTO mdto = mdao.getInfo(sid);
 %>
 
 <html>
-	<head>
-		<title>회원 탈퇴</title>
-		<link rel="stylesheet" href="/shop/resources/css/font.css" />
-	</head>
-	<body>
-		<form action="memberDeletePro.jsp" method="post">
-			<div>
-				<input type="text" id="mid" name="mid" placeholder="아이디 입력" oninput="midCheck()">
-				<div id="midmsg" style="margin-top: 5px; font-size: 14px;"></div>
-				<input type="hidden" id="Orimid" name="Orimid" value="<%=mdto.getMid() %>">
-				<input type="password" id="mpw" name="mpw" placeholder="비밀번호 입력" oninput="mpwCheck()">
-				<div id="mpwmsg" style="margin-top: 5px; font-size: 14px;"></div>
-				<input type="hidden" id="Orimpw" name="Orimpw" value="<%=mdto.getMpw() %>">
-			</div>
-			<div>
-				<input type="submit" value="확인">
-			</div>
-		</form>
-	</body>
-	<script src="<%=request.getContextPath()%>/resources/js/memberDelete.js"></script>
+<head>
+<title>ODEZ - 회원 탈퇴</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f7f7f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+form {
+	background-color: #fff;
+	padding: 30px 25px;
+	border-radius: 12px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+	width: 300px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+h2 {
+	font-size: 20px;
+	margin-bottom: 20px;
+	font-weight: bold;
+}
+
+input[type="text"], input[type="password"] {
+	width: 100%;
+	height: 42px;
+	padding: 0 12px;
+	font-size: 15px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+}
+
+input[type="submit"] {
+	width: 100%;
+	height: 42px;
+	background-color: #000;
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+	background-color: #333;
+}
+
+.msg {
+	font-size: 13px;
+	color: red;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+	<form action="memberDeletePro.jsp" method="post">
+		<h2>회원 탈퇴</h2>
+
+		<input type="text" id="mid" name="mid" placeholder="아이디 입력"
+			oninput="midCheck()" />
+		<div id="midmsg" class="msg"></div>
+
+		<input type="hidden" id="Orimid" name="Orimid"
+			value="<%=mdto.getMid()%>" /> <input type="password" id="mpw"
+			name="mpw" placeholder="비밀번호 입력" oninput="mpwCheck()" />
+		<div id="mpwmsg" class="msg"></div>
+
+		<input type="hidden" id="Orimpw" name="Orimpw"
+			value="<%=mdto.getMpw()%>" /> <input type="submit" value="확인" />
+	</form>
+
+	<script
+		src="<%=request.getContextPath()%>/resources/js/memberDelete.js"></script>
+</body>
 </html>

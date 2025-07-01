@@ -66,7 +66,7 @@ if (endPage > pageCount)
 		%>
 		<div>
 			<a href="/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>">
-				<h3><%=dto.getGname()%></h3>
+				<p><%=dto.getGname()%></p>
 			</a> <img src="<%=dto.getGiname()%>" alt="상품 이미지">
 			<p>
 				가격:
