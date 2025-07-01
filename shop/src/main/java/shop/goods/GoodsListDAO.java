@@ -63,7 +63,7 @@ public class GoodsListDAO {
 			}
 		}
 	}
-
+ 
 	// 상품 전체 불러오기 신제품순서
 	public List<GoodsListDTO> getGoods() {
 		List<GoodsListDTO> list = null;
