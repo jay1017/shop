@@ -39,7 +39,7 @@ if (endPage > pageCount)
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>상품 목록 조회</title>
+<title>ODEZ</title>
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
 <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
 	type="text/css">
