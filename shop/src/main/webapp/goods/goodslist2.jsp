@@ -110,7 +110,7 @@ if (endPage > pageCount)
 		<%
 		if (startPage > 1) {
 		%>
-		<a href="goodslist.jsp?pageNum=<%=startPage - 1%>">[이전]</a>
+		<a href="goodslist2.jsp?pageNum=<%=startPage - 1%>">[이전]</a>
 		<%
 		}
 		%>
@@ -124,7 +124,7 @@ if (endPage > pageCount)
 		<%
 		} else {
 		%>
-		<a href="goodslist.jsp?pageNum=<%=i%>">[<%=i%>]
+		<a href="goodslist2.jsp?pageNum=<%=i%>">[<%=i%>]
 		</a>
 		<%
 		}
@@ -134,7 +134,7 @@ if (endPage > pageCount)
 		<%
 		if (endPage < pageCount) {
 		%>
-		<a href="goodslist.jsp?pageNum=<%=endPage + 1%>">[다음]</a>
+		<a href="goodslist2.jsp?pageNum=<%=endPage + 1%>">[다음]</a>
 		<%
 		}
 		%>
