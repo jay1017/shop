@@ -2,14 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.goods.GoodsListDAO"%>
 <%@ page import="shop.goods.GoodsListDTO"%>
+<%@ page import="shop.goods.OptionDAO"%>
+<%@ page import="shop.goods.OptionDTO"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
-<%-- goodslist = 전체 상품 주르륵 나오게하기
-
-size 는 distict 로 중복제거 후 다 나오게 하기
-color 는 빼고 
-	할거하고 시작--%>
 <%
 request.setCharacterEncoding("UTF-8");
 GoodsListDAO dao = GoodsListDAO.getInstance(); // DAO 불러오고
@@ -61,39 +58,44 @@ if (endPage > pageCount)
 	<h2>전체 상품 목록</h2>
 	<div>
 		<div class="container">
-  			<div class="row">
-		<%
-		if (goodsList != null && !goodsList.isEmpty()) {
-			for (GoodsListDTO dto : goodsList) {
-		%>
-		 <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
-      <div class="card h-100">
-        <img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top" alt="상품 이미지">
-        <div class="card-body">
-          <h5 class="card-title" name="gname"><%= dto.getGname() %></h5>
-          <input type="hidden" name="gnum" value="<%=dto.getGnum() %>">
-          <p class="card-text">가 격:<%= dto.getGprice() %>원</p>
-          <p class="card-text">판매가 : <%= dto.getDiscount() %>원</p>
-          <a href="#" class="btn btn-outline-primary btn-sm w-100">+ 장바구니 담기</a>
-          <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum() %>" class="btn btn-outline-primary btn-sm w-100">구매하기</a>
-        </div>
-      </div>
-    </div>
-    <%
-      }
-    %>
-    </div>
-  </div>
-</div>
-		<%
-		}
-		 else {
-		%>
-		<p>등록된 상품이 없습니다.</p>
-		<%
-		}
-		%>
+			<div class="row">
+				<%
+				if (goodsList != null && !goodsList.isEmpty()) {
+					for (GoodsListDTO dto : goodsList) {
+				%>
+				<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+					<div class="card h-100">
+						<img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top"
+							alt="상품 이미지">
+						<div class="card-body">
+							<h5 class="card-title" name="gname"><%=dto.getGname()%></h5>
+							<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+							<p class="card-text">
+								가 격:<%=dto.getGprice()%>원
+							</p>
+							<p class="card-text">
+								판매가 :
+								<%=dto.getDiscount()%>원
+							</p>
+							<a href="#" class="btn btn-outline-primary btn-sm w-100">+
+								장바구니 담기</a> <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>"
+								class="btn btn-outline-primary btn-sm w-100">구매하기</a>
+						</div>
+					</div>
+				</div>
+				<%
+				}
+				%>
+			</div>
+		</div>
 	</div>
+	<%
+	} else {
+	%>
+	<p>등록된 상품이 없습니다.</p>
+	<%
+	}
+	%>
 	<div>
 		<%
 		if (startPage > 1) {
@@ -130,6 +132,98 @@ if (endPage > pageCount)
 			<input type="text" placeholder="검색어 입력">
 			<button type="submit">검색</button>
 		</form>
+	</div>
+	<div>
+		<%--사이드바 작업 
+	size 는 distict 로 중복제거 후 다 나오게 하기
+	color 는 빼고 --%>
+		<div class="col-lg-3">
+			<div class="shop__sidebar">
+				<div class="shop__sidebar__search">
+					<form action="#">
+						<input type="text" placeholder="검색">
+						<button type="submit"></button>
+					</form>
+				</div>
+				<div class="shop__sidebar__accordion">
+					<div class="accordion" id="accordionExample">
+						<div class="card">
+							<div class="card-heading">
+								<a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+							</div>
+							<div id="collapseOne" class="collapse show"
+								data-parent="#accordionExample">
+								<div class="card-body">
+									<div class="shop__sidebar__categories">
+										<ul class="nice-scroll" tabindex="1"
+											style="overflow-y: hidden; outline: none;">
+											<li><a href="#">신발</a></li>
+											<li><a href="#">쥬얼리</a></li>
+											<li><a href="#">가방</a></li>
+											<li><a href="#">셔츠</a></li>
+											<li><a href="#">티셔츠</a></li>
+											<li><a href="#">아우터</a></li>
+											<li><a href="#">바지</a></li>
+											<li><a href="#">치마</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-heading">
+								<a data-toggle="collapse" data-target="#collapseThree">Filter
+									Price</a>
+							</div>
+							<div id="collapseThree" class="collapse show"
+								data-parent="#accordionExample">
+								<div class="card-body">
+									<div class="shop__sidebar__price">
+										<ul>
+											<li><a href="#">~₩100,000</a></li>
+											<li><a href="#">₩100000 - ₩200000</a></li>
+											<li><a href="#">₩200000 - ₩300000</a></li>
+											<li><a href="#">₩300000 - ₩400000</a></li>
+											<li><a href="#">₩400000 - ₩500000</a></li>
+											<li><a href="#">₩500000+</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-heading">
+								<a data-toggle="collapse" data-target="#collapseFour">Size</a>
+							</div>
+							<div id="collapseFour" class="collapse show"
+								data-parent="#accordionExample">
+								<div class="card-body">
+									<div class="shop__sidebar__size">
+										<%
+										OptionDAO odao = OptionDAO.getInstance(); // DAO 객체 생성
+										List<String> sizes = odao.getSize(); // 사이즈 리스트 가져오기
+										%>
+
+										<%
+										for (int i = 0; i < sizes.size(); i++) {
+											String size = sizes.get(i);
+										%>
+										<label for="<%=size%>"> <%=size%> <input
+											type="radio" name="gosize" id="<%=size%>"
+											value="<%=size%>">
+										</label><br>
+										<%
+										}
+										%>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<jsp:include page="/include/footer.jsp" />
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
