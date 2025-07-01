@@ -27,7 +27,7 @@ color 는 빼고
         %>
                     <div>
                         <h3><%= dto.getGname() %></h3>
-                        <img src="<%=dto.getGinum() %>">
+                        <img src="<%=dto.getGinum() %>" alt="상품 이미지">
                         <p>가격: <%= dto.getGprice() %>원</p>
                         <p>판매가 :<%=dto.getDiscount() %>원</p> 
                         <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
