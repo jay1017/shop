@@ -153,6 +153,9 @@ public class GoodsListDAO {
 			String sql = "select count(*) from goods";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

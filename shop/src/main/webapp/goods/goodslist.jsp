@@ -28,7 +28,7 @@ color 는 빼고
 	int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) endPage = pageCount;
-	System.out.println(goodsList.size());
+	
 	%> 
     <header>
     
