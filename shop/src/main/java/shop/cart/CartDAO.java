@@ -90,29 +90,29 @@ public class CartDAO {
 	}
 
 	// 장바구니 조회
-	public CartDTO getCart(int gnum) {
-		CartDTO dto = null;
-		try {
-			conn = getConnection();
-			String sql = "select gnum, gname, gprice, ginum, discount from goods where gnum=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, gnum);
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				dto = new CartDTO();
-				dto.setGnum(rs.getInt("gnum"));
-				dto.setGname(rs.getString("gname"));
-				dto.setGprice(rs.getInt("gprice"));
-				dto.setGinum(rs.getInt("ginum"));
-				dto.setDiscount(rs.getInt("discount"));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			endConnection();
-		}
-		return dto;
-	}
+//	public GoodsDTO selectGoods(int gnum) {
+//		GoodsDTO dto = new GoodsDTO();
+//		try {
+//			conn = getConnection();
+//			String sql = "select gnum, canum, gname, gprice, ginum, discount from goods where gnum = ?";
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setInt(1, gnum);
+//			rs = pstmt.executeQuery();
+//			while (rs.next()) {
+//				dto.setGnum(rs.getInt("gnum"));
+//				dto.setCanum(rs.getInt("canum"));
+//				dto.setGname(rs.getString("gname"));
+//				dto.setGprice(rs.getInt("gprice"));
+//				dto.setGinum(rs.getInt("ginum"));
+//				dto.setDiscount(rs.getInt("discount"));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			endConnection();
+//		}
+//		return dto;
+//	}
 
 	//장바구니에 상품 넣기
 	public int insertCart(CartDTO dto) {
