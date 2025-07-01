@@ -28,6 +28,7 @@ color 는 빼고
 	int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) endPage = pageCount;
+	System.out.println(goodsList.size());
 	%> 
     <header>
     
@@ -73,7 +74,7 @@ color 는 빼고
     <% if (endPage < pageCount) { %>
         <a href="goodslist.jsp?pageNum=<%= endPage + 1 %>">[다음]</a>
     <% } %>
-			<form action="search.jsp" method="get">
+			<form action="/shop/main/search.jsp" method="get">
   <input type="text" placeholder="검색어 입력">
   <button type="submit">검색</button>
 </form>
