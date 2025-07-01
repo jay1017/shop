@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewDAO {
 		private static ReviewDAO instance = new ReviewDAO();
@@ -59,6 +61,49 @@ public class ReviewDAO {
 					e.printStackTrace();
 				}
 			}
+		}
+		public void writeReview(ReviewDTO dto)	{ //리뷰 작성 메소드
+			try {
+				conn=getConnection();
+				String sql="insert into review values(review_seq.NEXTVAL,?,?,?,?,?)";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, dto.getGnum());
+				pstmt.setInt(2, dto.getMnum());
+				pstmt.setInt(3, dto.getCanum());
+				pstmt.setInt(4, dto.getGinum());
+				pstmt.setString(5, dto.getRcontent());
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			
+		}
+		public List<ReviewDTO> getReview(int gnum) { //리뷰 출력 메소드
+			List<ReviewDTO> list=new ArrayList<>();
+			try {
+				conn=getConnection();
+				String sql="select * from review";
+				pstmt=conn.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					ReviewDTO dto=new ReviewDTO();
+					dto.setRnum(rs.getInt("rnum"));
+					dto.setGnum(rs.getInt("gnum"));
+					dto.setMnum(rs.getInt("mnum"));
+					dto.setCanum(rs.getInt("canum"));
+					dto.setGinum(rs.getInt("ginum"));
+					dto.setRcontent(rs.getString("rcontent"));
+					list.add(dto);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return list;
+			
 		}
 	}
 

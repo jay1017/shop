@@ -45,56 +45,6 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
 	<%--헤더--%>
-	<header>
-		<div>
-			<a href="">문의하기</a>
-		</div>
-		<div>
-			<h1>사이트 이름</h1>
-		</div>
-		<%
-		if (sid != null) {
-		%>
-		<div>
-			<a href="/shop/member/memberInfo.jsp">마이페이지</a> | <a
-				href="/shop/cart/cart.jsp">장바구니</a> | <a href="">주문내역</a> | <a
-				href="/shop/member/logoutForm.jsp">로그아웃</a>
-		</div>
-		<%
-		} else {
-		%>
-		<div>
-			<a href="/shop/member/loginForm.jsp">로그인</a> | <a
-				href="/shop/member/memberForm.jsp">회원가입</a>
-		</div>
-		<%
-		}
-		%>
-		<nav>
-			<div>
-				<a href="/shop/goods/categories.jsp">카테고리별 보기</a>
-				<%
-				for (CategoryDTO dto : list) {
-				%>
-				<form action="/shop/goods/categories.jsp?canum=<%=dto.getCanum()%>"
-					method="get">
-					<input type="hidden" name="canum" value="<%=dto.getCanum()%>">
-					<button type="submit"><%=dto.getCaname()%></button>
-				</form>
-			</div>
-			<%
-			}
-			%>
-		</nav>
-		<div class="search">
-			<form action="search.jsp">
-				<input type="text" name="key" placeholder="검색어 입력">
-				<button type="submit">검색</button>
-			</form>
-		</div>
-	</header>
-	<%--헤더--%>
-
 	<section class="hero">
 		<div class="hero__slider owl-carousel">
 			<div class="hero__items set-bg"

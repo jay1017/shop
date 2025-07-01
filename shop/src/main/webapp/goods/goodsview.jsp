@@ -2,18 +2,25 @@
 <%@ page import="shop.goods.GoodsDTO" %>
 <%@ page import="shop.goods.GoodsDAO" %>
 <%@ page import="shop.goods.OptionDTO" %>
+<%@ page import="shop.review.ReviewDTO" %>
+<%@ page import="shop.review.ReviewDAO" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%
     request.setCharacterEncoding("UTF-8");
-    // String sid = (String) session.getAttribute("sid");
-
+    String sid = (String) session.getAttribute("sid");
+	
     int gnum = Integer.parseInt(request.getParameter("gnum"));
     
     GoodsDAO dao = GoodsDAO.getDAO();
     GoodsDTO goods = dao.select(gnum); 
+    
+   //리뷰 목록 조회
+    ReviewDAO rdao=ReviewDAO.getInstance();
+    List<ReviewDTO> rlist=rdao.getReview(gnum); 
+    int mnum=36;
 	
     // 포맷팅
     NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
@@ -197,15 +204,17 @@
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item">
-                                            <div>
-                                            	<div>
-                                            	작성자:
-                                            	</div>
-                                            	<form>
-                                            	<input type="text" name="rcontent"/>
-                                            	
-                                            	</form>
-                                            </div>
+                                            <h5>리뷰 목록</h5>
+                                            <%--여기에 작업--%>
+                                            	<%for(ReviewDTO dto:rlist){	%>
+                                            		<%=dto.getRcontent() %>
+                                            <%} %>
+                                        </div>
+                                        	<div>
+                                        	<form action="/shop/review/reviewForm.jsp" method="post">
+                                        	<input type="text"/>
+                                        	<input type="submit" value="리뷰작성"/> <%--여기서 뭘 넘겨야할까? --%>
+                                        	</form>
                                         </div>
                                     </div>
                                 </div>
