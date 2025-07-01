@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="./inex.html"><img src="/shop/resources/img/logo.png" alt="" style="width: 110px;"></a>
+                    <a href="/shop/main/main.jsp"><img src="/shop/resources/img/logo.png" alt="" style="width: 110px;"></a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -66,11 +66,21 @@
                 	%>
                     <ul>
                         <li><a href="/shop/main/main.jsp">메인</a></li>
+<<<<<<< HEAD
                         <li><a href="/shop/goods/goodslist.jsp">상품</a>
+=======
+                        <li><a href="./shop.html">상품</a>
+>>>>>>> branch 'main' of https://github.com/jay1017/shop.git
                         	<ul class="dropdown">
+<<<<<<< HEAD
                         		<% for(CategoryDTO dto : list) { %>
                         			<li><a href="/shop/goods/goodslist.jsp?canum=<%=dto.getCanum()%>"><%=dto.getCaname() %></a></li>
                         		<% } %>
+=======
+                                <li><a href="/shop/goods/goods.jsp">상품 목록</a></li>
+                                <li><a href="/shop/cart/cart.jsp">장바구니</a></li>
+                                <li><a href="./checkout.html">주문서</a></li>
+>>>>>>> branch 'main' of https://github.com/jay1017/shop.git
                             </ul>
                         </li>
                         <li><a href="/shop/about/about.jsp">회사 소개</a></li>
@@ -94,7 +104,7 @@
 <div class="search-model">
     <div class="h-100 d-flex align-items-center justify-content-center">
         <div class="search-close-switch">+</div>
-        <form action="search.jsp" class="search-model-form">
+        <form action="/shop/main/search.jsp" class="search-model-form">
             <input type="text" name="key" id="search-input" placeholder="Search here.....">
             <input type="submit" value="검색">
         </form>

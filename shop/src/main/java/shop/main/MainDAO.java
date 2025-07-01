@@ -2,7 +2,6 @@ package shop.main;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import shop.member.MemberDTO;
 
 import java.sql.*;
@@ -202,15 +201,20 @@ public class MainDAO {
 		return list;
 	}
 
-	public List<GoodsDTO> search(String key) { // 서치실행 메소드
+	public List<GoodsDTO> search(String key,int startRow,int endRow) { // 서치실행 메소드
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from goods where gname like=? or gcontent like=?";
+			String sql = "select * from ( select rownum as rnum,s.* from"
+					+ "(select * from goods where gname like ? or gcontent like ? order by gnum desc) S where rownum<=?) where rnum>=?";
 			pstmt = conn.prepareStatement(sql);
-			for (int i = 1; i <= 2; i++)
-				pstmt.setString(i, "%" + key + "%");
-
+			
+				pstmt.setString(1 , "%" + key + "%");
+				pstmt.setString(2 , "%" + key + "%");
+				pstmt.setInt(3, endRow);
+				pstmt.setInt(4, startRow);
+				
+				
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				GoodsDTO dto = new GoodsDTO();
@@ -223,6 +227,7 @@ public class MainDAO {
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGread(rs.getInt("gread"));
 				list.add(dto);
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -230,6 +235,21 @@ public class MainDAO {
 			endConnection();
 		}
 		return list;
+		
+	}
+	public int searchCount(String key) {	//검색된 결과의 수 카운팅용 페이징 처리시 사용
+	    int count = 0;
+	    String sql = "SELECT COUNT(*) FROM goods WHERE gname LIKE ? or gcontent like ?";
+	    try (Connection conn = getConnection();
+	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, "%" + key + "%");
+	        pstmt.setString(2, "%" + key + "%");
+	        ResultSet rs = pstmt.executeQuery();
+	        if (rs.next()) count = rs.getInt(1);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return count;
 	}
 
 	public List<CategoryDTO> getCate() { // 카테고리명들을 리스트로 받아오는 작업
