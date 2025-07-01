@@ -11,6 +11,8 @@ public class GoodsListDTO {
 	private int gread;
 	private String gplot;
 	private String caname;
+	public String giname;
+	
 	public String getCaname() {
 		return caname;
 	}
@@ -70,6 +72,12 @@ public class GoodsListDTO {
 	}
 	public void setGplot(String gplot) {
 		this.gplot = gplot;
+	}
+	public String getGiname() {
+		return giname;
+	}
+	public void setGiname(String giname) {
+		this.giname = giname;
 	}
 	
 }

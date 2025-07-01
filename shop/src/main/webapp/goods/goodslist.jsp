@@ -44,10 +44,11 @@ color 는 빼고
         %>
                     <div>
                        <a href="/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>"> <h3><%= dto.getGname() %></h3></a>
-                        <img src="<%=dto.getGinum() %>" alt="상품 이미지">
+                        <img src="<%=dto.getGiname() %>" alt="상품 이미지">
                         <p>가격: <%= dto.getGprice() %>원</p>
                         <p>판매가 :<%=dto.getDiscount() %>원</p> 
                         <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+                    	<input type="hidden" name="ginum" value="<%=dto.getGinum() %>">
                     </div>
         <%
                 }
