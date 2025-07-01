@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="shop.goods.categoryDTO"%>
+<%@ page import="shop.goods.CategoryDTO"%>
 <%@ page import="shop.cart.CartDAO" %>
 <%@ page import="shop.cart.CartDTO" %>
 <%@ page import="shop.member.MemberDAO" %>

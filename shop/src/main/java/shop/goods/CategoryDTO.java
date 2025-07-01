@@ -1,6 +1,6 @@
 package shop.goods;
 
-public class categoryDTO {
+public class CategoryDTO {
 	private String caname;//카테고리 이름
 	private int canum;//카테고리 넘버
 	private String gname;//상품 이름

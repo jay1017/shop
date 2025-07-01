@@ -7,18 +7,18 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class categoryDAO {
+public class CategoryDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	private static categoryDAO instance = new categoryDAO();
+	private static CategoryDAO instance = new CategoryDAO();
 
-	public static categoryDAO getInstance() {
+	public static CategoryDAO getInstance() {
 		return instance;
 	}
 
-	private categoryDAO() {}
+	private CategoryDAO() {}
 	
 	//DB 젒고
 		private Connection getConnection() {
@@ -60,8 +60,8 @@ public class categoryDAO {
 			}
 		}
 		//goods에서 해당 canum에 해당하는 모든 값 추출
-	public List<categoryDTO> getGoodsList(int canum){
-		List<categoryDTO> list = new ArrayList<>();
+	public List<CategoryDTO> getGoodsList(int canum){
+		List<CategoryDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
 			String sql = "select * from goods where canum=?";
@@ -69,7 +69,7 @@ public class categoryDAO {
 			pstmt.setInt(1, canum);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				categoryDTO dto = new categoryDTO();
+				CategoryDTO dto = new CategoryDTO();
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setGcontent(rs.getString("gcontent"));
@@ -86,15 +86,15 @@ public class categoryDAO {
 		return list;
 	}
 	//전체 상품보여주기
-	public List<categoryDTO> getGoodsList(){
-		List<categoryDTO> list = null;
+	public List<CategoryDTO> getGoodsList(){
+		List<CategoryDTO> list = null;
 		try {
 			conn = getConnection();
 			String sql = "select * from goods";
 			pstmt=conn.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				categoryDTO dto = new categoryDTO();
+				CategoryDTO dto = new CategoryDTO();
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setGcontent(rs.getString("gcontent"));

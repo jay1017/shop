@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="shop.goods.categoryDTO" %>
-<%@ page import="shop.goods.categoryDAO" %>
+<%@ page import="shop.goods.CategoryDTO" %>
+<%@ page import="shop.goods.CategoryDAO" %>
 <%@ page import="shop.cart.CartDAO" %>
 <%@ page import="shop.cart.CartDTO" %>
 <%@ page import="java.util.List" %>
 
 <%
 request.setCharacterEncoding("UTF-8");
-categoryDAO dao = categoryDAO.getInstance();
+CategoryDAO dao = CategoryDAO.getInstance();
 CartDAO cdao = CartDAO.getInstance();
 int canum = Integer.parseInt(request.getParameter("canum"));
 
-    List<categoryDTO> list = null;
+    List<CategoryDTO> list = null;
     if (canum!=0) {
         list = dao.getGoodsList(canum);
     } else{
@@ -32,7 +32,7 @@ int canum = Integer.parseInt(request.getParameter("canum"));
 
 <div>
 <%  	if (list != null && !list.isEmpty()) {
-        for (categoryDTO dto : list) {
+        for (CategoryDTO dto : list) {
         	int gprice = dto.getGprice();
 			int discount = dto.getDiscount();
 			int disprice;
