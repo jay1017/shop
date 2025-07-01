@@ -65,7 +65,8 @@ if (endPage > pageCount)
 			for (GoodsListDTO dto : goodsList) {
 		%>
 		<div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="<%=dto.getGiname() %>>" style="background-image: url(&quot;img/product/product-2.jpg&quot;);">
+                                <div class="product__item__pic set-bg" >
+                                 <img src="/shop/upload/<%=dto.getGiname()%>" class="img-fluid" alt="상품 이미지">
                                     <ul class="product__hover">
                                         <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
                                         <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
