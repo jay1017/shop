@@ -70,17 +70,12 @@ if (endPage > pageCount)
       <div class="card h-100">
         <img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top" alt="상품 이미지">
         <div class="card-body">
-          <h5 class="card-title"><%= dto.getGname() %></h5>
+          <h5 class="card-title" name="gname"><%= dto.getGname() %></h5>
+          <input type="hidden" name="gnum" value="<%=dto.getGnum() %>">
           <p class="card-text">가 격:<%= dto.getGprice() %>원</p>
           <p class="card-text">판매가 : <%= dto.getDiscount() %>원</p>
-          <div class="rating mb-2">
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-            <i class="fa fa-star-o"></i>
-          </div>
           <a href="#" class="btn btn-outline-primary btn-sm w-100">+ 장바구니 담기</a>
+          <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum() %>" class="btn btn-outline-primary btn-sm w-100">구매하기</a>
         </div>
       </div>
     </div>
