@@ -108,6 +108,38 @@ body {
 .submit-button:hover {
 	background-color: #333;
 }
+
+.check-btn {
+	background-color: #000;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 500;
+	padding: 10px 16px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.check-btn:hover {
+	background-color: #333;
+}
+
+.input-row {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 15px;
+}
+
+.input-row input[type="text"] {
+	flex: 1;
+	height: 42px;
+	padding: 0 10px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	font-size: 15px;
+	box-sizing: border-box;
+}
 </style>
 </head>
 <body>
@@ -119,8 +151,8 @@ body {
 			onsubmit="return membercheck()">
 			<div class="btn-inline">
 				<input type="text" maxlength="100" id="mid" name="mid"
-					placeholder="아이디 입력*" class="join-input"> <input
-					type="button" value="중복확인" onclick="midCheck()" />
+					placeholder="아이디 입력*" class="join-input" style="margin-bottom: 0;">
+				<input type="button" value="중복확인" onclick="midCheck()" class="check-btn" />
 			</div>
 			<input type="hidden" id="butcheck" name="butcheck" value="false">
 
