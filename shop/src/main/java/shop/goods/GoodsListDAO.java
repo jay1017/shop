@@ -98,8 +98,8 @@ public class GoodsListDAO {
 		try {
 			conn = getConnection();
 			String sql = "select * from"
-					+ "(select rownum rnum, a.* from(select gnum, canum, gname, gprice, gcontent, ginum, (gprice-(gprice*discount/100)) as discount, gread "
-					+ " from goods order by gnum desc) a where rownum<=?) where rnum >=?";
+					+ "(select rownum rnum, a.* from(select g.gnum, g.canum, g.gname, g.gprice, g.gcontent, g.ginum, (g.gprice-(g.gprice*g.discount/100)) as discount, g.gread "
+					+ ",gi.giname from goods g join goods_image gi on g.ginum = gi.ginum order by g.gnum desc) a where rownum<=?) where rnum >=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, end);
 			pstmt.setInt(2, start);

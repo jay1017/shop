@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="shop.category.CategoryDTO" %>
+<%@ page import="shop.category.CategoryDAO" %>
+<%@ page import="java.util.List" %>
 <!-- Offcanvas Menu Begin -->
 <div class="offcanvas-menu-overlay"></div>
 <div class="offcanvas-menu-wrapper">
@@ -57,16 +60,24 @@
             </div>
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
+                	<%
+                		CategoryDAO dao = CategoryDAO.getDAO();
+                		List<CategoryDTO> list = dao.selectList(); 
+                	%>
                     <ul>
                         <li><a href="/shop/main/main.jsp">메인</a></li>
+                        <li><a href="/shop/goods/goodslist.jsp">상품</a>
                         <li><a href="./shop.html">상품</a>
                         	<ul class="dropdown">
+                        		<% for(CategoryDTO dto : list) { %>
+                        			<li><a href="/shop/goods/goodslist.jsp?canum=<%=dto.getCanum()%>"><%=dto.getCaname() %></a></li>
+                        		<% } %>
                                 <li><a href="/shop/goods/goods.jsp">상품 목록</a></li>
                                 <li><a href="/shop/cart/cart.jsp">장바구니</a></li>
                                 <li><a href="./checkout.html">주문서</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">회사소개</a></li>
+                        <li><a href="/shop/about/about.jsp">회사 소개</a></li>
                     </ul>
                 </nav>
             </div>

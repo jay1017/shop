@@ -10,8 +10,7 @@
     request.setCharacterEncoding("UTF-8");
     // String sid = (String) session.getAttribute("sid");
 
-    // int gnum = Integer.parseInt(request.getParameter("gnum"));
-    int gnum = 140;
+    int gnum = Integer.parseInt(request.getParameter("gnum"));
     
     GoodsDAO dao = GoodsDAO.getDAO();
     GoodsDTO goods = dao.select(gnum); 
@@ -140,23 +139,33 @@
                             		<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
 	                                <div class="quantity">
 	                                    <div class="pro-qty">
-	                                        <input type="text" value="1" name="ccount">
+	                                        <input type="text" value="1" name="ccount" id="ccount1">
 	                                    </div>
 	                                </div>
                                 	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
                                 	<input type="submit" value="장바구니 담기" class="primary-btn" style="border: none;"/>
                                 </form>
+                                <form action="/shop/buy/buyInsert.jsp" method="post" onsubmit="checkLogin(event)">
+                                	<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
+                                	<input type="hidden" name="ccount" id="ccount2"/>
+                                	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
+                                	<input type="submit" value="구매하기" class="primary-btn" style="border: none;"/>
+                                </form>
                                 <script>
                                 	function checkLogin(event) {
                                 		var sid = document.getElementById("sid");
+                                		var ccount1 = document.getElementById("ccount1");
+                                		var ccount2 = document.getElementById("ccount2");
+                                		
                                 		if(sid.value.trim() == 'null') {
                                 			alert("로그인 이후 가능합니다.");
                                 			event.preventDefault();
                                 			location.href="/shop/member/loginForm.jsp";
+                                		} else {
+                                			ccount2.value = ccount1.value;
                                 		}
                                 	}
                                 </script>
-                                <a href="/buy/buyInsert.jsp?gnum=<%=goods.getGnum() %>" class="primary-btn">구매하기</a>
                             </div>
                         </div>
                     </div>

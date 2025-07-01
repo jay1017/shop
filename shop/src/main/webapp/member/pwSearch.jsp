@@ -7,13 +7,18 @@
 		<link rel="stylesheet" href="/shop/resources/css/font.css" />
 	</head>
 	<body>
-		<form>
+		<form action="pwSearchPro.jsp" method="post" align="center">
 			<div>
-				<span>아이디</span>
-				<br />
+				<label><input type="radio" name="searchType" value="phone" checked onclick="toggleSearch()">휴대전화</label>
+				<label><input type="radio" name="searchType" value="email" onclick="toggleSearch()">이메일</label>
+			</div>
+			<div id="phoneForm">
 				<input type="text" name="mid" placeholder="아이디">
 				<br />
-				<span>이메일</span>
+				<input type="text" name="mphone" placeholder="휴대전화(-없이)">
+			</div>
+			<div id="emailForm" style="display: none;">
+				<input type="text" name="emid" placeholder="아이디">
 				<br />
 				<input type="text" name="memail" placeholder="이메일">
 			</div>
@@ -22,4 +27,5 @@
 			</div>
 		</form>
 	</body>
+	<script src="<%=request.getContextPath()%>/resources/js/login.js"></script>
 </html>
