@@ -136,12 +136,26 @@
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                </div>
-                                <a href="/shop/cart/cartInsertPro.jsp?gnum=<%=goods.getGnum() %>" class="primary-btn">장바구니 담기</a>
+                            	<form action="/shop/cart/cartInsertPro.jsp" method="post" onsubmit="checkLogin(event)">
+                            		<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
+	                                <div class="quantity">
+	                                    <div class="pro-qty">
+	                                        <input type="text" value="1" name="ccount">
+	                                    </div>
+	                                </div>
+                                	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
+                                	<input type="submit" value="장바구니 담기" class="primary-btn" style="border: none;"/>
+                                </form>
+                                <script>
+                                	function checkLogin(event) {
+                                		var sid = document.getElementById("sid");
+                                		if(sid.value.trim() == 'null') {
+                                			alert("로그인 이후 가능합니다.");
+                                			event.preventDefault();
+                                			location.href="/shop/member/loginForm.jsp";
+                                		}
+                                	}
+                                </script>
                                 <a href="/buy/buyInsert.jsp?gnum=<%=goods.getGnum() %>" class="primary-btn">구매하기</a>
                             </div>
                         </div>
