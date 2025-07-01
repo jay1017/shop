@@ -41,6 +41,7 @@
                         		String sid = (String)session.getAttribute("sid");
                         		if(sid != null) {%>
                         			<a href="/shop/member/logoutForm.jsp">로그아웃</a>
+                        			<a href="/shop/member/memberInfo.jsp">마이페이지</a>
                         		<% } else { %>
                         			<a href="/shop/member/loginForm.jsp">로그인</a>
                         		<% } %>
@@ -67,7 +68,6 @@
                     <ul>
                         <li><a href="/shop/main/main.jsp">메인</a></li>
                         <li><a href="/shop/goods/goodslist.jsp">상품</a>
-                        <li><a href="./shop.html">상품</a>
                         	<ul class="dropdown">
                         		<% for(CategoryDTO dto : list) { %>
                         			<li><a href="/shop/goods/goodslist.jsp?canum=<%=dto.getCanum()%>"><%=dto.getCaname() %></a></li>
