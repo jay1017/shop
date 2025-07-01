@@ -13,7 +13,7 @@ color 는 빼고
 	request.setCharacterEncoding("UTF-8");
 	  GoodsListDAO dao = GoodsListDAO.getInstance(); // DAO 불러오고
    
-    int pageSize = 15; //한 화면에 보여줄 뉴스 갯수
+    int pageSize = 15; //한 화면에 보여줄 상품 갯수
 	String pageNum = request.getParameter("pageNum");
 	if(pageNum == null){
 		pageNum = "1"; //페이지 번호가 없다면 기본값 1
@@ -28,8 +28,10 @@ color 는 빼고
 	int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) endPage = pageCount;
+	
 	%> 
     <header>
+    
 <title>상품 전체 목록</title>
 </header>
 
@@ -57,23 +59,24 @@ color 는 빼고
         %>
         </div>
         <div >
-			<%if(startPage > 1){%>
-				<a href="gooodslist.jsp?pageNum=<%=startPage-1 %>">[이전]</a>
-			<% } 
-			
-				for(int i = startPage; i <= endPage; i++){
-					if(i == currentPage){%>
-						<b>[<%=i %>]</b>
-					<%} else{%>
-							<a href="goodslist.jsp?pageNum=<%= i %>">[<%= i %>]</a>
-					<%} %>
-				<%}%>
-				
-			<%if(endPage < pageCount){%>
-				<a href="goodslist.jsp?pageNum=<%=endPage+1 %>">[다음]</a>
-			<%}%>
-			<form action="search.jsp" method="get">
+			 <% if (startPage > 1) { %>
+        <a href="goodslist.jsp?pageNum=<%= startPage - 1 %>">[이전]</a>
+    <% } %>
+
+    <% for (int i = startPage; i <= endPage; i++) {
+           if (i == currentPage) { %>
+               <b>[<%= i %>]</b>
+        <% } else { %>
+               <a href="goodslist.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+        <% }
+       } %>
+
+    <% if (endPage < pageCount) { %>
+        <a href="goodslist.jsp?pageNum=<%= endPage + 1 %>">[다음]</a>
+    <% } %>
+			<form action="/shop/main/search.jsp" method="get">
   <input type="text" placeholder="검색어 입력">
   <button type="submit">검색</button>
 </form>
 		</div>
+		
