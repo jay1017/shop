@@ -8,22 +8,28 @@
 <%
 MainDAO dao = MainDAO.getInstance();
 String key = request.getParameter("key"); //검색 결과 입력값 가져오기
-if(key==null) key="1";
+if(key==null) key="";
 
 GoodsImageDAO idao = GoodsImageDAO.getDAO(); //이미지 dao 
 
 String pageNum=request.getParameter("pageNum");
 if(pageNum==null) pageNum="1";
 
-int currentPage=Integer.parseInt(pageNum);
 int pageSize=8;
-int startRow=(currentPage-1)*pageSize;
-int endRow=startRow+pageSize;
+int currentPage = Integer.parseInt(request.getParameter("pageNum") != null ? request.getParameter("pageNum") : "1");
+int startRow=(currentPage-1)*pageSize+1;
+int endRow=currentPage*pageSize;
 
-List<GoodsDTO> list = dao.search(key,endRow,startRow); //검색된 상품정보를 가져옴
-int count=dao.searchCount(key); 
+List<GoodsDTO> list = dao.search(key,startRow,endRow); //검색된 상품정보를 가져옴
+int count=dao.searchCount(key);
 %>
 
+<%
+System.out.println("검색 키워드: " + key);
+System.out.println("현재 페이지: " + currentPage);
+System.out.println("startRow = " + startRow + ", endRow = " + endRow);
+System.out.println("검색된 상품 수: " + list.size());
+%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -116,8 +122,6 @@ int count=dao.searchCount(key);
             <% } %>
         </div>
     </div>
-    
-    <!--  -->
 	
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>

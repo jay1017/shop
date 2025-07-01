@@ -208,7 +208,7 @@ public class MainDAO {
 			String sql = "select * from ( select rownum as rnum,s.* from"
 					+ "(select * from goods where gname like ? or gcontent like ? order by gnum desc) S where rownum<=?) where rnum>=?";
 			pstmt = conn.prepareStatement(sql);
-	
+			
 				pstmt.setString(1 , "%" + key + "%");
 				pstmt.setString(2 , "%" + key + "%");
 				pstmt.setInt(3, endRow);
@@ -237,7 +237,7 @@ public class MainDAO {
 		return list;
 		
 	}
-	public int searchCount(String key) {
+	public int searchCount(String key) {	//검색된 결과의 수 카운팅용 페이징 처리시 사용
 	    int count = 0;
 	    String sql = "SELECT COUNT(*) FROM goods WHERE gname LIKE ? or gcontent like ?";
 	    try (Connection conn = getConnection();
