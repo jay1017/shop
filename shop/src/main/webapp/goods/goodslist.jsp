@@ -24,22 +24,14 @@ color 는 빼고
         <%
             if (goodsList != null && !goodsList.isEmpty()) {
                 for (GoodsListDTO dto : goodsList) {
-                	int gprice = dto.getGprice();
-        			int discount = dto.getDiscount();
-        			int disprice;
-        			if (discount != 0) {
-        				disprice = gprice - (gprice * discount / 100);
-        			}else{
-        				 disprice = gprice;
-        			}
         %>
                     <div>
                         <h3><%= dto.getGname() %></h3>
+                        <p><%=dto.getGinum() %>
                         <p>가격: <%= dto.getGprice() %>원</p>
-                        <p>할인: <%= dto.getDiscount() %>%</p>
-                        <p>판매가 :<%=disprice %> 
+                        <p>판매가 :<%=dto.getDiscount() %>원</p> 
                         <p>설명: <%= dto.getGplot() %></p>
-                        <!-- 필요시 이미지 번호(dto.getGinum())로 이미지 불러오기 -->
+                        <input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
                     </div>
         <%
                 }
