@@ -92,6 +92,37 @@ public class GoodsListDAO {
 		}
 		return list;
 	}
+	//한 페이지에 보여줄 상품 수
+	public List<GoodsListDTO> getGoods(int start, int end){
+		List<GoodsListDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from"
+					+ "(select rownum rnum, a.* from(select gnum, canum, gname, gprice, gcontent, ginum, (gprice-(gprice*discount/100)) as discount, gread"
+					+ "from goods order by gnum desc) a where rownum<=?) where rnum >=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, end);
+			pstmt.setInt(2, start);
+			rs= pstmt.executeQuery();
+			while(rs.next()) {
+				GoodsListDTO dto = new GoodsListDTO();
+				dto.setGnum(rs.getInt("gnum"));
+	            dto.setCanum(rs.getInt("canum"));
+	            dto.setGname(rs.getString("gname"));
+	            dto.setGprice(rs.getInt("gprice"));
+	            dto.setGcontent(rs.getString("gcontent"));
+	            dto.setGinum(rs.getInt("ginum"));
+	            dto.setDiscount(rs.getInt("discount"));
+	            dto.setGread(rs.getInt("gread"));
+	            list.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return list;
+	}
 	//카테고리 번호,이름 받기
 	public List<GoodsListDTO> getCate(){
 		List<GoodsListDTO> list = null;
