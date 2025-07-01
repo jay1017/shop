@@ -160,7 +160,7 @@ if (endPage > pageCount)
 					%>
 					<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
 						<div class="card h-100">
-							<img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top"
+							<img src="/shop/resources/image/<%=dto.getGiname()%>" class="card-img-top"
 								alt="상품 이미지">
 							<div class="card-body">
 								<h5 class="card-title"><%=dto.getGname()%></h5>
