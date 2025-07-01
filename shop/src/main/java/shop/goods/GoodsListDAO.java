@@ -114,4 +114,19 @@ public class GoodsListDAO {
 		return list;
 	}
 
+	//전체 상품 수
+	public int getGoodsCount() {
+		int count = 0;
+		try {
+			conn = getConnection();
+			String sql = "select count(*) from goods";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return count;
+	}
 }
