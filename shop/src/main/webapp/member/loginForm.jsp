@@ -13,12 +13,14 @@
 		<span>아이디</span><br />
 		<div>
 			<input type="text" id="loginmid" name="mid" oninput="loginIdCheck()"/>
+			<input type="button" value="아이디 찾기" onclick="idSearch.jsp">
 			<div id="loginmidmsg" style="margin-top: 5px; font-size: 14px;"></div>
 		</div>
 		<span>비밀번호</span><br />
 		<div>
 			<input type="password" id="loginpw" name="mpw" oninput="loginPwCheck()"/>
 			<div id="loginmpwmsg" style="margin-top: 5px; font-size: 14px;"></div>
+			<input type="button" value="비밀번호 찾기" onclick="pwSearch.jsp">
 		</div>
 		<div>
 			<br />

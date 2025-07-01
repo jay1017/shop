@@ -110,7 +110,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 									도시적인 분위기와 트렌디한 무드를 동시에 갖춘 <br/>
 									이번 시즌 머스트해브 아이템!<br/>
 									자크뮈스 르 시에라 티셔츠를 지금 만나보세요.</p>
-								<a href="#" class="primary-btn">Shop now <span
+								<a href="" class="primary-btn">Shop now <span
 									class="arrow_right"></span></a>
 								<%--shop now누르면 해당 상품의 상세화면으로이동하도록 만들기 --%>
 								<div class="hero__social">
@@ -195,7 +195,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             </div>
         </div>
     </section>
-	<!-- Banner Section end -->
+	<!-- Banner Section End -->
 
 	<!-- Product Section Begin -->
 <section class="product spad">
@@ -211,28 +211,37 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
         </div>
 
         <div class="row product__filter">
+
             <%-- 인기 상품 출력 --%>
             <%
+                int count = 0;
                 for (GoodsDTO dto : tlist) {
+                    int ginum = dto.getGinum();
+                    GoodsImageDTO gi = idao.select(ginum);
+                    String giname = gi.getGiname();
+                    if (count >= 8) break;
+                    count++;
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix popular">
                 <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="<%= dto.getGinum() %>">
-                        <span class="label">Hot</span> 
-                        <ul class="product__hover">
-                            <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                            <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                        </ul>
-                    </div>
+                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
+                        <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
+                            <span class="label">Hot</span>
+                            <ul class="product__hover">
+                                <li><a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a></li>
+                                <li><a href="#"><img src="/shop/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                <li><a href="#"><img src="/shop/resources/img/icon/search.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </a>
                     <div class="product__item__text">
-                        <h6><%= dto.getGname() %></h6> 
+                        <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
                         <div class="rating">
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                         </div>
-                        <h5><%= dto.getGprice() %>원</h5>
+                        <h5>&#8361;<%= dto.getGprice() %></h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                             <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
@@ -246,18 +255,24 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             <%-- 할인 상품 출력 --%>
             <%
                 for (GoodsDTO dto : slist) {
-                    double discountedPrice = dto.getGprice() * (1 - dto.getDiscount() / 100.0);
+                    int ginum = dto.getGinum();
+                    GoodsImageDTO gi = idao.select(ginum);
+                    String giname = gi.getGiname();
+                    if (count > 8) break;
+                    count++;
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix sale">
                 <div class="product__item">
-                    <div class="product__item__pic set-bg" data-setbg="<%= dto.getGinum() %>">
-                        <span class="label">Sale</span>
-                        <ul class="product__hover">
-                            <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                            <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                            <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                        </ul>
-                    </div>
+                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
+                        <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
+                            <span class="label">Sale</span>
+                            <ul class="product__hover">
+                                <li><a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a></li>
+                                <li><a href="#"><img src="/shop/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
+                                <li><a href="#"><img src="/shop/resources/img/icon/search.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </a>
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
@@ -266,8 +281,8 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                         </div>
                         <h5>
-                            <del><%= dto.getGprice() %></del>
-                            <%= String.format("%.2f", discountedPrice) %>원
+                            <del>&#8361;<%= dto.getGprice() %></del>
+                            <%= dto.getDiscount() %>
                         </h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
@@ -278,9 +293,12 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                 </div>
             </div>
             <% } %>
-		</div>          	
+
+        </div>
     </div>
 </section>
+<jsp:include page="/include/footer.jsp"></jsp:include>
+
 <!-- Product Section End -->
 	
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>

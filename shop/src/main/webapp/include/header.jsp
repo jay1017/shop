@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-7">
                     <div class="header__top__left">
-                        <p>오데즈에 오신 여러분을 환영합니다.</p>
+                        <p>오데즈에 오신 여러분을 환영합니다.</p> 
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-5">
