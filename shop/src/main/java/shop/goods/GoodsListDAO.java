@@ -82,7 +82,6 @@ public class GoodsListDAO {
 				dto.setGinum(rs.getInt("ginum"));
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGread(rs.getInt("gread"));
-				dto.setGplot(rs.getString("gplot"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
