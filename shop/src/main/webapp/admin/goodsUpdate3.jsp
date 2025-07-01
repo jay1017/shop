@@ -33,7 +33,15 @@
 		
 		OptionDAO dao = OptionDAO.getDAO();
 		OptionDTO dto = dao.select(gonum);
+		
+		String admin = (String) session.getAttribute("admin");
 	%>
+	<% if(admin == null) { %>
+		<script>
+			alert("로그인 후 이용 해 주세요.");
+			location.href="/shop/admin/login.jsp";
+		</script>
+	<% } else { %>
 	<div class="wrapper">
 		<jsp:include page="/admin/include/sidebar.jsp"></jsp:include>
 		<div class="main">
@@ -74,5 +82,6 @@
 			</main>
 		</div>
 	</div>
+	<% } %>
 </body>
 </html>

@@ -11,7 +11,7 @@
     // String sid = (String) session.getAttribute("sid");
 
     // int gnum = Integer.parseInt(request.getParameter("gnum"));
-    int gnum = 266;
+    int gnum = 140;
     
     GoodsDAO dao = GoodsDAO.getDAO();
     GoodsDTO goods = dao.select(gnum); 
