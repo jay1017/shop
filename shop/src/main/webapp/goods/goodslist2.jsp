@@ -58,7 +58,7 @@ if (endPage > pageCount)
 	<h2>전체 상품 목록</h2>
 	<div class="row">
 		<div class="container">
-			<div>
+			<div class="col-lg-9">
 				<%
 				if (goodsList != null && !goodsList.isEmpty()) {
 					for (GoodsListDTO dto : goodsList) {
