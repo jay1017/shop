@@ -66,21 +66,15 @@
                 	%>
                     <ul>
                         <li><a href="/shop/main/main.jsp">메인</a></li>
-<<<<<<< HEAD
                         <li><a href="/shop/goods/goodslist.jsp">상품</a>
-=======
                         <li><a href="./shop.html">상품</a>
->>>>>>> branch 'main' of https://github.com/jay1017/shop.git
                         	<ul class="dropdown">
-<<<<<<< HEAD
                         		<% for(CategoryDTO dto : list) { %>
                         			<li><a href="/shop/goods/goodslist.jsp?canum=<%=dto.getCanum()%>"><%=dto.getCaname() %></a></li>
                         		<% } %>
-=======
                                 <li><a href="/shop/goods/goods.jsp">상품 목록</a></li>
                                 <li><a href="/shop/cart/cart.jsp">장바구니</a></li>
                                 <li><a href="./checkout.html">주문서</a></li>
->>>>>>> branch 'main' of https://github.com/jay1017/shop.git
                             </ul>
                         </li>
                         <li><a href="/shop/about/about.jsp">회사 소개</a></li>
