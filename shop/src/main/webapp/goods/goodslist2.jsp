@@ -56,9 +56,9 @@ if (endPage > pageCount)
 	<jsp:include page="/include/header.jsp" />
 	<h1>상품목록</h1>
 	<h2>전체 상품 목록</h2>
-	<div>
+	<div class="row">
 		<div class="container">
-			<div class="row">
+			<div>
 				<%
 				if (goodsList != null && !goodsList.isEmpty()) {
 					for (GoodsListDTO dto : goodsList) {
@@ -88,52 +88,7 @@ if (endPage > pageCount)
 				%>
 			</div>
 		</div>
-	</div>
-	<%
-	} else {
-	%>
-	<p>등록된 상품이 없습니다.</p>
-	<%
-	}
-	%>
-	<div>
-		<%
-		if (startPage > 1) {
-		%>
-		<a href="goodslist2.jsp?pageNum=<%=startPage - 1%>">[이전]</a>
-		<%
-		}
-		%>
-
-		<%
-		for (int i = startPage; i <= endPage; i++) {
-			if (i == currentPage) {
-		%>
-		<b>[<%=i%>]
-		</b>
-		<%
-		} else {
-		%>
-		<a href="goodslist2.jsp?pageNum=<%=i%>">[<%=i%>]
-		</a>
-		<%
-		}
-		}
-		%>
-
-		<%
-		if (endPage < pageCount) {
-		%>
-		<a href="goodslist2.jsp?pageNum=<%=endPage + 1%>">[다음]</a>
-		<%
-		}
-		%>
-		<form action="/shop/main/search.jsp" method="get">
-			<input type="text" placeholder="검색어 입력">
-			<button type="submit">검색</button>
-		</form>
-	</div>
-	<div>
+		<div>
 		<%--사이드바 작업 
 	size 는 distict 로 중복제거 후 다 나오게 하기
 	color 는 빼고 --%>
@@ -225,6 +180,52 @@ if (endPage > pageCount)
 			</div>
 		</div>
 	</div>
+	</div>
+	<%
+	} else {
+	%>
+	<p>등록된 상품이 없습니다.</p>
+	<%
+	}
+	%>
+	<div>
+		<%
+		if (startPage > 1) {
+		%>
+		<a href="goodslist2.jsp?pageNum=<%=startPage - 1%>">[이전]</a>
+		<%
+		}
+		%>
+
+		<%
+		for (int i = startPage; i <= endPage; i++) {
+			if (i == currentPage) {
+		%>
+		<b>[<%=i%>]
+		</b>
+		<%
+		} else {
+		%>
+		<a href="goodslist2.jsp?pageNum=<%=i%>">[<%=i%>]
+		</a>
+		<%
+		}
+		}
+		%>
+
+		<%
+		if (endPage < pageCount) {
+		%>
+		<a href="goodslist2.jsp?pageNum=<%=endPage + 1%>">[다음]</a>
+		<%
+		}
+		%>
+		<form action="/shop/main/search.jsp" method="get">
+			<input type="text" placeholder="검색어 입력">
+			<button type="submit">검색</button>
+		</form>
+	</div>
+	
 	<jsp:include page="/include/footer.jsp" />
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
