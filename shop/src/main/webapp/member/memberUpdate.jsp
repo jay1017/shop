@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="shop.member.MemberDTO" %>
-<%@ page import="shop.member.MemberDAO" %>
+<%@ page import="shop.member.MemberDTO"%>
+<%@ page import="shop.member.MemberDAO"%>
 <%
 MemberDTO mdto = new MemberDTO();
 MemberDAO mdao = new MemberDAO();
@@ -10,7 +10,7 @@ mdto = mdao.getInfo(sid);
 String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여성으로 보여주기 위해 별도의 메서드 사용
 %>
 
-<%! //선언문 메서드를 만들기위해 !사용
+<%!//선언문 메서드를 만들기위해 !사용
 
 	//아이디 마스킹 처리
 	public String maskId(String id) {
@@ -31,7 +31,7 @@ String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여
 			return sb.toString();
 		}
 	}
-	
+
 	//이름 마스킹 처리
 	public String maskName(String name) {
 		if (name == null || name.trim().isEmpty())
@@ -57,11 +57,11 @@ String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여
 	public String maskPhone(String phone) {
 		if (phone == null || phone.length() < 10)
 			return phone; //만약 전화번호가 없거나 전화번호의 전체 길이가 10보다 작다면 원래의 값을 전달
-			//10으로 한 이유 010은 11자리 이지만 017이나 011등은 10자리로 지정되어 있기 때문
+		//10으로 한 이유 010은 11자리 이지만 017이나 011등은 10자리로 지정되어 있기 때문
 		return phone.substring(0, 3) + "-****-" + phone.substring(phone.length() - 4);
-			//번호의 첫 3자리와 마지막 4자리는 기본값으로 표시하고 가운데 번호는 -****-로 표시
+		//번호의 첫 3자리와 마지막 4자리는 기본값으로 표시하고 가운데 번호는 -****-로 표시
 	}
-	
+
 	//이메일 마스킹 처리
 	public String maskEmail(String email) {
 		if (email == null || !email.contains("@"))
@@ -70,71 +70,124 @@ String SetGender = mdao.setGender(sid); //해당 성별 번호를 남성 및 여
 		String id = email.substring(0, index); //이메일의 첫 글자부터 @가 위치하기 전까지의 값 지정
 		if (id.length() <= 2) //아이디에 해당하는 길이가 2이하라면
 			return id.charAt(0) + "*****" + email.substring(index);
-			// 첫글자를 제외한 나머지 값에 *****표시후 @부터 뒷자리까지 표시
+		// 첫글자를 제외한 나머지 값에 *****표시후 @부터 뒷자리까지 표시
 		return id.substring(0, 2) + "*****" + email.substring(index);
 		// 두번째 글자까지 기본값 출력
-}%>
+	}%>
 <style>
-.info-container {
-	width: 800px;
-	margin: 50px auto;
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+	background-color: #f3f2ee !important;
+	margin: 0;
+	padding: 0;
 }
 
-.info-title {
-	font-size: 24px;
-	font-weight: bold;
-	margin-bottom: 20px;
+.profile-container {
+	max-width: 600px;
+	margin: 80px auto;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+	padding: 40px 30px;
 }
 
-.info-section-title {
-	font-size: 18px;
+.profile-container h2 {
+	text-align: center;
+	font-size: 22px;
 	font-weight: bold;
-	margin-top: 40px;
-	border-bottom: 2px solid #000;
-	padding-bottom: 5px;
+	margin-bottom: 30px;
+}
+
+.profile-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border-top: 1px solid #eee;
+}
+
+.profile-list li {
+	padding: 18px 0;
+	border-bottom: 1px solid #eee;
+	font-size: 15px;
+	font-weight: 500;
+	color: #111;
+}
+
+.profile-list li span {
+	display: block;
+	margin-top: 5px;
+	color: #888;
+	font-size: 14px;
+}
+
+.black-btn {
+	margin-top: 20px;
+	width: 100%;
+	background-color: #000;
+	color: #fff;
+	padding: 12px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: 0.3s;
+}
+
+.black-btn:hover {
+	background-color: #333;
 }
 </style>
 <html>
 <head>
+<meta name="description" content="Male_Fashion Template">
+<meta name="keywords" content="Male_Fashion, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title><%=mdto.getMname()%>님의 정보</title>
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
+<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/elegant-icons.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/magnific-popup.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/nice-select.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/slicknav.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/style.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/font.css">
 </head>
 <body>
-	<a href="/shop/member/memberInfo.jsp">
-		<div>
-			이전 페이지
-		</div>
-	</a>
-	<div class="info-container">
-		<div class="info-title">회원정보 확인</div>
-		<br />
-		<div class="info-section-title">회원정보</div>
-		<table>
-			<tr>
-				<td>아이디</td>
-				<td><%=maskId(mdto.getMid())%></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><%=maskName(mdto.getMname())%></td>
-			</tr>
-			<tr>
-				<td>성별</td>
-				<td><%=SetGender%></td>
-			</tr>
-			<tr>
-				<td>전화번호</td>
-				<td><%=maskPhone(mdto.getMphone())%></td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td><%=maskEmail(mdto.getMemail())%></td>
-			</tr>
-		</table>
-		<div align="right">
-			<input type="button" value="회원정보 수정" onclick="updateMpwCheck()">
-		</div>
+	<jsp:include page="/include/header.jsp"></jsp:include>
+	<div class="profile-container">
+		<h2>
+			<%=mdto.getMname()%>님의 회원정보
+		</h2>
+		<ul class="profile-list">
+			<li>아이디<span><%=maskId(mdto.getMid())%></span></li>
+			<li>성별<span><%=SetGender%></span></li>
+			<li>전화번호<span><%=maskPhone(mdto.getMphone())%></span></li>
+			<li>이메일<span><%=maskEmail(mdto.getMemail())%></span></li>
+		</ul>
+		<button class="black-btn" onclick="updateMpwCheck()">회원정보 수정</button>
 	</div>
+	<jsp:include page="/include/footer.jsp"></jsp:include>
+	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
+	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
+	<script src="/shop/resources/js/jquery.slicknav.js"></script>
+	<script src="/shop/resources/js/mixitup.min.js"></script>
+	<script src="/shop/resources/js/owl.carousel.min.js"></script>
+	<script src="/shop/resources/js/main.js"></script>
 </body>
 <script src="<%=request.getContextPath()%>/resources/js/member.js"></script>
 </html>

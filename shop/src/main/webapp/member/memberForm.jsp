@@ -34,7 +34,7 @@
 
 body {
 	font-family: 'Noto Sans KR', sans-serif;
-	background-color: #f8f8f8;
+	background-color: #f3f2ee;
 	margin: 0;
 	padding: 0;
 }
