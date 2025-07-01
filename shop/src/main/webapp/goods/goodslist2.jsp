@@ -63,86 +63,83 @@ if (endPage > pageCount)
 			<div class="col-lg-3">
 				<div>
 					<%--사이드바  --%>
-					<div class="col-lg-3">
-						<div class="shop__sidebar">
-							<div class="shop__sidebar__search">
-								<form action="#">
-									<input type="text" placeholder="검색">
-									<button type="submit"></button>
-								</form>
-							</div>
-							<div class="shop__sidebar__accordion">
-								<div class="accordion" id="accordionExample">
-									<div class="card">
-										<div class="card-heading">
-											<a data-toggle="collapse" data-target="#collapseOne">Categories</a>
-										</div>
-										<div id="collapseOne" class="collapse show"
-											data-parent="#accordionExample">
-											<div class="card-body">
-												<div class="shop__sidebar__categories">
-													<ul class="nice-scroll" tabindex="1"
-														style="overflow-y: hidden; outline: none;">
-														<li><a href="#">신발</a></li>
-														<li><a href="#">쥬얼리</a></li>
-														<li><a href="#">가방</a></li>
-														<li><a href="#">셔츠</a></li>
-														<li><a href="#">티셔츠</a></li>
-														<li><a href="#">아우터</a></li>
-														<li><a href="#">바지</a></li>
-														<li><a href="#">치마</a></li>
-													</ul>
-												</div>
+					<div class="shop__sidebar">
+						<div class="shop__sidebar__search">
+							<form action="#">
+								<input type="text" placeholder="검색">
+								<button type="submit"></button>
+							</form>
+						</div>
+						<div class="shop__sidebar__accordion">
+							<div class="accordion" id="accordionExample">
+								<div class="card">
+									<div class="card-heading">
+										<a data-toggle="collapse" data-target="#collapseOne">Categories</a>
+									</div>
+									<div id="collapseOne" class="collapse show"
+										data-parent="#accordionExample">
+										<div class="card-body">
+											<div class="shop__sidebar__categories">
+												<ul class="nice-scroll" tabindex="1"
+													style="overflow-y: hidden; outline: none;">
+													<li><a href="#">신발</a></li>
+													<li><a href="#">쥬얼리</a></li>
+													<li><a href="#">가방</a></li>
+													<li><a href="#">셔츠</a></li>
+													<li><a href="#">티셔츠</a></li>
+													<li><a href="#">아우터</a></li>
+													<li><a href="#">바지</a></li>
+													<li><a href="#">치마</a></li>
+												</ul>
 											</div>
 										</div>
 									</div>
+								</div>
 
-									<div class="card">
-										<div class="card-heading">
-											<a data-toggle="collapse" data-target="#collapseThree">Filter
-												Price</a>
-										</div>
-										<div id="collapseThree" class="collapse show"
-											data-parent="#accordionExample">
-											<div class="card-body">
-												<div class="shop__sidebar__price">
-													<ul>
-														<li><a href="#">~₩100,000</a></li>
-														<li><a href="#">₩100000 - ₩200000</a></li>
-														<li><a href="#">₩200000 - ₩300000</a></li>
-														<li><a href="#">₩300000 - ₩400000</a></li>
-														<li><a href="#">₩400000 - ₩500000</a></li>
-														<li><a href="#">₩500000+</a></li>
-													</ul>
-												</div>
+								<div class="card">
+									<div class="card-heading">
+										<a data-toggle="collapse" data-target="#collapseThree">Filter
+											Price</a>
+									</div>
+									<div id="collapseThree" class="collapse show"
+										data-parent="#accordionExample">
+										<div class="card-body">
+											<div class="shop__sidebar__price">
+												<ul>
+													<li><a href="#">~₩100,000</a></li>
+													<li><a href="#">₩100000 - ₩200000</a></li>
+													<li><a href="#">₩200000 - ₩300000</a></li>
+													<li><a href="#">₩300000 - ₩400000</a></li>
+													<li><a href="#">₩400000 - ₩500000</a></li>
+													<li><a href="#">₩500000+</a></li>
+												</ul>
 											</div>
 										</div>
 									</div>
-									<div class="card">
-										<div class="card-heading">
-											<a data-toggle="collapse" data-target="#collapseFour">Size</a>
-										</div>
-										<div id="collapseFour" class="collapse show"
-											data-parent="#accordionExample">
-											<div class="card-body">
-												<div class="shop__sidebar__size">
-													<%
-													OptionDAO odao = OptionDAO.getInstance(); // DAO 객체 생성
-													List<String> sizes = odao.getSize(); // 사이즈 리스트 가져오기
-													%>
+								</div>
+								<div class="card">
+									<div class="card-heading">
+										<a data-toggle="collapse" data-target="#collapseFour">Size</a>
+									</div>
+									<div id="collapseFour" class="collapse show"
+										data-parent="#accordionExample">
+										<div class="card-body">
+											<div class="shop__sidebar__size">
+												<%
+												OptionDAO odao = OptionDAO.getInstance(); // DAO 객체 생성
+												List<String> sizes = odao.getSize(); // 사이즈 리스트 가져오기
+												%>
 
-													<%
-													for (int i = 0; i < sizes.size(); i++) {
-														String size = sizes.get(i);
-													%>
-													<label for="<%=size%>"> <%=size%> <input
-														type="radio" name="gosize" id="<%=size%>"
-														value="<%=size%>">
-													</label><br>
-													<%
-													}
-													%>
-												</div>
+												<%
+												for (int i = 0; i < sizes.size(); i++) {
+													String size = sizes.get(i);
+												%>
+												<label for="<%=size%>"> <%=size%> <input
+													type="radio" name="gosize" id="<%=size%>" value="<%=size%>">
+												</label><br>
+												<%
+												}
+												%>
 											</div>
 										</div>
 									</div>
