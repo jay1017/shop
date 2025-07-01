@@ -2,11 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ page import="shop.goods.categoryDTO" %>
 <%@ page import="shop.goods.categoryDAO" %>
+<%@ page import="shop.cart.cartDAO" %>
+<%@ page import="shop.cart.cartDTO" %>
 <%@ page import="java.util.List" %>
 
 <%
 request.setCharacterEncoding("UTF-8");
 categoryDAO dao = categoryDAO.getInstance();
+cartDAO cdao = cartDAO.getInstance();
 int canum = Integer.parseInt(request.getParameter("canum"));
 
     List<categoryDTO> list = null;
