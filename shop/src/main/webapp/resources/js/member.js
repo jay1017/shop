@@ -21,7 +21,7 @@ function midCheck() {
 	window.open(url, "midCheck", "width=400,height=300");
 }
 
-//비밀번호 체크 js(페이지화면 출력)
+//비밀번호 체크 js(페이지화면 출력) pwSearchUpdate.jsp에서도 사용
 function pwcheck() {
 	const pw = document.getElementById("pw").value.trim();
 	const pwch = document.getElementById("pwch").value.trim();
@@ -63,7 +63,7 @@ function namecheck(){
 function phonecheck() {
 	const phoneEl = document.getElementById("phoneEl").value.trim();
 	const phonemsg = document.getElementById("phonemsg");
-	const phoneNum = /^01\d{8,9}$/; //010부터 시작하고 숫자7~8자리 뜻함(정규표현식)
+	const phoneNum = /^01\d{8,9}$/; //01부터 시작하고 숫자8~9자리 뜻함(정규표현식)
 
 	if (!phoneNum.test(phoneEl)) {
 		phonemsg.textContent = "핸드폰 번호로 입력하세요.(특수문자,공백,문자는 허용되지 않습니다.)";
@@ -165,3 +165,30 @@ function membercheck() {
 	return true;
 }
 
+//비밀번호 재설정 pwSearchUpdate.jsp 사용
+function pwUpdateCheck(){
+	const pw = document.getElementById("pw");
+	const pwch = document.getElementById("pwch");
+	
+	if(pw.value.trim() === ""){
+		alert("비밀번호를 입력하세요.");
+		pw.focus();
+		return false;
+	}
+	if(pwch.value.trim() === ""){
+		alert("비밀번호를 확인하세요.");
+		pwch.focus();
+		return false;
+	}
+	if(pw.value.length < 8){
+		alert("비밀번호는 8자리 이상입니다.");
+		pw.focus();
+		return false;
+	}
+	if(pw.value !== pwch.value){
+		alert("비밀번호가 일치하지 않습니다.");
+		pw.focus();
+		return false;
+	}
+	return true;
+}

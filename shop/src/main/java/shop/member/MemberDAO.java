@@ -196,6 +196,24 @@ public class MemberDAO {
 		}
 	}
 	
+	//세션의 mnum값을 통한 회원의 비밀번호 재설정
+	public void PwUpdateMember(int mnum,String pw) {
+		try {
+			conn = getConnection();
+			String sql = "update member2 set mpw=? where mnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pw);
+			pstmt.setInt(2, mnum);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+	}
+	
 	// =========================== admin ==========================================
 	// 회원의 수
 	public int selectCount() {

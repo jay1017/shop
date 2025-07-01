@@ -53,14 +53,15 @@ private static LoginDAO instance = new LoginDAO();
 		return result;
 	}
 	
-	public String getIdEmail(String name, String email) {
+	//이름과 이메일 값으로 해당하는 mid값 조회
+	public String getIdByEmail(String ename, String email) {
 		String id = "";
 		try {
 			conn = getConnection();
 			String sql ="select mid from member2 where mname=? and memail=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
-			pstmt.setString(1, email);
+			pstmt.setString(1, ename);
+			pstmt.setString(2, email);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				id = rs.getString(1);
@@ -75,14 +76,15 @@ private static LoginDAO instance = new LoginDAO();
 		return id;
 	}
 	
-	public String getIdPw(String name, String phone) {
+	//이름과 전화번호로 mid값 조회
+	public String getIdByPhone(String pname, String mphone) {
 		String id = "";
 		try {
 			conn = getConnection();
 			String sql = "select mid from member2 where mname=? and mphone=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
-			pstmt.setString(2, phone);
+			pstmt.setString(1, pname);
+			pstmt.setString(2, mphone);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				id = rs.getString(1);
@@ -95,5 +97,73 @@ private static LoginDAO instance = new LoginDAO();
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
 		return id;
+	}
+	
+	//아이디와 전화번호를 통한 비밀번호 조회
+	public String getPwByPhone(String id, String phone) {
+		String mid = "";
+		try {
+			conn = getConnection();
+			String sql = "select mpw from member2 where mid=? and mphone=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, phone);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mid = rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return mid;
+	}
+	
+	//아이디와 이메일을 통한 비밀번호 조회
+	public String getPwByEmail(String id, String email) {
+		String mid = "";
+		try {
+			conn = getConnection();
+			String sql = "select mpw from member2 where mid=? and mpw=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mid = rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return mid;
+	}
+	
+	//세션에 저장하기 위한 아이디값과 일치하는 mnum 조회
+	public int getMnumById(String id) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "select mnum from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return result;
 	}
 }
