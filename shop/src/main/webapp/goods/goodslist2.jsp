@@ -58,39 +58,7 @@ if (endPage > pageCount)
 	<h2>전체 상품 목록</h2>
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-9">
-				<%
-				if (goodsList != null && !goodsList.isEmpty()) {
-					for (GoodsListDTO dto : goodsList) {
-				%>
-				<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
-					<div class="card h-100">
-						<img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top"
-							alt="상품 이미지">
-						<div class="card-body">
-							<h5 class="card-title" name="gname"><%=dto.getGname()%></h5>
-							<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-							<p class="card-text">
-								가 격:<%=dto.getGprice()%>원
-							</p>
-							<p class="card-text">
-								판매가 :
-								<%=dto.getDiscount()%>원
-							</p>
-							<a href="#" class="btn btn-outline-primary btn-sm w-100">+
-								장바구니 담기</a> <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>"
-								class="btn btn-outline-primary btn-sm w-100">구매하기</a>
-						</div>
-					</div>
-				</div>
-				<%
-				}
-				%>
-			</div>
-			<div>
-		<%--사이드바 작업 
-	size 는 distict 로 중복제거 후 다 나오게 하기
-	color 는 빼고 --%>
+		<div><%--사이드바  --%>
 		<div class="col-lg-3">
 			<div class="shop__sidebar">
 				<div class="shop__sidebar__search">
@@ -178,7 +146,36 @@ if (endPage > pageCount)
 				</div>
 			</div>
 		</div>
-	</div>
+	</div><%--사이드바 끝 --%>
+			<div class="col-lg-9">
+				<%
+				if (goodsList != null && !goodsList.isEmpty()) {
+					for (GoodsListDTO dto : goodsList) {
+				%>
+				<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+					<div class="card h-100">
+						<img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top"
+							alt="상품 이미지">
+						<div class="card-body">
+							<h5 class="card-title" name="gname"><%=dto.getGname()%></h5>
+							<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+							<p class="card-text">
+								가 격:<%=dto.getGprice()%>원
+							</p>
+							<p class="card-text">
+								판매가 :
+								<%=dto.getDiscount()%>원
+							</p>
+							<a href="#" class="btn btn-outline-primary btn-sm w-100">+
+								장바구니 담기</a> <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>"
+								class="btn btn-outline-primary btn-sm w-100">구매하기</a>
+						</div>
+					</div>
+				</div>
+				<%
+				}
+				%>
+			</div>
 		</div>
 		
 	</div>
