@@ -98,7 +98,7 @@ public class GoodsListDAO {
 		try {
 			conn = getConnection();
 			String sql = "select * from"
-					+ "(select rownum rnum, a.* from(select gnum, canum, gname, gprice, gcontent, ginum, (gprice-(gprice*discount/100)) as discount, gread"
+					+ "(select rownum rnum, a.* from(select gnum, canum, gname, gprice, gcontent, ginum, (gprice-(gprice*discount/100)) as discount, gread "
 					+ "from goods order by gnum desc) a where rownum<=?) where rnum >=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, end);

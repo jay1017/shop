@@ -22,7 +22,7 @@ color 는 빼고
 	int start = (currentPage - 1) * pageSize + 1; //2번 페이지로 갈 경우 11부터 시작
 	int end = currentPage * pageSize; // 11~20까지
 	int count = dao.getGoodsCount(); //전체 상품 수
-	 List<GoodsListDTO> goodsList = dao.getGoods(start, end); 
+	List<GoodsListDTO> goodsList = dao.getGoods(start, end); 
 	int pageCount = (count/pageSize) + (count % pageSize == 0 ? 0 : 1);
 	int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
 	int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
