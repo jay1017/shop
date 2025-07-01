@@ -80,6 +80,7 @@ color 는 빼고
   <button type="submit">검색</button>
 </form>
 		</div>
+		<jsp:include page="/include/footer.jsp" />
 </body>
 </html>
 		
