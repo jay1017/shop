@@ -188,7 +188,15 @@
                                 <div class="tab-pane" id="tabs-6" role="tabpanel">
                                     <div class="product__details__tab__content">
                                         <div class="product__details__tab__content__item">
-                                            <%-- 여기에 작업 --%>
+                                            <div>
+                                            	<div>
+                                            	작성자:
+                                            	</div>
+                                            	<form>
+                                            	<input type="text" name="rcontent"/>
+                                            	
+                                            	</form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

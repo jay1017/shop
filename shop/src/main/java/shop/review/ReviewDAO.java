@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class ReviewDAO {
-	public class MainDAO {
 		private static ReviewDAO instance = new ReviewDAO();
 
 		// DAO를 가져오는 역할
@@ -20,7 +19,7 @@ public class ReviewDAO {
 		ResultSet rs = null;
 
 		// DAO 생성자
-		private MainDAO() {
+		private ReviewDAO() {
 		}
 
 		// 커넥션 연결
@@ -62,4 +61,4 @@ public class ReviewDAO {
 			}
 		}
 	}
-}
+
