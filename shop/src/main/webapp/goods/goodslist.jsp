@@ -23,7 +23,7 @@ color 는 빼고
 	int end = currentPage * pageSize; // 11~20까지
 	int count = dao.getGoodsCount(); //전체 상품 수
 	int pageCount = (count/pageSize) + (count % pageSize == 0 ? 0 : 1);
-	int pageBlock = 10; // 한 화면에 보여줄 페이지 링크 수
+	int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
 	int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
 	int endPage = startPage + pageBlock - 1;
 	if(endPage > pageCount) endPage = pageCount;
@@ -54,3 +54,25 @@ color 는 빼고
         <%
             }
         %>
+        </div>
+        <div >
+			<%if(startPage > 1){%>
+				<a href="gooodslist.jsp?pageNum=<%=startPage-1 %>">[이전]</a>
+			<% } 
+			
+				for(int i = startPage; i <= endPage; i++){
+					if(i == currentPage){%>
+						<b>[<%=i %>]</b>
+					<%} else{%>
+							<a href="goodsist.jsp?pageNum=<%= i %>">[<%= i %>]</a>
+					<%} %>
+				<%}%>
+				
+			<%if(endPage < pageCount){%>
+				<a href="goodslist.jsp?pageNum=<%=endPage+1 %>">[다음]</a>
+			<%}%>
+			<form action="search.jsp" method="get">
+  <input type="text" placeholder="검색어 입력">
+  <button type="submit">검색</button>
+</form>
+		</div>
