@@ -64,40 +64,18 @@ if (endPage > pageCount)
 		if (goodsList != null && !goodsList.isEmpty()) {
 			for (GoodsListDTO dto : goodsList) {
 		%>
-		<div class="product__item">
-                                <div class="product__item__pic set-bg" >
-                                 <img src="/shop/upload/<%=dto.getGiname()%>" class="img-fluid" alt="상품 이미지">
-                                    <ul class="product__hover">
-                                        <li><a href="#"><img src="img/icon/heart.png" alt=""></a></li>
-                                        <li><a href="#"><img src="img/icon/compare.png" alt=""> <span>Compare</span></a>
-                                        </li>
-                                        <li><a href="#"><img src="img/icon/search.png" alt=""></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><%=dto.getGname() %></h6>
-                                    <a href="#" class="add-cart">+ 장바구니 담기</a>
-                                    <div class="rating">
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                        <i class="fa fa-star-o"></i>
-                                    </div>
-                                    <h5><%=dto.getGprice() %> 원</h5>
-                                    <div class="product__color__select">
-                                        <label for="pc-4">
-                                            <input type="radio" id="pc-4">
-                                        </label>
-                                        <label class="active black" for="pc-5">
-                                            <input type="radio" id="pc-5">
-                                        </label>
-                                        <label class="grey" for="pc-6">
-                                            <input type="radio" id="pc-6">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+		<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+			<div class="card h-100">
+				<img src="<%=dto.getGiname()%>" class="card-img-top"
+					alt="상품 이미지">
+				<div class="card-body">
+					<h5 class="card-title"><%=dto.getGname()%></h5>
+					<p class="card-text"><%=dto.getGprice()%>원
+					</p>
+					<a href="#" class="btn btn-outline-primary btn-sm">+ 장바구니 담기</a>
+				</div>
+			</div>
+		</div>
 		<%
 		}
 		} else {
