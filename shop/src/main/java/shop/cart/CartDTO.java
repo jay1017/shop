@@ -1,6 +1,6 @@
 package shop.cart;
 
-public class cartDTO {
+public class CartDTO {
 	private String gname;//상품명
 	private int gprice;//판매가
 	private String giname;//이미지

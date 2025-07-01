@@ -9,22 +9,22 @@ import java.util.List;
 
 import shop.main.GoodsDTO;
 
-public class cartDAO {
+public class CartDAO {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 
-	private static cartDAO instance = new cartDAO();
+	private static CartDAO instance = new CartDAO();
 
-	public static cartDAO getInstance() {
+	public static CartDAO getInstance() {
 		return instance;
 	}
 
-	private cartDAO() {
+	private CartDAO() {
 	}
 
-//DB 젒고
+	//DB 접속
 	private Connection getConnection() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -64,9 +64,9 @@ public class cartDAO {
 		}
 	}
 
-//상품번호에 맞는 상품 정보 가져오기
-	public cartDTO getCartGoods(int gnum) {
-		cartDTO dto = null;
+	//상품번호에 맞는 상품 정보 가져오기
+	public CartDTO getCartGoods(int gnum) {
+		CartDTO dto = null;
 		try {
 			conn = getConnection();
 			String sql = "select gnum, gname, gprice, giname, discount from goods where gnum=?";
@@ -74,7 +74,7 @@ public class cartDAO {
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				dto = new cartDTO();
+				dto = new CartDTO();
 				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
@@ -88,37 +88,38 @@ public class cartDAO {
 		}
 		return dto;
 	}
-	//장바구니에 담기
-	public cartDTO getCartAdd(int gnum) {
-		cartDTO dto = null;
+
+	// 장바구니 조회
+	public CartDTO getCart(int gnum) {
+		CartDTO dto = null;
 		try {
 			conn = getConnection();
 			String sql = "select gnum, gname, gprice, ginum, discount from goods where gnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				dto = new cartDTO();
+			while (rs.next()) {
+				dto = new CartDTO();
 				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setGinum(rs.getInt("ginum"));
-				dto.setDiscount(rs.getInt("discount"));	
+				dto.setDiscount(rs.getInt("discount"));
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 		return dto;
 	}
-//장바구니에 상품 넣기
-	public void insertCart(cartDTO dto) {
+
+	//장바구니에 상품 넣기
+	public int insertCart(CartDTO dto) {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "insert into cart(cnum, mnum, gnum, canum, ccount, ginum) "
-					+ "values(cart_seq.nextval, ?, ?, ?, ?, ?)";
+			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getMnum());
 			pstmt.setInt(2, dto.getGnum());
@@ -126,28 +127,29 @@ public class cartDAO {
 			pstmt.setInt(4, dto.getCcount());
 			pstmt.setInt(5, dto.getGinum());
 			result = pstmt.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
-		return;
+		return result;
 	}
-	//회원ID로 회원번호 조회
+
+	// 회원ID로 회원번호 조회
 	public int getMnum(String sid) {
-		int mnum=0;
+		int mnum = 0;
 		try {
 			conn = getConnection();
 			String sql = "select mnum from member2 where mid=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, sid);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				mnum = rs.getInt("mnum");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 		return mnum;

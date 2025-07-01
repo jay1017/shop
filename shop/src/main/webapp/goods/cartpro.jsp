@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.goods.categoryDTO"%>
-<%@ page import="shop.cart.cartDAO" %>
-<%@ page import="shop.cart.cartDTO" %>
+<%@ page import="shop.cart.CartDAO" %>
+<%@ page import="shop.cart.CartDTO" %>
 <%@ page import="shop.member.MemberDAO" %>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
@@ -11,8 +11,8 @@
 //로그인 확인
 String sid = (String) session.getAttribute("sid");
 int gnum = Integer.parseInt(request.getParameter("gnum"));
-cartDAO dao = cartDAO.getInstance();
-cartDTO dto = dao.getCartAdd(gnum);
+CartDAO dao = CartDAO.getInstance();
+CartDTO dto = dao.getCartAdd(gnum);
 
 if (dto == null) {
 %>

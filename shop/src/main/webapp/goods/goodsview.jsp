@@ -32,7 +32,7 @@
     <meta name="keywords" content="Male_Fashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Male-Fashion | Template</title>
+    <title>ODEZ</title>
     <!-- Css Styles -->
     <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css">
@@ -141,7 +141,8 @@
                                         <input type="text" value="1">
                                     </div>
                                 </div>
-                                <a href="#" class="primary-btn">장바구니 담기</a>
+                                <a href="/shop/cart/cartInsertPro.jsp?gnum=<%=goods.getGnum() %>" class="primary-btn">장바구니 담기</a>
+                                <a href="/buy/buyInsert.jsp?gnum=<%=goods.getGnum() %>" class="primary-btn">구매하기</a>
                             </div>
                         </div>
                     </div>
