@@ -37,6 +37,7 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				mdto = new MemberDTO();
+				mdto.setMnum(rs.getInt("mnum"));
 				mdto.setMid(rs.getString("mid"));
 				mdto.setMpw(rs.getString("mpw"));
 				mdto.setMname(rs.getString("mname"));
@@ -88,6 +89,7 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				mdto = new MemberDTO();
+				mdto.setMnum(rs.getInt("mnum"));
 				mdto.setMid(rs.getString("mid"));
 				mdto.setMpw(rs.getString("mpw"));
 				mdto.setMname(rs.getString("mname"));
