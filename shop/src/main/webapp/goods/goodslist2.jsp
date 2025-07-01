@@ -60,6 +60,8 @@ if (endPage > pageCount)
 	<h1>상품목록</h1>
 	<h2>전체 상품 목록</h2>
 	<div>
+		<div class="container">
+  			<div class="row">
 		<%
 		if (goodsList != null && !goodsList.isEmpty()) {
 			for (GoodsListDTO dto : goodsList) {
@@ -84,6 +86,7 @@ if (endPage > pageCount)
     <%
       }
     %>
+    </div>
   </div>
 </div>
 		<%
