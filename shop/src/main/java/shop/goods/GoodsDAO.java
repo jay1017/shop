@@ -102,7 +102,7 @@ public class GoodsDAO {
 		List<OptionDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select gonum, gosize from goods_option go, goods g where g.gnum = go.gnum and g.gname like '%" + gname + "%'";
+			String sql = "select go.gonum, go.gosize from goods_option go, goods g where g.gnum = go.gnum and g.gname like '%" + gname + "%' order by go.gonum";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {

@@ -45,7 +45,15 @@
 		if(count > 0) {
 			list = dao.selectList(startRow, endRow); 
 		}
+		
+		String admin = (String) session.getAttribute("admin");
 	%>
+	<% if(admin == null) { %>
+		<script>
+			alert("로그인 후 이용 해 주세요.");
+			location.href="/shop/admin/login.jsp";
+		</script>
+	<% } else { %>
 	<div class="wrapper">
 		<jsp:include page="/admin/include/sidebar.jsp"></jsp:include>
 		<div class="main">
@@ -94,7 +102,7 @@
 													<% } %>
 												</td>
 												<td class="ps-0">
-													<button class="btn btn-warning" onclick="deleteMsg('', '/shop/admin/categoryDelete.jsp?canum=');">삭제</button>
+													<button class="btn btn-warning" onclick="deleteMsg('<%=dto.getMnum() %>', '/shop/admin/memberDelete.jsp?mnum=');">삭제</button>
 												</td>
 											</tr>
 										<% }
@@ -134,5 +142,6 @@
 			</main>
 		</div>	
 	</div>
+	<% } %>
 </body>
 </html>
