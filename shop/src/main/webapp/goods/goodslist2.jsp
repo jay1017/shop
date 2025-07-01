@@ -136,7 +136,7 @@ if (endPage > pageCount)
 												%>
 												<label for="<%=size%>"> <%=size%> <input
 													type="radio" name="gosize" id="<%=size%>" value="<%=size%>">
-												</label><br>
+												</label>
 												<%
 												}
 												%>
