@@ -64,21 +64,31 @@ if (endPage > pageCount)
 		if (goodsList != null && !goodsList.isEmpty()) {
 			for (GoodsListDTO dto : goodsList) {
 		%>
-		<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
-			<div class="card h-100">
-				<img src="<%=dto.getGiname()%>" class="card-img-top"
-					alt="상품 이미지">
-				<div class="card-body">
-					<h5 class="card-title"><%=dto.getGname()%></h5>
-					<p class="card-text"><%=dto.getGprice()%>원
-					</p>
-					<a href="#" class="btn btn-outline-primary btn-sm">+ 장바구니 담기</a>
-				</div>
-			</div>
-		</div>
+		 <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+      <div class="card h-100">
+        <img src="/shop/upload/<%=dto.getGiname()%>" class="card-img-top" alt="상품 이미지">
+        <div class="card-body">
+          <h5 class="card-title"><%= dto.getGname() %></h5>
+          <p class="card-text"><%= dto.getGprice() %>원</p>
+          <div class="rating mb-2">
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o"></i>
+          </div>
+          <a href="#" class="btn btn-outline-primary btn-sm w-100">+ 장바구니 담기</a>
+        </div>
+      </div>
+    </div>
+    <%
+      }
+    %>
+  </div>
+</div>
 		<%
 		}
-		} else {
+		 else {
 		%>
 		<p>등록된 상품이 없습니다.</p>
 		<%
