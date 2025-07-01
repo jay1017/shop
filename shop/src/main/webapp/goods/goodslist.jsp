@@ -11,8 +11,8 @@ color 는 빼고
 	할거하고 시작--%>
 	<% 
 	request.setCharacterEncoding("UTF-8");
-	  GoodsListDAO dao = GoodsListDAO.getInstance(); // DAO 객체 생성
-    List<GoodsListDTO> goodsList = dao.getGoods(); // 전체 상품 목록 가져오기
+	  GoodsListDAO dao = GoodsListDAO.getInstance(); // DAO 불러오고
+    List<GoodsListDTO> goodsList = dao.getGoods(); // 전체 상품 목록 리스트화
 	%>
     <header>
 <title>상품 전체 목록</title>

@@ -69,7 +69,7 @@ public class GoodsListDAO {
 		List<GoodsListDTO> list = null;
 		try {
 			conn = getConnection();
-			String sql = "select * from goods order by gnum desc";
+			String sql = "select gnum,canum,gname,gprice,gcontent,ginum,discount,gread from goods order by gnum desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
