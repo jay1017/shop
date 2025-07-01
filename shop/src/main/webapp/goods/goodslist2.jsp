@@ -56,8 +56,8 @@ if (endPage > pageCount)
 	<jsp:include page="/include/header.jsp" />
 	<h1>상품목록</h1>
 	<h2>전체 상품 목록</h2>
-	<div class="row">
-		<div class="container">
+	<div class="container">
+		<div class="row">
 			<div class="col-lg-9">
 				<%
 				if (goodsList != null && !goodsList.isEmpty()) {
@@ -87,8 +87,7 @@ if (endPage > pageCount)
 				}
 				%>
 			</div>
-		</div>
-		<div>
+			<div>
 		<%--사이드바 작업 
 	size 는 distict 로 중복제거 후 다 나오게 하기
 	color 는 빼고 --%>
@@ -180,6 +179,8 @@ if (endPage > pageCount)
 			</div>
 		</div>
 	</div>
+		</div>
+		
 	</div>
 	<%
 	} else {
