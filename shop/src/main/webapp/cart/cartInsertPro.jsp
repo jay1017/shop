@@ -20,6 +20,7 @@
 		int gnum = Integer.parseInt(request.getParameter("gnum"));
 		String sid = (String) session.getAttribute("sid");
 		int ccount = Integer.parseInt(request.getParameter("ccount"));
+		int gonum = Integer.parseInt(request.getParameter("gonum"));
 
 		cart.setCcount(ccount);
 		
@@ -30,6 +31,7 @@
 		cart.setCanum(gdto.getCanum());
 		cart.setGnum(gdto.getGnum());
 		cart.setGinum(gdto.getGinum());
+		cart.setGonum(gonum);
 		
 		// 회원 조회
 		MemberDAO mdao = new MemberDAO();
@@ -46,6 +48,8 @@
 				var confirm = confirm("장바구니로 이동 하시겠습니까?");
 				if(confirm == true) {
 					location.href="/shop/cart/cart.jsp";
+				} else {
+					location.href="/shop/main/main.jsp";
 				}
 			</script>
 		<% } else {  %>

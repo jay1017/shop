@@ -1,6 +1,6 @@
-package shop.buy;
+package shop.admin;
 
-public class BuyDTO {
+public class BuyerDTO {
 	private int bnum;
 	private int mnum;
 	private int gnum;
@@ -10,10 +10,14 @@ public class BuyDTO {
 	private String address;
 	private String address2;
 	private String address3;
-	private int zip;
+	private String zip;
 	private String note;
 	private int buynum;
-	private int gonum;
+	private int bstatus;
+	
+	private String mid;
+	private String mname;
+	private String gname;
 	
 	public int getBnum() {
 		return bnum;
@@ -69,10 +73,10 @@ public class BuyDTO {
 	public void setAddress3(String address3) {
 		this.address3 = address3;
 	}
-	public int getZip() {
+	public String getZip() {
 		return zip;
 	}
-	public void setZip(int zip) {
+	public void setZip(String zip) {
 		this.zip = zip;
 	}
 	public String getNote() {
@@ -87,10 +91,28 @@ public class BuyDTO {
 	public void setBuynum(int buynum) {
 		this.buynum = buynum;
 	}
-	public int getGonum() {
-		return gonum;
+	public int getBstatus() {
+		return bstatus;
 	}
-	public void setGonum(int gonum) {
-		this.gonum = gonum;
+	public void setBstatus(int bstatus) {
+		this.bstatus = bstatus;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	public String getMname() {
+		return mname;
+	}
+	public void setMname(String mname) {
+		this.mname = mname;
+	}
+	public String getGname() {
+		return gname;
+	}
+	public void setGname(String gname) {
+		this.gname = gname;
 	}
 }

@@ -52,6 +52,13 @@
 			bcountes.add(Integer.parseInt(b));
 		}
 		
+		// 옵션 번호 배열로 변환
+		List<Integer> gonumes = new ArrayList<>();
+		String[] gonumArr = request.getParameterValues("gonum");
+		for(String g : gonumArr) {
+			gonumes.add(Integer.parseInt(g));
+		}
+		
 		// 받아온 값 대입 
 		int zip = Integer.parseInt(request.getParameter("zip"));
 		String address = request.getParameter("address");
@@ -75,6 +82,7 @@
 			dto.setCanum(canumes.get(i));
 			dto.setBcount(bcountes.get(i));
 			dto.setGinum(ginumes.get(i));
+			dto.setGonum(gonumes.get(i));
 			int result = dao.insert(dto);
 			if(result == 0) { %>
 				<script>

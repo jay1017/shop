@@ -40,7 +40,6 @@
 			location.href="/shop/member/loginForm.jsp";
 		</script>
 	<% } else { 
-		int ccount = Integer.parseInt(request.getParameter("bcount"));
 		String[] gnumArr = request.getParameterValues("gnum");
 		
 		List<Integer> gnumes = new ArrayList<>();
@@ -178,11 +177,20 @@
                                 <div class="checkout__order__products">상품 <span>가격</span></div>
                                 <ul class="checkout__total__products">
                                 	<% 
-                                		String[] bcountArr = request.getParameter("bcount").split(",");
+                                		// 수량 배열 list 타입으로 변환
+                                		String[] bcountArr = request.getParameterValues("bcount");
                                 		List<Integer> bcountList = new ArrayList<>();
                                 		
                                 		for(String b : bcountArr) {
                                 			bcountList.add(Integer.parseInt(b));
+                                		}
+                                		
+                                		// 옵션 번호 배열 list 타입으로 변환
+                                		String[] gonumArr = request.getParameterValues("gonum");
+                                		List<Integer> gonumList = new ArrayList<>();
+                                		
+                                		for(String g : gonumArr) {
+                                			gonumList.add(Integer.parseInt(g));
                                 		}
                                 		
                                 		int total = 0;
@@ -193,6 +201,7 @@
                                 	<% for(int i = 0; i < list.size(); i++) { 
                                 		GoodsDTO goods = list.get(i);
                                 		int bcount = bcountList.get(i);
+                                		int gonum = gonumList.get(i);
 	                                    String gprice = numberFormat.format(goods.getGprice());
 	                                    total += goods.getGprice();
 	                                    if(i == list.size() - 1) {
@@ -206,6 +215,7 @@
                                 			<span>&#8361; <%=gprice %></span>
                                 			<input type="hidden" name="gnum" value="<%=goods.getGnum()%>"/>
                                 			<input type="hidden" name="bcount" value="<%=bcount %>" />
+                                			<input type="hidden" name="gonum" value="<%=gonum%>"/>
                                 		</li>
                                 	<% } %>
                                 </ul>

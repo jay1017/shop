@@ -41,6 +41,11 @@
 					<span class="align-middle">회원</span>
 				</a>
 			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="/shop/admin/buyer.jsp">
+					<span class="align-middle">주문내역</span>
+				</a>
+			</li>
 		</ul>
 	</div>
 </nav>

@@ -136,24 +136,26 @@
                                     <span>사이즈:</span>
                                     <% for(OptionDTO dto : list) { %>
                                     <label id="<%=dto.getGosize()%>"><%=dto.getGosize() %>
-                                    	<input type="radio" id="<%=dto.getGosize()%>" value="<%=dto.getGonum() %>">
+                                    	<input type="radio" name="gonum" id="<%=dto.getGosize()%>" value="<%=dto.getGonum() %>">
                                     </label>
                                     <% } %>
                                 </div>
                             </div>
-                            <div class="product__details__cart__option">
+                            <div class="product__details__cart__option" style="display: flex; justify-content: center;">
                             	<form action="/shop/cart/cartInsertPro.jsp" method="post" onsubmit="checkLogin(event)">
-                            		<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
+                            		<input type="hidden" value="<%=session.getAttribute("sid") %>" name="sid" />
+                            		<input type="hidden" name="gonum" id="gonum1"/>
 	                                <div class="quantity">
 	                                    <div class="pro-qty">
-	                                        <input type="text" value="1" name="ccount" id="ccount1">
+	                                        <input type="text" value="1" name="ccount" id="ccount">
 	                                    </div>
 	                                </div>
                                 	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
                                 	<input type="submit" value="장바구니 담기" class="primary-btn" style="border: none;"/>
                                 </form>
-                                <form action="/shop/buy/buyInsert.jsp" method="post" onsubmit="checkLogin(event)">
-                                	<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
+                                <form action="/shop/buy/buyInsert.jsp" method="post" onsubmit="checkLogin(event)" style="margin-left: 20px;">
+                                	<input type="hidden" value="<%=session.getAttribute("sid") %>" name="sid" />
+                                	<input type="hidden" name="gonum" id="gonum2"/>
                                 	<input type="hidden" name="bcount" id="bcount"/>
                                 	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
                                 	<input type="submit" value="구매하기" class="primary-btn" style="border: none;"/>
@@ -161,15 +163,31 @@
                                 <script>
                                 	function checkLogin(event) {
                                 		var sid = document.getElementById("sid");
-                                		var ccount1 = document.getElementById("ccount1");
+                                		var ccount = document.getElementById("ccount");
                                 		var bcount = document.getElementById("bcount");
+                                		
+                                		var gonum = document.getElementsByName("gonum");
+                                		var gonum1 = document.getElementById("gonum1");
+                                		var gonum2 = document.getElementById("gonum2");
+                                		
+                                		for(var i = 0; i < gonum.length; i++) {
+                                			if(gonum[i].checked) {
+                                				gonum1.value = gonum[i].value;
+                                				gonum2.value = gonum[i].value;
+                                			}
+                                		}
+                                		
+                                		bcount.value = ccount.value;
+                                		
+                                		if(gonum1.value == null || gonum1.value == "" || gonum2.value == null || gonum2.value == "") {
+                                			alert("상품 옵션을 선택 해 주세요.");
+                                			event.preventDefault();
+                                		}
                                 		
                                 		if(sid.value.trim() == 'null') {
                                 			alert("로그인 이후 가능합니다.");
                                 			event.preventDefault();
                                 			location.href="/shop/member/loginForm.jsp";
-                                		} else {
-                                			bcount.value = ccount1.value;
                                 		}
                                 	}
                                 </script>

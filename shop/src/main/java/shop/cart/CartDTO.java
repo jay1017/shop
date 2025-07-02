@@ -11,6 +11,7 @@ public class CartDTO {
 	private int canum;//카테고리 번호
 	private int ccount;//주문수량
 	private int ginum;//이미지 번호
+	private int gonum;//굿즈옵션번호
 	
 	public int getDiscount() {
 		return discount;
@@ -72,5 +73,10 @@ public class CartDTO {
 	public void setGinum(int ginum) {
 		this.ginum = ginum;
 	}
-	
+	public int getGonum() {
+		return gonum;
+	}
+	public void setGonum(int gonum) {
+		this.gonum = gonum;
+	}
 }

@@ -139,20 +139,45 @@ public class BuyDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "insert into buyer values(buyer_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			
+			// 기존 수량 체크
+			int gocount = 0;
+			String sql = "select gocount from goods_option where gonum = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getMnum());
-			pstmt.setInt(2, dto.getGnum());
-			pstmt.setInt(3, dto.getCanum());
-			pstmt.setInt(4, dto.getBcount());
-			pstmt.setInt(5, dto.getGinum());
-			pstmt.setString(6, dto.getAddress());
-			pstmt.setString(7, dto.getAddress2());
-			pstmt.setInt(8, dto.getZip());
-			pstmt.setString(9, dto.getNote());
-			pstmt.setString(10, dto.getAddress3());
-			pstmt.setInt(11, dto.getBuynum());
-			result = pstmt.executeUpdate();
+			pstmt.setInt(1, dto.getGonum());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				gocount = rs.getInt(1);
+			}
+			
+			if(gocount > 0) {
+				int update = 0;
+				sql = "update goods_option set gocount = ? where gonum = ?";
+				pstmt = conn.prepareStatement(sql);
+				int count = gocount - dto.getBcount();
+				pstmt.setInt(1, count);
+				pstmt.setInt(2, dto.getGonum());
+				update = pstmt.executeUpdate();
+				
+				if(update == 1) {
+					sql = "insert into buyer values(buyer_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, dto.getBuynum());
+					pstmt.setInt(2, dto.getMnum());
+					pstmt.setInt(3, dto.getGnum());
+					pstmt.setInt(4, dto.getCanum());
+					pstmt.setInt(5, dto.getBcount());
+					pstmt.setInt(6, dto.getGinum());
+					pstmt.setInt(7, dto.getGonum());
+					pstmt.setString(8, dto.getAddress());
+					pstmt.setString(9, dto.getAddress2());
+					pstmt.setString(10, dto.getAddress3());
+					pstmt.setInt(11, dto.getZip());
+					pstmt.setString(12, dto.getNote());
+					pstmt.setInt(13, 0);
+					result = pstmt.executeUpdate();
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
