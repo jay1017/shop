@@ -33,7 +33,7 @@ if(canumStr != null){//카테고리별 출력
 	list = dao.getGoodsBySize(size);
 }else if(priceStr != null){//가격별 출력
 	int price = Integer.parseInt(priceStr);
-	list = dao.getGoodsByPrice(price);
+	list = dao.getGoodsByPrice(price,start,end);
 }else{//기본값(조건 없을때)
 list = dao.getGoods(start,end);
 }
