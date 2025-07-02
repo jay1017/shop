@@ -12,7 +12,7 @@
 String sid = (String) session.getAttribute("sid");
 int gnum = Integer.parseInt(request.getParameter("gnum"));
 CartDAO dao = CartDAO.getInstance();
-CartDTO dto = dao.getCartAdd(gnum);
+CartDTO dto = dao.getCartGoods(gnum);
 
 if (dto == null) {
 %>

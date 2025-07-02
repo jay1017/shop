@@ -191,9 +191,8 @@ if (endPage > pageCount)
 								<p class="card-text">
 									판매가:<%=dto.getDiscount()%>원
 								</p>
-								<a href="#" class="btn btn-outline-primary btn-sm w-100">+
-									장바구니 담기</a> <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>"
-									class="btn btn-outline-primary btn-sm w-100">구매하기</a>
+								<a href="cartpro.jsp" class="btn btn-outline-primary btn-sm w-100">+장바구니 담기</a> 
+								<a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>" class="btn btn-outline-primary btn-sm w-100">구매하기</a>
 							</div>
 						</div>
 					</div>
