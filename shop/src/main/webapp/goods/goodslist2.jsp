@@ -28,6 +28,7 @@ List<GoodsListDTO> list = null;
 //상품 진열 조건
 if(canumStr != null){//카테고리별 출력
 	int canum = Integer.parseInt(canumStr);
+	count = dao.getGoodsCount(canum);
 	list = dao.getGoodsByCate(canum,start,end);
 }else if(size != null){//사이즈별 출력
 	list = dao.getGoodsBySize(size,start,end);
