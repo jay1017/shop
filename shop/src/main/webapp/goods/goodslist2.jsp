@@ -20,7 +20,22 @@ int currentPage = Integer.parseInt(pageNum);
 int start = (currentPage - 1) * pageSize + 1; //2번 페이지로 갈 경우 11부터 시작
 int end = currentPage * pageSize; // 11~20까지
 int count = dao.getGoodsCount(); //전체 상품 수
-List<GoodsListDTO> goodsList = dao.getGoods(start, end);
+//파라미터 받기
+String canumStr = request.getParameter("canum");
+String size = request.getParameter("size");
+String priceStr = request.getParameter("price");
+List<GoodsListDTO> list = null;
+if(canumStr != null){
+	int canum = Integer.parseInt(canumStr);
+	list = dao.getGoodsByCate(canum);
+}else if(size != null){
+	list = dao.getGoodsBySize(size);
+}else if(priceStr != null){
+	int price = Integer.parseInt(priceStr);
+	list = dao.getGoodsByPrice(price);
+}else{
+list = dao.getGoods();
+}
 int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
 int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
 int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
@@ -131,7 +146,7 @@ if (endPage > pageCount)
 
 												<%
 												for (int i = 0; i < sizes.size(); i++) {
-													String size = sizes.get(i);
+													 size = sizes.get(i);
 												%>
 												<label for="<%=size%>"> <%=size%>
 												<input type="radio" name="gosize" id="<%=size%>" value="<%=size%>" onclick="location.href='goodslist2.jsp?size=<%=size %>'">
@@ -149,11 +164,10 @@ if (endPage > pageCount)
 			</div>
 			<!-- 상품 목록 -->
 			<div class="col-lg-9">
-				<h1>상품목록</h1>
 				<div class="row">
 					<%
-					if (goodsList != null && !goodsList.isEmpty()) {
-						for (GoodsListDTO dto : goodsList) {
+					if (list != null && !list.isEmpty()) {
+						for (GoodsListDTO dto : list) {
 					%>
 					<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
 						<div class="card h-100">
@@ -163,12 +177,10 @@ if (endPage > pageCount)
 							<div class="card-body">
 								<h5 class="card-title"><%=dto.getGname()%></h5></a>
 								<p class="card-text">
-									가격:
-									<%=dto.getGprice()%>원
+									가격:<%=dto.getGprice()%>원
 								</p>
 								<p class="card-text">
-									판매가:
-									<%=dto.getDiscount()%>원
+									판매가:<%=dto.getDiscount()%>원
 								</p>
 								<a href="#" class="btn btn-outline-primary btn-sm w-100">+
 									장바구니 담기</a> <a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>"
