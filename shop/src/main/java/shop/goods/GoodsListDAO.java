@@ -190,7 +190,7 @@ public class GoodsListDAO {
 		return list;
 	}
 	//가격 별 상품 출력
-		public List<GoodsListDTO> getGoodsByPrice(int price){
+		public List<GoodsListDTO> getGoodsByPrice(int price,int start, int end){
 			List<GoodsListDTO> list = new ArrayList<>();
 			try {
 				GoodsListDTO dto = new GoodsListDTO();
@@ -199,6 +199,8 @@ public class GoodsListDAO {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, price);
 				pstmt.setInt(2, price+500000);
+				pstmt.setInt(3, end);
+				pstmt.setInt(4, start);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
 					dto.setGnum(rs.getInt("gnum"));
