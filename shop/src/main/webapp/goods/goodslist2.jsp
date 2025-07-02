@@ -20,7 +20,7 @@ int currentPage = Integer.parseInt(pageNum);
 int start = (currentPage - 1) * pageSize + 1; //2번 페이지로 갈 경우 11부터 시작
 int end = currentPage * pageSize; // 11~20까지
 int count = dao.getGoodsCount(); //전체 상품 수
-//파라미터 받기
+//파라미터 받기 카테고리,사이즈,가격
 String canumStr = request.getParameter("canum");
 String size = request.getParameter("size");
 String priceStr = request.getParameter("price");
@@ -34,7 +34,7 @@ if(canumStr != null){
 	int price = Integer.parseInt(priceStr);
 	list = dao.getGoodsByPrice(price);
 }else{
-list = dao.getGoods();
+list = dao.getGoods(start,end);
 }
 int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
 int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
