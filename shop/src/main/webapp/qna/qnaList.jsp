@@ -7,7 +7,7 @@
 
     if (adminId == null) {
 %>
-    <script> 
+    <script>
         alert("로그인 후 이용해주세요.");
         history.back();  // 이전 페이지로 이동
     </script>
