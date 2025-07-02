@@ -145,9 +145,8 @@ body {
 			<button type="submit" class="login-button">로그인</button>
 
 			<div class="login-links">
-				<a href="javascript:void(0)" onclick="idSearch()" class="link-gray">아이디
-					찾기</a> <a href="javascript:void(0)" onclick="pwSearch()"
-					class="link-gray">비밀번호 찾기</a>
+				<a href="javascript:void(0)" onclick="idSearch()" class="link-gray">아이디찾기</a> 
+				<a href="javascript:void(0)" onclick="pwSearch()" class="link-gray">비밀번호 찾기</a>
 			</div>
 
 			<div class="signup-section">
