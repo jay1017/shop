@@ -171,14 +171,13 @@ public class MainDAO {
 		}
 		return list;
 	}
-	public List<GoodsDTO> getTrendGoods() { // 조회수가 일정이상인 상품의 모든정보를 가져오는 메소드
+	public List<GoodsDTO> getTrendGoods() { // 재고가 일정이하인 상품의 모든정보를 가져오는 메소드
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from goods where gread>10";
+			String sql = "select g.*,go.gocount from goods g,goods_option go where go.gnum=g.gnum and go.gocount<=100";
 			pstmt = conn.prepareStatement(sql);
 			
-
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				GoodsDTO dto = new GoodsDTO();

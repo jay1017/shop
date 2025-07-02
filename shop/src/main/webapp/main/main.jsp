@@ -11,7 +11,7 @@ GoodsImageDAO idao = GoodsImageDAO.getDAO();
 
 List<CategoryDTO> list = dao.getCate();
 List<GoodsDTO> list2 = dao.getGoods(); //모든 상품의 정보를 출력
-List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력
+List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력 
 List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 %>
 
@@ -153,7 +153,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
         <div class="row">
             <div class="col-lg-12">
                 <ul class="filter__controls">
-                    <li class="active" data-filter="*">전체 보기</li>
+                	<li class="active" data-filter="*">전체 상품</li>
                     <li data-filter=".popular">인기 상품</li>
                     <li data-filter=".sale">할인 상품</li>
                 </ul>
@@ -169,7 +169,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     int ginum = dto.getGinum();
                     GoodsImageDTO gi = idao.select(ginum);
                     String giname = gi.getGiname();
-                    if (count >= 8) break;
+                    if (count >= 12) break;
                     count++;
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix popular">
@@ -177,11 +177,6 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
                         <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
                             <span class="label">Hot</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="/shop/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="/shop/resources/img/icon/search.png" alt=""></a></li>
-                            </ul>
                         </div>
                     </a>
                     <div class="product__item__text">
@@ -203,24 +198,20 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             <% } %>
 
             <%-- 할인 상품 출력 --%>
-            <%
+            <%	
+            	int count2=0;
                 for (GoodsDTO dto : slist) {
                     int ginum = dto.getGinum();
                     GoodsImageDTO gi = idao.select(ginum);
                     String giname = gi.getGiname();
-                    if (count > 8) break;
-                    count++;
+                    if (count2 >= 12) break;
+                    count2++;
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix sale">
                 <div class="product__item">
                     <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
                         <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
                             <span class="label">Sale</span>
-                            <ul class="product__hover">
-                                <li><a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a></li>
-                                <li><a href="#"><img src="/shop/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                                <li><a href="#"><img src="/shop/resources/img/icon/search.png" alt=""></a></li>
-                            </ul>
                         </div>
                     </a>
                     <div class="product__item__text">
@@ -243,9 +234,13 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                 </div>
             </div>
             <% } %>
-
         </div>
     </div>
+	<div class="row">
+		<div class="col-lg-12 text-center">
+        	<a href="/shop/goods/goodslist.jsp" class="primary-btn">전체 상품 보기</a>
+       	</div>
+	</div>
 </section>
 <jsp:include page="/include/footer.jsp"></jsp:include>
 

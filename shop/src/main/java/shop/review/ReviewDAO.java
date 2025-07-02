@@ -72,6 +72,7 @@ public class ReviewDAO {
 				pstmt.setInt(3, dto.getCanum());
 				pstmt.setInt(4, dto.getGinum());
 				pstmt.setString(5, dto.getRcontent());
+				pstmt.executeUpdate();
 				
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -84,8 +85,10 @@ public class ReviewDAO {
 			List<ReviewDTO> list=new ArrayList<>();
 			try {
 				conn=getConnection();
-				String sql="select * from review";
+				String sql="select * from review where gnum=?";
 				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, gnum);
+				
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
 					ReviewDTO dto=new ReviewDTO();
@@ -103,7 +106,19 @@ public class ReviewDAO {
 				endConnection();
 			}
 			return list;
-			
+		}
+		public ReviewDTO getUserReview(int gnum,String sid) {
+			try {
+				conn=getConnection();
+				String sql="select * from review where gnum=? and ";
+				pstmt=conn.prepareStatement(sql);
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally{
+				endConnection();
+			}
+			return null;
 		}
 	}
 
