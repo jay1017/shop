@@ -56,6 +56,7 @@ if (endPage > pageCount)
 	<jsp:include page="/include/header.jsp" />
 	<h1>상품목록</h1>
 	<h2>전체 상품 목록</h2>
+	<input type="button" value="전체 상품 보기" onclick="location.href='goodslist2.jsp'">
 	<div class="container">
 		<div class="row">
 
@@ -82,14 +83,14 @@ if (endPage > pageCount)
 											<div class="shop__sidebar__categories">
 												<ul class="nice-scroll" tabindex="1"
 													style="overflow-y: hidden; outline: none;">
-													<li><a href="#">신발</a></li>
-													<li><a href="#">쥬얼리</a></li>
-													<li><a href="#">가방</a></li>
-													<li><a href="#">셔츠</a></li>
-													<li><a href="#">티셔츠</a></li>
-													<li><a href="#">아우터</a></li>
-													<li><a href="#">바지</a></li>
-													<li><a href="#">치마</a></li>
+													<li><a href="goodslist2.jsp?canum=22">신발</a></li>
+													<li><a href="goodslist2.jsp?canum=23">쥬얼리</a></li>
+													<li><a href="goodslist2.jsp?canum=24">가방</a></li>
+													<li><a href="goodslist2.jsp?canum=1">셔츠</a></li>
+													<li><a href="goodslist2.jsp?canum=4">티셔츠</a></li>
+													<li><a href="goodslist2.jsp?canum=5">아우터</a></li>
+													<li><a href="goodslist2.jsp?canum=6">바지</a></li>
+													<li><a href="goodslist2.jsp?canum=7">치마</a></li>
 												</ul>
 											</div>
 										</div>
@@ -98,20 +99,18 @@ if (endPage > pageCount)
 
 								<div class="card">
 									<div class="card-heading">
-										<a data-toggle="collapse" data-target="#collapseThree">Filter
-											Price</a>
+										<a data-toggle="collapse" data-target="#collapseThree">Price</a>
 									</div>
 									<div id="collapseThree" class="collapse show"
 										data-parent="#accordionExample">
 										<div class="card-body">
 											<div class="shop__sidebar__price">
 												<ul>
-													<li><a href="#">~₩100,000</a></li>
-													<li><a href="#">₩100000 - ₩200000</a></li>
-													<li><a href="#">₩200000 - ₩300000</a></li>
-													<li><a href="#">₩300000 - ₩400000</a></li>
-													<li><a href="#">₩400000 - ₩500000</a></li>
-													<li><a href="#">₩500000+</a></li>
+													<li><a href="goodslist2.jsp?price=0">~₩500,000</a></li>
+													<li><a href="goodslist2.jsp?price=500000">₩500000 - ₩1000000</a></li>
+													<li><a href="goodslist2.jsp?price=1000000">₩1000000 - ₩1500000</a></li>
+													<li><a href="goodslist2.jsp?price=1500000">₩1500000 - ₩2000000</a></li>
+													<li><a href="goodslist2.jsp?price=2000000">₩2000000 - ₩2500000</a></li>
 												</ul>
 											</div>
 										</div>
@@ -134,12 +133,11 @@ if (endPage > pageCount)
 												for (int i = 0; i < sizes.size(); i++) {
 													String size = sizes.get(i);
 												%>
-												<label for="<%=size%>"> <%=size%> <input
-													type="radio" name="gosize" id="<%=size%>" value="<%=size%>">
-												</label>
-												<%
-												}
-												%>
+												<a href="goodslist2.jsp?size=<%=size%>">
+												<label for="<%=size%>"> <%=size%>
+												<input type="radio" name="gosize" id="<%=size%>" value="<%=size%>">
+												</label></a>
+												<%}%>
 											</div>
 										</div>
 									</div>

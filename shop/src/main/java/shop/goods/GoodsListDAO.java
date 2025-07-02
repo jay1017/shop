@@ -163,5 +163,83 @@ public class GoodsListDAO {
 		}
 		return count;
 	}
-	
+	//사이즈 별 상품 출력
+	public List<GoodsListDTO> getGoodsBySize(String size){
+		List<GoodsListDTO> list = new ArrayList<>();
+		try {
+			GoodsListDTO dto = new GoodsListDTO();
+			conn = getConnection();
+			String sql = "select g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
+					+ "join goods_option go on g.gnum = go.gnum where go.gosize = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, size);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setGiname(rs.getString("giname"));
+				list.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return list;
+	}
+	//가격 별 상품 출력
+		public List<GoodsListDTO> getGoodsByPrice(int price){
+			List<GoodsListDTO> list = new ArrayList<>();
+			try {
+				GoodsListDTO dto = new GoodsListDTO();
+				conn = getConnection();
+				String sql = "select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
+						+ "join goods_option go on g.gnum = go.gnum where g.gprice > ? and g.gprice <= ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, price);
+				pstmt.setInt(2, price+500000);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					dto.setGnum(rs.getInt("gnum"));
+					dto.setGname(rs.getString("gname"));
+					dto.setGprice(rs.getInt("gprice"));
+					dto.setDiscount(rs.getInt("discount"));
+					dto.setGiname(rs.getString("giname"));
+					list.add(dto);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return list;
+		}
+		//카테고리 별 상품 출력
+				public List<GoodsListDTO> getGoodsByCate(int canum){
+					List<GoodsListDTO> list = new ArrayList<>();
+					try {
+						GoodsListDTO dto = new GoodsListDTO();
+						conn = getConnection();
+						String sql = "select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g "
+								+ "join goods_image gi on g.ginum = gi.ginum where canum=?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setInt(1, canum);
+						rs = pstmt.executeQuery();
+						while(rs.next()) {
+							dto.setGnum(rs.getInt("gnum"));
+							dto.setGname(rs.getString("gname"));
+							dto.setGprice(rs.getInt("gprice"));
+							dto.setDiscount(rs.getInt("discount"));
+							dto.setGiname(rs.getString("giname"));
+							list.add(dto);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						endConnection();
+					}
+					return list;
+				}
 }
