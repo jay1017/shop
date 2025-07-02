@@ -37,6 +37,10 @@ if(canumStr != null){//카테고리별 출력
 }else{//기본값(조건 없을때)
 list = dao.getGoods(start,end);
 }
+String para = "";
+if(canumStr != null){para += "&canum" + canumStr;}
+if(size != null){para += "&size" + size;}
+if(priceStr != null){para += "&price" + priceStr;}
 int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
 int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
 int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
@@ -84,7 +88,7 @@ if (endPage > pageCount)
 					<%--사이드바  --%>
 					<div class="shop__sidebar">
 						<div class="shop__sidebar__search">
-							<form action="#">
+							<form action="/shop/main/search.jsp">
 								<input type="text" placeholder="검색">
 								<button type="submit"></button>
 							</form>
@@ -210,7 +214,7 @@ if (endPage > pageCount)
 		<%
 		if (startPage > 1) {
 		%>
-		<a href="goodslist2.jsp?pageNum=<%=startPage - 1%>">[이전]</a>
+		<a href="goodslist2.jsp?pageNum=<%=startPage - 1%><%=para%>">[이전]</a>
 		<%
 		}
 		%>
@@ -224,7 +228,7 @@ if (endPage > pageCount)
 		<%
 		} else {
 		%>
-		<a href="goodslist2.jsp?pageNum=<%=i%>">[<%=i%>]
+		<a href="goodslist2.jsp?pageNum=<%=i%><%=para%>">[<%=i%>]
 		</a>
 		<%
 		}
@@ -234,7 +238,7 @@ if (endPage > pageCount)
 		<%
 		if (endPage < pageCount) {
 		%>
-		<a href="goodslist2.jsp?pageNum=<%=endPage + 1%>">[다음]</a>
+		<a href="goodslist2.jsp?pageNum=<%=endPage + 1%><%=para%>">[다음]</a>
 		<%
 		}
 		%>
