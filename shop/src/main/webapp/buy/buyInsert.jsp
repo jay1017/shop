@@ -32,18 +32,25 @@
 </head>
 <body>
 	<%
-		// 장바구니에 담기
-		
-		
-		int ccount = Integer.parseInt(request.getParameter("ccount"));
-		String[] gnumArr = request.getParameterValues("gnum");
 		String sid = (String) session.getAttribute("sid");
+		if(sid == null) {
+	%>
+		<script>
+			alert("로그인 후 이용 해 주세요.");
+			location.href="/shop/member/loginForm.jsp";
+		</script>
+	<% } else { 
+		int ccount = Integer.parseInt(request.getParameter("bcount"));
+		String[] gnumArr = request.getParameterValues("gnum");
 		
 		List<Integer> gnumes = new ArrayList<>();
 		
 		for(String gnum : gnumArr) {
 			gnumes.add(Integer.parseInt(gnum));
 		}
+		
+		// 장바구니에 담기
+		// 추후 작업
 		
 		BuyDAO dao = BuyDAO.getDAO();
 		List<GoodsDTO> list = dao.selectGoodsList(gnumes);
@@ -60,8 +67,8 @@
                     <div class="breadcrumb__text">
                         <h4>주문서</h4>
                         <div class="breadcrumb__links">
-                            <a href="./index.html">메인</a>
-                            <a href="./shop.html">상품</a>
+                            <a href="/shop/main/main.jsp">메인</a>
+                            <a href="/shop/goods/goodslist.jsp">상품</a>
                             <span>주문서</span>
                         </div>
                     </div>
@@ -75,7 +82,7 @@
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form action="buyInsertPro.jsp" method="post">
+                <form action="buyInsertPro.jsp" method="post" onsubmit="checkBuy(event)">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="checkout__title">주문 상세</h6>
@@ -89,11 +96,11 @@
                             </div>
                             <div class="checkout__input">
                                 <p>주소<span>*</span></p>
-                                <input type="text" id="sample6_postcode" placeholder="우편번호" name="zip">
+                                <input type="text" placeholder="우편번호" name="zip" id="zip">
 								<input type="button" onclick="zipFind()" value="우편번호 찾기" class="site-btn"><br>
-								<input type="text" id="sample6_address" placeholder="주소" name="address"><br>
-								<input type="text" id="sample6_detailAddress" placeholder="상세주소" name="address2">
-								<input type="text" id="sample6_extraAddress" placeholder="참고항목" name="address3">
+								<input type="text" placeholder="주소" name="address" id="address"><br>
+								<input type="text" placeholder="상세주소" name="address2" id="address2">
+								<input type="text" placeholder="참고항목" name="address3" id="address3">
                             </div>
                             <script>
 							    function zipFind() {
@@ -129,17 +136,17 @@
 							                        extraAddr = ' (' + extraAddr + ')';
 							                    }
 							                    // 조합된 참고항목을 해당 필드에 넣는다.
-							                    document.getElementById("sample6_extraAddress").value = extraAddr;
+							                    document.getElementById("address3").value = extraAddr;
 							                
 							                } else {
-							                    document.getElementById("sample6_extraAddress").value = '';
+							                    document.getElementById("address3").value = '';
 							                }
 
 							                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-							                document.getElementById('sample6_postcode').value = data.zonecode;
-							                document.getElementById("sample6_address").value = addr;
+							                document.getElementById('zip').value = data.zonecode;
+							                document.getElementById("address").value = addr;
 							                // 커서를 상세주소 필드로 이동한다.
-							                document.getElementById("sample6_detailAddress").focus();
+							                document.getElementById("address2").focus();
 							            }
 							        }).open();
 							    }
@@ -148,7 +155,7 @@
                                 <div class="col-lg-12">
                                     <div class="checkout__input">
                                         <p>휴대폰번호<span>*</span></p>
-                                        <input type="text" value="<%=member.getMphone()%>" readonly placeholder="휴대폰번호를 입력하세요.">
+                                        <input type="text" name="" value="<%=member.getMphone()%>" readonly placeholder="휴대폰번호를 입력하세요.">
                                     </div>
                                 </div>
                             </div>
@@ -162,8 +169,7 @@
                             </div>
                             <div class="checkout__input">
                                 <p>주문 시 메모</p>
-                                <input type="text"
-                                placeholder="ex) 배송 전 연락 바랍니다.">
+                                <input type="text" placeholder="ex) 배송 전 연락 바랍니다." name="note">
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -172,24 +178,44 @@
                                 <div class="checkout__order__products">상품 <span>가격</span></div>
                                 <ul class="checkout__total__products">
                                 	<% 
+                                		String[] bcountArr = request.getParameter("bcount").split(",");
+                                		List<Integer> bcountList = new ArrayList<>();
+                                		
+                                		for(String b : bcountArr) {
+                                			bcountList.add(Integer.parseInt(b));
+                                		}
+                                		
                                 		int total = 0;
+                               			String item_name = "";
+                               			int totalCnt = list.size();
                                 		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
                                 	%>
-                                	<% for(GoodsDTO goods : list) { 
-                                		
+                                	<% for(int i = 0; i < list.size(); i++) { 
+                                		GoodsDTO goods = list.get(i);
+                                		int bcount = bcountList.get(i);
 	                                    String gprice = numberFormat.format(goods.getGprice());
 	                                    total += goods.getGprice();
+	                                    if(i == list.size() - 1) {
+	                                    	item_name += goods.getGname();
+	                                    } else {
+	                                    	item_name += goods.getGname() + ",";
+	                                    }
                                		%>
-                                		<li><%=goods.getGname() %> <span>&#8361; <%=gprice %></span></li>
+                                		<li>
+                                			<%=goods.getGname() %> (<%=bcount %> 개) 
+                                			<span>&#8361; <%=gprice %></span>
+                                			<input type="hidden" name="gnum" value="<%=goods.getGnum()%>"/>
+                                			<input type="hidden" name="bcount" value="<%=bcount %>" />
+                                		</li>
                                 	<% } %>
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>총 가격 <span>&#8361; <%=numberFormat.format(total) %></span></li>
                                 </ul>
                                 <div class="checkout__input__checkbox">
-                                    <label for="acc-or">
+                                    <label for="accessOrder">
                                         상품 구매에 동의 하십니까?
-                                        <input type="checkbox" id="acc-or">
+                                        <input type="checkbox" id="accessOrder">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -197,11 +223,31 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" name="item_name" id="item_name" value="<%=item_name%>"/>
+                    <input type="hidden" name="quantity" id="quantity" value="<%=totalCnt%>"/>
+                    <input type="hidden" name="total_amount" id="total_amount" value="<%=total%>"/>
                 </form>
             </div>
         </div>
     </section>
+    <script>
+    	function checkBuy(event) {
+    		var address = document.getElementById("address");
+    		if(address.value == null || address.value == "") {
+    			alert("주소를 입력 하세요");
+    			event.preventDefault();
+    			return false;
+    		}
+    		var accessOrder = document.getElementById("accessOrder");
+    		if(!accessOrder.checked) {
+    			alert("상품 구매에 동의 해 주세요.");
+    			event.preventDefault();
+    			return false;
+    		}
+    	}
+    </script>
     <!-- Checkout Section End -->
     <jsp:include page="/include/footer.jsp"></jsp:include>
+    <% } %>
 </body>
 </html>

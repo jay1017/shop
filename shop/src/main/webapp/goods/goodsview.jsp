@@ -154,7 +154,7 @@
                                 </form>
                                 <form action="/shop/buy/buyInsert.jsp" method="post" onsubmit="checkLogin(event)">
                                 	<input type="hidden" value="<%=session.getAttribute("sid") %>" id="sid" />
-                                	<input type="hidden" name="ccount" id="ccount2"/>
+                                	<input type="hidden" name="bcount" id="bcount"/>
                                 	<input type="hidden" value="<%=goods.getGnum() %>" name="gnum"/>
                                 	<input type="submit" value="구매하기" class="primary-btn" style="border: none;"/>
                                 </form>
@@ -162,14 +162,14 @@
                                 	function checkLogin(event) {
                                 		var sid = document.getElementById("sid");
                                 		var ccount1 = document.getElementById("ccount1");
-                                		var ccount2 = document.getElementById("ccount2");
+                                		var bcount = document.getElementById("bcount");
                                 		
                                 		if(sid.value.trim() == 'null') {
                                 			alert("로그인 이후 가능합니다.");
                                 			event.preventDefault();
                                 			location.href="/shop/member/loginForm.jsp";
                                 		} else {
-                                			ccount2.value = ccount1.value;
+                                			bcount.value = ccount1.value;
                                 		}
                                 	}
                                 </script>

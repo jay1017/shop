@@ -82,14 +82,16 @@ public class BuyDAO {
 					gnum += num + ",";
 				}
 			}
-			String sql = "select gnum, gname, gprice, (gprice - (gprice * (discount / 100))) as discount from goods where gnum in(" + gnum + ")";
+			String sql = "select gnum, gname, (gprice - (gprice * (discount / 100))) as gprice, canum, ginum from goods where gnum in(" + gnum + ")";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				GoodsDTO dto = new GoodsDTO();
 				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
-				dto.setGprice(rs.getInt("discount"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setGinum(rs.getInt("ginum"));
 				list.add(dto);
 			}
 		} catch(Exception e) {
@@ -98,5 +100,64 @@ public class BuyDAO {
 			endConnection();
 		}
 		return list;
+	}
+	
+	// 기존 넘버 조회
+	public int selectNumber() {
+		int result = 0;
+		try {
+			int count = 0;
+			conn = getConnection();
+			String sql = "select count(*) from buyer";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+			if(count > 0) {
+				sql = "select max(bnum) from buyer";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					result = rs.getInt(1);
+				}
+			} else {
+				result = 1;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
+	}
+	
+	// 구매 테이블에 저장하는 메소드
+	public int insert(BuyDTO dto) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "insert into buyer values(buyer_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getMnum());
+			pstmt.setInt(2, dto.getGnum());
+			pstmt.setInt(3, dto.getCanum());
+			pstmt.setInt(4, dto.getBcount());
+			pstmt.setInt(5, dto.getGinum());
+			pstmt.setString(6, dto.getAddress());
+			pstmt.setString(7, dto.getAddress2());
+			pstmt.setInt(8, dto.getZip());
+			pstmt.setString(9, dto.getNote());
+			pstmt.setString(10, dto.getAddress3());
+			pstmt.setInt(11, dto.getBuynum());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
 	}
 }
