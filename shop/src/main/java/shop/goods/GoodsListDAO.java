@@ -163,5 +163,127 @@ public class GoodsListDAO {
 		}
 		return count;
 	}
-	
+	//해당 카테고리에 속한 상품 수
+		public int getGoodsCount(int canum) {
+			int count = 0;
+			try {
+				conn = getConnection();
+				String sql = "select count(*) from goods where canum=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, canum);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt(1);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return count;
+		}
+		//가격대별 상품 수
+		public int getGoodsCountbyprice(int price) {
+			int count = 0;
+			try {
+				conn = getConnection();
+				String sql = "select count(*) from goods where gprice <= ? and gprice > ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, price+500000);
+				pstmt.setInt(2, price);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt(1);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return count;
+		}
+	//사이즈 별 상품 출력
+	public List<GoodsListDTO> getGoodsBySize(String size,int start, int end){
+		List<GoodsListDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
+					+ "join goods_option go on g.gnum = go.gnum where go.gosize = ?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, size);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				GoodsListDTO dto = new GoodsListDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setDiscount(rs.getInt("discount"));
+				dto.setGiname(rs.getString("giname"));
+				list.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return list;
+	}
+	//가격 별 상품 출력
+		public List<GoodsListDTO> getGoodsByPrice(int price,int start, int end){
+			List<GoodsListDTO> list = new ArrayList<>();
+			try {
+				conn = getConnection();
+				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (SELECT g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount,gi.giname FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum WHERE gprice >= ? AND gprice < ? ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, price);
+				pstmt.setInt(2, price+500000);
+				pstmt.setInt(3, end);
+				pstmt.setInt(4, start);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					GoodsListDTO dto = new GoodsListDTO();
+					dto.setGnum(rs.getInt("gnum"));
+					dto.setGname(rs.getString("gname"));
+					dto.setGprice(rs.getInt("gprice"));
+					dto.setDiscount(rs.getInt("discount"));
+					dto.setGiname(rs.getString("giname"));
+					list.add(dto);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return list;
+		}
+		//카테고리 별 상품 출력
+				public List<GoodsListDTO> getGoodsByCate(int canum,int start,int end){
+					List<GoodsListDTO> list = new ArrayList<>();
+					try {
+						conn = getConnection();
+						String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g "
+								+ "join goods_image gi on g.ginum = gi.ginum where canum=?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setInt(1, canum);
+						pstmt.setInt(2, end);
+						pstmt.setInt(3, start);
+						rs = pstmt.executeQuery();
+						while(rs.next()) {
+							GoodsListDTO dto = new GoodsListDTO();
+							dto.setGnum(rs.getInt("gnum"));
+							dto.setGname(rs.getString("gname"));
+							dto.setGprice(rs.getInt("gprice"));
+							dto.setDiscount(rs.getInt("discount"));
+							dto.setGiname(rs.getString("giname"));
+							list.add(dto);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+					}finally {
+						endConnection();
+					}
+					return list;
+				}
 }

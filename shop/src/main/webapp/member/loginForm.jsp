@@ -145,16 +145,23 @@ body {
 			<button type="submit" class="login-button">로그인</button>
 
 			<div class="login-links">
-				<a href="javascript:void(0)" onclick="idSearch()" class="link-gray">아이디
-					찾기</a> <a href="javascript:void(0)" onclick="pwSearch()"
-					class="link-gray">비밀번호 찾기</a>
+				<a href="javascript:void(0)" onclick="idSearch()" class="link-gray">아이디찾기</a> 
+				<a href="javascript:void(0)" onclick="pwSearch()" class="link-gray">비밀번호 찾기</a>
 			</div>
-
-			<div class="signup-section">
+		</form>
+		<div style="text-align: center; margin-top: 20px;">
+    		<a href="https://kauth.kakao.com/oauth/authorize?client_id=bc8f1248fe973ce8060a5a525c39e1f9&redirect_uri=http://localhost:8080/shop/member/kakaoLogin.jsp&response_type=code">
+      		<img src="/shop/resources/img/kakaoLogin/kakao_login.png" alt="카카오 로그인" />
+    		</a>
+  		</div>
+  		<div class="signup-section">
 				ODEZ의 신규 회원이 되어보세요!
 				<button type="button" class="signup-button"
 					onclick="window.location='memberForm.jsp'">회원가입</button>
-			</div>
+		</div>
+  		<%--카카오 연결 해제 버튼 테스트용도 --%>
+  		<form action="/shop/member/kakaoUnlink.jsp" method="post" style="display:inline;">
+    		<button type="submit" style="margin-top: 50;">카카오 연결 해제</button>
 		</form>
 	</div>
 

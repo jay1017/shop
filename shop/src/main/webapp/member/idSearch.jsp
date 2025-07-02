@@ -7,7 +7,7 @@
 <style>
 body {
 	font-family: 'Noto Sans KR', sans-serif;
-	background: #fff;
+	background: #f3f2ee;
 	margin: 0;
 	padding: 0;
 	display: flex;

@@ -45,7 +45,7 @@
                         		<% } else { %>
                         			<a href="/shop/member/loginForm.jsp">로그인</a>
                         		<% } %>
-                            <a href="#">문의게시판</a>
+                            <a href="/shop/qna/qnaList.jsp">문의게시판</a>
                         </div>
                     </div>
                 </div>

@@ -214,6 +214,50 @@ public class MemberDAO {
 		}
 	}
 	
+	//전화번호 중복 확인
+	public String getPhone(String phone) {
+		String result = "";
+		try {
+			conn = getConnection();
+			String sql = "select mphone from member2 where mphone=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, phone);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	//회원가입 아이디 중복확인
+	public String getId(String mid) {
+		String id = "";
+		try {
+			conn = getConnection();
+			String sql = "select mid from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				id = rs.getString(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return id;
+	}
+
 	// =========================== admin ==========================================
 	// 회원의 수
 	public int selectCount() {

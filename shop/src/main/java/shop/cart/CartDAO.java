@@ -119,13 +119,14 @@ public class CartDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?)";
+			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getMnum());
 			pstmt.setInt(2, dto.getGnum());
 			pstmt.setInt(3, dto.getCanum());
 			pstmt.setInt(4, dto.getCcount());
 			pstmt.setInt(5, dto.getGinum());
+			pstmt.setInt(6, dto.getGonum());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
