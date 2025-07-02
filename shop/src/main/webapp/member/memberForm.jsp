@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+<%
+	String kakaoNickname = (String)session.getAttribute("kakaoNickname");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,8 +166,9 @@ body {
 				placeholder="비밀번호 확인*" class="join-input" oninput="pwcheck()">
 			<div id="pwmsg" class="msg"></div>
 
-			<input type="text" maxlength="100" id="nameEl" name="mname"
-				placeholder="이름 입력*" class="join-input" oninput="namecheck()">
+			<input type="text" maxlength="100" id="nameEl" name="mname" 
+			value="<%=kakaoNickname != null ? kakaoNickname : ""%>"placeholder="이름 입력*" 
+			class="join-input" oninput="namecheck()">
 			<div id="namemsg" class="msg"></div>
 
 			<input type="text" maxlength="1000" id="phoneEl" name="mphone"

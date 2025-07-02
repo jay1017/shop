@@ -257,6 +257,7 @@ public class MemberDAO {
 		}
 		return id;
 	}
+
 	// =========================== admin ==========================================
 	// 회원의 수
 	public int selectCount() {
