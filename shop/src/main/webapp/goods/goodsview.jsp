@@ -35,7 +35,7 @@
     
     ReviewDTO myReview=null;
     if(sid!=null) {
-    	myReview=rdao.getUserReview(gnum,sid); //본인 리뷰가 있는지 확인
+    	myReview=rdao.getUserReview(gnum,mnum); //본인 리뷰가 있는지 확인
     }
 	
     // 포맷팅
@@ -223,15 +223,24 @@
                                             <h5>리뷰 목록</h5>
                                             <%--여기에 작업--%>
                                             	<div>
-                                        			<form action="/shop/review/reviewPro.jsp" method="post">
-                                        				<input type="text" name="rcontent"/>
-                                        				<input type="hidden" name="sid" value="<%=sid%>"/>
+                                            	<% if(sid!=null) { %>
+                                            		<h5><%=(myReview==null ? "리뷰 작성" : "리뷰 수정") %></h5>
+                                        			<form action="<%=(myReview==null ? "/shop/review/reviewPro.jsp" :"/shop/review/reviewUpdate.jsp")%>" method="post">
+														<input type="hidden" name="sid" value="<%=sid%>"/>
                                         				<input type="hidden" name="gnum" value="<%=gnum%>"/>
                                         				<input type="hidden" name="mnum" value="<%=mnum%>"/>
                                         				<input type="hidden" name="canum" value="<%=canum%>"/> 
                                         				<input type="hidden" name="ginum" value="<%=ginum%>"/>
-                                        				<input type="submit" value="리뷰작성"/> <%--여기서 뭘 넘겨야할까? --%>
+                                        				<%if(myReview!=null) { %>
+                                        					<input type="hidden" name="rnum" value="<%=myReview.getRnum()%>"/>
+                                        				<%} %>
+                                        				<textarea name="rcontent" rows="4" cols="60" placeholder="리뷰를 입력하세요"><%= (myReview != null) ? myReview.getRcontent() : "" %>
+                                        				</textarea><br>
+                                        				<input type="submit" value="<%= (myReview == null ? "리뷰 작성" : "리뷰 수정") %>"> <%--여기서 뭘 넘겨야할까? --%>
                                         			</form>
+                                        			<%}else{ %>
+                                        			<p><a href="/shop/member/loginForm.jsp">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
+                                        			<%} %>
                                         		</div>
                                         		<div>
                                             	<%for(ReviewDTO dto:rlist){	%>
@@ -239,7 +248,7 @@
                                             		<%=dto.getCanum() %>
                                             		<%=dto.getGnum() %>                                          		  
                                             	</div>	                                            	                                        	
-                                            <%} %>                                                                        
+                                            <%} %>                                                                       
                                         </div>
                                     </div>
                                 </div>
