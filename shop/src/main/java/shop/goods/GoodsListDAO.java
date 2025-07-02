@@ -203,17 +203,19 @@ public class GoodsListDAO {
 			return count;
 		}
 	//사이즈 별 상품 출력
-	public List<GoodsListDTO> getGoodsBySize(String size){
+	public List<GoodsListDTO> getGoodsBySize(String size,int start, int end){
 		List<GoodsListDTO> list = new ArrayList<>();
 		try {
-			GoodsListDTO dto = new GoodsListDTO();
 			conn = getConnection();
-			String sql = "select g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
-					+ "join goods_option go on g.gnum = go.gnum where go.gosize = ?";
+			String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
+					+ "join goods_option go on g.gnum = go.gnum where go.gosize = ?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, size);
+			pstmt.setInt(2, end);
+			pstmt.setInt(3, start);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
+				GoodsListDTO dto = new GoodsListDTO();
 				dto.setGnum(rs.getInt("gnum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
@@ -257,17 +259,17 @@ public class GoodsListDAO {
 			return list;
 		}
 		//카테고리 별 상품 출력
-				public List<GoodsListDTO> getGoodsByCate(int canum){
+				public List<GoodsListDTO> getGoodsByCate(int canum,int start,int end){
 					List<GoodsListDTO> list = new ArrayList<>();
 					try {
-						GoodsListDTO dto = new GoodsListDTO();
 						conn = getConnection();
-						String sql = "select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g "
-								+ "join goods_image gi on g.ginum = gi.ginum where canum=?";
+						String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g "
+								+ "join goods_image gi on g.ginum = gi.ginum where canum=?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setInt(1, canum);
 						rs = pstmt.executeQuery();
 						while(rs.next()) {
+							GoodsListDTO dto = new GoodsListDTO();
 							dto.setGnum(rs.getInt("gnum"));
 							dto.setGname(rs.getString("gname"));
 							dto.setGprice(rs.getInt("gprice"));
