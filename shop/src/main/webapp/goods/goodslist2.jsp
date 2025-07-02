@@ -133,10 +133,9 @@ if (endPage > pageCount)
 												for (int i = 0; i < sizes.size(); i++) {
 													String size = sizes.get(i);
 												%>
-												<a href="goodslist2.jsp?size=<%=size%>">
 												<label for="<%=size%>"> <%=size%>
-												<input type="radio" name="gosize" id="<%=size%>" value="<%=size%>">
-												</label></a>
+												<input type="radio" name="gosize" id="<%=size%>" value="<%=size%>" onclick="location.href='goodslist2.jsp?size=<%=size %>'">
+												</label>
 												<%}%>
 											</div>
 										</div>
