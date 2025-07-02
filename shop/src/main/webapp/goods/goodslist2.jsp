@@ -33,14 +33,15 @@ if(canumStr != null){//카테고리별 출력
 	list = dao.getGoodsBySize(size);
 }else if(priceStr != null){//가격별 출력
 	int price = Integer.parseInt(priceStr);
+	count = dao.getGoodsCountbyprice(price);
 	list = dao.getGoodsByPrice(price,start,end);
 }else{//기본값(조건 없을때)
 list = dao.getGoods(start,end);
 }
 String para = "";
-if(canumStr != null){para += "&canum" + canumStr;}
-if(size != null){para += "&size" + size;}
-if(priceStr != null){para += "&price" + priceStr;}
+if(canumStr != null){para += "&canum=" + canumStr;}
+if(size != null){para += "&size=" + size;}
+if(priceStr != null){para += "&price=" + priceStr;}
 int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
 int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
 int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;

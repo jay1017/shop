@@ -163,6 +163,45 @@ public class GoodsListDAO {
 		}
 		return count;
 	}
+	//해당 카테고리에 속한 상품 수
+		public int getGoodsCount(int canum) {
+			int count = 0;
+			try {
+				conn = getConnection();
+				String sql = "select count(*) from goods where canum=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, canum);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt(1);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return count;
+		}
+		//가격대별 상품 수
+		public int getGoodsCountbyprice(int price) {
+			int count = 0;
+			try {
+				conn = getConnection();
+				String sql = "select count(*) from goods where gprice <= ? and gprice > ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, price+500000);
+				pstmt.setInt(2, price);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					count = rs.getInt(1);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+			return count;
+		}
 	//사이즈 별 상품 출력
 	public List<GoodsListDTO> getGoodsBySize(String size){
 		List<GoodsListDTO> list = new ArrayList<>();
