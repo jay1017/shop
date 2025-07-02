@@ -232,7 +232,6 @@ public class GoodsListDAO {
 		public List<GoodsListDTO> getGoodsByPrice(int price,int start, int end){
 			List<GoodsListDTO> list = new ArrayList<>();
 			try {
-				GoodsListDTO dto = new GoodsListDTO();
 				conn = getConnection();
 				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (SELECT g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount,gi.giname FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum WHERE gprice >= ? AND gprice < ? ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 				pstmt = conn.prepareStatement(sql);
@@ -242,6 +241,7 @@ public class GoodsListDAO {
 				pstmt.setInt(4, start);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
+					GoodsListDTO dto = new GoodsListDTO();
 					dto.setGnum(rs.getInt("gnum"));
 					dto.setGname(rs.getString("gname"));
 					dto.setGprice(rs.getInt("gprice"));
