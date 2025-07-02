@@ -155,6 +155,15 @@ body {
 					onclick="window.location='memberForm.jsp'">회원가입</button>
 			</div>
 		</form>
+		<div style="text-align: center; margin-top: 20px;">
+    		<a href="https://kauth.kakao.com/oauth/authorize?client_id=bc8f1248fe973ce8060a5a525c39e1f9&redirect_uri=http://localhost:8080/shop/member/kakaoLogin.jsp&response_type=code">
+      		<img src="/shop/resources/kakaoLogin/kakao_login.png" alt="카카오 로그인" />
+    		</a>
+  		</div>
+  		<%--카카오 연결 해제 버튼 테스트용도 --%>
+  		<form action="/shop/member/kakaoUnlink.jsp" method="post" style="display:inline;">
+    		<button type="submit">카카오 연결 해제</button>
+		</form>
 	</div>
 
 	<script src="<%=request.getContextPath()%>/resources/js/login.js"></script>
