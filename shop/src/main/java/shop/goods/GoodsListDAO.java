@@ -195,8 +195,7 @@ public class GoodsListDAO {
 			try {
 				GoodsListDTO dto = new GoodsListDTO();
 				conn = getConnection();
-				String sql = "select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
-						+ "join goods_option go on g.gnum = go.gnum where g.gprice > ? and g.gprice <= ?";
+				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (SELECT * FROM goods WHERE gprice >= ? AND gprice < ? + 500000 ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, price);
 				pstmt.setInt(2, price+500000);
