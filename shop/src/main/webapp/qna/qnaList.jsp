@@ -2,6 +2,20 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, qna.QnaDAO, qna.QnaDTO" %>
 
+<%
+    String adminId = (String) session.getAttribute("admin");
+
+    if (adminId == null) {
+%>
+    <script>
+        alert("로그인 후 이용해주세요.");
+        history.back();  // 이전 페이지로 이동
+    </script>
+<%
+        return; 
+    }
+%>
+
 <html>
 <head>
     <title>문의 목록</title>
