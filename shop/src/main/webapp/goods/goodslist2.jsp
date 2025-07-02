@@ -160,10 +160,11 @@ if (endPage > pageCount)
 					%>
 					<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
 						<div class="card h-100">
+							<a href="/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>">
 							<img src="/shop/resources/image/<%=dto.getGiname()%>" class="card-img-top"
 								alt="상품 이미지">
 							<div class="card-body">
-								<h5 class="card-title"><%=dto.getGname()%></h5>
+								<h5 class="card-title"><%=dto.getGname()%></h5></a>
 								<p class="card-text">
 									가격:
 									<%=dto.getGprice()%>원
