@@ -267,6 +267,8 @@ public class GoodsListDAO {
 								+ "join goods_image gi on g.ginum = gi.ginum where canum=?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setInt(1, canum);
+						pstmt.setInt(2, end);
+						pstmt.setInt(3, start);
 						rs = pstmt.executeQuery();
 						while(rs.next()) {
 							GoodsListDTO dto = new GoodsListDTO();
