@@ -25,15 +25,16 @@ String canumStr = request.getParameter("canum");
 String size = request.getParameter("size");
 String priceStr = request.getParameter("price");
 List<GoodsListDTO> list = null;
-if(canumStr != null){
+//상품 진열 조건
+if(canumStr != null){//카테고리별 출력
 	int canum = Integer.parseInt(canumStr);
 	list = dao.getGoodsByCate(canum);
-}else if(size != null){
+}else if(size != null){//사이즈별 출력
 	list = dao.getGoodsBySize(size);
-}else if(priceStr != null){
+}else if(priceStr != null){//가격별 출력
 	int price = Integer.parseInt(priceStr);
 	list = dao.getGoodsByPrice(price);
-}else{
+}else{//기본값(조건 없을때)
 list = dao.getGoods(start,end);
 }
 int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
@@ -69,9 +70,11 @@ if (endPage > pageCount)
 	type="text/css">
 <body>
 	<jsp:include page="/include/header.jsp" />
+	<div class="col-lg-3">
 	<h1>상품목록</h1>
 	<h2>전체 상품 목록</h2>
 	<input type="button" value="전체 상품 보기" onclick="location.href='goodslist2.jsp'">
+	</div>
 	<div class="container">
 		<div class="row">
 
