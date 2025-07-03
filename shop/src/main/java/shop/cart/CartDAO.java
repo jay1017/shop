@@ -69,7 +69,7 @@ public class CartDAO {
 		CartDTO dto = null;
 		try {
 			conn = getConnection();
-			String sql = "select gnum, gname, gprice, giname, discount from goods where gnum=?";
+			String sql = "select gnum, gname, gprice, giname, (gprice-(gprice*discount/100)) as discount from goods where gnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
@@ -173,5 +173,31 @@ public class CartDAO {
 			endConnection();
 		}
 		return gonum;
+	}
+	//회원번호로 카트정보 불러오기
+	public List<CartDTO> getCartByMnum(int mnum){
+		List<CartDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from cart where mnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				CartDTO dto = new CartDTO();
+				dto.setCnum(rs.getInt("cnum"));
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setCanum(rs.getInt("canum"));
+				dto.setCcount(rs.getInt("ccount"));
+				dto.setGinum(rs.getInt("ginum"));
+				dto.setGonum(rs.getInt("gonum"));
+				list.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return list;
 	}
 }
