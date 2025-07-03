@@ -152,5 +152,43 @@ public class ReviewDAO {
 				endConnection();
 			}
 		}
+		public void reviewDelete(int gnum,int mnum,int rnum) { //리뷰 삭제하는 메소드
+			try {
+				conn=getConnection();
+				String sql="delete from review where gnum=? and mnum=? and rnum=?";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, gnum);
+				pstmt.setInt(2, mnum);
+				pstmt.setInt(3, rnum);
+				
+				pstmt.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
+		}
+		public int reviewCount(int gnum) {  //상품의 리뷰 개수 가져오기
+			int rcount=0;
+			try {
+				
+				conn=getConnection();
+				String sql="select count(*) as rcount from review where gnum=?";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, gnum);
+				
+				rs=pstmt.executeQuery();
+				rs.next();
+				rcount=rs.getInt(1);
+				
+				System.out.println(rcount);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally{
+				endConnection();
+			}
+			
+			return rcount;
+		}
 	}
 

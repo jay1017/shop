@@ -174,7 +174,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix popular">
                 <div class="product__item">
-                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
+                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
                         <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
                             <span class="label">Hot</span>
                         </div>
@@ -209,7 +209,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
             %>
             <div class="col-lg-3 col-md-6 col-sm-6 mix sale">
                 <div class="product__item">
-                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
+                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
                         <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
                             <span class="label">Sale</span>
                         </div>

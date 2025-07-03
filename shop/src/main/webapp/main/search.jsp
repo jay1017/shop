@@ -55,7 +55,8 @@ System.out.println("검색된 상품 수: " + list.size());
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
-	<%-- <jsp:include page="/include/menu.jsp"></jsp:include> --%>
+	<%-- <jsp:include page="/include/menu.jsp"></jsp:include> --%> 
+	
             <!-- 상품 그리드 시작 -->
     <div class="container">
       <div class="row product__filter">
@@ -67,14 +68,9 @@ System.out.println("검색된 상품 수: " + list.size());
         %>
           <div class="col-lg-3 col-md-4 col-sm-6 mix popular mb-4">
             <div class="product__item">
-              <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>&ginum=<%= dto.getGinum() %>">
+              <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
                 <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
                   <span class="label">검색결과</span>
-                  <ul class="product__hover">
-                    <li><a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a></li>
-                    <li><a href="#"><img src="/shop/resources/img/icon/compare.png" alt=""> <span>Compare</span></a></li>
-                    <li><a href="#"><img src="/shop/resources/img/icon/search.png" alt=""></a></li>
-                  </ul>
                 </div>
               </a>
               <div class="product__item__text">

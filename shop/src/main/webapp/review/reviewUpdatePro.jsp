@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="shop.member.MemberDAO,shop.member.MemberDTO"%>
 <%@ page import="shop.review.ReviewDAO,shop.review.ReviewDTO"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
+<title>reviewUpdatePro.jsp</title>
 <%	
 	request.setCharacterEncoding("UTF-8");
 	String sid=(String)session.getAttribute("sid");//아이디 체크
@@ -12,23 +18,30 @@
 	int rnum=Integer.parseInt(request.getParameter("rnum")); //리뷰번호 
 	String rcontent=request.getParameter("rcontent"); //리뷰 내용
 	
-%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="/shop/resources/css/font.css" />
-<title>reviewUpdate.jsp</title>	<%--리뷰 업데이트 실행 페이지 --%>	
+	if(sid!=null) {
+	ReviewDTO dto=new ReviewDTO();
+	ReviewDAO dao=ReviewDAO.getInstance();
+	
+	dto.setGnum(gnum);
+	dto.setMnum(mnum);
+	dto.setCanum(canum);
+	dto.setGinum(ginum);
+	dto.setRnum(rnum);
+	dto.setRcontent(rcontent);
+	
+	 
+	dao.updateReview(dto); %>
+	<script>
+	alert('리뷰 수정이 완료되었습니다');
+	location.href = "/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>";
+	</script>
+<%	}else { %>
+	<script>
+	alert("잘못된 접근입니다");
+	history.go(-1);
+	</script>	
+<% 	}%>	
 </head>
 <body>
-<form action="reviewUpdatePro.jsp" method="post">
-<input type="hidden" name="gnum" value="<%=gnum %>"/>
-<input type="hidden" name="mnum" value="<%=mnum %>"/>
-<input type="hidden" name="canum" value="<%=canum %>"/>
-<input type="hidden" name="ginum" value="<%=ginum %>"/>
-<input type="hidden" name="rnum" value="<%=rnum %>"/>
-<textarea rows="50" cols="100"><%=rcontent%></textarea>
-
-</form>	
 </body>
-</html> 
+</html>

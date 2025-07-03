@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
-<title>reviewPro</title>
+<title>reviewPro</title> <%--리뷰 작성 실행 페이지입니다 --%>
 <%	
 	request.setCharacterEncoding("UTF-8");
 	String sid=(String)session.getAttribute("sid");//아이디 체크
@@ -30,7 +30,7 @@
 	dao.writeReview(dto); %>
 	<script>
 	alert('리뷰 작성이 완료되었습니다');
-	location.href = "/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>";
+	location.href = "/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>";
 	</script>
 <%	}else { %>
 	<script>
