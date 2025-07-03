@@ -1,5 +1,9 @@
 package shop.member;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -127,6 +131,7 @@ public class MemberDAO {
 				mdto.setMphone(rs.getString("mphone"));
 				mdto.setMemail(rs.getString("memail"));
 				mdto.setMgender(rs.getInt("mgender"));
+				mdto.setKakao_id(rs.getString("kakao_id"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -289,7 +294,48 @@ public class MemberDAO {
 		return id;
 	}
 
-	
+	//회원탈퇴시 카카오 동의해제 메서드
+	public void unlinkKakao(String access_token) {
+		if(access_token == null || access_token.isEmpty()) {
+			System.out.println("access_token이 없어서 카카오 연결 해제를 건너뜁니다.");
+			return;
+		}
+		try {
+			URL url = new URL("https://kapi.kakao.com/v1/user/unlink");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Bearer " + access_token);
+			conn.setDoOutput(true);
+			
+			OutputStream os = conn.getOutputStream();
+			os.flush();
+			os.close();
+			
+			int responseCode = conn.getResponseCode();
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					responseCode == 200 ? conn.getInputStream() : conn.getErrorStream(), "UTF-8"));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while((line = br.readLine()) != null) {
+				sb.append(line);
+			}
+			br.close();
+			if(responseCode == 200) {
+				System.out.println("카카오 연결 해제 성공: "+sb.toString());
+			}else {
+				System.out.println("카카오 연결 해제 실패 응답코드: "+responseCode);
+				System.out.println("응답 내용: " + sb.toString());
+			}
+		}catch(Exception e) {
+			System.out.println("카카오 연결 해제 중 예외 발생: ");
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+	}
 	
 	// =========================== admin ==========================================
 	// 회원의 수

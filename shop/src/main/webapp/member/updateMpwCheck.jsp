@@ -4,7 +4,9 @@
 <jsp:useBean id="mdto" class="shop.member.MemberDTO" />
 <jsp:setProperty property="*" name="mdto" />
 <jsp:useBean id="mdao" class="shop.member.MemberDAO" />
-
+<%
+	String sid = (String)session.getAttribute("sid");
+%>
 <html>
 <head>
   <title>ODEZ - 회원정보 확인</title>
@@ -75,12 +77,12 @@
 <body>
   <form action="/shop/member/updateMpwCheckTest.jsp" method="post">
     <h3>비밀번호 입력</h3>
-    <input type="hidden" name="mid" value="<%=session.getAttribute("sid") %>">
+    <input type="hidden" name="mid" value="<%=sid%>">
     <div class="input-group">
       비밀번호
       <input type="password" name="mpw" placeholder="비밀번호 입력" />
     </div>
-    <input type="submit" value="확인" />
+    <input type="submit" value="확인"/>
   </form>
 </body>
 </html>
