@@ -97,7 +97,7 @@
 				<div class="chat-box" id="chat-box">
 					<div class="bot-message">안녕하세요! 무엇을 도와드릴까요?</div>
 					<p class="primary-btn chatbotBtn mr-2">배송지연안내</p>
-					<p class="primary-btn chatbotBtn">재고입고안내</p> 
+					<p class="primary-btn chatbotBtn">재고입고안내</p>  
 				</div>
 				<form id="chat-form">
 					<input type="text" id="user-input" placeholder="메시지를 입력하세요." autocomplete="off" />
