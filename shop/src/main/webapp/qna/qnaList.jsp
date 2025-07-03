@@ -4,7 +4,7 @@
 
 <%
     // 로그인 세션 확인
-    String mid = (String) session.getAttribute("mid");
+    String mid = (String) session.getAttribute("admin");
     if (mid == null) {
 %>
     <script>
