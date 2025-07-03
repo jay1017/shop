@@ -18,6 +18,7 @@ return;
 // 장바구니 목록 세션에서 !!부르지말고 dao에서 부르기
 List<Integer> cartNums = (List<Integer>) session.getAttribute("cart");
 List<CartDTO> cartItems = new ArrayList<>();
+int ccount = Integer.parseInt("ccount");
 CartDAO dao = CartDAO.getInstance();
 
 if (cartNums != null) {//상품정보
@@ -60,7 +61,7 @@ if (cartItems.isEmpty()) {
         total += discount;
 %>
     <div class="item">
-        <img src="img/<%=dto.getGiname()%>" alt="상품 이미지" width="150">
+        <img src="/resources/image/<%=dto.getGiname()%>" alt="상품 이미지" width="150">
         <div>
             <p>상품명: <%=dto.getGname()%></p>
             <p>가격: ₩<%=gprice%></p>
