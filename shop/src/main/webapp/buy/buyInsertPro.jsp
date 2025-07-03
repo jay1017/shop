@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="shop.buy.KakaoPayReadyServlet" %>  
 <%@ page import="shop.buy.BuyDAO" %>
-<%@ page import="shop.buy.BuyDTO" %>    
+<%@ page import="shop.buy.BuyDTO" %>     
 <%@ page import="shop.goods.GoodsDTO" %>
 <%@ page import="shop.member.MemberDTO" %>
 <%@ page import="shop.member.MemberDAO" %>  
 <%@ page import="java.util.List" %> 
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList" %>     
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +17,9 @@
 <body>
 	<%
 		request.setCharacterEncoding("UTF-8");
+
 		BuyDAO dao = BuyDAO.getDAO();
 		BuyDTO dto = new BuyDTO();
-		
 		// 회원 번호 조회
 		String sid = (String) session.getAttribute("sid"); 
 		MemberDAO mdao = new MemberDAO();
@@ -90,12 +91,11 @@
 					history.go(-1);
 				</script>
 				<% break; 
-			} else { %>
-				<script>
-					location.href="/shop/buy/buySuccess.jsp";
-				</script>
-			<% }
-		}  
+			} else { 
+				KakaoPayReadyServlet kakao = new KakaoPayReadyServlet();
+				kakao.doPost(request, response);
+			}
+		} 
 	%>
 </body>
 </html>

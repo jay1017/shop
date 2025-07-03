@@ -90,9 +90,35 @@
             </div>
         </div>
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        <div class="chatbot-wrap">
+        	<a href="#" id="chatBot"><i class="fa fa-commenting" aria-hidden="true"></i></a>
+	        <!-- ChatBot display -->
+			<div id="chatBotBox" class="chat-container">
+				<div class="chat-box" id="chat-box">
+					<div class="bot-message">안녕하세요! 무엇을 도와드릴까요?</div>
+					<p class="primary-btn chatbotBtn mr-2">배송지연안내</p>
+					<p class="primary-btn chatbotBtn">재고입고안내</p> 
+				</div>
+				<form id="chat-form">
+					<input type="text" id="user-input" placeholder="메시지를 입력하세요." autocomplete="off" />
+					<button type="submit">전송</button>
+				</form>
+			</div>
+        </div>
     </div>
 </header>
 <!-- Header Section End -->
+
+<script>
+	const toggleBtn = document.getElementById('chatBot');
+	const chatContainer = document.getElementById('chatBotBox');
+	
+	toggleBtn.addEventListener('click', () => {
+		const isVisible = chatContainer.style.display === 'block';
+		chatContainer.style.display = isVisible ? 'none' : 'block';
+		toggleBtn.innerHTML = isVisible ? "<i class='fa fa-commenting' aria-hidden='true'></i>" : "<i class='fa fa-times' aria-hidden='true'></i>";
+	});
+</script>
 
 <!-- Search Begin -->
 <div class="search-model">

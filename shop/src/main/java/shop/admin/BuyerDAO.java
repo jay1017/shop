@@ -137,4 +137,23 @@ public class BuyerDAO {
 		}
 		return result;
 	}
+	
+	// 총 누적 판매 금액 계산
+	public int selectAmount() {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "select sum(g.gprice * b.bcount) amount from buyer b, goods g where b.gnum = g.gnum";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
+	}
 }
