@@ -160,7 +160,7 @@ public class CartDAO {
 		int gonum=0;
 		try {
 			conn = getConnection();
-			String sql = "select go.gonum from goods_option go join goods g on go.gnum=g.gnum where gnum=?";
+			String sql = "select go.gonum from goods_option go join goods g on go.gnum=g.gnum where g.gnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
