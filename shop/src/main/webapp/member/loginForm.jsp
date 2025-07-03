@@ -159,10 +159,6 @@ body {
 				<button type="button" class="signup-button"
 					onclick="window.location='memberForm.jsp'">회원가입</button>
 		</div>
-  		<%--카카오 연결 해제 버튼 테스트용도 --%>
-  		<form action="/shop/member/kakaoUnlink.jsp" method="post" style="display:inline;">
-    		<button type="submit" style="margin-top: 50;">카카오 연결 해제</button>
-		</form>
 	</div>
 
 	<script src="<%=request.getContextPath()%>/resources/js/login.js"></script>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="shop.member.MemberDTO" %>
+<%@ page import="shop.member.MemberDAO" %>
 <%@ page import="java.io.*, java.net.*, org.json.JSONObject" %>
 
 <%
@@ -49,23 +51,25 @@
 
 	// 사용자 정보 JSON 파싱
 	JSONObject userJson = new JSONObject(userResult);
-
-	// 닉네임 가져오기 (properties 객체 안에 있음)
-	// 닉네임이 없는 경우도 있기에 예외 방지 기능추가
-	String nickname = "";
-	if(userJson.has("properties")){
-		JSONObject props = userJson.getJSONObject("properties");
-		if(props.has("nickname")){
-			nickname = props.getString("nickname");
-		}
+	
+	String kakao_id = userJson.get("id").toString(); //카카오 고유 id가져옴(난수형태)
+	String nickname = userJson.getJSONObject("kakao_account").getJSONObject("profile").getString("nickname");
+	
+	
+	MemberDAO mdao = new MemberDAO();
+	MemberDTO member = mdao.getMemberByKakaoId(kakao_id); //카카오아이디 컬럼에 들어있는 해당회원의 모든 정보를 가져옴
+	
+	// 3. 로그인 세션 등록
+	if(member != null){
+		session.setAttribute("sid", member.getMid());
+		session.setAttribute("access_token", access_token); // unlink용
+		response.sendRedirect("/shop/main/main.jsp");
+	}else{
+		request.setAttribute("kakao_id", kakao_id);
+		request.setAttribute("nickname", nickname);
+		RequestDispatcher rd = request.getRequestDispatcher("/member/memberForm.jsp");
+		rd.forward(request, response);
 	}
 	
 	System.out.println("카카오 사용자 JSON: " + userJson.toString());
-
-	// 3. 로그인 세션 등록 → 이메일을 세션에 저장하여 로그인 처리
-	session.setAttribute("access_token", access_token); // unlink용
-	session.setAttribute("kakaoNickname", nickname); // 일반 로그인과 동일한 방식으로 세션 처리
-
-	// 4. 메인 페이지로 이동
-	response.sendRedirect("/shop/member/memberForm.jsp");
 %>
