@@ -121,6 +121,10 @@ body {
 </style>
 </head>
 <body>
+	<%--카카오 연결 해제 버튼 테스트용도 --%>
+  		<form action="/shop/member/kakaoUnlink.jsp" method="post" style="display:inline;">
+    		<button type="submit" style="margin-top: 50;">카카오 연결 해제</button>
+		</form>
 	<jsp:include page="/include/header.jsp" />
 
 	<section class="member-section">

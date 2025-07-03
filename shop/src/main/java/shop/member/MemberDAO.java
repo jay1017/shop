@@ -59,8 +59,8 @@ public class MemberDAO {
 	public void InputMember(MemberDTO mdto) {
 		try {
 			conn = getConnection();
-			String sql = "insert into member2(mnum, mid, mpw, mname, mphone, memail, mgender) "
-					+ "values(member2_seq.nextval,? ,? ,? ,? ,? ,?)";
+			String sql = "insert into member2(mnum, mid, mpw, mname, mphone, memail, mgender, kakao_id) "
+					+ "values(member2_seq.nextval,? ,? ,? ,? ,? ,? ,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mdto.getMid());
 			pstmt.setString(2, mdto.getMpw());
@@ -68,6 +68,7 @@ public class MemberDAO {
 			pstmt.setString(4, mdto.getMphone());
 			pstmt.setString(5, mdto.getMemail());
 			pstmt.setInt(6, mdto.getMgender());
+			pstmt.setString(7, mdto.getKakao_id());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -76,6 +77,36 @@ public class MemberDAO {
 			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
+	}
+	
+	//kakao아이디 조회 메서드
+	public MemberDTO getMemberByKakaoId(String kakaoid) {
+		MemberDTO mdto = null;
+		try {
+			conn = getConnection();
+			String sql = "select * from member2 where kakao_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, kakaoid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mdto = new MemberDTO();
+				mdto.setMnum(rs.getInt("mnum"));
+				mdto.setMid(rs.getString("mid"));
+				mdto.setMpw(rs.getString("mpw"));
+				mdto.setMname(rs.getString("mname"));
+				mdto.setMphone(rs.getString("mphone"));
+				mdto.setMemail(rs.getString("memail"));
+				mdto.setMgender(rs.getInt("mgender"));
+				mdto.setKakao_id(rs.getString("kakao_id"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return mdto;
 	}
 	
 	//memberInfo.jsp & updateMpwCheckTest.jsp 회원정보 확인
@@ -257,6 +288,9 @@ public class MemberDAO {
 		}
 		return id;
 	}
+
+	
+	
 	// =========================== admin ==========================================
 	// 회원의 수
 	public int selectCount() {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,6 +156,7 @@ body {
 				<input type="button" value="중복확인" onclick="midCheck()" class="check-btn" />
 			</div>
 			<input type="hidden" id="butcheck" name="butcheck" value="false">
+			<input type="hidden" name="kakao_id" value="${kakao_id}">
 
 			<input type="password" maxlength="100" id="pw" name="mpw"
 				placeholder="비밀번호 입력*" class="join-input" oninput="pwcheck()">
@@ -162,8 +164,9 @@ body {
 				placeholder="비밀번호 확인*" class="join-input" oninput="pwcheck()">
 			<div id="pwmsg" class="msg"></div>
 
-			<input type="text" maxlength="100" id="nameEl" name="mname"
-				placeholder="이름 입력*" class="join-input" oninput="namecheck()">
+			<input type="text" maxlength="100" id="nameEl" name="mname" 
+			value="<%=request.getAttribute("nickname") != null ? request.getAttribute("nickname") : ""%>"placeholder="이름 입력*" 
+			class="join-input" oninput="namecheck()">
 			<div id="namemsg" class="msg"></div>
 
 			<input type="text" maxlength="1000" id="phoneEl" name="mphone"

@@ -8,6 +8,7 @@ public class MemberDTO {
 	private String mphone;
 	private String memail;
 	private int mgender;
+	private String kakao_id;
 	public int getMnum() {
 		return mnum;
 	}
@@ -50,5 +51,12 @@ public class MemberDTO {
 	public void setMgender(int mgender) {
 		this.mgender = mgender;
 	}
+	public String getKakao_id() {
+		return kakao_id;
+	}
+	public void setKakao_id(String kakao_id) {
+		this.kakao_id = kakao_id;
+	}
+	
 	
 }

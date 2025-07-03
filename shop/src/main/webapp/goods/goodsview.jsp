@@ -4,23 +4,39 @@
 <%@ page import="shop.goods.OptionDTO" %>
 <%@ page import="shop.review.ReviewDTO" %>
 <%@ page import="shop.review.ReviewDAO" %>
+<%@ page import="shop.member.MemberDTO" %>
+<%@ page import="shop.member.MemberDAO" %>
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%--상품 상세정보--%>
 <%
     request.setCharacterEncoding("UTF-8");
     String sid = (String) session.getAttribute("sid");
-	
+    int mnum=0;
+    
+    if(sid!=null) {
+    MemberDAO mdao=new MemberDAO();
+    MemberDTO mdto=mdao.getMidname(sid); 
+    mnum=mdto.getMnum(); //회원 고유번호 받아오기
+    }
     int gnum = Integer.parseInt(request.getParameter("gnum"));
     
+    
     GoodsDAO dao = GoodsDAO.getDAO();
-    GoodsDTO goods = dao.select(gnum); 
+    GoodsDTO goods = dao.select(gnum);
+    int ginum=goods.getGinum(); //상품 이미지 번호 조회
+    int canum=goods.getCanum(); //상품 카테고리 번호 조회
     
    //리뷰 목록 조회
-    ReviewDAO rdao=ReviewDAO.getInstance();
-    List<ReviewDTO> rlist=rdao.getReview(gnum); 
-    int mnum=36;
+    ReviewDAO rdao=ReviewDAO.getInstance(); //리뷰 DAO
+    List<ReviewDTO> rlist=rdao.getReview(gnum);	//gnum인 리뷰목록 조회 
+    
+    ReviewDTO myReview=null;
+    if(sid!=null) {
+    	myReview=rdao.getUserReview(gnum,mnum); //본인 리뷰가 있는지 확인
+    }
 	
     // 포맷팅
     NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
@@ -224,15 +240,33 @@
                                         <div class="product__details__tab__content__item">
                                             <h5>리뷰 목록</h5>
                                             <%--여기에 작업--%>
+                                            	<div>
+                                            	<% if(sid!=null) { %>
+                                            		<h5><%=(myReview==null ? "리뷰 작성" : "리뷰 수정") %></h5>
+                                        			<form action="<%=(myReview==null ? "/shop/review/reviewPro.jsp" :"/shop/review/reviewUpdate.jsp")%>" method="post">
+														<input type="hidden" name="sid" value="<%=sid%>"/>
+                                        				<input type="hidden" name="gnum" value="<%=gnum%>"/>
+                                        				<input type="hidden" name="mnum" value="<%=mnum%>"/>
+                                        				<input type="hidden" name="canum" value="<%=canum%>"/> 
+                                        				<input type="hidden" name="ginum" value="<%=ginum%>"/>
+                                        				<%if(myReview!=null) { %>
+                                        					<input type="hidden" name="rnum" value="<%=myReview.getRnum()%>"/>
+                                        				<%} %>
+                                        				<textarea name="rcontent" rows="4" cols="60" placeholder="리뷰를 입력하세요"><%= (myReview != null) ? myReview.getRcontent() : "" %>
+                                        				</textarea><br>
+                                        				<input type="submit" value="<%= (myReview == null ? "리뷰 작성" : "리뷰 수정") %>"> <%--여기서 뭘 넘겨야할까? --%>
+                                        			</form>
+                                        			<%}else{ %>
+                                        			<p><a href="/shop/member/loginForm.jsp">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
+                                        			<%} %>
+                                        		</div>
+                                        		<div>
                                             	<%for(ReviewDTO dto:rlist){	%>
-                                            		<%=dto.getRcontent() %>
-                                            <%} %>
-                                        </div>
-                                        	<div>
-                                        	<form action="/shop/review/reviewForm.jsp" method="post">
-                                        	<input type="text"/>
-                                        	<input type="submit" value="리뷰작성"/> <%--여기서 뭘 넘겨야할까? --%>
-                                        	</form>
+                                            		<h2><%=dto.getMname()%></h2><br/>
+                                            		<h3><%=dto.getMid() %></h3><br/>
+                                            		<h5><%=dto.getRcontent()%></h5>                                        		  
+                                            	</div>	                                            	                                        	
+                                            <%} %>                                                                       
                                         </div>
                                     </div>
                                 </div>

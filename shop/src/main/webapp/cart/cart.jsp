@@ -15,12 +15,13 @@ if (sid == null) {
 return;
 }
 
-// 장바구니 목록
+// 장바구니 목록 세션에서 !!부르지말고 dao에서 부르기
 List<Integer> cartNums = (List<Integer>) session.getAttribute("cart");
 List<CartDTO> cartItems = new ArrayList<>();
+int ccount = Integer.parseInt("ccount");
 CartDAO dao = CartDAO.getInstance();
 
-if (cartNums != null) {//상품정보 
+if (cartNums != null) {//상품정보
     for (int gnum : cartNums) {
         CartDTO dto = dao.getCartGoods(gnum);
         if (dto != null) {
@@ -53,22 +54,19 @@ if (cartItems.isEmpty()) {
 } else { 
     int total = 0;
     for (CartDTO dto : cartItems) {
-    	int disprice;
+    	
         int gprice = dto.getGprice();
         int discount = dto.getDiscount();
-        if (discount != 0) {
-	disprice = gprice - (gprice * discount / 100);
-		}else{
-	 disprice = gprice;
-		}
-        total += disprice;
+        
+        total += discount;
 %>
     <div class="item">
-        <img src="img/<%=dto.getGiname()%>" alt="상품 이미지" width="150">
+        <img src="/resources/image/<%=dto.getGiname()%>" alt="상품 이미지" width="150">
         <div>
             <p>상품명: <%=dto.getGname()%></p>
             <p>가격: ₩<%=gprice%></p>
-            <p>할인가: ₩<%=disprice%></p>
+            <p>할인가: ₩<%=discount%></p>
+            <p>수량:<%=ccount %>개</p>
             <input type="button" value="구매하기" onclick="location.href='/shop/buy/cash.jsp?gnum=<%=dto.getGnum()%>'">
         </div>
     </div>

@@ -72,6 +72,7 @@ public class ReviewDAO {
 				pstmt.setInt(3, dto.getCanum());
 				pstmt.setInt(4, dto.getGinum());
 				pstmt.setString(5, dto.getRcontent());
+				pstmt.executeUpdate();
 				
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -84,8 +85,10 @@ public class ReviewDAO {
 			List<ReviewDTO> list=new ArrayList<>();
 			try {
 				conn=getConnection();
-				String sql="select * from review";
+				String sql="select r.*,m.* from review r,member2 m where r.gnum=? and m.mnum=r.mnum";
 				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, gnum);
+				
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
 					ReviewDTO dto=new ReviewDTO();
@@ -95,6 +98,8 @@ public class ReviewDAO {
 					dto.setCanum(rs.getInt("canum"));
 					dto.setGinum(rs.getInt("ginum"));
 					dto.setRcontent(rs.getString("rcontent"));
+					dto.setMname(rs.getString("mname"));
+					dto.setMid(rs.getString("mid"));
 					list.add(dto);
 				}
 			}catch(Exception e) {
@@ -103,7 +108,49 @@ public class ReviewDAO {
 				endConnection();
 			}
 			return list;
-			
+		}
+		public ReviewDTO getUserReview(int gnum,int mnum) { //내 리뷰가져오는 메소드
+				ReviewDTO dto=null;
+			try {
+				conn=getConnection();
+				String sql="select * from review where gnum=? and mnum=?";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, gnum);
+				pstmt.setInt(2, mnum);
+				
+				rs=pstmt.executeQuery();
+				while(rs.next()) {
+					dto = new ReviewDTO();
+					dto.setRnum(rs.getInt("rnum")); 
+					dto.setGnum(rs.getInt("gnum"));
+					dto.setMnum(rs.getInt("mnum"));
+					dto.setCanum(rs.getInt("canum"));
+					dto.setGinum(rs.getInt("ginum"));
+					dto.setRcontent(rs.getString("rcontent"));
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally{
+				endConnection();
+			}
+			return dto;
+		}
+		public void updateReview(ReviewDTO dto) { //리뷰 수정하는 메소드
+			try {
+				conn=getConnection();
+				String sql="update review set rcontent=? where gnum=? and mnum=? and rnum=?";
+				pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, dto.getRcontent());
+				pstmt.setInt(2, dto.getGnum());
+				pstmt.setInt(3, dto.getMnum());
+				pstmt.setInt(4, dto.getRnum());
+				
+				pstmt.executeUpdate();
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				endConnection();
+			}
 		}
 	}
 
