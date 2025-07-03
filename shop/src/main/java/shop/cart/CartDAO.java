@@ -155,4 +155,23 @@ public class CartDAO {
 		}
 		return mnum;
 	}
+	//해당상품의 gonum 옵션번호 불러오기
+	public int getGonum(int gnum) {
+		int gonum=0;
+		try {
+			conn = getConnection();
+			String sql = "select go.gonum from goods_option go join goods g on go.gnum=g.gnum where gnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				gonum = rs.getInt("gonum");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return gonum;
+	}
 }

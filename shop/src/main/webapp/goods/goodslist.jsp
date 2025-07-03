@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.goods.GoodsListDAO"%>
 <%@ page import="shop.goods.GoodsListDTO"%>
+<%@ page import="shop.cart.CartDTO" %>
+<%@ page import="shop.cart.CartDAO" %>
 <%@ page import="shop.goods.OptionDAO"%>
 <%@ page import="shop.goods.OptionDTO"%>
 <%@ page import="java.util.List"%>
@@ -10,7 +12,8 @@
 <%
 request.setCharacterEncoding("UTF-8");
 GoodsListDAO dao = GoodsListDAO.getInstance(); // DAO 불러오고
-
+CartDTO cdto = new CartDTO();
+CartDAO cdao = CartDAO.getInstance();
 int pageSize = 15; //한 화면에 보여줄 상품 갯수
 String pageNum = request.getParameter("pageNum");
 if (pageNum == null) {
@@ -177,6 +180,7 @@ if (endPage > pageCount)
 					<%
 					if (list != null && !list.isEmpty()) {
 						for (GoodsListDTO dto : list) {
+							int gonum = cdao.getGonum(dto.getGnum());
 					%>
 					<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
 						<div class="card h-100">
@@ -193,7 +197,8 @@ if (endPage > pageCount)
 								</p>
 								<form method="post" action="/shop/cart/cartInsertPro.jsp">
 								<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-								수량 : <input type="number" name="ccount" min="1" value="1" class="form-control form-control-sm mb-2" />
+								<input type="hidden" name="gonum" value="<%=gonum %>">
+								수량 : <input type="number" name="ccount" min="1" value="1"  />
 								<button type="submit" class="btn btn-outline-primary btn-sm w-100">+장바구니 담기</button>
 								</form>
 								<a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>" class="btn btn-outline-primary btn-sm w-100">구매하기</a>
