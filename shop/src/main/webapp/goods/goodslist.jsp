@@ -193,7 +193,7 @@ if (endPage > pageCount)
 								</p>
 								<form method="post" action="/shop/cart/cartInsertPro.jsp">
 								<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-								 <input type="number" name="ccount" min="1" value="1" class="form-control form-control-sm mb-2" />
+								수량 : <input type="number" name="ccount" min="1" value="1" class="form-control form-control-sm mb-2" />
 								<button type="submit" class="btn btn-outline-primary btn-sm w-100">+장바구니 담기</button>
 								</form>
 								<a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>" class="btn btn-outline-primary btn-sm w-100">구매하기</a>
