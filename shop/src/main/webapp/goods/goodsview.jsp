@@ -262,9 +262,9 @@
                                         		</div>
                                         		<div>
                                             	<%for(ReviewDTO dto:rlist){	%>
-                                            		<%=dto.getRcontent() %>
-                                            		<%=dto.getCanum() %>
-                                            		<%=dto.getGnum() %>                                          		  
+                                            		<h2><%=dto.getMname()%></h2><br/>
+                                            		<h3><%=dto.getMid() %></h3><br/>
+                                            		<h5><%=dto.getRcontent()%></h5>                                        		  
                                             	</div>	                                            	                                        	
                                             <%} %>                                                                       
                                         </div>

@@ -85,7 +85,7 @@ public class ReviewDAO {
 			List<ReviewDTO> list=new ArrayList<>();
 			try {
 				conn=getConnection();
-				String sql="select * from review where gnum=?";
+				String sql="select r.*,m.* from review r,member2 m where r.gnum=? and m.mnum=r.mnum";
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, gnum);
 				
@@ -98,6 +98,8 @@ public class ReviewDAO {
 					dto.setCanum(rs.getInt("canum"));
 					dto.setGinum(rs.getInt("ginum"));
 					dto.setRcontent(rs.getString("rcontent"));
+					dto.setMname(rs.getString("mname"));
+					dto.setMid(rs.getString("mid"));
 					list.add(dto);
 				}
 			}catch(Exception e) {

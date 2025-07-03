@@ -7,6 +7,8 @@ public class ReviewDTO { //리뷰 테이블 DTO
 	private int canum;	//카테고리번호 fk
 	private int ginum;	//굿즈 이미지 번호 fk
 	private String rcontent;//리뷰 내용
+	private String mid; //리뷰작성한 유저의 아이디
+	private String mname; //리뷰작성한 유저의 이름
 	public int getRnum() {
 		return rnum;
 	}
@@ -42,5 +44,17 @@ public class ReviewDTO { //리뷰 테이블 DTO
 	}
 	public void setRcontent(String rcontent) {
 		this.rcontent = rcontent;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+	public String getMname() {
+		return mname;
+	}
+	public void setMname(String mname) {
+		this.mname = mname;
 	}
 }
