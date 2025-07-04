@@ -180,8 +180,8 @@ public class CartDAO {
 		try {
 			conn = getConnection();
 			String sql = "select c.cnum,c.canum,c.ccount, c.ginum, c.gonum, g.gname, g.gprice, "
-					+ "    (g.gprice - (g.gprice * g.discount / 100)) AS discount "
-					+ "    from cart c join goods g on c.gnum = g.gnum where c.mnum=?;";
+					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount "
+					+ " from cart c join goods g on c.gnum = g.gnum where c.mnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
