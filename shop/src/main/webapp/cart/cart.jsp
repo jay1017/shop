@@ -14,19 +14,18 @@ if (sid == null) {
 <%
 return;
 }
-
 // 장바구니 목록 세션에서 !!부르지말고 dao에서 부르기
-List<Integer> cartNums = (List<Integer>) session.getAttribute("cart");
-List<CartDTO> cartItems = new ArrayList<>();
-int ccount = Integer.parseInt("ccount");
 CartDAO dao = CartDAO.getInstance();
+int mnum = dao.getMnum(sid);
+List<CartDTO> cart = dao.getCartByMnum(mnum);
+int ccount = Integer.parseInt(request.getParameter("ccount"));
+List<CartDTO> fullCartItems = new ArrayList<>();
 
-if (cartNums != null) {//상품정보
-    for (int gnum : cartNums) {
-        CartDTO dto = dao.getCartGoods(gnum);
-        if (dto != null) {
-            cartItems.add(dto);
-        }
+for (CartDTO cdto : cart) {
+    CartDTO goods = dao.getCartGoods(cdto.getGnum());
+    if (goods != null) {
+        goods.setCcount(cdto.getCcount()); // 수량 세팅
+        fullCartItems.add(goods);
     }
 }
 %>
@@ -47,13 +46,13 @@ if (cartNums != null) {//상품정보
 </header>
 
 <%
-if (cartItems.isEmpty()) {
+if (cart.isEmpty()) {
 %>
     <p>장바구니에 담긴 상품이 없습니다.</p>
 <%
 } else { 
     int total = 0;
-    for (CartDTO dto : cartItems) {
+    for (CartDTO dto : cart) {
     	
         int gprice = dto.getGprice();
         int discount = dto.getDiscount();
