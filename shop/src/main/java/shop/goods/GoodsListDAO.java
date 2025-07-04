@@ -70,7 +70,7 @@ public class GoodsListDAO {
 		List<GoodsListDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select gnum,canum,gname,gprice,gcontent,ginum,(gprice - (gprice * discount / 100)) as discount,gread from goods order by gnum desc";
+			String sql = "select g.gnum,g.canum,g.gname,g.gprice,g.gcontent,g.ginum,(g.gprice - (g.gprice * g.discount / 100)) as discount,g.gread,gi.giname from goods g join goods_image gi on g.ginum=gi.ginum order by gnum desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -83,6 +83,7 @@ public class GoodsListDAO {
 				dto.setGinum(rs.getInt("ginum"));
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGread(rs.getInt("gread"));
+				dto.setGiname(rs.getString("giname"));
 				list.add(dto);
 			}
 		} catch (Exception e) {

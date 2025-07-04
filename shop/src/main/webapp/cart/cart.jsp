@@ -90,7 +90,7 @@ for (CartDTO dto : cart) {
 	total += discount;
 %>
 <div class="item">
-	<img src="/resources/image/<%=dto.getGiname()%>" alt="상품 이미지"
+	<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품 이미지"
 		width="150">
 	<div>
 		<p>
