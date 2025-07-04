@@ -69,7 +69,7 @@ public class CartDAO {
 		CartDTO dto = null;
 		try {
 			conn = getConnection();
-			String sql = "select gnum, gname, gprice, giname, (gprice-(gprice*discount/100)) as discount from goods where gnum=?";
+			String sql = "select g.gnum, g.gname, g.gprice, gi.giname, (g.gprice-(g.gprice*g.discount/100)) as discount from goods g join goods_image gi on g.ginum=gi.ginum where gnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
