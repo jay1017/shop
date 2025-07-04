@@ -45,8 +45,8 @@ public class QnaDAO {
                 dto.setMnum(rs.getInt("mnum"));
                 dto.setQtitle(rs.getString("qtitle"));
                 dto.setQcontent(rs.getString("qcontent"));
-                dto.setQdate(rs.getTimestamp("qdate"));
                 list.add(dto);
+                System.out.println("읽은 글: " + dto.getQtitle());  // 로그 추가
             }
         } catch (Exception e) {
             e.printStackTrace();

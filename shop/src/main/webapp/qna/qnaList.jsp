@@ -5,7 +5,6 @@
 <%@ page import="shop.member.MemberDTO" %>
 
 <%
-    // 로그인 확인
     String sid = (String) session.getAttribute("sid");
     if (sid == null) {
 %>
@@ -17,7 +16,6 @@
         return;
     }
 
-    // 로그인된 회원의 mnum 가져오기
     MemberDAO mdao = new MemberDAO();
     MemberDTO mdto = mdao.getInfo(sid);
     int myMnum = 0;
@@ -31,8 +29,7 @@
     <title>문의 목록</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css">
     <style>
         .body-container {
             width: 700px;
@@ -49,7 +46,7 @@
         }
         a {
             text-decoration: none;
-            color: inherit;
+            color: #007bff;
         }
         a:hover {
             text-decoration: underline;
