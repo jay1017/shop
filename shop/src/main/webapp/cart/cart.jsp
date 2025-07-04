@@ -53,11 +53,11 @@ if (goods != null) {
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
-<body>
+	<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 	<jsp:include page="/include/header.jsp" />
 	<title>장바구니</title>
-
 </head>
+<body>
 
 <h1>장바구니</h1>
 
@@ -100,7 +100,7 @@ for (CartDTO dto : cart) {
 
 <h3>
 	총 합계: ₩<%=total%></h3>
-<a href="/shop/buy/buyInsert.jsp">전체 결제하기</a>
+<a href="/shop/buy/buyInsert.jsp">모두 구매</a>
 <input type="button" value="모두 구매" onclick="location.href='/shop/buy/cash.jsp'">
 
 <%

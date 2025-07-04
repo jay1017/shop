@@ -78,6 +78,8 @@ if (endPage > pageCount)
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+	</head>
 <body>
 <style>
 .primary-btn {
