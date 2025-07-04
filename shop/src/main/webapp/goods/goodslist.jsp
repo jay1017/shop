@@ -53,6 +53,7 @@ int endPage = startPage + pageBlock - 1;
 if (endPage > pageCount)
 	endPage = pageCount;
 %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -78,6 +79,18 @@ if (endPage > pageCount)
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <body>
+<style>
+.primary-btn {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 14px 30px;
+	color: #ffffff;
+	background: #000000;
+	letter-spacing: 4px;
+}
+</style>
 	<jsp:include page="/include/header.jsp" />
 	<jsp:include page="/include/sidebar.jsp" />
 	<div class="col-lg-3">
@@ -202,7 +215,18 @@ if (endPage > pageCount)
 								수량 : <input type="number" name="ccount" min="1" value="1"  />
 								<button type="submit" class="btn btn-outline-primary btn-sm w-100">+장바구니 담기</button>
 								</form>
-								<a href="/shop/buy/buy.jsp?gnum=<%=dto.getGnum()%>" class="btn btn-outline-primary btn-sm w-100">구매하기</a>
+								<form method="post" action="/shop/buy/buyInsert.jsp" onsubmit="copyCount()">
+								<input type="hidden" name="gnum" id="ccount" value="<%=dto.getGnum() %>">
+								<input type="hidden" name="gonum" value="<%=gonum %>">
+								<input type="hidden" name="bcount" id="bcount" value="">
+								<button type="submit" class="btn btn-outline-primary btn-sm w-100">구매하기</button>
+								</form>
+								<script>
+								function copyCount(){
+									const count = document.getElementById("ccount").value;
+									document.getElementById("bcount").value = count;
+								}
+								</script>
 							</div>
 						</div>
 					</div>
@@ -221,7 +245,7 @@ if (endPage > pageCount)
 		<%--row 닫기 --%>
 	</div>
 	<%--container 닫기 --%>
-	<div>
+	<div style="text-align: center;">
 		<%
 		if (startPage > 1) {
 		%>
@@ -255,7 +279,7 @@ if (endPage > pageCount)
 		%>
 		<form action="/shop/main/search.jsp" method="get">
 			<input type="text" placeholder="검색어 입력">
-			<button type="submit">검색</button>
+			<button type="submit" class="primary-btn" style="border: none; border-radius: 5px">검색</button>
 		</form>
 	</div>
 

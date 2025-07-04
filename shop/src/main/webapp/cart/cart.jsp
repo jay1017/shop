@@ -91,7 +91,7 @@ for (CartDTO dto : cart) {
 			수량:<%=dto.getCcount()%>개
 		</p>
 		<input type="button" value="구매하기"
-			onclick="location.href='/shop/buy/cash.jsp?gnum=<%=dto.getGnum()%>'">
+			onclick="location.href='/shop/buy/buyInsert.jsp?gnum=<%=dto.getGnum()%>'">
 	</div>
 </div>
 <%
@@ -100,7 +100,7 @@ for (CartDTO dto : cart) {
 
 <h3>
 	총 합계: ₩<%=total%></h3>
-<a href="cash.jsp">전체 결제하기</a>
+<a href="/shop/buy/buyInsert.jsp">전체 결제하기</a>
 <input type="button" value="모두 구매" onclick="location.href='/shop/buy/cash.jsp'">
 
 <%
