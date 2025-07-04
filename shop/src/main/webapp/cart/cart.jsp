@@ -61,11 +61,10 @@ if (goods != null) {
 	position: fixed; /* ← 핵심 */
 	top: 100px; /* 화면 위에서 떨어진 거리 */
 	right: 20px; /* 오른쪽에 고정 */
-	width: 180px; /* 원하는 너비로 조정 */
+	width: 80px; /* 원하는 너비로 조정 */
 	padding: 1em;
 	background: #e4e4e4;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-	z-index: 1000; /* 다른 요소 위에 보이도록 */
 	display: flex;
     flex-direction: column; /* ← 세로정렬! */
     gap: 10px;               
