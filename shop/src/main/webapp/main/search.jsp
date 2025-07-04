@@ -51,6 +51,7 @@ System.out.println("검색된 상품 수: " + list.size());
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 <%--검색된 상품의 목록--%>
 </head>
 <body>

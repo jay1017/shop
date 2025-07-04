@@ -30,9 +30,27 @@
     int canum=goods.getCanum(); //상품 카테고리 번호 조회
     
    //리뷰 목록 조회
+     //상품 리뷰 개수 가져오기
+    
+    String pageNum=request.getParameter("pageNum");
+    if(pageNum==null) pageNum="1";
+
+    int pageSize=8;
+    int currentPage = Integer.parseInt(request.getParameter("pageNum") != null ? request.getParameter("pageNum") : "1");
+    int startRow=(currentPage-1)*pageSize+1;
+    int endRow=currentPage*pageSize;
+
     ReviewDAO rdao=ReviewDAO.getInstance(); //리뷰 DAO
-    List<ReviewDTO> rlist=rdao.getReview(gnum);	//gnum인 리뷰목록 조회 
-    int rcount=rdao.reviewCount(gnum); //상품 리뷰 개수 가져오기
+    List<ReviewDTO> rlist=rdao.getReview(gnum,startRow,endRow);	//gnum인 리뷰목록 조회 
+    int rcount=rdao.reviewCount(gnum); //리뷰의 개수 출력하는 메소드
+   	
+
+    
+    System.out.println("상품번호: " + gnum);
+    System.out.println("현재 페이지: " + currentPage);
+    System.out.println("startRow = " + startRow + ", endRow = " + endRow);
+    System.out.println("리뷰개수: " + rcount);
+    
     
     
     ReviewDTO myReview=null;
@@ -67,6 +85,7 @@
     <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/font.css">
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
@@ -251,8 +270,7 @@
                                         				<input type="hidden" name="mnum" value="<%=mnum%>"/>
                                         				<input type="hidden" name="canum" value="<%=canum%>"/> 
                                         				<input type="hidden" name="ginum" value="<%=ginum%>"/>
-                                        				<textarea name="rcontent" rows="4" cols="60" placeholder="리뷰를 입력하세요">
-                                        				</textarea><br> 
+                                        				<textarea name="rcontent" rows="4" cols="60" placeholder="리뷰를 입력하세요"></textarea><br> 
                                         				<input type="submit" value="작 성" class="primary-btn" style="border: none;"> 
                                         			</form>
                                         			<%}else{ %>
@@ -261,33 +279,45 @@
                                         		</div>
                                         		
                                         		<%--리뷰 삭제 버튼 --%>
-                                            	<%if(rlist!=null && !rlist.isEmpty()) {	
-                                            			for(ReviewDTO dto:rlist){
-                                            				int rnum=dto.getRnum();
-                                            				String mname=dto.getMname();
-                                            	%>
-                                            				<div id="review-<%= rnum %>">
-        														<!-- 작성자 이름과 리뷰 내용 출력 -->
-        														<p>
-            													<strong><%= mname %></strong> </br>
-            													<span id="content-<%= rnum %>"><%= dto.getRcontent() %></span>
-        														</p>
-                                            					<%if(sid!=null && sid.equals(dto.getMid())) { %> <%--세션 id랑 유저 id가 같은지 확인 --%> 
-																	<button onclick="enableEdit(<%= rnum %>)">수정</button>
-                                            							<form method="post">
-                                            								<input type="hidden" name="mnum" value="<%=dto.getMnum() %>">
-                                            								<input type="hidden" name="rnum" value="<%=dto.getRnum()%>">
-                                            								<input type="hidden" name="gnum" value="<%=dto.getGnum() %>">
-                                            								<input type="hidden" name="ginum" value="<%=dto.getGinum() %>">
-                                            								<input type="hidden" name="rcontent" value="<%=dto.getRcontent() %>">
-                                            								<input type="submit" name="delete" value="삭 제" formaction="/shop/review/reviewDelete.jsp" class="primary-btn" style="border: none;">
-                                            							</form>                                      		  
-																<%} %>
-															</div>                                              				                                            	                                        	
-                                            			<%} 
-                                           		}else{%>
-                                            	<p>등록된 리뷰가 없습니다</p>
-											 <%	} %>											
+                                            	<%-- 리뷰 목록이 존재할 경우에만 출력 --%>
+											<% if(rlist != null && !rlist.isEmpty()) {
+											        for(ReviewDTO dto : rlist){
+											            int rnum = dto.getRnum();         // 리뷰 번호
+											            String mname = dto.getMname();   // 작성자 이름
+											%>
+											    <div id="review-<%= rnum %>">
+											        <!-- 작성자 이름과 리뷰 내용 출력 -->
+											        
+											            <strong><%= mname %></strong><br>
+											            <div id="rcontent-<%= rnum %>" 
+											            style="white-space: pre-wrap; padding: 10px; border: 1px solid #ccc; font-size: 16px;"><p><%= dto.getRcontent() %></p></div>
+											        <% 
+											            // 세션에 로그인된 사용자 ID와 리뷰 작성자 ID가 같은 경우에만 버튼 출력
+											            if(sid != null && sid.equals(dto.getMid())) { 
+											        %>
+											            <!-- 수정 버튼 (자바스크립트로 이 리뷰 블록을 수정폼으로 바꿈) -->
+											            <button onclick="enableEdit(<%= rnum %>,'<%=mname%>')" class="primary-btn" style="border: none;">수 정</button>
+											
+											            <!-- 삭제 버튼 (폼 submit 방식) -->
+											            <form method="post">
+											                <input type="hidden" name="mnum" value="<%= dto.getMnum() %>">
+											                <input type="hidden" name="rnum" value="<%= dto.getRnum() %>">
+											                <input type="hidden" name="gnum" value="<%= dto.getGnum() %>">
+											                <input type="hidden" name="ginum" value="<%= dto.getGinum() %>">
+											                <input type="hidden" name="rcontent" value="<%= dto.getRcontent() %>">
+											                <input type="submit" name="delete" value="삭 제" 
+											                       formaction="/shop/review/reviewDelete.jsp" 
+											                       class="primary-btn" style="border: none;">
+											            </form>
+											        <% } %>
+											    </div>
+											<% 
+											        }
+											    } else { 
+											%>
+											    <p>등록된 리뷰가 없습니다</p>
+											<% } %>
+                                            									
 										</div>
                                     </div>
                                 </div>
@@ -296,31 +326,47 @@
                     </div>
                 </div>
             </div>
+            <%--페이징 처리 --%>
+        <%
+        int pageCount = rcount / pageSize + (rcount % pageSize == 0 ? 0 : 1);
+        int pageBlock = 5;
+        int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
+        int endPage = startPage + pageBlock - 1;
+        if (endPage > pageCount) endPage = pageCount;
+        %>
+
+        <div class="text-center mt-4">
+            <% if (startPage > pageBlock) { %>
+                <a href="goodsview.jsp?gnum=<%=gnum %>&pageNum=<%= startPage - 1 %>">◀ 이전</a>
+            <% } %>
+
+            <% for (int i = startPage; i <= endPage; i++) { %>
+                <% if (i == currentPage) { %>
+                    <strong>[<%= i %>]</strong>
+                <% } else { %>
+                    <a href="goodsview.jsp?gnum=<%=gnum %>&pageNum=<%= i %>">[<%= i %>]</a>
+                <% } %>
+            <% } %>
+
+            <% if (endPage < pageCount) { %>
+                <a href="goodsview.jsp?gnum=<%=gnum %>&pageNum=<%= endPage + 1 %>">다음 ▶</a>
+            <% } %>
+        </div>
         </div>
     </section>
     <!-- Shop Details Section End -->
     <%--${}의 의미는 스크립트에서 변수를 출력하는것 자바에서 <%=%>랑 같다--%>
     <jsp:include page="/include/footer.jsp"></jsp:include>
-    <script>
-    //수정 버튼을 누르면 실행되는 함수
-    function enableEdit(rnum) {
-    	
-    	const content=document.getElementById('content-'+rnum).innerText; //현재 리뷰 내용을 가져옴(span안의 text)
-    	
-    	const reviewDiv=document.getElementById('review-'+rnum); //리뷰 전체 영역을 가져옴
-    	
-    	//이 영역을 수정폼으로 바꿔버림
-    	reviewDiv.innerHTML=`
-    	<form action=reviewUpdatePro.jsp method="post">
-    		<input type="hidden" name="rnum" value="${rnum}">
-    		<input type="hidden" name="gnum" value="${getGnumFromURL()}" <!--상품 번호 전달 -->
-    		<textarea name="rcontent" rows="3" cols="50">${rcontent}</textarea>
-    		<br>
-    		<button type="submit">저장</button>
-    		<button type="button" onclick="cancelEdit(${rnum},'${content}')">취소</button>
-    	</form>
-    	`;
-    }
-    </script>
+	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
+	<script src="/shop/resources/js/jquery.slicknav.js"></script>
+	<script src="/shop/resources/js/mixitup.min.js"></script>
+	<script src="/shop/resources/js/owl.carousel.min.js"></script>
+	<script src="/shop/resources/js/main.js"></script>
+    <script src="/shop/resources/js/review.js"></script>
+    <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
