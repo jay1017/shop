@@ -28,7 +28,32 @@ for (CartDTO cdto : cart) {
     }
 }
 %>
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Male_Fashion Template">
+<meta name="keywords" content="Male_Fashion, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>ODEZ</title>
+<link rel="stylesheet" href="/shop/resources/css/font.css" />
+<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/elegant-icons.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/magnific-popup.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/nice-select.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/slicknav.min.css"
+	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/style.css"
+	type="text/css">
+<body>
+	<jsp:include page="/include/header.jsp" />
     <title>장바구니</title>
     <style>
         .sidebar {
@@ -38,11 +63,9 @@ for (CartDTO cdto : cart) {
 }
     </style>
 </head>
-<body>
 
-<header>
     <h1> 장바구니</h1>
-</header>
+
 
 <%
 if (cart.isEmpty()) {
@@ -83,3 +106,16 @@ if (cart.isEmpty()) {
     <input type="button" value="⇩" onclick="window.scrollTo(0,document.body.scrollHeight)"> 
     <input type="button" value="고객센터" onclick="location.href='ascenter.jsp'">
 </div>
+<jsp:include page="/include/footer.jsp" />
+	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
+	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
+	<script src="/shop/resources/js/jquery.slicknav.js"></script>
+	<script src="/shop/resources/js/mixitup.min.js"></script>
+	<script src="/shop/resources/js/owl.carousel.min.js"></script>
+	<script src="/shop/resources/js/main.js"></script>
+</body>
+</html>
