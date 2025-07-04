@@ -66,6 +66,9 @@ if (goods != null) {
 	background: #e4e4e4;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 	z-index: 1000; /* 다른 요소 위에 보이도록 */
+	display: flex;
+    flex-direction: column; /* ← 세로정렬! */
+    gap: 10px;               
 }
 </style>
 </head>
