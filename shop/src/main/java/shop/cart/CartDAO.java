@@ -179,7 +179,9 @@ public class CartDAO {
 		List<CartDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from cart where mnum=?";
+			String sql = "select c.cnum,c.canum,c.ccount, c.ginum, c.gonum, g.gname, g.gprice, "
+					+ "    (g.gprice - (g.gprice * g.discount / 100)) AS discount "
+					+ "    from cart c join goods g on c.gnum = g.gnum where c.mnum=?;";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -191,6 +193,9 @@ public class CartDAO {
 				dto.setCcount(rs.getInt("ccount"));
 				dto.setGinum(rs.getInt("ginum"));
 				dto.setGonum(rs.getInt("gonum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setDiscount(rs.getInt("discount"));
 				list.add(dto);
 			}
 		}catch(Exception e) {
