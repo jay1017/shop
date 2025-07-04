@@ -22,5 +22,5 @@
 	<input type="button" value="구매내역" onclick="location.href='/shop/buy/buy.jsp'">
 	<input type="button" value="⇧" onclick="window.scrollTo(0,0)">
 	<input type="button" value="⇩" onclick="window.scrollTo(0,document.body.scrollHeight)">
-	<input type="button" value="고객센터" onclick="location.href='ascenter.jsp'">
+	<input type="button" value="문의" onclick="location.href='/shop/qna/qnaList.jsp'">
 </div>
