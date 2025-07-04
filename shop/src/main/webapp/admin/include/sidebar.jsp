@@ -3,7 +3,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
 	<div class="sidebar-content js-simplebar">
 		<a class="sidebar-brand" href="index.html"> 
-			<span class="align-middle">AdminKit</span>
+			<span class="align-middle">ODEZ ADMIN</span>
 		</a>
 		<ul class="sidebar-nav">
 			<li class="sidebar-header">메인</li>
@@ -44,6 +44,11 @@
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="/shop/admin/buyer.jsp">
 					<span class="align-middle">주문내역</span>
+				</a>
+			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="/shop/admin/review.jsp">
+					<span class="align-middle">리뷰</span>
 				</a>
 			</li>
 		</ul>
