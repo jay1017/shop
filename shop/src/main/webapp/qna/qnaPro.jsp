@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="qna.QnaDTO" %>
-<%@ page import="qna.QnaDAO" %>
+<%@ page import="shop.qna.QnaDTO" %>
+<%@ page import="shop.qna.QnaDAO" %>
 <%@ page import="shop.member.MemberDAO" %>
 <%@ page import="shop.member.MemberDTO" %>
 

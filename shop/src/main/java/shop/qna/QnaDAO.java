@@ -1,4 +1,4 @@
-package qna;
+package shop.qna;
 
 import java.sql.*;
 import java.util.*;
