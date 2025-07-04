@@ -5,7 +5,7 @@
 <%@ page import="shop.member.MemberDTO" %>
 
 <%
-    // 로그인 체크
+    // 로그인 확인
     String sid = (String) session.getAttribute("sid");
     if (sid == null) {
 %>
@@ -17,7 +17,7 @@
         return;
     }
 
-    // 로그인한 아이디로 mnum 가져오기
+    // 로그인된 회원의 mnum 가져오기
     MemberDAO mdao = new MemberDAO();
     MemberDTO mdto = mdao.getInfo(sid);
     int myMnum = 0;
@@ -29,110 +29,100 @@
 <html>
 <head>
     <title>문의 목록</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
     <style>
-        #modalOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        #deleteModal {
-            background: #fff;
+        .body-container {
+            width: 700px;
+            margin: 40px auto;
             padding: 20px;
-            width: 300px;
-            margin: 200px auto;
-            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            background-color: #fafafa;
+            border-radius: 8px;
+        }
+        h2 {
             text-align: center;
-            box-shadow: 0 0 10px #333;
+            margin-bottom: 30px;
         }
-        button {
-            margin: 5px;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        a {
+            text-decoration: none;
+            color: inherit;
         }
-        .btn-confirm { background-color: #d9534f; color: white; }
-        .btn-cancel { background-color: #5bc0de; color: white; }
+        a:hover {
+            text-decoration: underline;
+        }
+        table.qnaTable {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+        table.qnaTable th, table.qnaTable td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: center;
+        }
+        table.qnaTable th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+
+<jsp:include page="/include/header.jsp"></jsp:include>
+
+<div class="body-container">
     <h2>문의 목록 (<%= sid %>)</h2>
     <a href="qnaForm.jsp">[문의 작성]</a>
-    <br><br>
 
-<%
-    QnaDAO dao = new QnaDAO();
-    List<QnaDTO> list = dao.getQnaList();
+    <%
+        QnaDAO dao = new QnaDAO();
+        List<QnaDTO> list = dao.getQnaList();
 
-    boolean hasMyPost = false;
-    for (QnaDTO dto : list) {
-        if (dto.getMnum() == myMnum) {
-            hasMyPost = true;
-            break;
-        }
-    }
-
-    if (!hasMyPost) {
-%>
-    <p>등록된 문의가 없습니다.</p>
-<%
-    } else {
-%>
-    <table border="1" cellpadding="5" cellspacing="0">
+        if (list.isEmpty()) {
+    %>
+        <p>등록된 문의가 없습니다.</p>
+    <%
+        } else {
+    %>
+    <table class="qnaTable">
         <tr>
             <th>번호</th>
             <th>회원번호</th>
             <th>제목</th>
-            <th>내용</th>
-            <th>관리</th>
         </tr>
-<%
+    <%
         for (QnaDTO dto : list) {
-            if (dto.getMnum() != myMnum) continue;
-%>
+            String title = dto.getQtitle();
+            if (title == null || title.trim().equals("")) {
+                title = "(제목 없음)";
+            }
+    %>
         <tr>
             <td><%= dto.getQnum() %></td>
             <td><%= dto.getMnum() %></td>
-            <td><%= dto.getQtitle() %></td>
-            <td><%= dto.getQcontent() %></td>
             <td>
-                <a href="qnaUpdateForm.jsp?qnum=<%= dto.getQnum() %>">수정</a> |
-                <a href="javascript:openDeleteModal(<%= dto.getQnum() %>)">삭제</a>
+                <% if (dto.getMnum() == myMnum) { %>
+                    <a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
+                <% } else { %>
+                    <%= title %>
+                <% } %>
             </td>
         </tr>
-<%
+    <%
         }
-%>
+    %>
     </table>
-<%
-    }
-%>
-
-    <!-- 삭제 확인 모달 -->
-    <div id="modalOverlay">
-        <div id="deleteModal">
-            <p><strong>정말로 삭제하시겠습니까?</strong></p>
-            <button class="btn-confirm" onclick="confirmDelete()">확인</button>
-            <button class="btn-cancel" onclick="closeDeleteModal()">취소</button>
-        </div>
-    </div>
-
-    <script>
-        let deleteQnum = 0;
-
-        function openDeleteModal(qnum) {
-            deleteQnum = qnum;
-            document.getElementById('modalOverlay').style.display = 'block';
+    <%
         }
+    %>
+</div>
 
-        function closeDeleteModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        function confirmDelete() {
-            location.href = 'qnaDelete.jsp?qnum=' + deleteQnum;
-        }
-    </script>
+<jsp:include page="/include/footer.jsp"></jsp:include>
+<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+<script src="/shop/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

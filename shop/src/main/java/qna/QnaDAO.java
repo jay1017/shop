@@ -2,24 +2,62 @@ package qna;
 
 import java.sql.*;
 import java.util.*;
+import java.util.*;
 
 public class QnaDAO {
 
+    // DB 연결
     private Connection getConnection() throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
         String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
-        String user = "team02";      
-        String password = "1234";  
+        String user = "team02";
+        String password = "1234";
         return DriverManager.getConnection(url, user, password);
     }
-    
-    
-    
-    
+
+    // 1. 문의글 등록
+    public void insertQna(QnaDTO dto) {
+        String sql = "INSERT INTO qna (qnum, mnum, qtitle, qcontent, qdate) VALUES (qna_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, dto.getMnum());
+            pstmt.setString(2, dto.getQtitle());
+            pstmt.setString(3, dto.getQcontent());
+
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 2. 전체 문의글 목록
+    public List<QnaDTO> getQnaList() {
+        List<QnaDTO> list = new ArrayList<>();
+        String sql = "SELECT * FROM qna ORDER BY qnum DESC";
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                QnaDTO dto = new QnaDTO();
+                dto.setQnum(rs.getInt("qnum"));
+                dto.setMnum(rs.getInt("mnum"));
+                dto.setQtitle(rs.getString("qtitle"));
+                dto.setQcontent(rs.getString("qcontent"));
+                dto.setQdate(rs.getTimestamp("qdate"));
+                list.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // 3. 특정 문의글 조회
     public QnaDTO getQna(int qnum) {
         QnaDTO dto = null;
         String sql = "SELECT * FROM qna WHERE qnum = ?";
-
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -28,9 +66,10 @@ public class QnaDAO {
                 if (rs.next()) {
                     dto = new QnaDTO();
                     dto.setQnum(rs.getInt("qnum"));
-                    dto.setMnum(rs.getInt("mnum"));  
-                    dto.setQtitle(rs.getString("qtitle"));   
+                    dto.setMnum(rs.getInt("mnum"));
+                    dto.setQtitle(rs.getString("qtitle"));
                     dto.setQcontent(rs.getString("qcontent"));
+                    dto.setQdate(rs.getTimestamp("qdate"));
                 }
             }
         } catch (Exception e) {
@@ -39,16 +78,15 @@ public class QnaDAO {
         return dto;
     }
 
-    
+    // 4. 문의글 수정
     public void updateQna(QnaDTO dto) {
-    	String sql = "UPDATE qna SET qtitle=?, qcontent=? WHERE qnum=?";
-
+        String sql = "UPDATE qna SET qtitle = ?, qcontent = ? WHERE qnum = ?";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        	pstmt.setString(1, dto.getQtitle());     
-            pstmt.setString(2, dto.getQcontent());   
-            pstmt.setInt(3, dto.getQnum());          
+            pstmt.setString(1, dto.getQtitle());
+            pstmt.setString(2, dto.getQcontent());
+            pstmt.setInt(3, dto.getQnum());
 
             pstmt.executeUpdate();
         } catch (Exception e) {
@@ -56,10 +94,9 @@ public class QnaDAO {
         }
     }
 
-    
+    // (선택) 5. 문의글 삭제
     public void deleteQna(int qnum) {
         String sql = "DELETE FROM qna WHERE qnum = ?";
-
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -69,60 +106,4 @@ public class QnaDAO {
             e.printStackTrace();
         }
     }
-
-    public void insertQna(QnaDTO dto) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            conn = getConnection();
-            String sql = "INSERT INTO qna (qnum, mnum, qtitle, qcontent) VALUES (qna_seq.nextval, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-
-            pstmt.setInt(1, dto.getMnum());
-            pstmt.setString(2, dto.getQtitle());
-            pstmt.setString(3, dto.getQcontent());
-
-            int result = pstmt.executeUpdate();
-            System.out.println("insertQna 실행 결과: " + result);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try { if (pstmt != null) pstmt.close(); } catch (Exception e) { e.printStackTrace(); }
-            try { if (conn != null) conn.close(); } catch (Exception e) { e.printStackTrace(); }
-        }
-    }
-
-    public List<QnaDTO> getQnaList() {
-        List<QnaDTO> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-
-        try {
-            conn = getConnection();
-            String sql = "SELECT QNUM, MNUM, QTITLE, QCONTENT FROM QNA ORDER BY QNUM DESC";
-            pstmt = conn.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                QnaDTO dto = new QnaDTO();
-                dto.setQnum(rs.getInt("QNUM"));
-                dto.setMnum(rs.getInt("MNUM"));
-                dto.setQtitle(rs.getString("QTITLE"));
-                dto.setQcontent(rs.getString("QCONTENT"));
-                list.add(dto);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try { if (rs != null) rs.close(); } catch (Exception e) {}
-            try { if (pstmt != null) pstmt.close(); } catch (Exception e) {}
-            try { if (conn != null) conn.close(); } catch (Exception e) {}
-        }
-
-        return list;
-    }
-}
-	        
+}      

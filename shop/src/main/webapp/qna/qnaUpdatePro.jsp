@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="qna.QnaDAO, qna.QnaDTO" %>
+
 <%
     request.setCharacterEncoding("UTF-8");
 
@@ -15,6 +16,9 @@
 
     QnaDAO dao = new QnaDAO();
     dao.updateQna(dto);
-
-    response.sendRedirect("qnaList.jsp");
 %>
+
+<script>
+    alert("수정이 완료되었습니다.");
+    location.href = "qnaContent.jsp?qnum=<%= qnum %>";
+</script>
