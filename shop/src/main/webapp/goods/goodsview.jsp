@@ -277,9 +277,6 @@
                                         			<p><a href="/shop/member/loginForm.jsp">로그인</a> 후 리뷰를 작성할 수 있습니다.</p> <%--로그인 안되있으면 내 리뷰뜨는 공간에 로그인 링크뜹니다 --%>
                                         			<%} %>
                                         		</div>
-                                        		
-                                        		<%--리뷰 삭제 버튼 --%>
-                                            	<%-- 리뷰 목록이 존재할 경우에만 출력 --%>
 											<% if(rlist != null && !rlist.isEmpty()) {
 											        for(ReviewDTO dto : rlist){
 											            int rnum = dto.getRnum();         // 리뷰 번호
@@ -320,6 +317,43 @@
                                             									
 										</div>
                                     </div>
+                                    <%
+							        int pageCount = rcount / pageSize + (rcount % pageSize == 0 ? 0 : 1);
+							        int pageBlock = 5;
+							        int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
+							        int endPage = startPage + pageBlock - 1;
+							        if (endPage > pageCount) endPage = pageCount;
+							        %>
+							
+							        <div id="reviewSection" class="text-center mt-4">
+							            <% if (startPage > pageBlock) { %>
+							                <a href="javascript:review('<%=gnum %>', '<%= startPage - 1 %>');">◀ 이전</a>
+							            <% } %>
+							
+							            <% for (int i = startPage; i <= endPage; i++) { %>
+							                <% if (i == currentPage) { %>
+							                    <strong>[<%= i %>]</strong>
+							                <% } else { %>
+							                    <a href="javascript:review('<%=gnum %>','<%=i %>')">[<%= i %>]</a>
+							                <% } %>
+							            <% } %>
+							
+							            <% if (endPage < pageCount) { %>
+							                <a href="javascript:review('<%=gnum %>','<%=endPage + 1 %>')">다음 ▶</a>
+							            <% } %>
+							        </div>
+							        <script>
+							        	function review (gnum,page) {
+							        		fetch(`/shop/review/reviewPagePro.jsp?gnum=${gnum}&page=${page}`);
+							        		.then(function(response){
+							        			return response.json();
+							        		})
+							        		.then(function(data){
+							        			console.log(data);
+							        			//document.getElementById("reviewSection").innerHTML=data;
+							        		});
+							        	}
+							        </script>
                                 </div>
                             </div>
                         </div>
@@ -327,31 +361,6 @@
                 </div>
             </div>
             <%--페이징 처리 --%>
-        <%
-        int pageCount = rcount / pageSize + (rcount % pageSize == 0 ? 0 : 1);
-        int pageBlock = 5;
-        int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-        int endPage = startPage + pageBlock - 1;
-        if (endPage > pageCount) endPage = pageCount;
-        %>
-
-        <div class="text-center mt-4">
-            <% if (startPage > pageBlock) { %>
-                <a href="goodsview.jsp?gnum=<%=gnum %>&pageNum=<%= startPage - 1 %>">◀ 이전</a>
-            <% } %>
-
-            <% for (int i = startPage; i <= endPage; i++) { %>
-                <% if (i == currentPage) { %>
-                    <strong>[<%= i %>]</strong>
-                <% } else { %>
-                    <a href="goodsview.jsp?gnum=<%=gnum %>&pageNum=<%= i %>">[<%= i %>]</a>
-                <% } %>
-            <% } %>
-
-            <% if (endPage < pageCount) { %>
-                <a href="goodsview.jsp?gnum=<%=gnum %>&pageNum=<%= endPage + 1 %>">다음 ▶</a>
-            <% } %>
-        </div>
         </div>
     </section>
     <!-- Shop Details Section End -->
