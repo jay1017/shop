@@ -119,7 +119,7 @@ public class CartDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into cart values(cart_seq.nextval, ?, ?, ?, ?, ?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getMnum());
 			pstmt.setInt(2, dto.getGnum());
@@ -180,8 +180,8 @@ public class CartDAO {
 		try {
 			conn = getConnection();
 			String sql = "select c.cnum,c.gnum,c.canum,c.ccount, c.ginum, c.gonum, g.gname, g.gprice, "
-					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount "
-					+ " from cart c join goods g on c.gnum = g.gnum where c.mnum=?";
+					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount,gi.giname "
+					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.gnum=gi.gnum where c.mnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -196,6 +196,7 @@ public class CartDAO {
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setDiscount(rs.getInt("discount"));
+				dto.setGiname(rs.getString("giname"));
 				list.add(dto);
 			}
 		}catch(Exception e) {
