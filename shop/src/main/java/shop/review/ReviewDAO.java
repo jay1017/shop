@@ -81,13 +81,17 @@ public class ReviewDAO {
 			}
 			
 		}
-		public List<ReviewDTO> getReview(int gnum) { //리뷰 출력 메소드
+		public List<ReviewDTO> getReview(int gnum,int startRow,int endRow) { //리뷰 출력 메소드
 			List<ReviewDTO> list=new ArrayList<>();
 			try {
 				conn=getConnection();
-				String sql="select r.*,m.* from review r,member2 m where r.gnum=? and m.mnum=r.mnum";
+				String sql="select * from (select rownum as r,rnum,gnum,mnum,canum,ginum,rcontent,mname,mid "
+						+ "from ( select re.rnum,re.gnum,re.mnum,re.canum,re.ginum,re.rcontent,m.mname,m.mid from review re, member2 m where re.gnum=? and m.mnum=re.mnum order by re.rnum DESC ) ) where r>=? and r<=?";
+						
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setInt(1, gnum);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
 				
 				rs=pstmt.executeQuery();
 				while(rs.next()) {
@@ -138,12 +142,10 @@ public class ReviewDAO {
 		public void updateReview(ReviewDTO dto) { //리뷰 수정하는 메소드
 			try {
 				conn=getConnection();
-				String sql="update review set rcontent=? where gnum=? and mnum=? and rnum=?";
+				String sql="update review set rcontent=? where rnum=?";
 				pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1, dto.getRcontent());
-				pstmt.setInt(2, dto.getGnum());
-				pstmt.setInt(3, dto.getMnum());
-				pstmt.setInt(4, dto.getRnum());
+				pstmt.setInt(2, dto.getRnum());
 				
 				pstmt.executeUpdate();
 			}catch(Exception e){
@@ -190,5 +192,6 @@ public class ReviewDAO {
 			
 			return rcount;
 		}
+		
 	}
 

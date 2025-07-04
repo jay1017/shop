@@ -12,9 +12,6 @@
 	request.setCharacterEncoding("UTF-8");
 	String sid=(String)session.getAttribute("sid");//아이디 체크
 	int gnum=Integer.parseInt(request.getParameter("gnum")); //상품번호
-	int mnum=Integer.parseInt(request.getParameter("mnum"));	//회원번호
-	int canum=Integer.parseInt(request.getParameter("canum"));	//카테고리번호
-	int ginum=Integer.parseInt(request.getParameter("ginum"));	//상품대표이미지번호
 	int rnum=Integer.parseInt(request.getParameter("rnum")); //리뷰번호 
 	String rcontent=request.getParameter("rcontent"); //리뷰 내용
 	
@@ -23,9 +20,6 @@
 	ReviewDAO dao=ReviewDAO.getInstance();
 	
 	dto.setGnum(gnum);
-	dto.setMnum(mnum);
-	dto.setCanum(canum);
-	dto.setGinum(ginum);
 	dto.setRnum(rnum);
 	dto.setRcontent(rcontent);
 	
@@ -33,7 +27,7 @@
 	dao.updateReview(dto); %>
 	<script>
 	alert('리뷰 수정이 완료되었습니다');
-	location.href = "/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>&ginum=<%=dto.getGinum()%>";
+	location.href = "/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>";
 	</script>
 <%	}else { %>
 	<script>
