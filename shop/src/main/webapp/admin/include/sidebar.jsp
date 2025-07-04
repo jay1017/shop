@@ -46,6 +46,11 @@
 					<span class="align-middle">주문내역</span>
 				</a>
 			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="/shop/admin/review.jsp">
+					<span class="align-middle">리뷰</span>
+				</a>
+			</li>
 		</ul>
 	</div>
 </nav>
