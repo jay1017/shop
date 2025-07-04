@@ -351,6 +351,10 @@
 							        		.then(function(data){
 							        			console.log(data);
 							        			//document.getElementById("reviewSection").innerHTML=data;
+							        			{
+							        				gnum:<%=gnum%>
+							        				page:<%=page%>
+							        			}
 							        		});
 							        	}
 							        </script>
