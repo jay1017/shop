@@ -63,8 +63,8 @@ public class MemberDAO {
 	public void InputMember(MemberDTO mdto) {
 		try {
 			conn = getConnection();
-			String sql = "insert into member2(mnum, mid, mpw, mname, mphone, memail, mgender, kakao_id) "
-					+ "values(member2_seq.nextval,? ,? ,? ,? ,? ,? ,?)";
+			String sql = "insert into member2(mnum, mid, mpw, mname, mphone, memail, mgender, kakao_id, naver_id) "
+					+ "values(member2_seq.nextval,? ,? ,? ,? ,? ,? ,? ,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mdto.getMid());
 			pstmt.setString(2, mdto.getMpw());
@@ -73,6 +73,7 @@ public class MemberDAO {
 			pstmt.setString(5, mdto.getMemail());
 			pstmt.setInt(6, mdto.getMgender());
 			pstmt.setString(7, mdto.getKakao_id());
+			pstmt.setString(8, mdto.getNaver_id());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -337,6 +338,60 @@ public class MemberDAO {
 		}
 	}
 	
+	//네이버고유id를 통한 회원정보 조회 메서드
+	public MemberDTO getNaverMember(String naver_id) {
+		MemberDTO mdto = null;
+		try {
+			conn = getConnection();
+			String sql = "select * from member2 where naver_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, naver_id);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				mdto = new MemberDTO();
+				mdto.setMnum(rs.getInt("mnum"));
+				mdto.setMid(rs.getString("mid"));
+				mdto.setMpw(rs.getString("mpw"));
+				mdto.setMname(rs.getString("mname"));
+				mdto.setMphone(rs.getString("mphone"));
+				mdto.setMemail(rs.getString("memail"));
+				mdto.setMgender(rs.getInt("mgender"));
+				mdto.setKakao_id(rs.getString("kakao_id"));
+				mdto.setNaver_id(rs.getString("naver_id"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return mdto;
+	}
+	
+	//회원탈퇴시 네이버 동의해제 메서드
+	public void unlinkNaver(String access_token) {
+		try {
+			URL url = new URL("https://nid.naver.com/oauth2.0/token?grant_type=delete"
+					+"&client_id=xlKrOZe43aUWrCldbgTq"
+					+"&client_secret=ZkIXnpMuhw"
+					+"&access_token="+access_token
+					+"&service_provider=NAVER");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			while(br.readLine() != null) {
+				br.close();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+	}
 	// =========================== admin ==========================================
 	// 회원의 수
 	public int selectCount() {

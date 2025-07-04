@@ -1,6 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
+<%
+	String nid = (String)session.getAttribute("naver_id");
+	String nname = (String)session.getAttribute("naver_name");
+	String nemail = (String)session.getAttribute("naver_email");
+	String nphone = (String)session.getAttribute("naver_phone");
+	
+	if(nid == null){
+		session.removeAttribute("naver_id");
+		session.removeAttribute("naver_name");
+		session.removeAttribute("naver_email");
+	}
+	
+	String name = "";
+	if(request.getAttribute("nickname") != null){
+		name = (String)request.getAttribute("nickname");
+	}else if(nname != null){
+		name = nname;
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +47,7 @@
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 <style>
 * {
 	box-sizing: border-box;
@@ -157,6 +177,7 @@ body {
 			</div>
 			<input type="hidden" id="butcheck" name="butcheck" value="false">
 			<input type="hidden" name="kakao_id" value="${kakao_id}">
+			<input type="hidden" name="naver_id" value="${naver_id}">
 
 			<input type="password" maxlength="100" id="pw" name="mpw"
 				placeholder="비밀번호 입력*" class="join-input" oninput="pwcheck()">
@@ -165,17 +186,17 @@ body {
 			<div id="pwmsg" class="msg"></div>
 
 			<input type="text" maxlength="100" id="nameEl" name="mname" 
-			value="<%=request.getAttribute("nickname") != null ? request.getAttribute("nickname") : ""%>"placeholder="이름 입력*" 
+			value="<%=name != null ? name : ""%>"placeholder="이름 입력*" 
 			class="join-input" oninput="namecheck()">
 			<div id="namemsg" class="msg"></div>
 
 			<input type="text" maxlength="1000" id="phoneEl" name="mphone"
-				placeholder="전화번호 입력(-제외)*" class="join-input"
+				placeholder="전화번호 입력(-제외)*" class="join-input" value="<%=nphone != null ? nphone : "" %>"
 				oninput="phonecheck()">
 			<div id="phonemsg" class="msg"></div>
 
 			<input type="text" maxlength="1000" id="emailEl" name="memail"
-				placeholder="이메일 입력" class="join-input" oninput="emailcheck()">
+				placeholder="이메일 입력" value="<%=nemail != null ? nemail : ""%>"class="join-input" oninput="emailcheck()">
 			<div id="emailmsg" class="msg"></div>
 
 			<div class="radio-group">

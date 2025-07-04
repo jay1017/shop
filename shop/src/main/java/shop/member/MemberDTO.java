@@ -9,6 +9,7 @@ public class MemberDTO {
 	private String memail;
 	private int mgender;
 	private String kakao_id;
+	private String naver_id;
 	public int getMnum() {
 		return mnum;
 	}
@@ -56,6 +57,12 @@ public class MemberDTO {
 	}
 	public void setKakao_id(String kakao_id) {
 		this.kakao_id = kakao_id;
+	}
+	public String getNaver_id() {
+		return naver_id;
+	}
+	public void setNaver_id(String naver_id) {
+		this.naver_id = naver_id;
 	}
 	
 	

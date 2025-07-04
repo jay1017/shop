@@ -124,6 +124,7 @@ body {
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
