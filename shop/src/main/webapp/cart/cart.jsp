@@ -59,9 +59,9 @@ if (goods != null) {
 	<style>
 .sidebar {
 	position: fixed; /* ← 핵심 */
-	top: 100px; /* 화면 위에서 떨어진 거리 */
+	top: 200px; /* 화면 위에서 떨어진 거리 */
 	right: 20px; /* 오른쪽에 고정 */
-	width: 80px; /* 원하는 너비로 조정 */
+	width: 120px; /* 원하는 너비로 조정 */
 	padding: 1em;
 	background: #e4e4e4;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
