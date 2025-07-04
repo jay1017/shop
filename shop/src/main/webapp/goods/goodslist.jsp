@@ -79,6 +79,7 @@ if (endPage > pageCount)
 	type="text/css">
 <body>
 	<jsp:include page="/include/header.jsp" />
+	<jsp:include page="/include/sidebar.jsp" />
 	<div class="col-lg-3">
 	<h1>상품목록</h1>
 	<h2>전체 상품 목록</h2>
