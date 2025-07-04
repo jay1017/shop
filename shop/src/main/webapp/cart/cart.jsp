@@ -18,7 +18,6 @@ return;
 CartDAO dao = CartDAO.getInstance();
 int mnum = dao.getMnum(sid);
 List<CartDTO> cart = dao.getCartByMnum(mnum);
-int ccount = Integer.parseInt(request.getParameter("ccount"));
 List<CartDTO> fullCartItems = new ArrayList<>();
 
 for (CartDTO cdto : cart) {
@@ -65,7 +64,7 @@ if (cart.isEmpty()) {
             <p>상품명: <%=dto.getGname()%></p>
             <p>가격: ₩<%=gprice%></p>
             <p>할인가: ₩<%=discount%></p>
-            <p>수량:<%=ccount %>개</p>
+            <p>수량:<%=dto.getCcount() %>개</p>
             <input type="button" value="구매하기" onclick="location.href='/shop/buy/cash.jsp?gnum=<%=dto.getGnum()%>'">
         </div>
     </div>
