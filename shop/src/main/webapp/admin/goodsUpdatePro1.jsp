@@ -15,7 +15,7 @@
 		String serverPath = config.getServletContext().getRealPath("resources/image");
 		int max = 1024 * 1024 * 10;
 		String enc = "UTF-8";
-		DefaultFileRenamePolicy df = new DefaultFileRenamePolicy();ㄴ
+		DefaultFileRenamePolicy df = new DefaultFileRenamePolicy();
 		MultipartRequest mr = new MultipartRequest(request, serverPath, max, enc, df);
 	
 		GoodsImageDTO dto = new GoodsImageDTO();
