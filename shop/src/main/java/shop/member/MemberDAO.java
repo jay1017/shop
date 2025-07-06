@@ -22,7 +22,7 @@ public class MemberDAO {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url,"team02","1234");
-		}catch(Exception e) {
+		}catch(Exception e) { 
 			e.printStackTrace();
 		}
 		return conn;

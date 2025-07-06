@@ -256,111 +256,108 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                    <div class="product__details__tab__content">
-                                        <div class="product__details__tab__content__item">
-                                            <h5>리뷰 목록</h5>
-                                            <%--여기에 작업--%>
-                                            	<div>
-                                            	<% if(sid!=null) { %>
-                                            		<h5>리뷰 작성</h5>	
-                                        			<form action="/shop/review/reviewPro.jsp" method="post">
-														<input type="hidden" name="sid" value="<%=sid%>"/>
-                                        				<input type="hidden" name="gnum" value="<%=gnum%>"/>
-                                        				<input type="hidden" name="mnum" value="<%=mnum%>"/>
-                                        				<input type="hidden" name="canum" value="<%=canum%>"/> 
-                                        				<input type="hidden" name="ginum" value="<%=ginum%>"/>
-                                        				<textarea name="rcontent" rows="4" cols="60" placeholder="리뷰를 입력하세요"></textarea><br> 
-                                        				<input type="submit" value="작 성" class="primary-btn" style="border: none;"> 
-                                        			</form>
-                                        			<%}else{ %>
-                                        			<p><a href="/shop/member/loginForm.jsp">로그인</a> 후 리뷰를 작성할 수 있습니다.</p> <%--로그인 안되있으면 내 리뷰뜨는 공간에 로그인 링크뜹니다 --%>
-                                        			<%} %>
-                                        		</div>
-											<% if(rlist != null && !rlist.isEmpty()) {
-											        for(ReviewDTO dto : rlist){
-											            int rnum = dto.getRnum();         // 리뷰 번호
-											            String mname = dto.getMname();   // 작성자 이름
-											%>
-											    <div id="review-<%= rnum %>">
-											        <!-- 작성자 이름과 리뷰 내용 출력 -->
-											        
-											            <strong><%= mname %></strong><br>
-											            <div id="rcontent-<%= rnum %>" 
-											            style="white-space: pre-wrap; padding: 10px; border: 1px solid #ccc; font-size: 16px;"><p><%= dto.getRcontent() %></p></div>
-											        <% 
-											            // 세션에 로그인된 사용자 ID와 리뷰 작성자 ID가 같은 경우에만 버튼 출력
-											            if(sid != null && sid.equals(dto.getMid())) { 
-											        %>
-											            <!-- 수정 버튼 (자바스크립트로 이 리뷰 블록을 수정폼으로 바꿈) -->
-											            <button onclick="enableEdit(<%= rnum %>,'<%=mname%>')" class="primary-btn" style="border: none;">수 정</button>
-											
-											            <!-- 삭제 버튼 (폼 submit 방식) -->
-											            <form method="post">
-											                <input type="hidden" name="mnum" value="<%= dto.getMnum() %>">
-											                <input type="hidden" name="rnum" value="<%= dto.getRnum() %>">
-											                <input type="hidden" name="gnum" value="<%= dto.getGnum() %>">
-											                <input type="hidden" name="ginum" value="<%= dto.getGinum() %>">
-											                <input type="hidden" name="rcontent" value="<%= dto.getRcontent() %>">
-											                <input type="submit" name="delete" value="삭 제" 
-											                       formaction="/shop/review/reviewDelete.jsp" 
-											                       class="primary-btn" style="border: none;">
-											            </form>
-											        <% } %>
-											    </div>
-											<% 
-											        }
-											    } else { 
-											%>
-											    <p>등록된 리뷰가 없습니다</p>
-											<% } %>
-                                            									
-										</div>
-                                    </div>
-                                    <%
-							        int pageCount = rcount / pageSize + (rcount % pageSize == 0 ? 0 : 1);
-							        int pageBlock = 5;
-							        int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-							        int endPage = startPage + pageBlock - 1;
-							        if (endPage > pageCount) endPage = pageCount;
-							        %>
-							
-							        <div id="reviewSection" class="text-center mt-4">
-							            <% if (startPage > pageBlock) { %>
-							                <a href="javascript:review('<%=gnum %>', '<%= startPage - 1 %>');">◀ 이전</a>
-							            <% } %>
-							
-							            <% for (int i = startPage; i <= endPage; i++) { %>
-							                <% if (i == currentPage) { %>
-							                    <strong>[<%= i %>]</strong>
-							                <% } else { %>
-							                    <a href="javascript:review('<%=gnum %>','<%=i %>')">[<%= i %>]</a>
-							                <% } %>
-							            <% } %>
-							
-							            <% if (endPage < pageCount) { %>
-							                <a href="javascript:review('<%=gnum %>','<%=endPage + 1 %>')">다음 ▶</a>
-							            <% } %>
-							        </div>
-							        <script>
-							        	function review (gnum,page) {
-							        		fetch(`/shop/review/reviewPagePro.jsp?gnum=${gnum}&page=${page}`);
-							        		.then(function(response){
-							        			return response.json();
-							        		})
-							        		.then(function(data){
-							        			console.log(data);
-							        			//document.getElementById("reviewSection").innerHTML=data;
-							        			{
-							        				gnum:<%=gnum%>
-							        				page:<%=page%>
-							        			}
-							        		});
-							        	}
-							        </script>
-                                </div>
-                            </div>
-                        </div>
+                             <!-- 리뷰 출력 -->
+						<div class="tab-pane" id="tabs-6" role="tabpanel">
+						    <div class="product__details__tab__content">
+						        <div class="product__details__tab__content__item">
+						            <h5>리뷰 목록</h5>
+						            
+						            <!-- 리뷰 작성 버튼 및 폼 -->
+						            <% if(sid != null) { %>
+						                <div class="review-write-section" style="margin-bottom: 30px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+						                    <div class="review-write-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+						                        <h6>리뷰 작성</h6>
+						                        <button type="button" class="btn btn-primary btn-sm" onclick="toggleReviewForm()" id="reviewToggleBtn">
+						                            리뷰 작성하기
+						                        </button>
+						                    </div>
+						                    
+						                    <div id="reviewForm" style="display: none;">
+						                        <form action="/shop/review/reviewPro.jsp" method="post">
+						                            <input type="hidden" name="gnum" value="<%=gnum%>">
+						                            <input type="hidden" name="mnum" value="<%=mnum%>">
+						                            <input type="hidden" name="canum" value="<%=canum%>">
+						                            <input type="hidden" name="ginum" value="<%=ginum%>">
+						                            
+						                            <div class="form-group">
+						                                <label for="rcontent">리뷰 내용</label>
+						                                <textarea class="form-control" name="rcontent" id="rcontent" rows="4" 
+						                                          placeholder="상품에 대한 리뷰를 작성해주세요." required></textarea>
+						                            </div>
+						                            
+						                            <div class="form-group" style="text-align: right; margin-top: 15px;">
+						                                <button type="button" class="btn btn-secondary btn-sm" onclick="cancelReviewForm()">
+						                                    취소
+						                                </button>
+						                                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 10px;">
+						                                    리뷰 등록
+						                                </button>
+						                            </div>
+						                        </form>
+						                    </div>
+						                </div>
+						            <% } else { %>
+						                <div class="login-notice" style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+						                    <p style="margin: 0; color: #6c757d;">
+						                        <i class="fa fa-user"></i> 리뷰를 작성하려면 
+						                        <a href="/shop/member/loginForm.jsp" style="color: #007bff;">로그인</a>이 필요합니다.
+						                    </p>
+						                </div>
+						            <% } %>
+						            
+						            <!-- Ajax 기반 리뷰 목록 영역 -->
+						            <div id="reviewContainer">로딩 중...</div>
+						            
+						            <script>
+						                // 리뷰 작성 폼 토글 함수
+						                function toggleReviewForm() {
+						                    const reviewForm = document.getElementById('reviewForm');
+						                    const toggleBtn = document.getElementById('reviewToggleBtn');
+						                    
+						                    if (reviewForm.style.display === 'none') {
+						                        reviewForm.style.display = 'block';
+						                        toggleBtn.textContent = '작성 취소';
+						                        toggleBtn.className = 'btn btn-secondary btn-sm';
+						                    } else {
+						                        reviewForm.style.display = 'none';
+						                        toggleBtn.textContent = '리뷰 작성하기';
+						                        toggleBtn.className = 'btn btn-primary btn-sm';
+						                        // 폼 초기화
+						                        document.getElementById('rcontent').value = '';
+						                    }
+						                }
+						                
+						                // 리뷰 작성 취소 함수
+						                function cancelReviewForm() {
+						                    document.getElementById('reviewForm').style.display = 'none';
+						                    document.getElementById('reviewToggleBtn').textContent = '리뷰 작성하기';
+						                    document.getElementById('reviewToggleBtn').className = 'btn btn-primary btn-sm';
+						                    // 폼 초기화
+						                    document.getElementById('rcontent').value = '';
+						                }
+						                
+						                // 리뷰 페이지 로딩 함수
+						                function loadReviewPage(gnum, pageNum) {
+						                    fetch("/shop/review/reviewPagePro.jsp?gnum=" + gnum + "&pageNum=" + pageNum)
+						                        .then(response => response.text())
+						                        .then(html => {
+						                            document.getElementById("reviewContainer").innerHTML = html;
+						                        })
+						                        .catch(err => {
+						                            console.error("리뷰 로딩 실패:", err);
+						                            document.getElementById("reviewContainer").innerHTML = '<p style="color: #dc3545;">리뷰를 불러오는 중 오류가 발생했습니다.</p>';
+						                        });
+						                }
+						
+						                // 페이지 로드 시 리뷰 목록 로딩
+						                document.addEventListener("DOMContentLoaded", function () {
+						                    const gnum = <%= gnum %>;
+						                    loadReviewPage(gnum, 1);
+						                });
+						            </script>
+						        </div>
+						    </div>
+						</div>
                     </div>
                 </div>
             </div>
@@ -383,3 +380,4 @@
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
+

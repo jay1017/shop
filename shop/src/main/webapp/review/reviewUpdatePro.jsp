@@ -1,41 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="shop.member.MemberDAO,shop.member.MemberDTO"%>
-<%@ page import="shop.review.ReviewDAO,shop.review.ReviewDTO"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="/shop/resources/css/font.css" />
-<title>reviewUpdatePro.jsp</title>
-<%	
-	request.setCharacterEncoding("UTF-8");
-	String sid=(String)session.getAttribute("sid");//아이디 체크
-	int gnum=Integer.parseInt(request.getParameter("gnum")); //상품번호
-	int rnum=Integer.parseInt(request.getParameter("rnum")); //리뷰번호 
-	String rcontent=request.getParameter("rcontent"); //리뷰 내용
-	
-	if(sid!=null) {
-	ReviewDTO dto=new ReviewDTO();
-	ReviewDAO dao=ReviewDAO.getInstance();
-	
-	dto.setGnum(gnum);
-	dto.setRnum(rnum);
-	dto.setRcontent(rcontent);
-	
-	 
-	dao.updateReview(dto); %>
-	<script>
-	alert('리뷰 수정이 완료되었습니다');
-	location.href = "/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>";
-	</script>
-<%	}else { %>
-	<script>
-	alert("잘못된 접근입니다");
-	history.go(-1);
-	</script>	
-<% 	}%>	
-</head>
-<body>
-</body>
-</html>
+<%@ page contentType="text/plain; charset=UTF-8" %>
+<%@ page import="shop.review.*" %>
+<%@ page import="shop.member.*" %>
+
+<%
+    request.setCharacterEncoding("UTF-8");
+    
+    int rnum = Integer.parseInt(request.getParameter("rnum"));
+    String content = request.getParameter("rcontent");
+    String sid = (String) session.getAttribute("sid");
+
+    if (sid != null && content != null && !content.trim().isEmpty()) {
+        ReviewDAO dao = ReviewDAO.getInstance();
+        MemberDAO mdao = new MemberDAO();
+        
+        // 현재 로그인한 회원의 정보 가져오기
+        MemberDTO mdto = mdao.getMidname(sid);
+        int currentMnum = mdto.getMnum();
+        
+        // 해당 리뷰 정보 가져오기
+        ReviewDTO dto = dao.getReviewByRnum(rnum); 
+        
+        if (dto != null && currentMnum == dto.getMnum()) {
+            // 본인의 리뷰인 경우에만 수정 허용
+            dto.setRcontent(content);
+            boolean result = dao.updateReview(dto);
+            
+            if(result) {
+                out.print("OK");
+            } else {
+                out.print("UPDATE_FAILED");
+            }
+        } else {
+            out.print("NO_AUTH");
+        }
+    } else {
+        out.print("INVALID_PARAM");
+    }
+%>
