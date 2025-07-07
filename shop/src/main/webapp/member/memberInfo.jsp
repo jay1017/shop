@@ -135,12 +135,12 @@ body {
 						<strong>내 정보 확인 및 변경</strong>
 					</div> <span class="arrow">&gt;</span>
 			</a></li>
-			<li><a href="#">
+			<li><a href="memberCoupon.jsp?mnum=<%=mdto.getMnum()%>">
 					<div class="menu-text">
 						<strong>쿠폰 내역</strong>
 					</div> <span class="arrow">&gt;</span>
 			</a></li>
-			<li><a href="memberCoupon.jsp?mnum=<%=mdto.getMnum()%>">
+			<li><a href="#">
 					<div class="menu-text">
 						<strong>포인트 내역</strong>
 					</div> <span class="arrow">&gt;</span>
