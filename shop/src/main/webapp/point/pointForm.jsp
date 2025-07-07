@@ -10,7 +10,11 @@
 	MemberDTO mdto = mdao.getInfo(sid);
 	
 	pointDAO pdao = new pointDAO();
-	pointDTO pdto = pdao.getPointMember(sid);
+	pointDTO pdto = new pointDTO();
+	
+	int result = 0;
+	int PointCount = pdao.getAllPoint(mdto.getMnum());
+	
 %>
 <html>
 	<head>
@@ -40,7 +44,7 @@
 		<form align="center">
 			<h2><%=mdto.getMname() %>님의 포인트 내역</h2>
 			<div>
-				
+				<%=mdto.getMname() %>님의 사용가능 포인트: <%=PointCount %>
 			</div>
 		</form>
 	<jsp:include page="/include/footer.jsp" />

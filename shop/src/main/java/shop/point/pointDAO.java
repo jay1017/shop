@@ -42,4 +42,25 @@ public class pointDAO {
 			if(rs!=null)try {rs.close();}catch(Exception e) {}
 		}
 	}
+	
+	public int getAllPoint(int mnum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "select sum(ppoint) from point where mnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn!=null)try {conn.close();}catch(Exception e) {}
+			if(pstmt!=null)try {pstmt.close();}catch(Exception e) {}
+			if(rs!=null)try {rs.close();}catch(Exception e) {}
+		}
+		return result;
+	}
 }
