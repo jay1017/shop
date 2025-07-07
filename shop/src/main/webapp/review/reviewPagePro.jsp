@@ -1,131 +1,144 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="java.util.*" %>
-<%@ page import="shop.review.*" %>
-<%@ page import="shop.member.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="shop.review.ReviewDTO" %>
+<%@ page import="shop.review.ReviewDAO" %>
+<%@ page import="shop.member.MemberDTO" %>
+<%@ page import="shop.member.MemberDAO" %>
+<%@ page import="java.util.List" %>
 <%
+    request.setCharacterEncoding("UTF-8");
     String sid = (String) session.getAttribute("sid");
-    int gnum = Integer.parseInt(request.getParameter("gnum"));
-    int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-    int pageSize = 5;
-    int startRow = (pageNum - 1) * pageSize + 1;
-    int endRow = pageNum * pageSize;
-
-    ReviewDAO dao = ReviewDAO.getInstance();
-    List<ReviewDTO> list = dao.getReview(gnum, startRow, endRow);
-    int totalCount = dao.reviewCount(gnum);
-    int pageCount = (int) Math.ceil(totalCount / (double) pageSize);
+    int mnum = 0;
     
-    // 회원 정보 가져오기
-    MemberDAO mdao = new MemberDAO();
-    int currentMnum = 0;
     if(sid != null) {
-        MemberDTO mdto = mdao.getMidname(sid);
-        currentMnum = mdto.getMnum();
+        MemberDAO mdao = new MemberDAO();
+        MemberDTO mdto = mdao.getMidname(sid); 
+        mnum = mdto.getMnum();
     }
+    
+    int gnum = Integer.parseInt(request.getParameter("gnum"));
+    String pageNum = request.getParameter("pageNum");
+    if(pageNum == null) pageNum = "1";
+    
+    int pageSize = 8;
+    int currentPage = Integer.parseInt(pageNum);
+    int startRow = (currentPage - 1) * pageSize + 1;
+    int endRow = currentPage * pageSize;
+    
+    ReviewDAO rdao = ReviewDAO.getInstance();
+    List<ReviewDTO> rlist = rdao.getReview(gnum, startRow, endRow);
+    int rcount = rdao.reviewCount(gnum);
+    
+    int pageCount = (int) Math.ceil((double) rcount / pageSize);
+    int startPage = ((currentPage - 1) / 10) * 10 + 1;
+    int endPage = Math.min(startPage + 9, pageCount);
 %>
 
-<% if(list.size() > 0) { %>
-    <% for (ReviewDTO dto : list) { %>
-        <div class="review-item" id="review-<%=dto.getRnum()%>" style="border-bottom: 1px solid #eee; padding: 15px 0;">
-            <strong><%=dto.getMname()%> (@<%=dto.getMid()%>)</strong>
-            <br>
-            <div id="rcontent-<%=dto.getRnum()%>" style="margin:10px 0; line-height: 1.5;"><%=dto.getRcontent()%></div>
-
-            <% if (sid != null && currentMnum == dto.getMnum()) { %>
-                <div style="margin-top: 10px;">
-                    <button onclick="enableEdit(<%=dto.getRnum()%>)" class="primary-btn" style="margin-right: 10px; padding: 5px 10px; font-size: 12px;">수정</button>
-                    <button onclick="deleteReview(<%=dto.getRnum()%>, <%=dto.getGnum()%>)" class="primary-btn" style="padding: 5px 10px; font-size: 12px; background-color: #dc3545;">삭제</button>
+<div class="review-list-container">
+    <% if(rlist.isEmpty()) { %>
+        <div class="no-reviews" style="text-align: center; padding: 40px; color: #666;">
+            <p>아직 작성된 리뷰가 없습니다.</p>
+        </div>
+    <% } else { %>
+        <% for(ReviewDTO review : rlist) { %>
+            <div class="review-item" id="review-<%=review.getRnum()%>" style="padding: 20px; border-bottom: 1px solid #e0e0e0; margin-bottom: 20px;">
+                <div class="review-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div class="reviewer-info">
+                        <strong style="color: #333;"><%=review.getMname()%></strong>
+                        <span style="color: #666; font-size: 14px; margin-left: 10px;">(<%=review.getMid()%>)</span>
+                    </div>
+                    <% if(sid != null && mnum == review.getMnum()) { %>
+                        <div class="review-actions">
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="editReview(<%=review.getRnum()%>, '<%=review.getRcontent().replace("'", "\\'").replace("\n", "\\n").replace("\"", "\\\"").replace("\r", "")%>')">
+                                수정
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteReview(<%=review.getRnum()%>)" style="margin-left: 5px;">
+                                삭제
+                            </button>
+                        </div>
+                    <% } %>
                 </div>
-            <% } %>
+                
+                <div class="review-content" id="content-<%=review.getRnum()%>">
+                    <p style="margin: 0; line-height: 1.6; color: #555;"><%=review.getRcontent().replace("\n", "<br>")%></p>
+                </div>
+                
+                <!-- 수정 폼 (기본적으로 숨김) -->
+                <div class="review-edit-form" id="edit-form-<%=review.getRnum()%>" style="display: none; margin-top: 15px;">
+                    <textarea class="form-control" id="edit-content-<%=review.getRnum()%>" rows="3" style="margin-bottom: 10px;"><%=review.getRcontent()%></textarea>
+                    <div style="text-align: right;">
+                        <button type="button" class="btn btn-sm btn-secondary" onclick="cancelEdit(<%=review.getRnum()%>)">취소</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="saveEdit(<%=review.getRnum()%>)" style="margin-left: 5px;">저장</button>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    <% } %>
+    
+    <!-- 페이징 -->
+    <% if(pageCount > 1) { %>
+        <div class="pagination-container" style="text-align: center; margin-top: 30px;">
+            <div class="pagination" style="display: inline-block;">
+                <% if(currentPage > 1) { %>
+                    <a href="javascript:void(0)" onclick="loadReviewPageFromContainer(<%=gnum%>, <%=currentPage-1%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;">이전</a>
+                <% } %>
+                
+                <% for(int i = startPage; i <= endPage; i++) { %>
+                    <% if(i == currentPage) { %>
+                        <span style="display: inline-block; padding: 8px 12px; margin: 0 2px; background-color: #007bff; color: white; border: 1px solid #007bff;"><%=i%></span>
+                    <% } else { %>
+                        <a href="javascript:void(0)" onclick="loadReviewPageFromContainer(<%=gnum%>, <%=i%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;"><%=i%></a>
+                    <% } %>
+                <% } %>
+                
+                <% if(currentPage < pageCount) { %>
+                    <a href="javascript:void(0)" onclick="loadReviewPageFromContainer(<%=gnum%>, <%=currentPage+1%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;">다음</a>
+                <% } %>
+            </div>
         </div>
     <% } %>
-<% } else { %>
-    <div style="text-align: center; padding: 50px 0; color: #999;">
-        <p>등록된 리뷰가 없습니다.</p>
-    </div>
-<% } %>
-
-<% if(pageCount > 1) { %>
-    <div class="review-pagination" style="text-align: center; margin-top: 30px;">
-        <% for (int i = 1; i <= pageCount; i++) { %>
-            <button onclick="loadReviewPage(<%= gnum %>, <%= i %>)" 
-                    class="<%= i == pageNum ? "primary-btn" : "secondary-btn" %>" 
-                    style="margin: 0 5px; padding: 8px 15px; border: none; cursor: pointer;">
-                <%= i %>
-            </button>
-        <% } %>
-    </div>
-<% } %>
+</div>
 
 <script>
-function enableEdit(rnum) {
-    const contentDiv = document.getElementById("rcontent-" + rnum);
-    const original = contentDiv.innerText;
-    contentDiv.innerHTML = `
-        <textarea id="editArea-${rnum}" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd;">${original}</textarea>
-        <div style="margin-top: 10px;">
-            <button onclick="updateReview(${rnum})" class="primary-btn" style="margin-right: 10px; padding: 5px 10px; font-size: 12px;">저장</button>
-            <button onclick="cancelEdit(${rnum}, '${original}')" class="secondary-btn" style="padding: 5px 10px; font-size: 12px;">취소</button>
-        </div>
-    `;
-}
-
-function cancelEdit(rnum, original) {
-    const contentDiv = document.getElementById("rcontent-" + rnum);
-    contentDiv.innerHTML = original;
-}
-
-function updateReview(rnum) {
-    const content = document.getElementById("editArea-" + rnum).value;
-    if(content.trim() === '') {
-        alert('내용을 입력해주세요.');
-        return;
+// 상위 페이지의 loadReviewPage 함수를 호출하는 헬퍼 함수
+function loadReviewPageFromContainer(gnum, pageNum) {
+    try {
+        // 상위 창의 함수 호출 시도
+        if (window.parent && window.parent.loadReviewPage) {
+            window.parent.loadReviewPage(gnum, pageNum);
+        } else if (window.loadReviewPage) {
+            window.loadReviewPage(gnum, pageNum);
+        } else {
+            // 직접 페이지 로딩
+            fetch("/shop/review/reviewPagePro.jsp?gnum=" + gnum + "&pageNum=" + pageNum)
+                .then(response => response.text())
+                .then(html => {
+                    const container = document.getElementById("reviewContainer");
+                    if (container) {
+                        container.innerHTML = html;
+                    }
+                })
+                .catch(err => {
+                    console.error("리뷰 로딩 실패:", err);
+                });
+        }
+    } catch(e) {
+        console.error('loadReviewPageFromContainer error:', e);
     }
-    
-    const formData = new URLSearchParams();
-    formData.append("rnum", rnum);
-    formData.append("rcontent", content);
-
-    fetch("/shop/review/reviewUpdatePro.jsp", {
-        method: "POST",
-        body: formData,
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.trim() === "OK") {
-            alert('리뷰가 수정되었습니다.');
-            const gnum = <%= gnum %>;
-            const pageNum = <%= pageNum %>;
-            loadReviewPage(gnum, pageNum);
-        } else {
-            alert('리뷰 수정에 실패했습니다.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('오류가 발생했습니다.');
-    });
 }
-
-function deleteReview(rnum, gnum) {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
-
-    fetch("/shop/review/reviewDelete.jsp?rnum=" + rnum + "&gnum=" + gnum, {
-        method: "GET"
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.trim() === "OK") {
-            alert('리뷰가 삭제되었습니다.');
-            const pageNum = <%= pageNum %>;
-            loadReviewPage(gnum, pageNum);
+//리뷰 삭제 함수 (reviewPagePro.jsp용)
+function deleteReview(rnum) {
+    try {
+        // 상위 창의 함수 호출 시도
+        if (window.parent && window.parent.deleteReview) {
+            window.parent.deleteReview(rnum);
+        } else if (window.deleteReview) {
+            window.deleteReview(rnum);
         } else {
-            alert('리뷰 삭제에 실패했습니다.');
+            alert('삭제 기능을 사용할 수 없습니다.');
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('오류가 발생했습니다.');
-    });
+    } catch(e) {
+        console.error('deleteReview error:', e);
+        alert('리뷰 삭제 중 오류가 발생했습니다.');
+    }
 }
 </script>

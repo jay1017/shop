@@ -233,5 +233,26 @@ public class ReviewDAO {
 		
 		return rcount;
 	}
+	// rnum과 rcontent만으로 리뷰 수정하는 메서드
+	public boolean reviewUpdate(int rnum, String rcontent) {
+	    boolean result = false;
+	    try {
+	        conn = getConnection();
+	        String sql = "update review set rcontent=? where rnum=?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, rcontent);
+	        pstmt.setInt(2, rnum);
+	        
+	        int count = pstmt.executeUpdate();
+	        result = (count > 0);
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        endConnection();
+	    }
+	    return result;
+	}
 }
+
 

@@ -32,26 +32,12 @@
    //리뷰 목록 조회
      //상품 리뷰 개수 가져오기
     
-    String pageNum=request.getParameter("pageNum");
-    if(pageNum==null) pageNum="1";
-
-    int pageSize=8;
-    int currentPage = Integer.parseInt(request.getParameter("pageNum") != null ? request.getParameter("pageNum") : "1");
-    int startRow=(currentPage-1)*pageSize+1;
-    int endRow=currentPage*pageSize;
+    
 
     ReviewDAO rdao=ReviewDAO.getInstance(); //리뷰 DAO
-    List<ReviewDTO> rlist=rdao.getReview(gnum,startRow,endRow);	//gnum인 리뷰목록 조회 
+    
     int rcount=rdao.reviewCount(gnum); //리뷰의 개수 출력하는 메소드
    	
-
-    
-    System.out.println("상품번호: " + gnum);
-    System.out.println("현재 페이지: " + currentPage);
-    System.out.println("startRow = " + startRow + ", endRow = " + endRow);
-    System.out.println("리뷰개수: " + rcount);
-    
-    
     
     ReviewDTO myReview=null;
     if(sid!=null) {
@@ -257,6 +243,7 @@
                                     </div>
                                 </div>
                              <!-- 리뷰 출력 -->
+						<!-- 리뷰 탭 내용 부분 (기존 코드 수정) -->
 						<div class="tab-pane" id="tabs-6" role="tabpanel">
 						    <div class="product__details__tab__content">
 						        <div class="product__details__tab__content__item">
@@ -339,6 +326,7 @@
 						                // 리뷰 페이지 로딩 함수
 						                function loadReviewPage(gnum, pageNum) {
 						                    fetch("/shop/review/reviewPagePro.jsp?gnum=" + gnum + "&pageNum=" + pageNum)
+						                   
 						                        .then(response => response.text())
 						                        .then(html => {
 						                            document.getElementById("reviewContainer").innerHTML = html;
@@ -354,6 +342,148 @@
 						                    const gnum = <%= gnum %>;
 						                    loadReviewPage(gnum, 1);
 						                });
+						             // 리뷰 수정 함수
+						                function editReview(rnum, content) {
+						                    try {
+						                        // 기존 내용 숨기기
+						                        document.getElementById('content-' + rnum).style.display = 'none';
+						                        // 수정 폼 보이기
+						                        document.getElementById('edit-form-' + rnum).style.display = 'block';
+						                        // 텍스트 영역에 기존 내용 설정
+						                        document.getElementById('edit-content-' + rnum).value = content;
+						                    } catch(e) {
+						                        console.error('editReview error:', e);
+						                        alert('리뷰 수정 폼을 여는 중 오류가 발생했습니다.');
+						                    }
+						                }
+
+						                // 수정 취소 함수
+						                function cancelEdit(rnum) {
+						                    try {
+						                        // 수정 폼 숨기기
+						                        document.getElementById('edit-form-' + rnum).style.display = 'none';
+						                        // 기존 내용 보이기
+						                        document.getElementById('content-' + rnum).style.display = 'block';
+						                    } catch(e) {
+						                        console.error('cancelEdit error:', e);
+						                    }
+						                }
+
+						             // 수정 저장 함수
+						                function saveEdit(rnum) {
+						                    try {
+						                        const newContent = document.getElementById('edit-content-' + rnum).value.trim();
+						                        
+						                        if(newContent === '') {
+						                            alert('리뷰 내용을 입력해주세요.');
+						                            return;
+						                        }
+						                        
+						                        // URLSearchParams를 사용하여 파라미터 전송
+						                        const params = new URLSearchParams();
+						                        params.append('rnum', rnum);
+						                        params.append('rcontent', newContent);
+						                        
+						                        fetch('/shop/review/reviewUpdatePro.jsp', {
+						                            method: 'POST',
+						                            headers: {
+						                                'Content-Type': 'application/x-www-form-urlencoded'
+						                            },
+						                            body: params
+						                        })
+						                        .then(response => response.text())
+						                        .then(result => {
+						                            const trimmedResult = result.trim();
+						                            console.log('Update result:', trimmedResult); // 디버깅용
+						                            
+						                            if(trimmedResult === 'OK') {
+						                                // 성공 시 화면 업데이트
+						                                document.getElementById('content-' + rnum).innerHTML = '<p style="margin: 0; line-height: 1.6; color: #555;">' + newContent.replace(/\n/g, '<br>') + '</p>';
+						                                cancelEdit(rnum);
+						                                alert('리뷰가 수정되었습니다.');
+						                            } else if(trimmedResult === 'NO_PERMISSION') {
+						                                alert('수정 권한이 없습니다.');
+						                            } else if(trimmedResult === 'NOT_LOGGED_IN') {
+						                                alert('로그인이 필요합니다.');
+						                                window.location.href = '/shop/member/loginForm.jsp';
+						                            } else {
+						                                alert('리뷰 수정에 실패했습니다. (' + trimmedResult + ')');
+						                            }
+						                        })
+						                        .catch(error => {
+						                            console.error('saveEdit error:', error);
+						                            alert('리뷰 수정 중 오류가 발생했습니다.');
+						                        });
+						                    } catch(e) {
+						                        console.error('saveEdit error:', e);
+						                        alert('리뷰 수정 중 오류가 발생했습니다.');
+						                    }
+						                }
+						             // 리뷰 삭제 함수
+						                function deleteReview(rnum) {
+						                    if(!confirm('정말로 이 리뷰를 삭제하시겠습니까?')) {
+						                        return;
+						                    }
+						                    
+						                    try {
+						                        const gnum = <%= gnum %>;
+						                        
+						                        fetch('/shop/review/reviewDelete.jsp?rnum=' + rnum + '&gnum=' + gnum, {
+						                            method: 'GET'
+						                        })
+						                        .then(response => response.text())
+						                        .then(result => {
+						                            const trimmedResult = result.trim();
+						                            console.log('Delete result:', trimmedResult); // 디버깅용
+						                            
+						                            if(trimmedResult === 'OK') {
+						                                alert('리뷰가 삭제되었습니다.');
+						                                // 리뷰 목록 새로고침
+						                                loadReviewPage(gnum, 1);
+						                            } else if(trimmedResult === 'NO_PERMISSION') {
+						                                alert('삭제 권한이 없습니다.');
+						                            } else if(trimmedResult === 'NOT_LOGGED_IN') {
+						                                alert('로그인이 필요합니다.');
+						                                window.location.href = '/shop/member/loginForm.jsp';
+						                            } else {
+						                                alert('리뷰 삭제에 실패했습니다. (' + trimmedResult + ')');
+						                            }
+						                        })
+						                        .catch(error => {
+						                            console.error('deleteReview error:', error);
+						                            alert('리뷰 삭제 중 오류가 발생했습니다.');
+						                        });
+						                    } catch(e) {
+						                        console.error('deleteReview error:', e);
+						                        alert('리뷰 삭제 중 오류가 발생했습니다.');
+						                    }
+						                }
+						                function loadReviewPageFromContainer(gnum, pageNum) {
+						                    try {
+						                        // 상위 창의 함수 호출 시도
+						                        if (window.parent && window.parent.loadReviewPage) {
+						                            window.parent.loadReviewPage(gnum, pageNum);
+						                        } else if (window.loadReviewPage) {
+						                            window.loadReviewPage(gnum, pageNum);
+						                        } else {
+						                            // 직접 페이지 로딩
+						                            fetch("/shop/review/reviewPagePro.jsp?gnum=" + gnum + "&pageNum=" + pageNum)
+						                                .then(response => response.text())
+						                                .then(html => {
+						                                    const container = document.getElementById("reviewContainer");
+						                                    if (container) {
+						                                        container.innerHTML = html;
+						                                    }
+						                                })
+						                                .catch(err => {
+						                                    console.error("리뷰 로딩 실패:", err);
+						                                });
+						                        }
+						                    } catch(e) {
+						                        console.error('loadReviewPageFromContainer error:', e);
+						                    }
+						                }
+						             
 						            </script>
 						        </div>
 						    </div>
@@ -361,12 +491,17 @@
                     </div>
                 </div>
             </div>
-            <%--페이징 처리 --%>
         </div>
     </section>
     <!-- Shop Details Section End -->
-    <%--${}의 의미는 스크립트에서 변수를 출력하는것 자바에서 <%=%>랑 같다--%>
+
     <jsp:include page="/include/footer.jsp"></jsp:include>
+
+	<!-- jQuery를 먼저 로드 -->
+	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
+
+	<!-- 다른 스크립트들 -->
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
 	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
 	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
@@ -375,9 +510,6 @@
 	<script src="/shop/resources/js/mixitup.min.js"></script>
 	<script src="/shop/resources/js/owl.carousel.min.js"></script>
 	<script src="/shop/resources/js/main.js"></script>
-    <script src="/shop/resources/js/review.js"></script>
-    <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
-	<script src="/shop/resources/js/bootstrap.min.js"></script>
+	
 </body>
 </html>
-
