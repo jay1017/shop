@@ -90,6 +90,9 @@
             background-color: #0056b3;
         }
     </style>
+    
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+    
 </head>
 <body>
 

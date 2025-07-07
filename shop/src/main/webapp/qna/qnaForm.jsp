@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="shop.member.MemberDAO" %>
+	<%@ page import="shop.member.MemberDTO" %>
+    
 
 <%
     // 로그인 세션 확인
@@ -15,6 +18,8 @@
     }
 %>
 
+
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -36,22 +41,62 @@
     <link rel="stylesheet" href="/shop/resources/css/font.css">
     
     <title>문의 작성</title>
+     <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            width: 700px;
+            margin: 40px auto;
+            padding: 25px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+        }
+        td {
+            padding: 10px;
+            font-size: 16px;
+        }
+        textarea {
+            width: 100%;
+        }
+        .btn-box {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+    
 </head>
 <body>  
 
 <jsp:include page="/include/header.jsp"></jsp:include>
 
-    <center><b>글쓰기</b></center>
+    <div class="form-container">
+    <h2 class="text-center mb-4">문의 작성</h2>
+    
+    <form action="qnaPro.jsp" method="post">
+        <input type="hidden" name="mid" value="<%= sid %>"> <%-- 로그인한 아이디 전달 --%>
 
-    <input type="button" value="목록" onclick="window.location='qnaList.jsp'">
-    <br>
+        <div class="form-group">
+            <label for="qtitle">제목</label>
+            <input type="text" name="qtitle" id="qtitle" class="form-control" required>
+        </div>
 
-    <form method="post" action="qnaPro.jsp">
-        <input type="hidden" name="mid" value="<%= sid %>">
-        제목: <input type="text" name="qtitle"><br>
-        내용: <textarea name="qcontent"></textarea><br>
-        <input type="submit" value="등록">
+        <div class="form-group">
+            <label for="qcontent">내용</label>
+            <textarea name="qcontent" id="qcontent" rows="10" class="form-control" required></textarea>
+        </div>
+
+        <div class="btn-box text-center">
+            <input type="submit" value="등록" class="btn btn-primary">
+            <input type="button" value="취소" class="btn btn-secondary" onclick="history.back();">
+            <input type="button" value="목록" class="btn btn-light" onclick="window.location='qnaList.jsp'">
+        </div>
     </form>
+</div>
     
     <jsp:include page="/include/footer.jsp"></jsp:include>
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
