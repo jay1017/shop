@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="shop.admin.CouponDTO" %>
+<%@ page import="shop.admin.CouponDAO" %>    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin Page</title>
+</head>
+<body>
+	<%
+		request.setCharacterEncoding("UTF-8");
+		String cptype = request.getParameter("cptype");
+		int cpvalue = Integer.parseInt(request.getParameter("cpvalue"));
+		String cpname = request.getParameter("cpname");
+		int cpmop = Integer.parseInt(request.getParameter("cpmop"));
+		int cpdate = Integer.parseInt(request.getParameter("cpdate"));
+		
+		CouponDTO dto = new CouponDTO();
+		dto.setCptype(cptype);
+		dto.setCpvalue(cpvalue);
+		dto.setCpname(cpname);
+		dto.setCpmop(cpmop);
+		dto.setCpdate(cpdate);
+		
+		CouponDAO dao = CouponDAO.getDAO();
+		int result = dao.insert(dto); 
+	%>
+	<% if(result == 1) { %>
+		<script>
+			alert("등록이 완료 되었습니다.");
+			location.href="/shop/admin/coupon.jsp";
+		</script>
+	<% } else { %>
+		<script>
+			alert("등록을 실패하였습니다.");
+			location.href="/shop/admin/couponInsert.jsp";
+		</script>
+	<% } %>
+</body>
+</html>

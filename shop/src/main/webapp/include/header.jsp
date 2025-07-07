@@ -16,13 +16,19 @@
 <div class="offcanvas-menu-wrapper">
     <div class="offcanvas__option">
         <div class="offcanvas__links">
-            <a href="#">로그인</a>
-            <a href="#">문의게시판</a>
+            <%
+          		String sid = (String)session.getAttribute("sid");
+          		if(sid != null) {%>
+          			<a href="/shop/member/logoutForm.jsp">로그아웃</a>
+          			<a href="/shop/member/memberInfo.jsp">마이페이지</a>
+          		<% } else { %>
+          			<a href="/shop/member/loginForm.jsp">로그인</a>
+          		<% } %>
+            <a href="/shop/qna/qnaList.jsp">문의게시판</a>
         </div>
     </div>
     <div class="offcanvas__nav__option">
         <a href="#" class="search-switch"><img src="/shop/resources/img/icon/search.png" alt=""></a>
-        <a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a>
         <a href="#"><img src="/shop/resources/img/icon/cart.png" alt=""> <span>0</span></a>
     </div>
     <div id="mobile-menu-wrap"></div>
@@ -45,14 +51,12 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
-                        	<%
-                        		String sid = (String)session.getAttribute("sid");
-                        		if(sid != null) {%>
-                        			<a href="/shop/member/logoutForm.jsp">로그아웃</a>
-                        			<a href="/shop/member/memberInfo.jsp">마이페이지</a>
-                        		<% } else { %>
-                        			<a href="/shop/member/loginForm.jsp">로그인</a>
-                        		<% } %>
+                        	<% if(sid != null) {%>
+                       			<a href="/shop/member/logoutForm.jsp">로그아웃</a>
+                       			<a href="/shop/member/memberInfo.jsp">마이페이지</a>
+                       		<% } else { %>
+                       			<a href="/shop/member/loginForm.jsp">로그인</a>
+                       		<% } %>
                             <a href="/shop/qna/qnaList.jsp">문의게시판</a>
                         </div>
                     </div>
@@ -92,7 +96,6 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                     <a href="#" class="search-switch"><img src="/shop/resources/img/icon/search.png" alt=""></a>
-                    <a href="#"><img src="/shop/resources/img/icon/heart.png" alt=""></a>
                     <a href="#"><img src="/shop/resources/img/icon/cart.png" alt=""> <span>0</span></a>
                 </div>
             </div>

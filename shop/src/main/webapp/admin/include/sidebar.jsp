@@ -51,6 +51,11 @@
 					<span class="align-middle">리뷰</span>
 				</a>
 			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="/shop/admin/coupon.jsp">
+					<span class="align-middle">쿠폰</span>
+				</a>
+			</li>
 		</ul>
 	</div>
 </nav>
