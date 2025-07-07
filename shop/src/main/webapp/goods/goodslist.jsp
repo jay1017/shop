@@ -103,10 +103,10 @@ if (endPage > pageCount)
 	<div class="container">
 		<div class="row">
 
-			<!-- 사이드바 -->
+			<!-- selection -->
 			<div class="col-lg-3">
 				<div>
-					<%--사이드바  --%>
+					<%--selection  --%>
 					<div class="shop__sidebar">
 						<div class="shop__sidebar__search">
 							<form action="/shop/main/search.jsp">
@@ -188,7 +188,7 @@ if (endPage > pageCount)
 						</div>
 					</div>
 				</div>
-				<%--사이드바 끝 --%>
+				<%--selection 끝 --%>
 			</div>
 			<!-- 상품 목록 -->
 			<div class="col-lg-9">
@@ -211,17 +211,17 @@ if (endPage > pageCount)
 								<p class="card-text">
 									판매가:<%=dto.getDiscount()%>원
 								</p>
-								<form method="post" action="/shop/cart/cartInsertPro.jsp">
-								<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-								<input type="hidden" name="gonum" value="<%=gonum %>">
-								수량 : <input type="number" name="ccount" min="1" value="1"  />
-								<button type="submit" class="btn btn-outline-primary btn-sm w-100">+장바구니 담기</button>
-								</form>
-								<form method="post" action="/shop/buy/buyInsert.jsp" onsubmit="copyCount()">
-								<input type="hidden" name="gnum" id="ccount" value="<%=dto.getGnum() %>">
-								<input type="hidden" name="gonum" value="<%=gonum %>">
-								<input type="hidden" name="bcount" id="bcount" value="">
-								<button type="submit" class="btn btn-outline-primary btn-sm w-100">구매하기</button>
+								<form method="post">
+   								<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+    							<input type="hidden" name="gonum" value="<%=gonum%>">
+    
+    							수량: <input type="number" name="ccount" id="ccount" min="1" value="1" />
+    							<input type="hidden" name="bcount" id="bcount" value="" />
+
+    							<button type="submit" formaction="/shop/cart/cartInsertPro.jsp" class="btn btn-outline-primary btn-sm w-100">
+       							+장바구니 담기</button>
+    							<button type="submit" formaction="/shop/buy/buyInsertPro.jsp" onclick="copyCount()" class="btn btn-outline-primary btn-sm w-100">
+       							구매하기</button>
 								</form>
 								<script>
 								function copyCount(){

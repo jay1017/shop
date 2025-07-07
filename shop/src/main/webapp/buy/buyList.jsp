@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,shop.cart.CartDAO,shop.cart.CartDTO"%>
+<%@ page import="shop.buy.BuyListDAO"%>
+<%@ page import="shop.buy.BuyListDTO"%>
+<%@ page import="java.util.List"%>
 <%
 request.setCharacterEncoding("UTF-8");
 
@@ -15,21 +17,10 @@ if (sid == null) {
 <%
 return;
 }
-// 장바구니 목록 세션에서 !!부르지말고 dao에서 부르기
-CartDAO dao = CartDAO.getInstance();
+BuyListDAO dao = BuyListDAO.getInstance();
 int mnum = dao.getMnum(sid);
-List<CartDTO> cart = dao.getCartByMnum(mnum);
-List<CartDTO> fullCartItems = new ArrayList<>();
-
-for (CartDTO cdto : cart) {
-CartDTO goods = dao.getCartGoods(cdto.getGnum());
-if (goods != null) {
-	goods.setCcount(cdto.getCcount()); // 수량 세팅
-	fullCartItems.add(goods);
-}
-}
+List<BuyListDTO> buy = dao.getBuybyMnum(mnum);
 %>
-<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -53,56 +44,58 @@ if (goods != null) {
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
-	<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
-	<jsp:include page="/include/header.jsp" />
-	<title>장바구니</title>
-</head>
-<body>
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
+	type="text/css" />
+<jsp:include page="/include/header.jsp" />
+<jsp:include page="/include/sidebar.jsp" />
 
-<h1>장바구니</h1>
-
-
-<%
-if (cart.isEmpty()) {
-%>
-<p>장바구니에 담긴 상품이 없습니다.</p>
-<%
-} else {
-int total = 0;
-for (CartDTO dto : cart) {
-
-	int gprice = dto.getGprice();
-	int discount = dto.getDiscount();
-
-	total += discount;
-%>
-<div class="item">
-	<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품 이미지"
-		width="150">
-	<div>
-		<p>상품명:<%=dto.getGname()%></p>
-		<p>가격: ₩<%=gprice%></p>
-		<p>할인가: ₩<%=discount%></p>
-		<p>수량:<%=dto.getCcount()%>개</p>
-		<input type="hidden" name="bcount" id="bcount" value="<%=dto.getCcount()%>">
-		<input type="hidden" name="gnum" id="gnum" value="<%=dto.getGnum() %>">
-		<input type="button" value="구매하기"
-			onclick="location.href='/shop/buy/buyInsert.jsp'">
+<title>전체 주문 페이지</title>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
+			<h1>주문내역</h1>
+		</div>
 	</div>
 </div>
+<%-- 주문내역 페이지로 돌아가는 버튼하나 만들기
+buy 테이블에서 전체불러오기(주문 상세내역)
+bnum불러오고 상품 이름, 사진, 가격정도만 불러오면 될듯?--%>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
 <%
-}
+if (buy.isEmpty()) {
+%>
+<p>구매한 상품이 없습니다.</p>
+<%
+} else {
+for (BuyListDTO dto : buy) {
+
+	int discount = dto.getDiscount();
+	int bcount = dto.getBcount();
+	int price = discount * bcount;
 %>
 
-<h3>
-	총 합계: ₩<%=total%></h3>
-<input type="button" value="모두 구매" onclick="location.href='/shop/buy/buyInsert.jsp'">
+			<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품이미지"
+				width="150">
 
-<%
-}
-%>
+			<p>
+				상품명:<%=dto.getGname()%></p>
+			<p>
+				가격: ₩<%=discount%></p>
+			<p>
+				구매수량:<%=bcount%>개
+			</p>
+			<p>
+				구매가: ₩<%=price%></p>
+		</div>
+		<%
+		}
+		}
+		%>
+	</div>
+</div>
 
-<jsp:include page="/include/sidebar.jsp" />
 <jsp:include page="/include/footer.jsp" />
 <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/shop/resources/js/bootstrap.min.js"></script>
