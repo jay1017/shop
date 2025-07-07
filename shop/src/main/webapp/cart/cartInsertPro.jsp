@@ -16,7 +16,7 @@
 	<%
 		// 카트 객체 생성
 		CartDTO cart = new CartDTO();
-	
+	 
 		int gnum = Integer.parseInt(request.getParameter("gnum"));
 		String sid = (String) session.getAttribute("sid");
 		int ccount = Integer.parseInt(request.getParameter("ccount"));

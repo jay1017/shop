@@ -19,7 +19,7 @@ if (result == 1) {
 	alert("수정되었습니다.");
 	window.location.href = document.referrer;
 </script>
-<%
+<% 
 } else {
 %>
 <script>

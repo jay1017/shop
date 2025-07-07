@@ -87,7 +87,7 @@ if (goods != null) {
 			<p>
 				가격: ₩<%=gprice%></p>
 			<p>
-				할인가: ₩<%=discount%></p>
+				할인가: ₩<%=discount%></p> 
 			<p>
 				수량:<%=dto.getCcount()%>개
 			</p>
