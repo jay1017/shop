@@ -30,9 +30,27 @@
     int canum=goods.getCanum(); //상품 카테고리 번호 조회
     
    //리뷰 목록 조회
+     //상품 리뷰 개수 가져오기
+    
+    String pageNum=request.getParameter("pageNum");
+    if(pageNum==null) pageNum="1";
+
+    int pageSize=8;
+    int currentPage = Integer.parseInt(request.getParameter("pageNum") != null ? request.getParameter("pageNum") : "1");
+    int startRow=(currentPage-1)*pageSize+1;
+    int endRow=currentPage*pageSize;
+
     ReviewDAO rdao=ReviewDAO.getInstance(); //리뷰 DAO
-    List<ReviewDTO> rlist=rdao.getReview(gnum);	//gnum인 리뷰목록 조회 
-    int rcount=rdao.reviewCount(gnum); //상품 리뷰 개수 가져오기
+    List<ReviewDTO> rlist=rdao.getReview(gnum,startRow,endRow);	//gnum인 리뷰목록 조회 
+    int rcount=rdao.reviewCount(gnum); //리뷰의 개수 출력하는 메소드
+   	
+
+    
+    System.out.println("상품번호: " + gnum);
+    System.out.println("현재 페이지: " + currentPage);
+    System.out.println("startRow = " + startRow + ", endRow = " + endRow);
+    System.out.println("리뷰개수: " + rcount);
+    
     
     
     ReviewDTO myReview=null;
@@ -67,6 +85,7 @@
     <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
     <link rel="stylesheet" href="/shop/resources/css/font.css">
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
@@ -237,90 +256,128 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="tabs-6" role="tabpanel">
-                                    <div class="product__details__tab__content">
-                                        <div class="product__details__tab__content__item">
-                                            <h5>리뷰 목록</h5>
-                                            <%--여기에 작업--%>
-                                            	<div>
-                                            	<% if(sid!=null) { %>
-                                            		<h5>리뷰 작성</h5>	
-                                        			<form action="/shop/review/reviewPro.jsp" method="post">
-														<input type="hidden" name="sid" value="<%=sid%>"/>
-                                        				<input type="hidden" name="gnum" value="<%=gnum%>"/>
-                                        				<input type="hidden" name="mnum" value="<%=mnum%>"/>
-                                        				<input type="hidden" name="canum" value="<%=canum%>"/> 
-                                        				<input type="hidden" name="ginum" value="<%=ginum%>"/>
-                                        				<textarea name="rcontent" rows="4" cols="60" placeholder="리뷰를 입력하세요">
-                                        				</textarea><br> 
-                                        				<input type="submit" value="작 성" class="primary-btn" style="border: none;"> 
-                                        			</form>
-                                        			<%}else{ %>
-                                        			<p><a href="/shop/member/loginForm.jsp">로그인</a> 후 리뷰를 작성할 수 있습니다.</p> <%--로그인 안되있으면 내 리뷰뜨는 공간에 로그인 링크뜹니다 --%>
-                                        			<%} %>
-                                        		</div>
-                                        		
-                                        		<%--리뷰 삭제 버튼 --%>
-                                            	<%if(rlist!=null && !rlist.isEmpty()) {	
-                                            			for(ReviewDTO dto:rlist){
-                                            				int rnum=dto.getRnum();
-                                            				String mname=dto.getMname();
-                                            	%>
-                                            				<div id="review-<%= rnum %>">
-        														<!-- 작성자 이름과 리뷰 내용 출력 -->
-        														<p>
-            													<strong><%= mname %></strong> </br>
-            													<span id="content-<%= rnum %>"><%= dto.getRcontent() %></span>
-        														</p>
-                                            					<%if(sid!=null && sid.equals(dto.getMid())) { %> <%--세션 id랑 유저 id가 같은지 확인 --%> 
-																	<button onclick="enableEdit(<%= rnum %>)">수정</button>
-                                            							<form method="post">
-                                            								<input type="hidden" name="mnum" value="<%=dto.getMnum() %>">
-                                            								<input type="hidden" name="rnum" value="<%=dto.getRnum()%>">
-                                            								<input type="hidden" name="gnum" value="<%=dto.getGnum() %>">
-                                            								<input type="hidden" name="ginum" value="<%=dto.getGinum() %>">
-                                            								<input type="hidden" name="rcontent" value="<%=dto.getRcontent() %>">
-                                            								<input type="submit" name="delete" value="삭 제" formaction="/shop/review/reviewDelete.jsp" class="primary-btn" style="border: none;">
-                                            							</form>                                      		  
-																<%} %>
-															</div>                                              				                                            	                                        	
-                                            			<%} 
-                                           		}else{%>
-                                            	<p>등록된 리뷰가 없습니다</p>
-											 <%	} %>											
-										</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                             <!-- 리뷰 출력 -->
+						<div class="tab-pane" id="tabs-6" role="tabpanel">
+						    <div class="product__details__tab__content">
+						        <div class="product__details__tab__content__item">
+						            <h5>리뷰 목록</h5>
+						            
+						            <!-- 리뷰 작성 버튼 및 폼 -->
+						            <% if(sid != null) { %>
+						                <div class="review-write-section" style="margin-bottom: 30px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+						                    <div class="review-write-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+						                        <h6>리뷰 작성</h6>
+						                        <button type="button" class="btn btn-primary btn-sm" onclick="toggleReviewForm()" id="reviewToggleBtn">
+						                            리뷰 작성하기
+						                        </button>
+						                    </div>
+						                    
+						                    <div id="reviewForm" style="display: none;">
+						                        <form action="/shop/review/reviewPro.jsp" method="post">
+						                            <input type="hidden" name="gnum" value="<%=gnum%>">
+						                            <input type="hidden" name="mnum" value="<%=mnum%>">
+						                            <input type="hidden" name="canum" value="<%=canum%>">
+						                            <input type="hidden" name="ginum" value="<%=ginum%>">
+						                            
+						                            <div class="form-group">
+						                                <label for="rcontent">리뷰 내용</label>
+						                                <textarea class="form-control" name="rcontent" id="rcontent" rows="4" 
+						                                          placeholder="상품에 대한 리뷰를 작성해주세요." required></textarea>
+						                            </div>
+						                            
+						                            <div class="form-group" style="text-align: right; margin-top: 15px;">
+						                                <button type="button" class="btn btn-secondary btn-sm" onclick="cancelReviewForm()">
+						                                    취소
+						                                </button>
+						                                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 10px;">
+						                                    리뷰 등록
+						                                </button>
+						                            </div>
+						                        </form>
+						                    </div>
+						                </div>
+						            <% } else { %>
+						                <div class="login-notice" style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 5px;">
+						                    <p style="margin: 0; color: #6c757d;">
+						                        <i class="fa fa-user"></i> 리뷰를 작성하려면 
+						                        <a href="/shop/member/loginForm.jsp" style="color: #007bff;">로그인</a>이 필요합니다.
+						                    </p>
+						                </div>
+						            <% } %>
+						            
+						            <!-- Ajax 기반 리뷰 목록 영역 -->
+						            <div id="reviewContainer">로딩 중...</div>
+						            
+						            <script>
+						                // 리뷰 작성 폼 토글 함수
+						                function toggleReviewForm() {
+						                    const reviewForm = document.getElementById('reviewForm');
+						                    const toggleBtn = document.getElementById('reviewToggleBtn');
+						                    
+						                    if (reviewForm.style.display === 'none') {
+						                        reviewForm.style.display = 'block';
+						                        toggleBtn.textContent = '작성 취소';
+						                        toggleBtn.className = 'btn btn-secondary btn-sm';
+						                    } else {
+						                        reviewForm.style.display = 'none';
+						                        toggleBtn.textContent = '리뷰 작성하기';
+						                        toggleBtn.className = 'btn btn-primary btn-sm';
+						                        // 폼 초기화
+						                        document.getElementById('rcontent').value = '';
+						                    }
+						                }
+						                
+						                // 리뷰 작성 취소 함수
+						                function cancelReviewForm() {
+						                    document.getElementById('reviewForm').style.display = 'none';
+						                    document.getElementById('reviewToggleBtn').textContent = '리뷰 작성하기';
+						                    document.getElementById('reviewToggleBtn').className = 'btn btn-primary btn-sm';
+						                    // 폼 초기화
+						                    document.getElementById('rcontent').value = '';
+						                }
+						                
+						                // 리뷰 페이지 로딩 함수
+						                function loadReviewPage(gnum, pageNum) {
+						                    fetch("/shop/review/reviewPagePro.jsp?gnum=" + gnum + "&pageNum=" + pageNum)
+						                        .then(response => response.text())
+						                        .then(html => {
+						                            document.getElementById("reviewContainer").innerHTML = html;
+						                        })
+						                        .catch(err => {
+						                            console.error("리뷰 로딩 실패:", err);
+						                            document.getElementById("reviewContainer").innerHTML = '<p style="color: #dc3545;">리뷰를 불러오는 중 오류가 발생했습니다.</p>';
+						                        });
+						                }
+						
+						                // 페이지 로드 시 리뷰 목록 로딩
+						                document.addEventListener("DOMContentLoaded", function () {
+						                    const gnum = <%= gnum %>;
+						                    loadReviewPage(gnum, 1);
+						                });
+						            </script>
+						        </div>
+						    </div>
+						</div>
                     </div>
                 </div>
             </div>
+            <%--페이징 처리 --%>
         </div>
     </section>
     <!-- Shop Details Section End -->
     <%--${}의 의미는 스크립트에서 변수를 출력하는것 자바에서 <%=%>랑 같다--%>
     <jsp:include page="/include/footer.jsp"></jsp:include>
-    <script>
-    //수정 버튼을 누르면 실행되는 함수
-    function enableEdit(rnum) {
-    	
-    	const content=document.getElementById('content-'+rnum).innerText; //현재 리뷰 내용을 가져옴(span안의 text)
-    	
-    	const reviewDiv=document.getElementById('review-'+rnum); //리뷰 전체 영역을 가져옴
-    	
-    	//이 영역을 수정폼으로 바꿔버림
-    	reviewDiv.innerHTML=`
-    	<form action=reviewUpdatePro.jsp method="post">
-    		<input type="hidden" name="rnum" value="${rnum}">
-    		<input type="hidden" name="gnum" value="${getGnumFromURL()}" <!--상품 번호 전달 -->
-    		<textarea name="rcontent" rows="3" cols="50">${rcontent}</textarea>
-    		<br>
-    		<button type="submit">저장</button>
-    		<button type="button" onclick="cancelEdit(${rnum},'${content}')">취소</button>
-    	</form>
-    	`;
-    }
-    </script>
+	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
+	<script src="/shop/resources/js/jquery.slicknav.js"></script>
+	<script src="/shop/resources/js/mixitup.min.js"></script>
+	<script src="/shop/resources/js/owl.carousel.min.js"></script>
+	<script src="/shop/resources/js/main.js"></script>
+    <script src="/shop/resources/js/review.js"></script>
+    <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
 </body>
 </html>
+

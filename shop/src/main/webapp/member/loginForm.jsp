@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 <style>
 * {
 	box-sizing: border-box;
@@ -127,7 +128,27 @@ body {
 	color: #555; /* 마우스 올렸을 때 좀 더 진한 회색 */
 	text-decoration: underline; /* 선택사항: 호버 시 밑줄 표시 */
 }
+.naver-login-btn {
+    width: 400px;      /* 가로 길이 */      
+    height: 40px;
+    cursor: pointer;   /* 마우스 올릴 때 손가락 모양 */
+    transition: transform 0.2s ease;
+}
+
+.naver-login-btn:hover {
+    transform: scale(1.05); /* 호버 시 살짝 확대 효과 */
+}
 </style>
+<%
+    String clientId = "xlKrOZe43aUWrCldbgTq";
+    String redirectURI = java.net.URLEncoder.encode("http://localhost:8080/shop/member/naverLogin.jsp", "UTF-8");
+    String state = "RANDOM_STATE";  // CSRF 방지를 위한 임의의 문자열 (세션에 저장해도 좋음)
+
+    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code"
+        + "&client_id=" + clientId
+        + "&redirect_uri=" + redirectURI
+        + "&state=" + state;
+%>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
@@ -151,8 +172,11 @@ body {
 		</form>
 		<div style="text-align: center; margin-top: 20px;">
     		<a href="https://kauth.kakao.com/oauth/authorize?client_id=bc8f1248fe973ce8060a5a525c39e1f9&redirect_uri=http://localhost:8080/shop/member/kakaoLogin.jsp&response_type=code">
-      		<img src="/shop/resources/img/kakaoLogin/kakao_login.png" alt="카카오 로그인" />
+      			<img src="/shop/resources/img/kakaoLogin/kakao_login.png" alt="카카오 로그인" />
     		</a>
+    		<a href="<%=apiURL %>">
+    			<img class="naver-login-btn" src="https://static.nid.naver.com/oauth/big_g.PNG" alt="네이버 로그인 버튼" />
+			</a>	
   		</div>
   		<div class="signup-section">
 				ODEZ의 신규 회원이 되어보세요!

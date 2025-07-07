@@ -280,7 +280,7 @@
 			toggleBtn.addEventListener('click', () => {
 				const isVisible = chatContainer.style.display === 'block';
 				chatContainer.style.display = isVisible ? 'none' : 'block';
-				toggleBtn.innerHTML = isVisible ? "챗봇" : "닫기";
+				toggleBtn.innerHTML = isVisible ? "<i class='fa fa-commenting-o'></i>" : "<i class='fa fa-times' aria-hidden='true'></i>";
 			});
 		</script>
     </div>

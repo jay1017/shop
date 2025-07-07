@@ -46,6 +46,13 @@
     // 로그인한 사용자의 정보
     MemberDAO mdao = new MemberDAO();
     MemberDTO mdto = mdao.getInfo(sid);
+    
+    int myMnum = 0;
+    if (mdto != null) {
+        myMnum = mdto.getMnum(); // 사용자 번호 저장
+    }
+    
+    
     if (mdto == null || dto.getMnum() != mdto.getMnum()) {
 %>
     <script>
@@ -117,6 +124,9 @@
             text-decoration: underline;
         }
     </style>
+    
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+    
 </head>
 <body>
 
@@ -134,13 +144,24 @@
 
     <a href="qnaList.jsp" class="back-button">← 목록으로 돌아가기</a>
 
-    <%-- 수정 버튼: 작성자일 경우만 보임 --%>
-    <% if (dto.getMnum() == mdto.getMnum()) { %>
+    <%-- 본인 글인 경우 수정/삭제 가능 --%>
+    <% if (dto.getMnum() == myMnum) { %>
         <a href="qnaUpdateForm.jsp?qnum=<%= dto.getQnum() %>" class="back-button">✏️ 수정</a>
+        <a href="javascript:void(0);" class="back-button" onclick="confirmDelete(<%= dto.getQnum() %>)">🗑️ 삭제</a>
     <% } %>
 </div>
 
 <jsp:include page="/include/footer.jsp"></jsp:include>
+
+<!-- 삭제 확인 함수 -->
+<script>
+function confirmDelete(qnum) {
+    if (confirm("정말 삭제하시겠습니까?")) {
+        location.href = "qnaDelete.jsp?qnum=" + qnum;
+    }
+}
+</script>
+
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>

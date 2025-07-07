@@ -84,6 +84,8 @@
             font-weight: bold;
         }
     </style>
+    
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 </head>
 <body>
 
@@ -120,11 +122,9 @@
             <td><%= dto.getQnum() %></td>
             <td><%= dto.getMnum() %></td>
             <td>
-                <% if (dto.getMnum() == myMnum) { %>
+             
                     <a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
-                <% } else { %>
-                    <%= title %>
-                <% } %>
+                
             </td>
         </tr>
     <%

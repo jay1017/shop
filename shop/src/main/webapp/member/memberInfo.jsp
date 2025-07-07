@@ -30,6 +30,7 @@ String SetGender = mdao.setGender(sid);
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
 <style>
 .member-section {
 	max-width: 720px;
