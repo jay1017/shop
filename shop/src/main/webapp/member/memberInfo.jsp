@@ -135,19 +135,14 @@ body {
 						<strong>내 정보 확인 및 변경</strong>
 					</div> <span class="arrow">&gt;</span>
 			</a></li>
-			<li><a href="">
+			<li><a href="#">
 					<div class="menu-text">
-						<strong>주문 내역</strong>
+						<strong>쿠폰 내역</strong>
 					</div> <span class="arrow">&gt;</span>
 			</a></li>
 			<li><a href="#">
 					<div class="menu-text">
-						<strong>1:1 문의 내역</strong>
-					</div> <span class="arrow">&gt;</span>
-			</a></li>
-			<li><a href="#">
-					<div class="menu-text">
-						<strong>FAQ</strong>
+						<strong>포인트 내역</strong>
 					</div> <span class="arrow">&gt;</span>
 			</a></li>
 		</ul>

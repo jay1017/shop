@@ -7,7 +7,7 @@
 <%@ page import="shop.member.MemberDTO" %>
 <%@ page import="shop.member.MemberDAO" %>  
 <%@ page import="java.util.List" %> 
-<%@ page import="java.util.ArrayList" %>     
+<%@ page import="java.util.ArrayList" %>  
 <!DOCTYPE html>
 <html>
 <head>

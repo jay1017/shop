@@ -221,6 +221,10 @@
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>총 가격 <span>&#8361; <%=numberFormat.format(total) %></span></li>
+                                    <%
+                                    	session.setAttribute("totalprice", numberFormat.format(total));
+                                    	// 총 구매 가격을 세션에 저장하여 포인트 계산시에 활용함
+                                    %>
                                 </ul>
                                 <div class="checkout__input__checkbox">
                                     <label for="accessOrder">
