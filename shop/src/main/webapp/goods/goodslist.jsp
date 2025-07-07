@@ -204,31 +204,13 @@ if (endPage > pageCount)
 							<img src="/shop/resources/image/<%=dto.getGiname()%>" class="card-img-top"
 								alt="상품 이미지">
 							<div class="card-body">
-								<h5 class="card-title"><%=dto.getGname()%></h5></a>
+								<h5 class="card-title"><%=dto.getGname()%></h5>
 								<p class="card-text">
 									가격:<%=dto.getGprice()%>원
 								</p>
 								<p class="card-text">
 									판매가:<%=dto.getDiscount()%>원
-								</p>
-								<form method="post">
-   								<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-    							<input type="hidden" name="gonum" value="<%=gonum%>">
-    
-    							수량: <input type="number" name="ccount" id="ccount" min="1" value="1" />
-    							<input type="hidden" name="bcount" id="bcount" value="" />
-
-    							<button type="submit" formaction="/shop/cart/cartInsertPro.jsp" class="btn btn-outline-primary btn-sm w-100">
-       							+장바구니 담기</button>
-    							<button type="submit" formaction="/shop/buy/buyInsertPro.jsp" onclick="copyCount()" class="btn btn-outline-primary btn-sm w-100">
-       							구매하기</button>
-								</form>
-								<script>
-								function copyCount(){
-									const count = document.getElementById("ccount").value;
-									document.getElementById("bcount").value = count;
-								}
-								</script>
+								</p></a>
 							</div>
 						</div>
 					</div>
