@@ -53,66 +53,83 @@ if (goods != null) {
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
-	<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
-	<jsp:include page="/include/header.jsp" />
-	<title>장바구니</title>
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
+	type="text/css" />
+<jsp:include page="/include/header.jsp" />
+<title>장바구니</title>
 </head>
 <body>
 
-<h1>장바구니</h1>
+	<h1>장바구니</h1>
 
 
-<%
-if (cart.isEmpty()) {
-%>
-<p>장바구니에 담긴 상품이 없습니다.</p>
-<%
-} else {
-int total = 0;
-for (CartDTO dto : cart) {
+	<%
+	if (cart.isEmpty()) {
+	%>
+	<p>장바구니에 담긴 상품이 없습니다.</p>
+	<%
+	} else {
+	int total = 0;
+	for (CartDTO dto : cart) {
 
-	int gprice = dto.getGprice();
-	int discount = dto.getDiscount();
+		int gprice = dto.getGprice();
+		int discount = dto.getDiscount();
 
-	total += discount;
-%>
-<div class="item">
-	<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품 이미지"
-		width="150">
-	<div>
-		<p>상품명:<%=dto.getGname()%></p>
-		<p>가격: ₩<%=gprice%></p>
-		<p>할인가: ₩<%=discount%></p>
-		<p>수량:<%=dto.getCcount()%>개</p>
-		<input type="hidden" name="bcount" id="bcount" value="<%=dto.getCcount()%>">
-		<input type="hidden" name="gnum" id="gnum" value="<%=dto.getGnum() %>">
-		<input type="button" value="구매하기"
-			onclick="location.href='/shop/buy/buyInsert.jsp'">
+		total += discount;
+	%>
+	<div class="item">
+		<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품 이미지"
+			width="150">
+		<div>
+			<p>
+				상품명:<%=dto.getGname()%></p>
+			<p>
+				가격: ₩<%=gprice%></p>
+			<p>
+				할인가: ₩<%=discount%></p>
+			<p>
+				수량:<%=dto.getCcount()%>개
+			</p>
+			<form method="post" action="/shop/buy/buyInsert.jsp">
+				<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+				<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
+				<input type="submit" value="구매하기">
+			</form>
+		</div>
 	</div>
-</div>
-<%
-}
-%>
+	<%
+	}
+	%>
 
-<h3>
-	총 합계: ₩<%=total%></h3>
-<input type="button" value="모두 구매" onclick="location.href='/shop/buy/buyInsert.jsp'">
+	<h3>
+		총 합계: ₩<%=total%></h3>
+	<form method="post" action="/shop/buy/buyInsert.jsp">
+		<%
+		for (CartDTO dto : cart) {
+		%>
+		<input type="hidden" name="gnum" value="<%=dto.getGnum()%>"> <input
+			type="hidden" name="bcount" value="<%=dto.getCcount()%>">
+		<%
+		}
+		%>
+		<input type="submit" value="모두 구매">
+	</form>
 
-<%
-}
-%>
+	<%
+	}
+	%>
 
-<jsp:include page="/include/sidebar.jsp" />
-<jsp:include page="/include/footer.jsp" />
-<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
-<script src="/shop/resources/js/bootstrap.min.js"></script>
-<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
-<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
-<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
-<script src="/shop/resources/js/jquery.countdown.min.js"></script>
-<script src="/shop/resources/js/jquery.slicknav.js"></script>
-<script src="/shop/resources/js/mixitup.min.js"></script>
-<script src="/shop/resources/js/owl.carousel.min.js"></script>
-<script src="/shop/resources/js/main.js"></script>
+	<jsp:include page="/include/sidebar.jsp" />
+	<jsp:include page="/include/footer.jsp" />
+	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
+	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
+	<script src="/shop/resources/js/jquery.slicknav.js"></script>
+	<script src="/shop/resources/js/mixitup.min.js"></script>
+	<script src="/shop/resources/js/owl.carousel.min.js"></script>
+	<script src="/shop/resources/js/main.js"></script>
 </body>
 </html>
