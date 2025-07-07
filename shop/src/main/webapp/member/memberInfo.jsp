@@ -140,7 +140,7 @@ body {
 						<strong>쿠폰 내역</strong>
 					</div> <span class="arrow">&gt;</span>
 			</a></li>
-			<li><a href="#">
+			<li><a href="/shop/point/pointForm.jsp">
 					<div class="menu-text">
 						<strong>포인트 내역</strong>
 					</div> <span class="arrow">&gt;</span>
