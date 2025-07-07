@@ -78,6 +78,7 @@ if (goods != null) {
 		total += discount;
 	%>
 	<div class="item">
+	<input type="checkbox" name="gnum" value="<%=dto.getGnum()%>">
 		<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품 이미지"
 			width="150">
 		<div>
@@ -95,6 +96,18 @@ if (goods != null) {
 				<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
 				<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
 				<input type="submit" value="구매하기">
+			</form>
+			<%--수정 --%>
+			<form method="post" action="cartUpdate.jsp">
+			수량: <input type="number" name="ccount" id="ccount" min="1" value="1" />
+			<input type="hidden" name="gnum" value="<%=dto.getGnum() %>">
+			<input type="hidden" name="ccount" value="<%=dto.getCcount() %>">
+			<button type="submit">수정하기</button>
+			</form>
+			<%--삭제 --%>
+			<form method="post" action="cartDelete.jsp">
+			<input type="hidden" name="gnum" value="<%=dto.getGnum() %>">
+			<button type="submit">삭제하기</button>
 			</form>
 		</div>
 	</div>

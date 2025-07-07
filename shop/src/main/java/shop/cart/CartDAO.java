@@ -24,7 +24,7 @@ public class CartDAO {
 	private CartDAO() {
 	}
 
-	//DB 접속
+	// DB 접속
 	private Connection getConnection() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -64,7 +64,7 @@ public class CartDAO {
 		}
 	}
 
-	//상품번호에 맞는 상품 정보 가져오기
+	// 상품번호에 맞는 상품 정보 가져오기
 	public CartDTO getCartGoods(int gnum) {
 		CartDTO dto = null;
 		try {
@@ -114,7 +114,7 @@ public class CartDAO {
 //		return dto;
 //	}
 
-	//장바구니에 상품 넣기
+	// 장바구니에 상품 넣기
 	public int insertCart(CartDTO dto) {
 		int result = 0;
 		try {
@@ -155,27 +155,29 @@ public class CartDAO {
 		}
 		return mnum;
 	}
-	//해당상품의 gonum 옵션번호 불러오기
+
+	// 해당상품의 gonum 옵션번호 불러오기
 	public int getGonum(int gnum) {
-		int gonum=0;
+		int gonum = 0;
 		try {
 			conn = getConnection();
 			String sql = "select go.gonum from goods_option go join goods g on go.gnum=g.gnum where g.gnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				gonum = rs.getInt("gonum");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 		return gonum;
 	}
-	//회원번호로 카트정보 불러오기
-	public List<CartDTO> getCartByMnum(int mnum){
+
+	// 회원번호로 카트정보 불러오기
+	public List<CartDTO> getCartByMnum(int mnum) {
 		List<CartDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
@@ -185,7 +187,7 @@ public class CartDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				CartDTO dto = new CartDTO();
 				dto.setCnum(rs.getInt("cnum"));
 				dto.setGnum(rs.getInt("gnum"));
@@ -199,11 +201,49 @@ public class CartDAO {
 				dto.setGiname(rs.getString("giname"));
 				list.add(dto);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return list;
+	}
+
+	// 장바구니 수정하기(수량)
+	public int updateCart(int ccount, int gnum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "update cart set ccount=? where gnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, ccount);
+			pstmt.setInt(2, gnum);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
+	}
+
+	// 장바구니에서 상품 삭제하기
+	public int deleteCart(int gnum, int mnum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "delete from cart where gnum=? and mnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+			pstmt.setInt(2, mnum);
+			result = pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
 			endConnection();
 		}
-		return list;
+		return result;
 	}
+	
+	
 }
