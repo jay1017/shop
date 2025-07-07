@@ -93,6 +93,7 @@ if (goods != null) {
 			<form method="post" action="/shop/buy/buyInsert.jsp">
 				<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
 				<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
+				<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
 				<input type="submit" value="구매하기">
 			</form>
 		</div>
@@ -107,8 +108,9 @@ if (goods != null) {
 		<%
 		for (CartDTO dto : cart) {
 		%>
-		<input type="hidden" name="gnum" value="<%=dto.getGnum()%>"> <input
-			type="hidden" name="bcount" value="<%=dto.getCcount()%>">
+		<input type="hidden" name="gnum" value="<%=dto.getGnum()%>"> 
+		<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
+		<input type="hidden" name="gonum" value="<%=dto.getGonum() %>">
 		<%
 		}
 		%>
