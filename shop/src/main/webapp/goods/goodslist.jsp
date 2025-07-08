@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.goods.GoodsListDAO"%>
 <%@ page import="shop.goods.GoodsListDTO"%>
-<%@ page import="shop.cart.CartDTO" %>
-<%@ page import="shop.cart.CartDAO" %>
+<%@ page import="shop.cart.CartDTO"%>
+<%@ page import="shop.cart.CartDAO"%>
 <%@ page import="shop.goods.OptionDAO"%>
 <%@ page import="shop.goods.OptionDTO"%>
 <%@ page import="java.util.List"%>
@@ -29,23 +29,29 @@ String size = request.getParameter("size");
 String priceStr = request.getParameter("price");
 List<GoodsListDTO> list = null;
 //상품 진열 조건
-if(canumStr != null){//카테고리별 출력
+if (canumStr != null) {//카테고리별 출력
 	int canum = Integer.parseInt(canumStr);
 	count = dao.getGoodsCount(canum);
-	list = dao.getGoodsByCate(canum,start,end);
-}else if(size != null){//사이즈별 출력
-	list = dao.getGoodsBySize(size,start,end);
-}else if(priceStr != null){//가격별 출력
+	list = dao.getGoodsByCate(canum, start, end);
+} else if (size != null) {//사이즈별 출력
+	list = dao.getGoodsBySize(size, start, end);
+} else if (priceStr != null) {//가격별 출력
 	int price = Integer.parseInt(priceStr);
 	count = dao.getGoodsCountbyprice(price);
-	list = dao.getGoodsByPrice(price,start,end);
-}else{//기본값(조건 없을때)
-list = dao.getGoods(start,end);
+	list = dao.getGoodsByPrice(price, start, end);
+} else {//기본값(조건 없을때)
+	list = dao.getGoods(start, end);
 }
 String para = "";
-if(canumStr != null){para += "&canum=" + canumStr;}
-if(size != null){para += "&size=" + size;}
-if(priceStr != null){para += "&price=" + priceStr;}
+if (canumStr != null) {
+	para += "&canum=" + canumStr;
+}
+if (size != null) {
+	para += "&size=" + size;
+}
+if (priceStr != null) {
+	para += "&price=" + priceStr;
+}
 int pageCount = (count / pageSize) + (count % pageSize == 0 ? 0 : 1);
 int pageBlock = 5; // 한 화면에 보여줄 페이지 링크 수
 int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
@@ -78,10 +84,11 @@ if (endPage > pageCount)
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
-	</head>
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
+	type="text/css" />
+</head>
 <body>
-<style>
+	<style>
 .primary-btn {
 	display: inline-block;
 	font-size: 13px;
@@ -95,10 +102,15 @@ if (endPage > pageCount)
 </style>
 	<jsp:include page="/include/header.jsp" />
 	<jsp:include page="/include/sidebar.jsp" />
-	<div class="col-lg-3">
-	<h1>상품목록</h1>
-	<h2>전체 상품 목록</h2>
-	<input type="button" value="전체 상품 보기" onclick="location.href='goodslist.jsp'">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3">
+				<h1>상품목록</h1>
+				<h2>전체 상품 목록</h2>
+				<input type="button" value="전체 상품 보기"
+					onclick="location.href='goodslist.jsp'">
+			</div>
+		</div>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -150,10 +162,14 @@ if (endPage > pageCount)
 											<div class="shop__sidebar__price">
 												<ul>
 													<li><a href="goodslist.jsp?price=0">~₩500,000</a></li>
-													<li><a href="goodslist.jsp?price=500000">₩500000 - ₩1000000</a></li>
-													<li><a href="goodslist.jsp?price=1000000">₩1000000 - ₩1500000</a></li>
-													<li><a href="goodslist.jsp?price=1500000">₩1500000 - ₩2000000</a></li>
-													<li><a href="goodslist.jsp?price=2000000">₩2000000 - ₩2500000</a></li>
+													<li><a href="goodslist.jsp?price=500000">₩500000 -
+															₩1000000</a></li>
+													<li><a href="goodslist.jsp?price=1000000">₩1000000
+															- ₩1500000</a></li>
+													<li><a href="goodslist.jsp?price=1500000">₩1500000
+															- ₩2000000</a></li>
+													<li><a href="goodslist.jsp?price=2000000">₩2000000
+															- ₩2500000</a></li>
 												</ul>
 											</div>
 										</div>
@@ -174,12 +190,15 @@ if (endPage > pageCount)
 
 												<%
 												for (int i = 0; i < sizes.size(); i++) {
-													 size = sizes.get(i);
+													size = sizes.get(i);
 												%>
-												<label for="<%=size%>"> <%=size%>
-												<input type="radio" name="gosize" id="<%=size%>" value="<%=size%>" onclick="location.href='goodslist.jsp?size=<%=size %>'">
+												<label for="<%=size%>"> <%=size%> <input
+													type="radio" name="gosize" id="<%=size%>" value="<%=size%>"
+													onclick="location.href='goodslist.jsp?size=<%=size%>'">
 												</label>
-												<%}%>
+												<%
+												}
+												%>
 											</div>
 										</div>
 									</div>
@@ -201,32 +220,36 @@ if (endPage > pageCount)
 					<div class="col-lg-4 col-md-6 col-sm-6 mb-4">
 						<div class="card h-100">
 							<a href="/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum()%>">
-							<img src="/shop/resources/image/<%=dto.getGiname()%>" class="card-img-top"
-								alt="상품 이미지">
-							<div class="card-body">
-								<h5 class="card-title"><%=dto.getGname()%></h5>
-								<p class="card-text">
-									가격:<%=dto.getGprice()%>원
-								</p>
-								<p class="card-text">
-									판매가:<%=dto.getDiscount()%>원
-								</p></a>
-							</div>
+								<img src="/shop/resources/image/<%=dto.getGiname()%>"
+								class="card-img-top" alt="상품 이미지">
+								<div class="card-body">
+									<h5 class="card-title"><%=dto.getGname()%></h5>
+									<p class="card-text">
+										가격:<%=dto.getGprice()%>원
+									</p>
+									<p class="card-text">
+										판매가:<%=dto.getDiscount()%>원
+									</p>
+									<p class="card-text">
+									사이즈:<%=dto.getGosize() %>
+									</p>
+							</a>
 						</div>
 					</div>
-					<%
-					}
-					} else {
-					%>
-					<p>등록된 상품이 없습니다.</p>
-					<%
-					}
-					%>
 				</div>
-				<%--상품 카드 닫음 --%>
+				<%
+				}
+				} else {
+				%>
+				<p>등록된 상품이 없습니다.</p>
+				<%
+				}
+				%>
 			</div>
+			<%--상품 카드 닫음 --%>
 		</div>
-		<%--row 닫기 --%>
+	</div>
+	<%--row 닫기 --%>
 	</div>
 	<%--container 닫기 --%>
 	<div style="text-align: center;">
@@ -263,7 +286,8 @@ if (endPage > pageCount)
 		%>
 		<form action="/shop/main/search.jsp" method="get">
 			<input type="text" placeholder="검색어 입력">
-			<button type="submit" class="primary-btn" style="border: none; border-radius: 5px">검색</button>
+			<button type="submit" class="primary-btn"
+				style="border: none; border-radius: 5px">검색</button>
 		</form>
 	</div>
 

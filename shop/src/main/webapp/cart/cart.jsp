@@ -62,7 +62,6 @@ if (goods != null) {
 
 	<h1>장바구니</h1>
 
-
 	<%
 	if (cart.isEmpty()) {
 	%>

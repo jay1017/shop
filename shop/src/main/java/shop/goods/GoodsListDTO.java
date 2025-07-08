@@ -12,13 +12,14 @@ public class GoodsListDTO {
 	private String gplot;
 	private String caname;
 	public String giname;
-	public String size;
+	public String gosize;
 	
-	public String getSize() {
-		return size;
+	
+	public String getGosize() {
+		return gosize;
 	}
-	public void setSize(String size) {
-		this.size = size;
+	public void setGosize(String gosize) {
+		this.gosize = gosize;
 	}
 	public String getCaname() {
 		return caname;
