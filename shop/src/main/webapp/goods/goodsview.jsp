@@ -412,7 +412,7 @@
 						                        var textarea=document.getElementById('edit-content-' + rnum);
 						                        textarea.value=content;
 						                        
-						                    setTimeOut(function() {   
+						                    setTimeOut(function() { //setTimeOut을 쓰는 이유는 리뷰를 수정할때 기존내용의 맨 끝에 마우스 커서가 자동으로 위치하도록 해야하기 때문입니다  
 						                        textarea.focus();
 						                        textarea.setSelectionRange(textarea.value.length,textarea.value.length);
 						                    },10);    
