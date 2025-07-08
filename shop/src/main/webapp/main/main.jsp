@@ -62,7 +62,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 									도시적인 분위기와 트렌디한 무드를 동시에 갖춘 <br/>
 									이번 시즌 머스트해브 아이템!<br/>
 									자크뮈스 르 시에라 티셔츠를 지금 만나보세요.</p>
-								<a href="/shop/goods/goodsview.jsp?gnum=22" class="primary-btn">Shop now <span
+								<a href="/shop/goods/goodsview.jsp?gnum=263" class="primary-btn">Shop now <span
 									class="arrow_right"></span></a>
 								<%--shop now누르면 해당 상품의 상세화면으로이동하도록 만들기 --%>
 								<div class="hero__social">
@@ -89,7 +89,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 								자켓은 어디에나 매치해도 스타일을 살려주는 아이템입니다.<br/>
 								간절기부터 겨울까지 쭉 활용 가능한 머스트해브 아우터!<br/>
 								생로랑 클래식 테디 재킷을 지금 만나보세요.</p>
-								<a href="/shop/goods/goodsview.jsp?gnum=22" class="primary-btn">Shop now <span
+								<a href="/shop/goods/goodsview.jsp?gnum=110" class="primary-btn">Shop now <span
 									class="arrow_right"></span></a>
 								<div class="hero__social">
 									<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
