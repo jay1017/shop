@@ -7,8 +7,7 @@ public class QnaDTO {
     private int mnum;
     private String qtitle;
     private String qcontent;
-    private Timestamp qdate;
-    private String mid;
+    
 
     public int getQnum() {
         return qnum;
@@ -42,15 +41,6 @@ public class QnaDTO {
         this.qcontent = qcontent;
     }
     
-    public Timestamp getQdate() {
-        return qdate;
-    }
-
- // ✨ Getter & Setter for mid (작성자 ID)
-    public String getMid() {
-        return mid;
-    }
-    public void setMid(String mid) {
-        this.mid = mid;
-    }
+    
+ 
 }

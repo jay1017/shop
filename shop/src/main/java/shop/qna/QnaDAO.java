@@ -38,6 +38,7 @@ public class QnaDAO {
     public List<QnaDTO> getQnaList() {
         List<QnaDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM qna ORDER BY qnum DESC";
+        
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
@@ -61,6 +62,7 @@ public class QnaDAO {
     public QnaDTO getQna(int qnum) {
         QnaDTO dto = null;
         String sql = "SELECT * FROM qna WHERE qnum = ?";
+        
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -72,7 +74,7 @@ public class QnaDAO {
                     dto.setMnum(rs.getInt("mnum"));
                     dto.setQtitle(rs.getString("qtitle"));
                     dto.setQcontent(rs.getString("qcontent"));
-                    dto.setQdate(rs.getTimestamp("qdate"));
+                    
                 }
             }
         } catch (Exception e) {
@@ -98,7 +100,7 @@ public class QnaDAO {
         }
     }
 
-    // (선택) 5. 문의글 삭제
+    // 5. 문의글 삭제
     public void deleteQna(int qnum) {
         String sql = "DELETE FROM qna WHERE qnum = ?";
         try (Connection conn = getConnection();
