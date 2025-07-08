@@ -223,7 +223,7 @@ if (endPage > pageCount)
 								<img src="/shop/resources/image/<%=dto.getGiname()%>"
 								class="card-img-top" alt="상품 이미지">
 								<div class="card-body">
-									<h5 class="card-title"><%=dto.getGname()%></h5>
+									<h5 class="card-title"><%=dto.getGname()%></h5> 
 									<p class="card-text">
 										가격:<%=dto.getGprice()%>원
 									</p>
