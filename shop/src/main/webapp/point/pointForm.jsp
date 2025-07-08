@@ -1,28 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="shop.member.MemberDTO" %>
-<%@ page import="shop.member.MemberDAO" %>
-<%@ page import="shop.point.pointDAO" %>
-<%@ page import="shop.point.pointDTO" %>
-<%@ page import="java.util.List" %>
+	pageEncoding="UTF-8"%>
+<%@ page import="shop.member.MemberDTO"%>
+<%@ page import="shop.member.MemberDAO"%>
+<%@ page import="shop.point.pointDAO"%>
+<%@ page import="shop.point.pointDTO"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%
-	String sid = (String)session.getAttribute("sid");
-	MemberDAO mdao = new MemberDAO();
-	MemberDTO mdto = mdao.getInfo(sid);
-	
-	pointDAO pdao = new pointDAO();
-	pointDTO pdto = new pointDTO();
-	
-	int result = 0;
-	int PointCount = pdao.getAllPoint(mdto.getMnum());
-	
-	List<pointDTO> plist = pdao.getPointList(mdto.getMnum());
+String sid = (String) session.getAttribute("sid");
+MemberDAO mdao = new MemberDAO();
+MemberDTO mdto = mdao.getInfo(sid);
+
+pointDAO pdao = new pointDAO();
+pointDTO pdto = new pointDTO();
+
+int result = 0;
+int PointCount = pdao.getAllPoint(mdto.getMnum());
+
+List<pointDTO> plist = pdao.getPointList(mdto.getMnum());
+
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 %>
 <html>
-	<head>
-		<title>ODEZ - 포인트 내역</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
+<head>
+<title>ODEZ - 포인트 내역</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
 	type="text/css">
@@ -39,46 +42,103 @@
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
-<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
-	</head>
-	<body>
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
+	type="text/css" />
+<style>
+body {
+	background-color: #f3f2ee; /* 전체 배경색 */
+	font-family: 'Noto Sans KR', sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.my-page-box {
+	max-width: 600px;
+	margin: 60px auto;
+	background: #fff;
+	border-radius: 15px;
+	padding: 30px 40px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.my-page-box h2 {
+	text-align: center;
+	font-weight: 700;
+	margin-bottom: 30px;
+}
+
+.my-point-summary {
+	font-size: 16px;
+	font-weight: 500;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.point-history {
+	border-top: 1px solid #eee;
+}
+
+.point-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 0;
+	border-bottom: 1px solid #f2f2f2;
+	font-size: 15px;
+}
+
+.point-item span.label {
+	font-weight: 600;
+}
+
+.point-item span.status {
+	color: #777;
+}
+
+.point-item span.date {
+	color: #aaa;
+	font-size: 13px;
+}
+
+.empty-message {
+	text-align: center;
+	padding: 40px 0;
+	color: #999;
+}
+</style>
+</head>
+<body>
 	<jsp:include page="/include/header.jsp" />
-		<form align="center">
-			<h2><%=mdto.getMname() %>님의 포인트 내역</h2>
-			<div>
-				<%=mdto.getMname() %>님의 사용가능 포인트: <%=PointCount %>
+	<form align="center">
+		<div class="my-page-box">
+			<h2>
+				안녕하세요.
+				<%=mdto.getMname()%>님
+			</h2>
+
+			<div class="my-point-summary">
+				사용 가능 포인트: <strong><%=PointCount%>P</strong>
 			</div>
-			<div>
-				<table>
-					<thead>
-						<tr>
-							<th>포인트 유형</th>
-							<th>포인트</th>
-							<th>상태</th>
-							<th>적립일</th>
-							<th>사용일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<%
-							for(pointDTO pd : plist){
-						%>		<tr>
-									<td><%=pd.getPtype() %></td>
-									<td><%=pd.getPpoint() %></td>
-									<td><%=pd.getPstat() == 1 ? "적립" : "사용" %></td>
-									<td><%=pd.getPcreate() != null ? pd.getPcreate().toString().substring(0,16): "-" %></td>
-									<td><%=pd.getPuse() != null ? pd.getPuse().toString().substring(0,16): "-" %></td>
-								</tr>
-						<%} 
-							if(plist.isEmpty()){
-							%>	<tr>
-									<td colspan="5">포인트 내역이 없습니다.</td>
-								</tr>
-							<%}%>
-					</tbody>
-				</table>
+
+			<div class="point-history">
+				<%
+				if (plist != null && !plist.isEmpty()) {
+					for (pointDTO pd : plist) {
+				%>
+				<div class="point-item">
+					<span class="label"><%=pd.getPtype()%> (<%=pd.getPstat() == 1 ? "적립" : "사용"%>)</span>
+					<span><%=pd.getPpoint()%>P</span> <span class="date"><%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%></span>
+				</div>
+				<%
+				}
+				} else {
+				%>
+				<div class="empty-message">포인트 내역이 없습니다.</div>
+				<%
+				}
+				%>
 			</div>
-		</form>
+		</div>
+	</form>
 	<jsp:include page="/include/footer.jsp" />
 
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
@@ -91,5 +151,5 @@
 	<script src="/shop/resources/js/mixitup.min.js"></script>
 	<script src="/shop/resources/js/owl.carousel.min.js"></script>
 	<script src="/shop/resources/js/main.js"></script>
-	</body>
+</body>
 </html>

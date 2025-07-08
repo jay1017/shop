@@ -134,10 +134,6 @@ body {
     cursor: pointer;   /* 마우스 올릴 때 손가락 모양 */
     transition: transform 0.2s ease;
 }
-
-.naver-login-btn:hover {
-    transform: scale(1.05); /* 호버 시 살짝 확대 효과 */
-}
 </style>
 <%
     String clientId = "xlKrOZe43aUWrCldbgTq";
