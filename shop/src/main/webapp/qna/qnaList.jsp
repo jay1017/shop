@@ -5,7 +5,9 @@
 <%@ page import="shop.member.MemberDTO" %>
 
 <%
-    String sid = (String) session.getAttribute("sid");
+	request.setCharacterEncoding("UTF-8");
+    
+	String sid = (String) session.getAttribute("sid");
     if (sid == null) {
 %>
     <script>
@@ -22,8 +24,12 @@
     if (mdto != null) {
         myMnum = mdto.getMnum();
     }
+    
+    QnaDAO dao = new QnaDAO();
+    List<QnaDTO> list = dao.getQnaList();
 %>
 
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -69,6 +75,9 @@
         a:hover {
             text-decoration: underline;
         }
+        a:focus {
+            outline: none;
+        }
         table.qnaTable {
             width: 100%;
             border-collapse: collapse;
@@ -96,9 +105,6 @@
     <a href="qnaForm.jsp">[문의 작성]</a>
 
     <%
-        QnaDAO dao = new QnaDAO();
-        List<QnaDTO> list = dao.getQnaList();
-
         if (list.isEmpty()) {
     %>
         <p>등록된 문의가 없습니다.</p>
@@ -117,29 +123,21 @@
             if (title == null || title.trim().equals("")) {
                 title = "(제목 없음)";
             }
-            
-            int writerMnum = dto.getMnum(); // 작성자 ID 
-            
-            if (myMnum == writerMnum) {
     %>
         <tr>
             <td><%= dto.getQnum() %></td>
-            <td><%= writerMnum %></td>
-            <td><a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
-        </tr>     
+            <td><%= dto.getMnum() %></td>
+            <td>
+             		<% if (dto.getMnum() == myMnum) { %>
+                    	<a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
+                	<% } else { %>
+                    	<a href="#" onclick="alert('비공개 글입니다.'); this.blur(); return false;"><%= title %></a>
+            		<% } %>
+            </td>
+        </tr>
     <%
-            } else {
-                // 다른 사람이 쓴 글은 잠금 표시
+        }
     %>
-        <tr>
-        	<td><%= dto.getQnum() %></td>
-            <td><%= writerMnum %></td>
-            <td>🔒 비공개 글입니다.</td>
-        </tr>     	     
-    <%
-            }
-        } // end for
-    %>    
     </table>
     <%
         }
@@ -147,17 +145,17 @@
 </div>
 
 <jsp:include page="/include/footer.jsp"></jsp:include>
-
-	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
-	<script src="/shop/resources/js/bootstrap.min.js"></script>
-	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
-	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
-	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
-	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
-	<script src="/shop/resources/js/jquery.slicknav.js"></script>
-	<script src="/shop/resources/js/mixitup.min.js"></script>
-	<script src="/shop/resources/js/owl.carousel.min.js"></script>
-	<script src="/shop/resources/js/main.js"></script>
-	
+   
+   <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+   <script src="/shop/resources/js/bootstrap.min.js"></script>
+   <script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+   <script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+   <script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+   <script src="/shop/resources/js/jquery.countdown.min.js"></script>
+   <script src="/shop/resources/js/jquery.slicknav.js"></script>
+   <script src="/shop/resources/js/mixitup.min.js"></script>
+   <script src="/shop/resources/js/owl.carousel.min.js"></script>
+   <script src="/shop/resources/js/main.js"></script>
+   
 </body>
 </html>
