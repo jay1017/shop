@@ -1,5 +1,6 @@
 .nice-select {
   -webkit-tap-highlight-color: transparent;
+  width: 100%;
   background-color: #fff;
   border-radius: 5px;
   border: solid 1px #e8e8e8;
@@ -24,8 +25,7 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  white-space: nowrap;
-  width: auto; }
+  white-space: nowrap;}
   .nice-select:hover {
     border-color: #dbdbdb; }
   .nice-select:active, .nice-select.open, .nice-select:focus {
@@ -99,6 +99,7 @@
     position: absolute;
     top: 100%;
     left: 0;
+    width: 100%;
     -webkit-transform-origin: 50% 0;
         -ms-transform-origin: 50% 0;
             transform-origin: 50% 0;

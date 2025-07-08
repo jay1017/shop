@@ -6,7 +6,8 @@ public class CouponDTO {
 	private int ucnum;
 	private int mnum;
 	private int cpnum;
-	private int cp;
+	private String cp;
+	private String cptype;
 	private Timestamp ucdate;
 	private int ucuse;
 	private String cpname;
@@ -32,10 +33,10 @@ public class CouponDTO {
 	public void setCpnum(int cpnum) {
 		this.cpnum = cpnum;
 	}
-	public int getCp() {
+	public String getCp() {
 		return cp;
 	}
-	public void setCp(int cp) {
+	public void setCp(String cp) {
 		this.cp = cp;
 	}
 	public Timestamp getUcdate() {
@@ -73,5 +74,11 @@ public class CouponDTO {
 	}
 	public void setCpcount(int cpcount) {
 		this.cpcount = cpcount;
+	}
+	public String getCptype() {
+		return cptype;
+	}
+	public void setCptype(String cptype) {
+		this.cptype = cptype;
 	}
 }

@@ -15,15 +15,50 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import shop.coupon.CouponDAO;
+import shop.coupon.CouponDTO;
+
 public class KakaoPayReadyServlet extends HttpServlet {
     private static final String ADMIN_KEY = "8060ceb8b44371ba06fe9af9ee591a81";
     private static final String CID = "TC0ONETIME"; // 테스트용 CID
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	request.setCharacterEncoding("UTF-8");
         // 가져온 파라미터 대입
     	String item_name = URLEncoder.encode(request.getParameter("item_name"), "UTF-8");
         String total_amount = request.getParameter("total_amount").trim();
         String quantity = request.getParameter("quantity").trim();
+
+        String gnum = request.getParameter("gnum");
+        String[] bcountArr = request.getParameterValues("bcount");
+        String bcount = "";
+        
+        int cpnum = Integer.parseInt(request.getParameter("cpnum"));
+        
+        int before_price = Integer.parseInt(request.getParameter("before_price"));
+        
+        for(String b : bcountArr) {
+        	bcount += (b + ",");
+        }
+        
+        String[] gonumArr = request.getParameterValues("gonum");
+        String gonum = "";
+        for(String g : gonumArr) {
+        	gonum += (g + ",");
+        }
+        
+        String address = request.getParameter("address");
+		String address2 = request.getParameter("address2");
+		String address3 = request.getParameter("address3");
+		String note = request.getParameter("note");
+		int zip = Integer.parseInt(request.getParameter("zip"));
+        
+        String successUrl = "http://localhost:8080/shop/buy/success.jsp?";
+        String approvalUrl = URLEncoder.encode(successUrl + "&gnum=" 
+        + gnum + "&bcount=" + bcount + "&address=" + address + "&address2=" 
+        + address2 + "&address3=" + address3 + "&note=" + note + "&gonum="
+        + gonum + "&bprice=" + total_amount + "&zip=" + zip + "&before_price=" + 
+        before_price + "&cpnum=" + cpnum, "UTF-8");
         
         // URL로 외부와 연결
         URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
@@ -45,7 +80,7 @@ public class KakaoPayReadyServlet extends HttpServlet {
                 "&quantity=" + quantity + 
                 "&total_amount=" + total_amount +
                 "&tax_free_amount=0" +
-                "&approval_url=http://localhost:8080/shop/buy/success.jsp" +
+                "&approval_url=" + approvalUrl+ 
                 "&cancel_url=http://localhost:8080/shop/buy/cancel.jsp" +
                 "&fail_url=http://localhost:8080/shop/buy/fail.jsp";
         

@@ -167,7 +167,7 @@ public class BuyDAO {
 				update = pstmt.executeUpdate();
 				
 				if(update == 1) {
-					sql = "insert into buyer values(buyer_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					sql = "insert into buyer values(buyer_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setInt(1, dto.getBuynum());
 					pstmt.setInt(2, dto.getMnum());
@@ -182,6 +182,7 @@ public class BuyDAO {
 					pstmt.setInt(11, dto.getZip());
 					pstmt.setString(12, dto.getNote());
 					pstmt.setInt(13, 0);
+					pstmt.setInt(14, dto.getBprice());
 					result = pstmt.executeUpdate();
 				}
 			}

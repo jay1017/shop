@@ -14,6 +14,8 @@ public class BuyDTO {
 	private String note;
 	private int buynum;
 	private int gonum;
+	private int cpnum;
+	private int bprice;
 	
 	public int getBnum() {
 		return bnum;
@@ -92,5 +94,17 @@ public class BuyDTO {
 	}
 	public void setGonum(int gonum) {
 		this.gonum = gonum;
+	}
+	public int getCpnum() {
+		return cpnum;
+	}
+	public void setCpnum(int cpnum) {
+		this.cpnum = cpnum;
+	}
+	public int getBprice() {
+		return bprice;
+	}
+	public void setBprice(int bprice) {
+		this.bprice = bprice;
 	}
 }

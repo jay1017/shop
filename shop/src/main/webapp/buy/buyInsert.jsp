@@ -8,6 +8,8 @@
 <%@ page import="java.util.Locale" %>
 <%@ page import="shop.member.MemberDTO" %>
 <%@ page import="shop.member.MemberDAO" %>
+<%@ page import="shop.coupon.CouponDTO" %>
+<%@ page import="shop.coupon.CouponDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +87,24 @@
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <h6 class="checkout__title">주문 상세</h6>
+                            <div class="row mb-4">
+                            	<div class="col-lg-12">
+		                            <div class="checkout__input">
+		                                <p>쿠폰</p>
+		                                <%
+                                			int mnum = member.getMnum();
+                                			CouponDAO cdao = CouponDAO.getDAO();
+                                			List<CouponDTO> clist = cdao.selectList(mnum);
+                                		%>
+                                		<select id="cpnum" name="cpnum" onchange="cpnumChange()">
+                                			<option value="0">-선택-</option>
+	                               			<% for(CouponDTO dto : clist) { %>
+	                                			<option value="<%=dto.getCpnum() %>"><%=dto.getCpname() %></option>
+	                                		<% } %>
+                                		</select>
+		                            </div>
+		                        </div>
+		                    </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="checkout__input">
@@ -154,7 +174,7 @@
                                 <div class="col-lg-12">
                                     <div class="checkout__input">
                                         <p>휴대폰번호<span>*</span></p>
-                                        <input type="text" name="" value="<%=member.getMphone()%>" readonly placeholder="휴대폰번호를 입력하세요.">
+                                        <input type="text" value="<%=member.getMphone()%>" readonly placeholder="휴대폰번호를 입력하세요.">
                                     </div>
                                 </div>
                             </div>
@@ -166,10 +186,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkout__input">
-                                <p>주문 시 메모</p>
-                                <input type="text" placeholder="ex) 배송 전 연락 바랍니다." name="note">
-                            </div>
+                            <div class="row">
+                            	<div class="col-lg-12">
+		                            <div class="checkout__input">
+		                                <p>주문 시 메모</p>
+		                                <input type="text" placeholder="ex) 배송 전 연락 바랍니다." name="note">
+		                            </div>
+		                        </div>
+		                    </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
@@ -220,7 +244,12 @@
                                 	<% } %>
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>총 가격 <span>&#8361; <%=numberFormat.format(total) %></span></li>
+                                    <li>총 가격 
+                                    	<span>&#8361; 
+                                    		<span id="after_total_amount"></span>
+                                    		<span id="before_total_amount"><%=numberFormat.format(total) %></span>
+                                    	</span>
+                                    </li>
                                     <%
                                     	session.setAttribute("totalprice", numberFormat.format(total));
                                     	// 총 구매 가격을 세션에 저장하여 포인트 계산시에 활용함
@@ -234,12 +263,44 @@
                                     </label>
                                 </div>
                                 <button type="submit" class="site-btn">주문하기</button>
+                           		<script>
+                           			function cpnumChange() {
+                           				// 쿠폰 번호
+                           				const cpnum = document.getElementById("cpnum").value;
+                           				// 변경 전 가격(input)
+                           				const before_price = document.getElementById("before_price");
+                           				// 카카오로 보내줄 가격(input)
+                           				const total_amount = document.getElementById("total_amount"); 
+                           				// 사용자에게 보여주는 변경 전 가격과 변경 후 가격
+                           				const before_total_amount = document.getElementById("before_total_amount");
+                           				const after_total_amount = document.getElementById("after_total_amount");
+                           				
+                           				if(cpnum != 0) {
+                           					fetch("/shop/buy/coupon.jsp?cpnum=" + cpnum + "&total=" + before_price.value)
+                           		        	.then(response => response.json())
+                           		        	.then(data => {
+	                           		         	before_total_amount.classList.add("cancle");
+	                           		         	after_total_amount.innerHTML = data.total_amount.toLocaleString('ko-KR');
+	                           		         	total_amount.value = data.total_amount;
+	                           		        })
+	                           		        .catch(error => {
+	                           		            console.error("쿠폰 계산 오류:", error);
+	                           		            alert("쿠폰 적용 중 오류가 발생했습니다:\n" + error.message);
+	                           		        });
+                           				} else {
+                           					before_total_amount.classList.remove("cancle");
+                           					after_total_amount.innerHTML = "";
+                           					total_amount.value = before_price.value;
+                           				}
+                           			}
+                           		</script>
                             </div>
                         </div>
                     </div>
                     <input type="hidden" name="item_name" id="item_name" value="<%=item_name%>"/>
                     <input type="hidden" name="quantity" id="quantity" value="<%=totalCnt%>"/>
                     <input type="hidden" name="total_amount" id="total_amount" value="<%=total%>"/>
+                    <input type="hidden" name="before_price" id="before_price" value="<%=total%>"/>
                 </form>
             </div>
         </div>

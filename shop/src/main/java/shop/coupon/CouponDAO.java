@@ -90,7 +90,7 @@ public class CouponDAO {
 		List<CouponDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select uc.ucnum, c.cpname, c.cpvalue, c.cpreg + c.cpdate as cpdate from user_coupon uc, coupon c where uc.mnum = ? and uc.cpnum = c.cpnum";
+			String sql = "select uc.ucnum, c.cpname, c.cpvalue, c.cpreg + c.cpdate as cpdate, c.cpnum from user_coupon uc, coupon c where uc.mnum = ? and uc.cpnum = c.cpnum";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -100,6 +100,7 @@ public class CouponDAO {
 				dto.setCpname(rs.getString("cpname"));
 				dto.setCpvalue(rs.getInt("cpvalue"));
 				dto.setCpdate(rs.getTimestamp("cpdate"));
+				dto.setCpnum(rs.getInt("cpnum"));
 				list.add(dto);
 			}
 		} catch(Exception e) {
@@ -164,6 +165,46 @@ public class CouponDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			pstmt.setInt(2, cpnum);
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return result;
+	}
+	
+	// 사용자 쿠폰 조회
+	public CouponDTO select(int cpnum) {
+		CouponDTO dto = new CouponDTO();
+		try {
+			conn = getConnection();
+			String sql = "select * from coupon where cpnum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cpnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setCp(rs.getString("cp"));
+				dto.setCpvalue(rs.getInt("cpvalue"));
+				dto.setCptype(rs.getString("cptype"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			endConnection();
+		}
+		return dto;
+	}
+	
+	// 사용자 쿠폰 소진
+	public int delete(int cpnum, int mnum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "delete from user_coupon where cpnum = ? and mnum = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cpnum);
+			pstmt.setInt(2, mnum);
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();

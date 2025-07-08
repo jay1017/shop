@@ -3407,6 +3407,10 @@ ul, ol {
   cursor: pointer;
 }
 
+#before_total_amount.cancle {
+	text-decoration: line-through;
+}
+
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 @media only screen and (min-width: 1200px) {
 	.container {
