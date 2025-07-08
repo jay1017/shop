@@ -1,6 +1,6 @@
 package shop.point;
 
-import oracle.sql.DATE;
+import java.util.Date;
 
 public class pointDTO {
 	private int pnum;
@@ -8,8 +8,8 @@ public class pointDTO {
 	private int ppoint;
 	private String ptype;
 	private int pstat;
-	private DATE pcreate;
-	private DATE puse;
+	private Date pcreate;
+	private Date puse;
 	
 	
 	public int getPnum() {
@@ -42,16 +42,16 @@ public class pointDTO {
 	public void setPstat(int pstat) {
 		this.pstat = pstat;
 	}
-	public DATE getPcreate() {
+	public Date getPcreate() {
 		return pcreate;
 	}
-	public void setPcreate(DATE pcreate) {
+	public void setPcreate(Date pcreate) {
 		this.pcreate = pcreate;
 	}
-	public DATE getPuse() {
+	public Date getPuse() {
 		return puse;
 	}
-	public void setPuse(DATE puse) {
+	public void setPuse(Date puse) {
 		this.puse = puse;
 	}
 }

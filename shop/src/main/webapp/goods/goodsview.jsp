@@ -29,8 +29,7 @@
     int ginum=goods.getGinum(); //상품 이미지 번호 조회
     int canum=goods.getCanum(); //상품 카테고리 번호 조회
     
-   //리뷰 목록 조회
-     //상품 리뷰 개수 가져오기
+   	//리뷰 목록 조회
     
     
 
@@ -75,6 +74,7 @@
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
+	<jsp:include page="/include/sidebar.jsp"></jsp:include>
     <!-- Shop Details Section Begin -->
     <section class="shop-details">
         <div class="product__details__pic">
@@ -483,7 +483,6 @@
 						                        console.error('loadReviewPageFromContainer error:', e);
 						                    }
 						                }
-						             
 						            </script>
 						        </div>
 						    </div>

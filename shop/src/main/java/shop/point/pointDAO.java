@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class pointDAO {
 	Connection conn = null;
@@ -43,11 +45,12 @@ public class pointDAO {
 		}
 	}
 	
+	//해당 회원의 사용가능 포인트 금액 표시
 	public int getAllPoint(int mnum) {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "select sum(ppoint) from point where mnum=?";
+			String sql = "select sum(ppoint) from point where mnum=? and pstat = 1";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -62,5 +65,35 @@ public class pointDAO {
 			if(rs!=null)try {rs.close();}catch(Exception e) {}
 		}
 		return result;
+	}
+	
+	//해당회원의 적립 내역 전체 보기 메서드
+	public List<pointDTO> getPointList(int mnum){
+		List<pointDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select * from point where mnum=? order by pcreate DESC";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				pointDTO pdto = new pointDTO();
+				pdto.setPnum(rs.getInt("pnum"));
+				pdto.setMnum(rs.getInt("mnum"));
+				pdto.setPpoint(rs.getInt("ppoint"));
+				pdto.setPtype(rs.getString("ptype"));
+				pdto.setPstat(rs.getInt("pstat"));
+				pdto.setPcreate(rs.getDate("pcreate"));
+				pdto.setPuse(rs.getDate("puse"));
+				list.add(pdto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn!=null)try {conn.close();}catch(Exception e) {}
+			if(pstmt!=null)try {pstmt.close();}catch(Exception e) {}
+			if(rs!=null)try {rs.close();}catch(Exception e) {}
+		}
+		return list;
 	}
 }

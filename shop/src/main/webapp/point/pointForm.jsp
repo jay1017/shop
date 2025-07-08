@@ -4,6 +4,7 @@
 <%@ page import="shop.member.MemberDAO" %>
 <%@ page import="shop.point.pointDAO" %>
 <%@ page import="shop.point.pointDTO" %>
+<%@ page import="java.util.List" %>
 <%
 	String sid = (String)session.getAttribute("sid");
 	MemberDAO mdao = new MemberDAO();
@@ -15,6 +16,7 @@
 	int result = 0;
 	int PointCount = pdao.getAllPoint(mdto.getMnum());
 	
+	List<pointDTO> plist = pdao.getPointList(mdto.getMnum());
 %>
 <html>
 	<head>
@@ -45,6 +47,36 @@
 			<h2><%=mdto.getMname() %>님의 포인트 내역</h2>
 			<div>
 				<%=mdto.getMname() %>님의 사용가능 포인트: <%=PointCount %>
+			</div>
+			<div>
+				<table>
+					<thead>
+						<tr>
+							<th>포인트 유형</th>
+							<th>포인트</th>
+							<th>상태</th>
+							<th>적립일</th>
+							<th>사용일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							for(pointDTO pd : plist){
+						%>		<tr>
+									<td><%=pd.getPtype() %></td>
+									<td><%=pd.getPpoint() %></td>
+									<td><%=pd.getPstat() == 1 ? "적립" : "사용" %></td>
+									<td><%=pd.getPcreate() != null ? pd.getPcreate().toString().substring(0,16): "-" %></td>
+									<td><%=pd.getPuse() != null ? pd.getPuse().toString().substring(0,16): "-" %></td>
+								</tr>
+						<%} 
+							if(plist.isEmpty()){
+							%>	<tr>
+									<td colspan="5">포인트 내역이 없습니다.</td>
+								</tr>
+							<%}%>
+					</tbody>
+				</table>
 			</div>
 		</form>
 	<jsp:include page="/include/footer.jsp" />
