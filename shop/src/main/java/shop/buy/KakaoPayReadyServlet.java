@@ -53,7 +53,7 @@ public class KakaoPayReadyServlet extends HttpServlet {
 		String note = request.getParameter("note");
 		int zip = Integer.parseInt(request.getParameter("zip"));
         
-        String successUrl = "http://localhost:8080/shop/buy/success.jsp?";
+        String successUrl = "http://192.168.219.157:8080/shop/buy/success.jsp?";
         String approvalUrl = URLEncoder.encode(successUrl + "&gnum=" 
         + gnum + "&bcount=" + bcount + "&address=" + address + "&address2=" 
         + address2 + "&address3=" + address3 + "&note=" + note + "&gonum="
@@ -81,8 +81,8 @@ public class KakaoPayReadyServlet extends HttpServlet {
                 "&total_amount=" + total_amount +
                 "&tax_free_amount=0" +
                 "&approval_url=" + approvalUrl+ 
-                "&cancel_url=http://localhost:8080/shop/buy/cancel.jsp" +
-                "&fail_url=http://localhost:8080/shop/buy/fail.jsp";
+                "&cancel_url=http://192.168.219.157:8080/shop/buy/cancel.jsp" +
+                "&fail_url=http://192.168.219.157:8080/shop/buy/fail.jsp";
         
         OutputStream out = conn.getOutputStream();
         out.write(param.getBytes());
