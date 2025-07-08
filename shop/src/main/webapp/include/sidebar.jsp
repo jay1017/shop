@@ -11,7 +11,8 @@
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 	display: flex;
     flex-direction: column; /* ← 세로정렬! */
-    gap: 10px;               
+    gap: 10px;     
+    z-index: 999;          
 }
 </style>
     
