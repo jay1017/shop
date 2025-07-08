@@ -36,9 +36,11 @@
     dto.setQtitle(qtitle);
     dto.setQcontent(qcontent);
 
-    // 4. DB에 저장
+    // 4.  DB에 저장하기 직전 로그 추가
+    System.out.println("insertQna 호출 전");
     QnaDAO dao = new QnaDAO();
     dao.insertQna(dto);
+    System.out.println("insertQna 호출 후");
 %>
 
 <script>

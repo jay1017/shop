@@ -1,12 +1,13 @@
 package shop.qna;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.*;
-import java.util.*;
+
 
 public class QnaDAO {
 
-    // DB 연결
+	// DB 연결
     private Connection getConnection() throws Exception {
         Class.forName("oracle.jdbc.driver.OracleDriver");
         String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
@@ -15,9 +16,9 @@ public class QnaDAO {
         return DriverManager.getConnection(url, user, password);
     }
 
-    // 1. 문의글 등록
+    // 1. 문의 등록
     public void insertQna(QnaDTO dto) {
-        String sql = "INSERT INTO qna (qnum, mnum, qtitle, qcontent, qdate) VALUES (qna_seq.NEXTVAL, ?, ?, ?, SYSDATE)";
+        String sql = "INSERT INTO QNA (qnum, mnum, qtitle, qcontent) VALUES (qna_seq.NEXTVAL, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -26,12 +27,14 @@ public class QnaDAO {
             pstmt.setString(3, dto.getQcontent());
 
             pstmt.executeUpdate();
+            System.out.println("문의 등록 완료");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // 2. 전체 문의글 목록
+    // 2. 전체 목록
     public List<QnaDTO> getQnaList() {
         List<QnaDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM qna ORDER BY qnum DESC";
@@ -77,6 +80,7 @@ public class QnaDAO {
         }
         return dto;
     }
+
 
     // 4. 문의글 수정
     public void updateQna(QnaDTO dto) {

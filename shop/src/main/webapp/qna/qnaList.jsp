@@ -15,7 +15,7 @@
 <%
         return;
     }
-
+ 
     MemberDAO mdao = new MemberDAO();
     MemberDTO mdto = mdao.getInfo(sid);
     int myMnum = 0;
@@ -117,19 +117,29 @@
             if (title == null || title.trim().equals("")) {
                 title = "(제목 없음)";
             }
+            
+            int writerMnum = dto.getMnum(); // 작성자 ID 
+            
+            if (myMnum == writerMnum) {
     %>
         <tr>
             <td><%= dto.getQnum() %></td>
-            <td><%= dto.getMnum() %></td>
-            <td>
-             
-                    <a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
-                
-            </td>
-        </tr>
+            <td><%= writerMnum %></td>
+            <td><a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
+        </tr>     
     <%
-        }
+            } else {
+                // 다른 사람이 쓴 글은 잠금 표시
     %>
+        <tr>
+        	<td><%= dto.getQnum() %></td>
+            <td><%= writerMnum %></td>
+            <td>🔒 비공개 글입니다.</td>
+        </tr>     	     
+    <%
+            }
+        } // end for
+    %>    
     </table>
     <%
         }
@@ -137,6 +147,7 @@
 </div>
 
 <jsp:include page="/include/footer.jsp"></jsp:include>
+
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>

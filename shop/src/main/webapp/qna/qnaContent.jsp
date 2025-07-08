@@ -56,7 +56,7 @@
     if (mdto == null || dto.getMnum() != mdto.getMnum()) {
 %>
     <script>
-        alert("자신의 글만 열람할 수 있습니다.");
+        alert("비밀글로 작성자만 볼 수 있습니다.");
         history.back();
     </script>
 <%
