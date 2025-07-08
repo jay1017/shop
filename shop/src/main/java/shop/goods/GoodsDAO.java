@@ -71,7 +71,10 @@ public class GoodsDAO {
 		GoodsDTO dto = new GoodsDTO();
 		try {
 			conn = getConnection();
-			String sql = "select ca.canum, ca.caname, g.gplot, g.gnum, g.gname, g.gprice, g.gcontent, (g.gprice - (g.gprice * (g.discount / 100))) as discount, gi.ginum, gi.giname, gi.gidetail1, gi.gidetail2, gi.gidetail3 from goods g, goods_image gi, category ca where g.canum = ca.canum and g.ginum = gi.ginum and gnum =  ?";
+			String sql = "select ca.canum, ca.caname, g.gplot, g.gnum, g.gname, g.gprice, g.gcontent, (g.gprice - (g.gprice * (g.discount / 100))) as discount, gi.ginum, gi.giname, gi.gidetail1, gi.gidetail2, gi.gidetail3,go.gonum from goods g "
+					+ "join goods_image gi on g.ginum=gi.ginum "
+					+ "join category ca on g.canum = ca.canum "
+					+ "join goods_option go on g.gnum=go.gnum where g.gnum = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			rs = pstmt.executeQuery();
@@ -89,6 +92,7 @@ public class GoodsDAO {
 				dto.setGidetail1(rs.getString("gidetail1"));
 				dto.setGidetail2(rs.getString("gidetail2"));
 				dto.setGidetail3(rs.getString("gidetail3"));
+				dto.setGonum(rs.getInt("gonum"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

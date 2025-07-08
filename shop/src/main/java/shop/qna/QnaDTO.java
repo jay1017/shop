@@ -1,6 +1,5 @@
 package shop.qna;
 
-
 import java.sql.Timestamp;
 
 public class QnaDTO {
@@ -9,8 +8,7 @@ public class QnaDTO {
     private String qtitle;
     private String qcontent;
     private Timestamp qdate;
-
-    public QnaDTO() {}
+    private String mid;
 
     public int getQnum() {
         return qnum;
@@ -43,12 +41,16 @@ public class QnaDTO {
     public void setQcontent(String qcontent) {
         this.qcontent = qcontent;
     }
-
+    
     public Timestamp getQdate() {
         return qdate;
     }
 
-    public void setQdate(Timestamp qdate) {
-        this.qdate = qdate;
+ // ✨ Getter & Setter for mid (작성자 ID)
+    public String getMid() {
+        return mid;
+    }
+    public void setMid(String mid) {
+        this.mid = mid;
     }
 }

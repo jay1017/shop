@@ -12,7 +12,14 @@ public class CartDTO {
 	private int ccount;//주문수량
 	private int ginum;//이미지 번호
 	private int gonum;//굿즈옵션번호
+	private String gosize;
 	
+	public String getGosize() {
+		return gosize;
+	}
+	public void setGosize(String gosize) {
+		this.gosize = gosize;
+	}
 	public int getDiscount() {
 		return discount;
 	}

@@ -99,8 +99,8 @@ public class GoodsListDAO {
 		try {
 			conn = getConnection();
 			String sql = "select * from"
-					+ "(select rownum rnum, a.* from(select g.gnum, g.canum, g.gname, g.gprice, g.gcontent, g.ginum, (g.gprice-(g.gprice*g.discount/100)) as discount, g.gread "
-					+ ",gi.giname from goods g join goods_image gi on g.ginum = gi.ginum order by g.gnum desc) a where rownum<=?) where rnum >=?";
+					+ "(select rownum rnum, a.* from(select g.gnum, g.canum, g.gname, g.gprice, g.gcontent, g.ginum, (g.gprice-(g.gprice*g.discount/100)) as discount, go.gosize "
+					+ ",gi.giname from goods g join goods_image gi on g.ginum = gi.ginum join goods_option go on go.gnum = g.gnum order by g.gnum desc) a where rownum<=?) where rnum >=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, end);
 			pstmt.setInt(2, start);
@@ -114,7 +114,7 @@ public class GoodsListDAO {
 	            dto.setGcontent(rs.getString("gcontent"));
 	            dto.setGinum(rs.getInt("ginum"));
 	            dto.setDiscount(rs.getInt("discount"));
-	            dto.setGread(rs.getInt("gread"));
+	            dto.setGosize(rs.getString("gosize"));
 	            list.add(dto);
 			}
 		}catch(Exception e) {
@@ -208,7 +208,7 @@ public class GoodsListDAO {
 		List<GoodsListDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g join goods_image gi on g.ginum = gi.ginum "
+			String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname, go.gosize from goods g join goods_image gi on g.ginum = gi.ginum "
 					+ "join goods_option go on g.gnum = go.gnum where go.gosize = ?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, size);
@@ -222,6 +222,7 @@ public class GoodsListDAO {
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGiname(rs.getString("giname"));
+				dto.setGosize(rs.getString("gosize"));
 				list.add(dto);
 			}
 		}catch(Exception e) {
@@ -236,7 +237,7 @@ public class GoodsListDAO {
 			List<GoodsListDTO> list = new ArrayList<>();
 			try {
 				conn = getConnection();
-				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (SELECT g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount,gi.giname FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum WHERE gprice >= ? AND gprice < ? ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (SELECT g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount,gi.giname,go.gosize FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum join goods_option go on g.gnum=go.gnum WHERE gprice >= ? AND gprice < ? ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, price);
 				pstmt.setInt(2, price+500000);
@@ -250,6 +251,7 @@ public class GoodsListDAO {
 					dto.setGprice(rs.getInt("gprice"));
 					dto.setDiscount(rs.getInt("discount"));
 					dto.setGiname(rs.getString("giname"));
+					dto.setGosize(rs.getString("gosize"));
 					list.add(dto);
 				}
 			}catch(Exception e) {
@@ -264,8 +266,8 @@ public class GoodsListDAO {
 					List<GoodsListDTO> list = new ArrayList<>();
 					try {
 						conn = getConnection();
-						String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname from goods g "
-								+ "join goods_image gi on g.ginum = gi.ginum where canum=?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+						String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname,go.gosize from goods g "
+								+ "join goods_image gi on g.ginum = gi.ginum join goods_option go on g.gnum = go.gnum where g.canum=?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setInt(1, canum);
 						pstmt.setInt(2, end);
@@ -278,6 +280,7 @@ public class GoodsListDAO {
 							dto.setGprice(rs.getInt("gprice"));
 							dto.setDiscount(rs.getInt("discount"));
 							dto.setGiname(rs.getString("giname"));
+							dto.setGosize(rs.getString("gosize"));
 							list.add(dto);
 						}
 					}catch(Exception e) {

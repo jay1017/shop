@@ -93,7 +93,7 @@
         <div class="btn-box text-center">
             <input type="submit" value="등록" class="btn btn-primary">
             <input type="button" value="취소" class="btn btn-secondary" onclick="history.back();">
-            <input type="button" value="목록" class="btn btn-light" onclick="window.location='qnaList.jsp'">
+            
         </div>
     </form>
 </div>
