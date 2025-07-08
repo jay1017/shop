@@ -56,6 +56,7 @@ System.out.println("검색된 상품 수: " + list.size());
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
+	<jsp:include page="/include/sidebar.jsp"></jsp:include>
 	<%-- <jsp:include page="/include/menu.jsp"></jsp:include> --%> 
 	
             <!-- 상품 그리드 시작 -->

@@ -46,6 +46,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
 	<%--헤더--%>
+	<jsp:include page="/include/sidebar.jsp"></jsp:include>
 	<section class="hero">
 		<div class="hero__slider owl-carousel">
 			<div class="hero__items set-bg"
