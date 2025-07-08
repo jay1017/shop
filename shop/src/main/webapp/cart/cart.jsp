@@ -84,6 +84,8 @@ if (goods != null) {
 		<div>
 			<p>
 				상품명:<%=dto.getGname()%></p>
+				<p>사이즈:<%=dto.getGosize() %>
+				</p>
 			<p>
 				가격: ₩<%=gprice%></p>
 			<p>

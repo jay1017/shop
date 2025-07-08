@@ -182,8 +182,8 @@ public class CartDAO {
 		try {
 			conn = getConnection();
 			String sql = "select c.cnum,c.gnum,c.canum,c.ccount, c.ginum, c.gonum, g.gname, g.gprice, "
-					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount,gi.giname "
-					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum where c.mnum=?";
+					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount,gi.giname,go.gosize "
+					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on go.gnum=g.gnum where c.mnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -199,6 +199,7 @@ public class CartDAO {
 				dto.setGprice(rs.getInt("gprice"));
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGiname(rs.getString("giname"));
+				dto.setGosize(rs.getString("gosize"));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -245,5 +246,43 @@ public class CartDAO {
 		return result;
 	}
 	
-	
+	//장바구니에 기존 상품 조회
+	public boolean goodsEquals(int gnum, int mnum) {
+		try {
+			conn = getConnection();
+			String sql = "select count(*) from cart where gnum=? and mnum=?";
+			pstmt= conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+			pstmt.setInt(2, mnum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int count = rs.getInt(1);
+				if(count > 0) {
+					return true;
+					//상품이 있으면 true
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}//상품 없으면 false
+		return false;
+	}
+	//기존상품이 있으면 장바구니에 수량증가
+	public void updateCount(int mnum, int gnum, int count) {
+		try {
+			conn = getConnection();
+			String sql = "update cart set ccount = ccount + ? where mnum=? and gnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, count);
+			pstmt.setInt(2, mnum);
+			pstmt.setInt(3, gnum);
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+	}
 }
