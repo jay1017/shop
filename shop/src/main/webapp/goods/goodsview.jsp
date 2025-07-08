@@ -409,10 +409,16 @@
 						                        // 수정 폼 보이기
 						                        document.getElementById('edit-form-' + rnum).style.display = 'block';
 						                        // 텍스트 영역에 기존 내용 설정
-						                        document.getElementById('edit-content-' + rnum).value = content;
+						                        var textarea=document.getElementById('edit-content-' + rnum);
+						                        textarea.value=content;
+						                        
+						                    setTimeOut(function() {   
+						                        textarea.focus();
+						                        textarea.setSelectionRange(textarea.value.length,textarea.value.length);
+						                    },10);    
 						                    } catch(e) {
 						                        console.error('editReview error:', e);
-						                        alert('리뷰 수정 폼을 여는 중 오류가 발생했습니다.');
+						                        
 						                    }
 						                }
 

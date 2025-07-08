@@ -64,7 +64,7 @@
                 
                 <!-- 수정 폼 (기본적으로 숨김) -->
                 <div class="review-edit-form" id="edit-form-<%=review.getRnum()%>" style="display: none; margin-top: 15px;">
-                    <textarea class="form-control" id="edit-content-<%=review.getRnum()%>" rows="3" style="margin-bottom: 10px;"><%=review.getRcontent()%></textarea>
+                <textarea class="form-control" id="edit-content-<%=review.getRnum()%>" rows="3" style="margin-bottom: 10px;"><%=review.getRcontent()%></textarea>
                     <div style="text-align: right;">
                         <button type="button" class="btn btn-sm btn-secondary" onclick="cancelEdit(<%=review.getRnum()%>)">취소</button>
                         <button type="button" class="btn btn-sm btn-primary" onclick="saveEdit(<%=review.getRnum()%>)" style="margin-left: 5px;">저장</button>
