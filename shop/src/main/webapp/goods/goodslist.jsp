@@ -88,18 +88,6 @@ if (endPage > pageCount)
 	type="text/css" />
 </head>
 <body>
-	<style>
-.primary-btn {
-	display: inline-block;
-	font-size: 13px;
-	font-weight: 700;
-	text-transform: uppercase;
-	padding: 14px 30px;
-	color: #ffffff;
-	background: #000000;
-	letter-spacing: 4px;
-}
-</style>
 	<jsp:include page="/include/header.jsp" />
 	<jsp:include page="/include/sidebar.jsp" />
 	<div class="container">
