@@ -31,8 +31,6 @@
     
    	//리뷰 목록 조회
     
-    
-
     ReviewDAO rdao=ReviewDAO.getInstance(); //리뷰 DAO
     
     int rcount=rdao.reviewCount(gnum); //리뷰의 개수 출력하는 메소드
@@ -336,13 +334,13 @@
 						                            document.getElementById("reviewContainer").innerHTML = '<p style="color: #dc3545;">리뷰를 불러오는 중 오류가 발생했습니다.</p>';
 						                        });
 						                }
-						
+										
 						                // 페이지 로드 시 리뷰 목록 로딩
 						                document.addEventListener("DOMContentLoaded", function () {
 						                    const gnum = <%= gnum %>;
 						                    loadReviewPage(gnum, 1);
 						                });
-						             // 리뷰 수정 함수
+						             	// 리뷰 수정 함수
 						                function editReview(rnum, content) {
 						                    try {
 						                        // 기존 내용 숨기기
