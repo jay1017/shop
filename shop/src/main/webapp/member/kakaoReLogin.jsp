@@ -19,7 +19,7 @@ conn.setDoOutput(true);
 
 String param = "grant_type=authorization_code"
     + "&client_id=bc8f1248fe973ce8060a5a525c39e1f9"
-    + "&redirect_uri=http://localhost:8080/shop/member/kakaoReLogin.jsp"
+    + "&redirect_uri=http://192.168.219.157:8080/shop/member/kakaoReLogin.jsp"
     + "&code=" + code;
 
 OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());

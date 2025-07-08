@@ -13,87 +13,26 @@ MemberDTO mdto = mdao.getInfo(sid);
 <head>
 <title>ODEZ - 회원 탈퇴</title>
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
-<style>
-body {
-	margin: 0;
-	padding: 0;
-	font-family: 'Noto Sans KR', sans-serif;
-	background-color: #f7f7f7;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
-
-form {
-	background-color: #fff;
-	padding: 30px 25px;
-	border-radius: 12px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-	width: 300px;
-	box-sizing: border-box;
-	text-align: center;
-}
-
-h2 {
-	font-size: 20px;
-	margin-bottom: 20px;
-	font-weight: bold;
-}
-
-input[type="text"], input[type="password"] {
-	width: 100%;
-	height: 42px;
-	padding: 0 12px;
-	font-size: 15px;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	box-sizing: border-box;
-	margin-bottom: 10px;
-}
-
-input[type="submit"] {
-	width: 100%;
-	height: 42px;
-	background-color: #000;
-	color: #fff;
-	font-size: 16px;
-	font-weight: bold;
-	border: none;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: background-color 0.3s;
-}
-
-input[type="submit"]:hover {
-	background-color: #333;
-}
-
-.msg {
-	font-size: 13px;
-	color: red;
-	margin-bottom: 10px;
-}
-</style>
+<link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 </head>
-<body>
-	<form action="memberDeletePro.jsp" method="post">
-		<h2>회원 탈퇴</h2>
+<body class="memberDelete-body">
+	<form class="memberDelete-form" action="memberDeletePro.jsp" method="post">
+		<h2 class="memberDelete-title">회원 탈퇴</h2>
 
 		<input type="text" id="mid" name="mid" placeholder="아이디 입력"
-			oninput="midCheck()" />
-		<div id="midmsg" class="msg"></div>
+			class="memberDelete-input" oninput="midCheck()" />
+		<div id="midmsg" class="memberDelete-msg"></div>
 
-		<input type="hidden" id="Orimid" name="Orimid"
-			value="<%=mdto.getMid()%>" /> <input type="password" id="mpw"
-			name="mpw" placeholder="비밀번호 입력" oninput="mpwCheck()" />
-		<div id="mpwmsg" class="msg"></div>
+		<input type="hidden" id="Orimid" name="Orimid" value="<%=mdto.getMid()%>" />
 
-		<input type="hidden" id="Orimpw" name="Orimpw"
-			value="<%=mdto.getMpw()%>" /> <input type="submit" value="확인" />
+		<input type="password" id="mpw" name="mpw" placeholder="비밀번호 입력"
+			class="memberDelete-input" oninput="mpwCheck()" />
+		<div id="mpwmsg" class="memberDelete-msg"></div>
+
+		<input type="hidden" id="Orimpw" name="Orimpw" value="<%=mdto.getMpw()%>" />
+		<input type="submit" value="확인" class="memberDelete-submit" />
 	</form>
 
-	<script
-		src="<%=request.getContextPath()%>/resources/js/memberDelete.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/memberDelete.js"></script>
 </body>
 </html>

@@ -25,100 +25,24 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 <head>
 <title>ODEZ - 포인트 내역</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/elegant-icons.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/magnific-popup.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/nice-select.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/slicknav.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/style.css"
-	type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/magnific-popup.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
-<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
-	type="text/css" />
-<style>
-body {
-	background-color: #f3f2ee; /* 전체 배경색 */
-	font-family: 'Noto Sans KR', sans-serif;
-	margin: 0;
-	padding: 0;
-}
-
-.my-page-box {
-	max-width: 600px;
-	margin: 60px auto;
-	background: #fff;
-	border-radius: 15px;
-	padding: 30px 40px;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.my-page-box h2 {
-	text-align: center;
-	font-weight: 700;
-	margin-bottom: 30px;
-}
-
-.my-point-summary {
-	font-size: 16px;
-	font-weight: 500;
-	margin-bottom: 20px;
-	text-align: center;
-}
-
-.point-history {
-	border-top: 1px solid #eee;
-}
-
-.point-item {
-	display: flex;
-	justify-content: space-between;
-	padding: 15px 0;
-	border-bottom: 1px solid #f2f2f2;
-	font-size: 15px;
-}
-
-.point-item span.label {
-	font-weight: 600;
-}
-
-.point-item span.status {
-	color: #777;
-}
-
-.point-item span.date {
-	color: #aaa;
-	font-size: 13px;
-}
-
-.empty-message {
-	text-align: center;
-	padding: 40px 0;
-	color: #999;
-}
-</style>
 </head>
-<body>
+<body class="point-body">
 	<jsp:include page="/include/header.jsp" />
 	<form align="center">
-		<div class="my-page-box">
-			<h2>
-				안녕하세요.
-				<%=mdto.getMname()%>님
-			</h2>
-
-			<div class="my-point-summary">
+		<div class="point-box">
+			<h2>안녕하세요. <%=mdto.getMname()%>님</h2>
+			<div class="point-summary">
 				사용 가능 포인트: <strong><%=PointCount%>P</strong>
 			</div>
-
 			<div class="point-history">
 				<%
 				if (plist != null && !plist.isEmpty()) {
@@ -126,13 +50,14 @@ body {
 				%>
 				<div class="point-item">
 					<span class="label"><%=pd.getPtype()%> (<%=pd.getPstat() == 1 ? "적립" : "사용"%>)</span>
-					<span><%=pd.getPpoint()%>P</span> <span class="date"><%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%></span>
+					<span><%=pd.getPpoint()%>P</span>
+					<span class="date"><%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%></span>
 				</div>
 				<%
 				}
 				} else {
 				%>
-				<div class="empty-message">포인트 내역이 없습니다.</div>
+				<div class="point-empty">포인트 내역이 없습니다.</div>
 				<%
 				}
 				%>

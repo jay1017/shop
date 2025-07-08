@@ -17,7 +17,7 @@
 	// access token 요청에 필요한 파라미터 구성
 	String param = "grant_type=authorization_code"
 		+ "&client_id=bc8f1248fe973ce8060a5a525c39e1f9" 
-		+ "&redirect_uri=http://localhost:8080/shop/member/kakaoLogin.jsp" // 리디렉트 URI (카카오 개발자센터 등록된 것과 동일해야 함)
+		+ "&redirect_uri=http://192.168.219.157:8080/shop/member/kakaoLogin.jsp" // 리디렉트 URI (카카오 개발자센터 등록된 것과 동일해야 함)
 		+ "&code=" + code;                                      // 위에서 받은 인가 코드 포함
 
 	// 파라미터 전송

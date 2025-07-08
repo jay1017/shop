@@ -11,7 +11,7 @@
 	
 	String clientId = "xlKrOZe43aUWrCldbgTq";
 	String clientSecret = "ZkIXnpMuhw";
-	String redirectURI = URLEncoder.encode("http://localhost:8080/shop/member/naverLogin.jsp","UTF-8");
+	String redirectURI = URLEncoder.encode("http://192.168.219.157:8080/shop/member/naverLogin.jsp","UTF-8");
 	//redirectURI를 URL로 인코딩
 	
 	// 1. Access Token 요청

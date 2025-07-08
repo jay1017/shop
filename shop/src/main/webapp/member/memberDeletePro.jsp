@@ -28,7 +28,7 @@ else {
                     alert("카카오 인증이 필요합니다.");
                     location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code"
                         + "&client_id=bc8f1248fe973ce8060a5a525c39e1f9"
-                        + "&redirect_uri=http://localhost:8080/shop/member/kakaoReLogin.jsp"
+                        + "&redirect_uri=http://192.168.219.157:8080/shop/member/kakaoReLogin.jsp"
                         + "&prompt=login";
                 </script>
 <%
@@ -38,7 +38,7 @@ else {
                     alert("네이버 인증이 필요합니다.");
                     location.href = "https://nid.naver.com/oauth2.0/authorize?response_type=code"
                         + "&client_id=xlKrOZe43aUWrCldbgTq"
-                        + "&redirect_uri=http://localhost:8080/shop/member/naverReLogin.jsp"
+                        + "&redirect_uri=http://192.168.219.157:8080/shop/member/naverReLogin.jsp"
                         + "&state=delete"
                         + "&prompt=login";
                 </script>
