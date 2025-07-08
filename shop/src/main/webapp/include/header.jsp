@@ -25,6 +25,7 @@
           			<a href="/shop/member/loginForm.jsp">로그인</a>
           		<% } %>
             <a href="/shop/qna/qnaList.jsp">문의게시판</a>
+            <a href="/shop/faq/faqForm.jsp">FAQ</a>
         </div>
     </div>
     <div class="offcanvas__nav__option">
@@ -58,6 +59,7 @@
                        			<a href="/shop/member/loginForm.jsp">로그인</a>
                        		<% } %>
                             <a href="/shop/qna/qnaList.jsp">문의게시판</a>
+                            <a href="/shop/faq/faqForm.jsp">FAQ</a>
                         </div>
                     </div>
                 </div>
