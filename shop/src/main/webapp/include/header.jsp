@@ -98,7 +98,7 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                     <a href="#" class="search-switch"><img src="/shop/resources/img/icon/search.png" alt=""></a>
-                    <a href="#"><img src="/shop/resources/img/icon/cart.png" alt=""> <span>0</span></a>
+                    <a href="/shop/cart/cart.jsp"><img src="/shop/resources/img/icon/cart.png" alt=""> <span>0</span></a>
                 </div>
             </div>
         </div>
