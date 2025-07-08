@@ -115,6 +115,7 @@ public class GoodsListDAO {
 	            dto.setGinum(rs.getInt("ginum"));
 	            dto.setDiscount(rs.getInt("discount"));
 	            dto.setGosize(rs.getString("gosize"));
+	            dto.setGiname(rs.getString("giname"));
 	            list.add(dto);
 			}
 		}catch(Exception e) {
