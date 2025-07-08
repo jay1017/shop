@@ -123,4 +123,29 @@ public class GoodsDAO {
 		}
 		return list;
 	}
+	//gonum으로 상품 불러오기
+	public List<GoodsDTO> selectGoods(int gonum){
+		List<GoodsDTO> list = new ArrayList<>();
+		try {
+			conn = getConnection();
+			String sql = "select g.gnum, g.gname, g.gprice, gi.giname, (g.gprice-(g.gprice*g.discount/100)) as discount from goods g join goods_image gi on g.ginum= gi.ginum where g.gonum=? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gonum);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				GoodsDTO dto = new GoodsDTO();
+				dto.setGnum(rs.getInt("gnum"));
+				dto.setGname(rs.getString("gname"));
+				dto.setGprice(rs.getInt("gprice"));
+				dto.setGiname(rs.getString("giname"));
+				dto.setDiscount(rs.getInt("discount"));
+				list.add(dto);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return list;
+	}
 }

@@ -10,12 +10,6 @@ public class GoodsDTO {
 	private int discount;
 	private int gread;
 	private int gonum;
-	public int getGonum() {
-		return gonum;
-	}
-	public void setGonum(int gonum) {
-		this.gonum = gonum;
-	}
 	private String caname;
 	private String giname;
 	private String gidetail1;
@@ -23,6 +17,12 @@ public class GoodsDTO {
 	private String gidetail3;
 	private String gplot;
 	
+	public int getGonum() {
+		return gonum;
+	}
+	public void setGonum(int gonum) {
+		this.gonum = gonum;
+	}
 	public int getGnum() {
 		return gnum;
 	}
