@@ -152,7 +152,7 @@ if (goods != null) {
 				} // for
 				%>
 			</div>
-			<!-- col-lg-9 -->
+			<!-- col-lg-8 -->
 			<div class="col-lg-4">
 				<div class="cart__discount">
 					<h6>쿠폰 입력</h6>

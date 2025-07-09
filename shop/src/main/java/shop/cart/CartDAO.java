@@ -302,4 +302,23 @@ public class CartDAO {
 		}
 		return result;
 	}
+	//gonum에 해당하는 상품번호 가져오기
+	public int getGnumByGonum(int gonum) {
+		int gnum = 0;
+		try {
+			conn = getConnection();
+			String sql = "select gnum from goods_option where gonum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gonum);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				gnum = rs.getInt("gnum");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return gnum;
+	}
 }

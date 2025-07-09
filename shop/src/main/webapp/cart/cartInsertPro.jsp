@@ -16,13 +16,19 @@
 	<%
 		// 카트 객체 생성
 		CartDTO cart = new CartDTO();
+	
 	 
-		int gnum = Integer.parseInt(request.getParameter("gnum"));
+		
 		String sid = (String) session.getAttribute("sid");
 		int ccount = Integer.parseInt(request.getParameter("ccount"));
 		int gonum = Integer.parseInt(request.getParameter("gonum"));
 		
 		cart.setCcount(ccount);
+		
+		CartDAO cdao = CartDAO.getInstance();
+		int gnum = cdao.getGnumByGonum(gonum);
+		int mnum = cdao.getMnum(sid);
+		boolean bool = cdao.goodsEquals(gnum,mnum);
 		
 		// 굿즈 조회
 		GoodsDAO gdao = GoodsDAO.getDAO();
@@ -38,10 +44,6 @@
 		MemberDTO mdto = mdao.getInfo(sid);
 		
 		cart.setMnum(mdto.getMnum());
-		
-		CartDAO cdao = CartDAO.getInstance();
-		int mnum = cdao.getMnum(sid);
-		boolean bool = cdao.goodsEquals(gnum,mnum);
 		
 		int result = 0;
 		if(bool){
