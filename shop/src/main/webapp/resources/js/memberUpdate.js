@@ -137,7 +137,8 @@ function UpdateMember(){
 			return false;
 		}
 	}
-	return true;
+		alert("정보수정이 완료되었습니다.");
+		return true;
 }
 
 //회원탈퇴시 팝업창 연결

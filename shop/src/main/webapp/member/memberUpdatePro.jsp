@@ -42,7 +42,6 @@ public boolean notEmpty(String str){
 	
 	MemberDAO mdao = new MemberDAO();
 	mdao.updateMember(mdto);
-	
 	response.sendRedirect("memberUpdate.jsp");
 %>
 
