@@ -16,7 +16,7 @@ MemberDTO mdto = mdao.getInfo(sid);
 <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 </head>
 <body class="memberDelete-body">
-	<form class="memberDelete-form" action="memberDeletePro.jsp" method="post">
+	<form class="memberDelete-form" action="<%=request.getContextPath()%>/member/memberDeletePro.jsp" method="post">
 		<h2 class="memberDelete-title">회원 탈퇴</h2>
 
 		<input type="text" id="mid" name="mid" placeholder="아이디 입력"

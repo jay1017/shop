@@ -72,10 +72,10 @@ MemberDTO member = mdao.getMemberByKakaoId(kakao_id);
 if (member != null) {
     session.setAttribute("sid", member.getMid());
     session.setAttribute("access_token", access_token); // 다시 저장
-
+%>
     // 탈퇴 처리 재진행
-    response.sendRedirect("/shop/member/memberDeletePro.jsp?mid=" + member.getMid() + "&mpw=KAKAO");
-} else {
+
+<%} else {
     out.println("<script>alert('카카오 계정에 해당하는 회원이 존재하지 않습니다.'); window.close();</script>");
 }
 %>
