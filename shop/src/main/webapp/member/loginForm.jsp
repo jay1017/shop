@@ -52,7 +52,7 @@
 		</form>
 
 		<div style="text-align: center; margin-top: 20px;">
-    		<a href="https://kauth.kakao.com/oauth/authorize?client_id=bc8f1248fe973ce8060a5a525c39e1f9&redirect_uri=http://localhost:8080/shop/member/kakaoLogin.jsp&response_type=code">
+    		<a href="https://kauth.kakao.com/oauth/authorize?client_id=bc8f1248fe973ce8060a5a525c39e1f9&redirect_uri=http://192.168.219.157:8080/shop/member/kakaoLogin.jsp&response_type=code">
       			<img src="/shop/resources/img/kakaoLogin/kakao_login.png" alt="카카오 로그인" />
     		</a>
     		<a href="<%=apiURL %>">
