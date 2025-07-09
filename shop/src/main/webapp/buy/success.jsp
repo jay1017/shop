@@ -11,6 +11,7 @@
 <%@ page import="shop.point.pointDAO" %>  
 <%@ page import="shop.coupon.CouponDAO" %> 
 <%@ page import="shop.coupon.CouponDTO" %>    
+<%@ page import="shop.cart.CartDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@
 		String pg_token = request.getParameter("pg_token");
 		String sid = (String) session.getAttribute("sid");
 		String tp = request.getParameter("before_price");
-		
+		CartDAO cadao = CartDAO.getInstance();
 		if(pg_token != null) { 
 			request.setCharacterEncoding("UTF-8");
 			
@@ -139,6 +140,7 @@
 						alert("정상 결제 되었습니다.");
 						location.href="/shop/main/main.jsp";
 					</script>
+					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum());
 				<% }
 			} 
 		} else { %>
