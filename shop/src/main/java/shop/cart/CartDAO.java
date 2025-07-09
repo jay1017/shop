@@ -285,4 +285,21 @@ public class CartDAO {
 			endConnection();
 		}
 	}
+	//구매 후 cart에서 삭제
+	public int deleteByBuy(int gnum, int mnum) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "delete from cart where gnum=? and mnum=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, gnum);
+			pstmt.setInt(2, mnum);
+			result = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return result;
+	}
 }
