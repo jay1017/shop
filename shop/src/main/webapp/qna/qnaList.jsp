@@ -99,7 +99,7 @@
 <body>
 
 
-
+<jsp:include page="/include/sidebar.jsp"></jsp:include>
 <jsp:include page="/include/header.jsp"></jsp:include>
 
 <div class="body-container">
