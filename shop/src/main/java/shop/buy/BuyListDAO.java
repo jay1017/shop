@@ -65,7 +65,7 @@ public class BuyListDAO {
 		List<BuyListDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select  b.mnum, b.bnum, b.gnum, b.bcount, g.ginum, g.gname,(g.gprice - (g.gprice * g.discount / 100)) AS discount, gi.giname from buyer b join goods g on b.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum where mnum=?";
+			String sql = "select  b.mnum, b.bnum, b.gnum, b.bcount, g.ginum, g.gname,(g.gprice - (g.gprice * g.discount / 100)) AS discount, gi.giname, go.gosize from buyer b join goods g on b.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on g.gnum=go.gnum where mnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -79,6 +79,7 @@ public class BuyListDAO {
 				dto.setGname(rs.getString("gname"));
 				dto.setDiscount(rs.getInt("discount"));
 				dto.setGiname(rs.getString("giname"));
+				dto.setGosize(rs.getString("gosize"));
 				list.add(dto);
 			}
 		}catch(Exception e) {

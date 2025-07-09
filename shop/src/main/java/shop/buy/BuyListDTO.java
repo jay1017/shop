@@ -11,7 +11,14 @@ public class BuyListDTO {
 	private int discount;
 	private String giname;
 	private int gprice;
+	private String gosize;
 	
+	public String getGosize() {
+		return gosize;
+	}
+	public void setGosize(String gosize) {
+		this.gosize = gosize;
+	}
 	public int getGprice() {
 		return gprice;
 	}
