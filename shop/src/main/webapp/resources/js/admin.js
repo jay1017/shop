@@ -44,14 +44,14 @@ function checkOption(event) {
 // 상품 등록, 수정 화면 : 등록, 수정 시 값이 있는 지 확인
 function checkGoods1(event) {
 	var giname = document.getElementById("giname");
-	if (giname.value.trim() == "") {
+	if (giname.files.length == 0) {
 		alert("대표 이미지를 선택 하십시오.");
 		event.preventDefault();
 		return false;
 	}
 
 	var gidetail1 = document.getElementById("gidetail1");
-	if (gidetail1.value.trim() == "") {
+	if (gidetail1.files.length == 0) {
 		alert("상세 이미지1은 필수 선택 값입니다.");
 		event.preventDefault();
 		return false;

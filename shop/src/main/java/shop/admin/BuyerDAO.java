@@ -127,8 +127,9 @@ public class BuyerDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "update buyer set bstatus = 1";
+			String sql = "update buyer set bstatus = 1 where bnum = ?";
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();

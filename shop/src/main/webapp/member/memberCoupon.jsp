@@ -42,12 +42,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="tab-container">
+				<div class="tab-container2">
 					<div class="tab-header">
 						<div class="tab-button active" onclick="showTab(0)">보유 쿠폰 (<%=cpcount %>장)</div>
 						<div class="tab-button" onclick="showTab(1)">쿠폰 받기 (<%=cpNcount %>장)</div>
 					</div>
-					<div class="tab-content active">
+					<div class="tab-content2 active">
 						<% for(CouponDTO dto : list) { %>
 							<div class="coupon-box clearfix">
 								<span class="coupon-type">구매 쿠폰</span>
@@ -56,7 +56,7 @@
 							</div>
 						<% } %>
 					</div>
-					<div class="tab-content">
+					<div class="tab-content2">
 						<% for(CouponDTO dto : nList) { %>
 							<div class="coupon-box clearfix">
 								<span class="coupon-type">구매 쿠폰</span>
@@ -76,7 +76,7 @@
 	<script>
 	function showTab(index) {
 		const buttons = document.querySelectorAll('.tab-button');
-		const contents = document.querySelectorAll('.tab-content');
+		const contents = document.querySelectorAll('.tab-content2');
 	
 		buttons.forEach((btn, i) => {
 			btn.classList.toggle('active', i === index);

@@ -42,19 +42,19 @@
 									<form action="goodsInsertPro1.jsp" method="post" enctype="multipart/form-data" onsubmit="checkGoods1(event)">
 										<div class="mb-3">
 											<label class="form-label">대표 이미지</label>
-											<input type="file" name="giname" class="form-control form-control-lg"/>
+											<input type="file" id="giname" name="giname" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">상세 이미지1</label>
-											<input type="file" name="gidetail1" class="form-control form-control-lg"/>
+											<input type="file" id="gidetail1" name="gidetail1" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">상세 이미지2</label>
-											<input type="file" name="gidetail2" class="form-control form-control-lg"/>
+											<input type="file" id="gidetail2" name="gidetail2" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">상세 이미지3</label>
-											<input type="file" name="gidetail3" class="form-control form-control-lg"/>
+											<input type="file" id="gidetail3" name="gidetail3" class="form-control form-control-lg"/>
 										</div>
 										<input type="submit" value="저장하고 다음 화면으로" class="btn btn-primary mt-3"/>
 									</form>

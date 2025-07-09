@@ -22,25 +22,22 @@
 		request.setCharacterEncoding("UTF-8");
 		String pg_token = request.getParameter("pg_token");
 		String sid = (String) session.getAttribute("sid");
+		String tp = request.getParameter("before_price");
 		
 		if(pg_token != null) { 
 			request.setCharacterEncoding("UTF-8");
 			
 			//카카오페이 결제 후 저장해야 하기에 success페이지에서 제작
-			/* String tp = (String) session.getAttribute("totalprice");
-			String totalprice = tp; //세션에 저장할땐 콤마가 포함된 문자열로 전송했기에
-			String cleanPrice = totalprice.replace(",", ""); // 콤마 삭제후
-			int totalpri = Integer.parseInt(cleanPrice); // int형변환
-			int point = totalpri / 100;
+			int totalprice = Integer.parseInt(tp);
+			int point = totalprice / 100;
 			String pname = "구매 적립포인트";
 
 			pointDAO pdao = new pointDAO();
 			pointDTO pdto = new pointDTO();
 			
-			pdto.setMnum(mdto.getMnum());
 			pdto.setPpoint(point);
 			pdto.setPtype(pname);
-			pdto.setPstat(1);  */
+			pdto.setPstat(1);
 			
 			//사용상태는 사용 or 미사용이기에 미사용일때 1, 사용했을때 0으로 저장하기 위해
 			//적립만 했을 시엔 1로 기본값 저장
@@ -55,6 +52,7 @@
 			
 			// 회원 번호 대입
 			dto.setMnum(mdto.getMnum()); 
+			pdto.setMnum(mdto.getMnum());
 			
 			// 상품 번호 배열로 정리
 			String[] gnumArr = request.getParameter("gnum").split(",");
