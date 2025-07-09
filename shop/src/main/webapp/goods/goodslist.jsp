@@ -93,8 +93,7 @@ if (endPage > pageCount)
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-3">
-				<h1>상품목록</h1>
-				<h2>전체 상품 목록</h2>
+				<h2>상품 목록</h2>
 				<input type="button" value="전체 상품 보기"
 					onclick="location.href='goodslist.jsp'">
 			</div>
