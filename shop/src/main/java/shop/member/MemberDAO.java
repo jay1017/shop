@@ -322,13 +322,13 @@ public class MemberDAO {
 	}
 	
 	//네이버고유id를 통한 회원정보 조회 메서드
-	public MemberDTO getNaverMember(String naver_id) {
+	public MemberDTO getNaverMember(String nid) {
 		MemberDTO mdto = null;
 		try {
 			conn = getConnection();
 			String sql = "select * from member2 where naver_id=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, naver_id);
+			pstmt.setString(1, nid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				mdto = new MemberDTO();
@@ -361,7 +361,7 @@ public class MemberDAO {
 					+"&access_token="+access_token
 					+"&service_provider=NAVER");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
+			conn.setRequestMethod("POST");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			while(br.readLine() != null) {
