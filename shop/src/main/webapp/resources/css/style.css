@@ -3507,15 +3507,6 @@ ul, ol {
 	border-bottom: 2px solid #000;
 }
 
-.tab-content {
-	display: none;
-	font-size: 14px;
-}
-
-.tab-content.active {
-	display: block;
-}
-
 .faq-body {
 	background-color: #f3f2ee;
 	margin: 0;

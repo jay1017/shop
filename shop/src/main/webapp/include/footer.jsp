@@ -56,8 +56,6 @@
     </div>
 </footer>
 <!-- Footer Section End -->
-
-<!-- Js Plugins -->
 <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 <script src="/shop/resources/js/bootstrap.min.js"></script>
 <script src="/shop/resources/js/jquery.nice-select.min.js"></script>
