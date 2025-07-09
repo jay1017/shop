@@ -154,15 +154,8 @@ if (goods != null) {
 			</div>
 			<!-- col-lg-8 -->
 			<div class="col-lg-4">
-				<div class="cart__discount">
-					<h6>쿠폰 입력</h6>
-					<form action="#">
-						<input type="text" placeholder="Coupon code">
-						<button type="submit">등록</button>
-					</form>
-				</div>
 				<div class="cart__total">
-					<h6>합계</h6>
+					<h6>총액</h6>
 					<ul>
 						<li>총 액<span>₩<%=total%></span></li>
 					</ul>
