@@ -11,6 +11,7 @@
 <%@ page import="java.util.Locale"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="shop.buy.BuyDTO" %>
 <%--상품 상세정보--%>
 <%
 
@@ -36,7 +37,12 @@
     ReviewDAO rdao=ReviewDAO.getInstance(); //리뷰 DAO
     
     int rcount=rdao.reviewCount(gnum); //리뷰의 개수 출력하는 메소드
-      
+    
+	boolean reviewCheck=rdao.reviewCheck(mnum,gnum); //리뷰 작성 가능한 bnum인지 체크
+	
+	BuyDTO bdto=rdao.buyCheck(mnum, gnum);
+	int bnum=bdto.getBnum(); //bnum출력
+    int gonum=bdto.getGonum();  //gonum출력
     
     ReviewDTO myReview=null;
     if(sid!=null) {
@@ -290,6 +296,7 @@
                                  <%
                                  if (sid != null) {
                                  %>
+                                 <% if(reviewCheck){%>
                                  <div class="review-write-section"
                                     style="margin-bottom: 30px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
                                     <div class="review-write-header"
@@ -306,6 +313,8 @@
                                           <input type="hidden" name="mnum" value="<%=mnum%>">
                                           <input type="hidden" name="canum" value="<%=canum%>">
                                           <input type="hidden" name="ginum" value="<%=ginum%>">
+                                          <input type="hidden" name="bnum" value="<%=bnum%>">
+                                          <input type="hidden" name="gonum" value="<%=gonum%>">
 
                                           <div class="form-group">
                                              <label for="rcontent">리뷰 내용</label>
@@ -324,7 +333,7 @@
                                        </form>
                                     </div>
                                  </div>
-                                 <%
+                                 <%}
                                  } else {
                                  %>
                                  <div class="login-notice"
