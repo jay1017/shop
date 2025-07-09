@@ -121,7 +121,7 @@
 								<input type="text" placeholder="상세주소" name="address2" id="address2">
 								<input type="text" placeholder="참고항목" name="address3" id="address3">
                             </div>
-                            <script>
+                            <script> 
 							    function zipFind() {
 							    	new daum.Postcode({
 							            oncomplete: function(data) {
