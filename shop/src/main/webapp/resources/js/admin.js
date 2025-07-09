@@ -111,3 +111,64 @@ function deleteGoods(num1, num2, num3, url1, url2, url3) {
 		window.location = url1 + num1 + url2 + num2 + url3 + num3;
 	}
 }
+
+// 어드민 탭 이벤트
+function showTab(index) {
+	const buttons = document.querySelectorAll('.tab-button');
+	const contents = document.querySelectorAll('.tab-content2');
+
+	buttons.forEach((btn, i) => {
+		btn.classList.toggle('active', i === index);
+	});
+
+	contents.forEach((content, i) => {
+		content.classList.toggle('active', i === index);
+	});
+}
+
+// canames 에 caname 대입 / gcounts에 gcount 대입
+var canames = document.getElementsByClassName("caname");
+var gcounts = document.getElementsByClassName("gcount");
+var caname = [];
+var gcount = [];
+
+for (i = 0; i < canames.length; i++) {
+	caname.push(canames[i].innerHTML);
+}
+
+for (i = 0; i < gcounts.length; i++) {
+	gcount.push(gcounts[i].innerHTML);
+}
+
+// 메인의 차트 로드
+document.addEventListener("DOMContentLoaded", function() {
+	// Pie chart
+	new Chart(document.getElementById("chartjs-dashboard-pie"), {
+		type: "pie",
+		data: {
+			labels: caname,
+			datasets: [{
+				data: gcount,
+				backgroundColor: [
+					window.theme.primary,
+					window.theme.warning,
+					window.theme.danger,
+					window.theme.success,
+					window.theme.primary,
+					window.theme.warning,
+					window.theme.danger,
+					window.theme.success,
+				],
+				borderWidth: 5
+			}]
+		},
+		options: {
+			responsive: !window.MSInputMethodContext,
+			maintainAspectRatio: false,
+			legend: {
+				display: false
+			},
+			cutoutPercentage: 75
+		}
+	});
+});

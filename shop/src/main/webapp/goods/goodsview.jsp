@@ -218,42 +218,41 @@
                               style="border: none;" />
                         </form>
                         <script>
-                                
-                                     function selectRadio(value) {
-                                         document.getElementById("gonum1").value = value;
-                                         document.getElementById("gonum2").value = value;
-                                }
-                                   function checkLogin(event) {
-                                      var sid = document.getElementById("sid");
-                                      var ccount = document.getElementById("ccount");
-                                      var bcount = document.getElementById("bcount");
-                                      
-                                      var gonum = document.getElementsByName("gonum");
-                                      var gonum1 = document.getElementById("gonum1");
-                                      var gonum2 = document.getElementById("gonum2");
-                                      
-                                      for(var i = 0; i < gonum.length; i++) {
-                                         if(gonum[i].checked) {
-                                            gonum1.value = gonum[i].value;
-                                            gonum2.value = gonum[i].value;
-                                         }
-                                      }
-                                      
-                                      bcount.value = ccount.value;
-                                      
-                                      if(gonum1.value == null || gonum1.value == "" || gonum2.value == null || gonum2.value == "") {
-                                         alert("상품 옵션을 선택 해 주세요.");
-                                         event.preventDefault();
-                                      }
-                                      
-                                      if(sid.value.trim() == 'null') {
-                                         alert("로그인 이후 가능합니다.");
-                                         event.preventDefault();
-                                         location.href="/shop/member/loginForm.jsp";
-                                      }
-                                   }
-                                    
-                                </script>
+	                         function selectRadio(value) {
+	                             document.getElementById("gonum1").value = value;
+	                             document.getElementById("gonum2").value = value;
+	                         }
+                            function checkLogin(event) {
+                               var sid = document.getElementById("sid");
+                               var ccount = document.getElementById("ccount");
+                               var bcount = document.getElementById("bcount");
+                               
+                               var gonum = document.getElementsByName("gonum");
+                               var gonum1 = document.getElementById("gonum1");
+                               var gonum2 = document.getElementById("gonum2");
+                               
+                               for(var i = 0; i < gonum.length; i++) {
+                                  if(gonum[i].checked) {
+                                     gonum1.value = gonum[i].value;
+                                     gonum2.value = gonum[i].value;
+                                  }
+                               }
+                               
+                               bcount.value = ccount.value;
+                               
+                               if(gonum1.value == null || gonum1.value == "" || gonum2.value == null || gonum2.value == "") {
+                                  alert("상품 옵션을 선택 해 주세요.");
+                                  event.preventDefault();
+                               }
+                               
+                               if(sid.value.trim() == 'null') {
+                                  alert("로그인 이후 가능합니다.");
+                                  event.preventDefault();
+                                  location.href="/shop/member/loginForm.jsp";
+                               }
+                            }
+                             
+                         </script>
                      </div>
                   </div>
                </div>

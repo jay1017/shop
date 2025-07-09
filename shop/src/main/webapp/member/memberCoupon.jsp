@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="/shop/resources/css/font.css">
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/shop/resources/js/member.js"></script>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp" />
@@ -73,21 +74,6 @@
 	
 	<jsp:include page="/include/footer.jsp" />
 	
-	<script>
-	function showTab(index) {
-		const buttons = document.querySelectorAll('.tab-button');
-		const contents = document.querySelectorAll('.tab-content2');
-	
-		buttons.forEach((btn, i) => {
-			btn.classList.toggle('active', i === index);
-		});
-	
-		contents.forEach((content, i) => {
-			content.classList.toggle('active', i === index);
-		});
-	}
-</script>
-
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>

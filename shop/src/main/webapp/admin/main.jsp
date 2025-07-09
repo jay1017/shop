@@ -180,52 +180,6 @@
 	</div>
 
 	<script src="/shop/resources/js/app.js"></script>
-	<script>
-		var canames = document.getElementsByClassName("caname");
-		var gcounts = document.getElementsByClassName("gcount");
-		var caname = [];
-		var gcount = [];
-		
-		for(i = 0; i < canames.length; i++) {
-			caname.push(canames[i].innerHTML);
-		}
-		
-		for(i = 0; i < gcounts.length; i++) {
-			gcount.push(gcounts[i].innerHTML);
-		}
-		
-		document.addEventListener("DOMContentLoaded", function() {
-			// Pie chart
-			new Chart(document.getElementById("chartjs-dashboard-pie"), {
-				type: "pie",
-				data: {
-					labels: caname,
-					datasets: [{
-						data: gcount,
-						backgroundColor: [
-							window.theme.primary,
-							window.theme.warning,
-							window.theme.danger,
-							window.theme.success,
-							window.theme.primary,
-							window.theme.warning,
-							window.theme.danger,
-							window.theme.success,
-						],
-						borderWidth: 5
-					}]
-				},
-				options: {
-					responsive: !window.MSInputMethodContext,
-					maintainAspectRatio: false,
-					legend: {
-						display: false
-					},
-					cutoutPercentage: 75
-				}
-			});
-		});
-	</script>
 	<% } %>
 </body>
 

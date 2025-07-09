@@ -1,5 +1,5 @@
 //회원정보 수정하기 전 비밀번호를 확인하는 팝업창 연결
-function updateMpwCheck(){
+function updateMpwCheck() {
 	window.open("/shop/member/updateMpwCheck.jsp", "회원정보 수정", "width=500, height=250");
 }
 
@@ -7,16 +7,16 @@ function updateMpwCheck(){
 function midCheck() {
 	const midInput = document.getElementById("mid");
 	const mid = midInput.value.trim();
-	
-	if(mid === ""){
+
+	if (mid === "") {
 		alert("아이디를 입력하세요.");
 		midInput.focus();
 		return;
 	}
-	
+
 	document.getElementById("butcheck").value = "true";
-	
-	url = "/shop/member/midCheck.jsp?mid=" + encodeURIComponent(mid); 
+
+	url = "/shop/member/midCheck.jsp?mid=" + encodeURIComponent(mid);
 	// encodeURIComponent -> 만약 아이디에 특수문자가 입력되었을 때 url주소로 잘못 넘어갈 수 있기에 사용
 	window.open(url, "midCheck", "width=400,height=300");
 }
@@ -47,14 +47,14 @@ function pwcheck() {
 }
 
 //이름 공백 체크(페이지화면 출력)
-function namecheck(){
+function namecheck() {
 	const nameEl = document.getElementById("nameEl").value.trim();
 	const namemsg = document.getElementById("namemsg");
-	
-	if(nameEl === ""){
+
+	if (nameEl === "") {
 		namemsg.textContent = "이름을 입력하세요.";
 		namemsg.style.color = "red";
-	}else{
+	} else {
 		namemsg.textContent = "";
 	}
 }
@@ -109,54 +109,54 @@ function membercheck() {
 	const phoneNum = /^01\d{8,9}$/;
 	const emailStr = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 	const butcheck = document.getElementById("butcheck").value;
-	if(mid.value.trim() === ""){
+	if (mid.value.trim() === "") {
 		alert("아이디를 입력하세요.");
 		mid.focus();
 		return false;
 	}
-	if(butcheck !== "true"){
+	if (butcheck !== "true") {
 		alert("아이디 중복확인을 해주세요.");
 		mid.focus();
 		return false;
 	}
-	if(pw.value.trim() === ""){
+	if (pw.value.trim() === "") {
 		alert("비밀번호를 입력하세요.");
 		pw.focus();
 		return false;
 	}
-	if(pwch.value.trim() === ""){
+	if (pwch.value.trim() === "") {
 		alert("비밀번호를 확인하세요.");
 		pwch.focus();
 		return false;
 	}
-	if(pw.value.length < 8){
+	if (pw.value.length < 8) {
 		alert("비밀번호는 8자리 이상입니다.");
 		pw.focus();
 		return false;
 	}
-	if(pw.value !== pwch.value){
+	if (pw.value !== pwch.value) {
 		alert("비밀번호가 일치하지 않습니다.");
 		pw.focus();
 		return false;
 	}
-	if(nameEl.value.trim() === ""){
+	if (nameEl.value.trim() === "") {
 		alert("이름을 입력하세요.");
 		nameEl.focus();
 		return false;
 	}
-	if(phoneEl.value.trim() === ""){
+	if (phoneEl.value.trim() === "") {
 		alert("전화번호를 입력하세요.");
 		phoneEl.focus();
 		return false;
 	}
-	if(!phoneNum.test(phoneEl.value.trim())){
+	if (!phoneNum.test(phoneEl.value.trim())) {
 		// ▲전화번호 입력값이 해당 형식이 아니라면▲
 		alert("번호형식이 올바르지 않습니다. (예: 01012345678)");
 		phoneEl.focus();
 		return false;
 	}
-	if(emailEl.value.trim() !== ""){
-		if(!emailStr.test(emailEl.value.trim())){
+	if (emailEl.value.trim() !== "") {
+		if (!emailStr.test(emailEl.value.trim())) {
 			alert("올바른 이메일 형식을 입력하세요.");
 			emailEl.focus();
 			return false;
@@ -166,29 +166,43 @@ function membercheck() {
 }
 
 //비밀번호 재설정 pwSearchUpdate.jsp 사용
-function pwUpdateCheck(){
+function pwUpdateCheck() {
 	const pw = document.getElementById("pw");
 	const pwch = document.getElementById("pwch");
-	
-	if(pw.value.trim() === ""){
+
+	if (pw.value.trim() === "") {
 		alert("비밀번호를 입력하세요.");
 		pw.focus();
 		return false;
 	}
-	if(pwch.value.trim() === ""){
+	if (pwch.value.trim() === "") {
 		alert("비밀번호를 확인하세요.");
 		pwch.focus();
 		return false;
 	}
-	if(pw.value.length < 8){
+	if (pw.value.length < 8) {
 		alert("비밀번호는 8자리 이상입니다.");
 		pw.focus();
 		return false;
 	}
-	if(pw.value !== pwch.value){
+	if (pw.value !== pwch.value) {
 		alert("비밀번호가 일치하지 않습니다.");
 		pw.focus();
 		return false;
 	}
 	return true;
+}
+
+// 멤버 쿠폰 탭 이벤트
+function showTab(index) {
+	const buttons = document.querySelectorAll('.tab-button');
+	const contents = document.querySelectorAll('.tab-content2');
+
+	buttons.forEach((btn, i) => {
+		btn.classList.toggle('active', i === index);
+	});
+
+	contents.forEach((content, i) => {
+		content.classList.toggle('active', i === index);
+	});
 }
