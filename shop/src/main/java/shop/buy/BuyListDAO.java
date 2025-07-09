@@ -65,7 +65,7 @@ public class BuyListDAO {
 		List<BuyListDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select  b.mnum, b.bnum, b.gnum, b.bcount, g.ginum, g.gname,(g.gprice - (g.gprice * g.discount / 100)) AS discount, gi.giname, go.gosize from buyer b join goods g on b.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on g.gnum=go.gnum where mnum=? order by bnum";
+			String sql = "select  b.mnum, b.bnum, b.gnum, b.bcount, g.ginum, g.gname,(g.gprice - (g.gprice * g.discount / 100)) AS discount, gi.giname, go.gosize from buyer b join goods g on b.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on g.gnum=go.gnum where mnum=? order by bnum desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();

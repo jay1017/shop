@@ -183,7 +183,7 @@ public class CartDAO {
 			conn = getConnection();
 			String sql = "select c.cnum,c.gnum,c.canum,c.ccount, c.ginum, c.gonum, g.gname, g.gprice, "
 					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount,gi.giname,go.gosize "
-					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on go.gnum=g.gnum where c.mnum=? order by cnum";
+					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on go.gnum=g.gnum where c.mnum=? order by cnum desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
