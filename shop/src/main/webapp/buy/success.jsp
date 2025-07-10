@@ -24,6 +24,7 @@
 		String pg_token = request.getParameter("pg_token");
 		String sid = (String) session.getAttribute("sid");
 		String tp = request.getParameter("before_price");
+		System.out.println("토탈 가격: "+ tp);
 		CartDAO cadao = CartDAO.getInstance();
 		if(pg_token != null) { 
 			request.setCharacterEncoding("UTF-8");
