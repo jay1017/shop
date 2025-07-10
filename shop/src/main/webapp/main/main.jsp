@@ -188,7 +188,10 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                             <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
                         </div>
-                        <h5>&#8361;<%= dto.getGprice() %></h5>
+                        <h5>
+                        	<del>&#8361;<%= dto.getGprice() %></del>
+                        	<%= dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100) %>
+                        </h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                             <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
