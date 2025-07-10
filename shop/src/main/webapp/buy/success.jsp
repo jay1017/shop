@@ -141,7 +141,8 @@
 						alert("정상 결제 되었습니다.");
 						location.href="/shop/main/main.jsp";
 					</script>
-					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum());
+					<% 
+					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum());%>
 				<% }
 			} 
 		} else { %>
