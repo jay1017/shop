@@ -210,13 +210,24 @@ public class MainDAO {
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from ( select rownum as rnum,s.* from"
-					+ "(select * from goods where gname like ? order by gnum desc) S where rownum<=?) where rnum>=?";
+			String sql = "SELECT * FROM ("
+			           + " SELECT rownum AS rnum, data.*"
+			           + " FROM ("
+			           + "     SELECT gnum, canum, gname, gprice, gcontent, ginum, discount, gread,"
+			           + "            ROW_NUMBER() OVER (PARTITION BY gname ORDER BY gnum DESC) AS rn"
+			           + "     FROM goods"
+			           + "     WHERE gname LIKE ?"
+			           + " ) data"
+			           + " WHERE rn = 1"
+			           + " ORDER BY gnum DESC"
+			           + ")"
+			           + " WHERE rnum >= ? AND rnum <= ?";
+
 			pstmt = conn.prepareStatement(sql);
-			
-				pstmt.setString(1 , "%" + key + "%");
-				pstmt.setInt(2, endRow);
-				pstmt.setInt(3, startRow);
+			pstmt.setString(1 , "%" + key + "%");
+			pstmt.setInt(2, startRow); // 시작
+			pstmt.setInt(3, endRow);   // 끝
+
 				
 				
 			rs = pstmt.executeQuery();
@@ -241,9 +252,16 @@ public class MainDAO {
 		return list;
 		
 	}
-	public int searchCount(String key) {	//검색된 결과의 수 카운팅용 페이징 처리시 사용
+	public int searchCount(String key) { // 중복 제거된 검색 결과 수 카운트
 	    int count = 0;
-	    String sql = "SELECT COUNT(*) FROM goods WHERE gname LIKE ? ";
+	    String sql = 
+	        "SELECT COUNT(*) FROM ( " +
+	        "   SELECT ROW_NUMBER() OVER (PARTITION BY gname ORDER BY gnum DESC) AS rn " +
+	        "   FROM goods " +
+	        "   WHERE gname LIKE ? " +
+	        ") " +
+	        "WHERE rn = 1";
+	    
 	    try (Connection conn = getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	        pstmt.setString(1, "%" + key + "%");
@@ -255,6 +273,7 @@ public class MainDAO {
 	    }
 	    return count;
 	}
+
 
 	public List<CategoryDTO> getCate() { // 카테고리명들을 리스트로 받아오는 작업
 		List<CategoryDTO> list = new ArrayList<>();
