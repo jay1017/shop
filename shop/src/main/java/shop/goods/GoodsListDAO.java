@@ -157,7 +157,7 @@ public class GoodsListDAO {
 		int count = 0;
 		try {
 			conn = getConnection();
-			String sql = "select count(*) from goods";
+			String sql = "select count(*) from select gname from goods group by gname";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -175,7 +175,7 @@ public class GoodsListDAO {
 			int count = 0;
 			try {
 				conn = getConnection();
-				String sql = "select count(*) from goods where canum=?";
+				String sql = "select count(*) from (select gname from goods where canum=? group by gname)";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, canum);
 				rs = pstmt.executeQuery();
@@ -194,7 +194,7 @@ public class GoodsListDAO {
 			int count = 0;
 			try {
 				conn = getConnection();
-				String sql = "select count(*) from goods where (gprice-(gprice*discount/100)) <= ? and (gprice-(gprice*discount/100)) > ?";
+				String sql = "select count(*) from (select gname from goods where (gprice-(gprice*discount/100)) <= ? and (gprice-(gprice*discount/100)) > ? group by gname)";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, price+500000);
 				pstmt.setInt(2, price);
@@ -243,7 +243,12 @@ public class GoodsListDAO {
 			List<GoodsListDTO> list = new ArrayList<>();
 			try {
 				conn = getConnection();
-				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (SELECT g.gnum, g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount,gi.giname,go.gosize FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum join goods_option go on g.gnum=go.gnum WHERE (g.gprice-(g.gprice*g.discount/100)) >= ? AND (g.gprice-(g.gprice*g.discount/100)) < ? ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+				String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM "
+						+ "(SELECT MIN(g.gnum) AS gnum, g.gname, "
+						+ "MIN(g.gprice) AS gprice, "
+						+ "MIN((g.gprice - (g.gprice * g.discount / 100))) AS discount "
+						+ ",MIN(gi.giname) AS giname FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum "
+						+ " WHERE (g.gprice-(g.gprice*g.discount/100)) >= ? AND (g.gprice-(g.gprice*g.discount/100)) < ? group by g.gname ORDER BY gnum DESC) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, price);
 				pstmt.setInt(2, price+500000);
@@ -257,7 +262,6 @@ public class GoodsListDAO {
 					dto.setGprice(rs.getInt("gprice"));
 					dto.setDiscount(rs.getInt("discount"));
 					dto.setGiname(rs.getString("giname"));
-					dto.setGosize(rs.getString("gosize"));
 					list.add(dto);
 				}
 			}catch(Exception e) {
@@ -272,8 +276,9 @@ public class GoodsListDAO {
 					List<GoodsListDTO> list = new ArrayList<>();
 					try {
 						conn = getConnection();
-						String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM (select g.gnum,g.gname, g.gprice, (g.gprice-(g.gprice*g.discount/100)) as discount, gi.giname,go.gosize from goods g "
-								+ "join goods_image gi on g.ginum = gi.ginum join goods_option go on g.gnum = go.gnum where g.canum=?) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
+						String sql = "SELECT * FROM (SELECT ROWNUM rnum, a.* FROM "
+								+ "(SELECT MIN(g.gnum) AS gnum, g.gname, MIN(g.gprice) AS gprice, MIN((g.gprice - (g.gprice * g.discount / 100))) AS discount,MIN(gi.giname) AS giname"
+								+ " FROM goods g JOIN goods_image gi ON g.ginum = gi.ginum where g.canum=? group by gname order by gnum desc) a WHERE ROWNUM <= ?) WHERE rnum >= ?";
 						pstmt = conn.prepareStatement(sql);
 						pstmt.setInt(1, canum);
 						pstmt.setInt(2, end);
@@ -286,7 +291,6 @@ public class GoodsListDAO {
 							dto.setGprice(rs.getInt("gprice"));
 							dto.setDiscount(rs.getInt("discount"));
 							dto.setGiname(rs.getString("giname"));
-							dto.setGosize(rs.getString("gosize"));
 							list.add(dto);
 						}
 					}catch(Exception e) {
