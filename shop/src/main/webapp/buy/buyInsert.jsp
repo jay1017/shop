@@ -10,6 +10,8 @@
 <%@ page import="shop.member.MemberDAO" %>
 <%@ page import="shop.coupon.CouponDTO" %>
 <%@ page import="shop.coupon.CouponDAO" %>
+<%@ page import="shop.point.pointDAO" %>
+<%@ page import="shop.point.pointDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,9 +102,24 @@
                                 		<select id="cpnum" name="cpnum" onchange="cpnumChange()">
                                 			<option value="0">-선택-</option>
 	                               			<% for(CouponDTO dto : clist) { %>
-	                                			<option value="<%=dto.getCpnum() %>"><%=dto.getCpname() %></option>
+	                                			<option value="<%=dto.getCpnum() %>" data-price="<%=dto.getCpvalue()%>">
+	                                				<%=dto.getCpname() %>
+	                                			</option>
 	                                		<% } %>
                                 		</select>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="row mb-4">
+                            	<div class="col-lg-12">
+		                            <div class="checkout__input">
+		                            	<%
+		                            		pointDAO pdao = new pointDAO();
+		                            	%>
+		                                <p>사용 가능 포인트: <%=pdao.getAllPoint(mnum) %>원</p>
+		                                <input type="text" id="minusPoint" name="minusPoint" placeholder="포인트 입력">
+		                                <input type="hidden" id="allpoint" name="allpoint" value=<%=pdao.getAllPoint(mnum) %>>
+		                                <input type="button" class="site-btn" name="PointBtn" value="적용" onclick="selectPoint()">
 		                            </div>
 		                        </div>
 		                    </div>
@@ -207,10 +224,6 @@
                                     		<span id="before_total_amount"><%=numberFormat.format(total) %></span>
                                     	</span>
                                     </li>
-                                    <%
-                                    	session.setAttribute("totalprice", numberFormat.format(total));
-                                    	// 총 구매 가격을 세션에 저장하여 포인트 계산시에 활용함
-                                    %>
                                 </ul>
                                 <div class="checkout__input__checkbox">
                                     <label for="accessOrder">
@@ -226,6 +239,7 @@
                     <input type="hidden" name="item_name" id="item_name" value="<%=item_name%>"/>
                     <input type="hidden" name="quantity" id="quantity" value="<%=totalCnt%>"/>
                     <input type="hidden" name="total_amount" id="total_amount" value="<%=total%>"/>
+                    <input type="hidden" id="applied_point" name="applied_point" value="0">
                     <input type="hidden" name="before_price" id="before_price" value="<%=total%>"/>
                 </form>
             </div>
@@ -234,5 +248,6 @@
     <!-- Checkout Section End -->
     <jsp:include page="/include/footer.jsp"></jsp:include>
     <% } %>
+    <script src="<%=request.getContextPath()%>/resources/js/buy.js"></script>
 </body>
 </html>

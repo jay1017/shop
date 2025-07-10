@@ -93,3 +93,51 @@ function checkBuy(event) {
 		return false;
 	}
 }
+
+//포인트 사용 계산식
+function selectPoint() {
+    const pointInput = document.getElementById("minusPoint");
+    const hiddenPoint = document.getElementById("allpoint");
+    const appliedPoint = document.getElementById("applied_point");
+
+    const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10);
+    const available = parseInt(hiddenPoint.value.trim(), 10);
+
+    if (isNaN(point) || point <= 0) {
+        alert("사용할 포인트를 입력하세요.");
+        return;
+    }
+
+    if (point > available) {
+        alert("포인트는 " + available + "원까지만 사용 가능합니다.");
+        pointInput.value = "";
+        return;
+    }
+
+    // 원래 총합 가격 가져오기 (before_price는 항상 "원래 가격"만 저장)
+    const beforeTotal = parseInt(document.getElementById("before_price").value.replace(/[^0-9]/g, ""), 10);
+
+    // 쿠폰 할인 금액 계산 다시 가져오기
+    let couponDiscount = 0;
+    const cpSelect = document.getElementById("cpnum");
+    const selectedOption = cpSelect.options[cpSelect.selectedIndex];
+
+    if (selectedOption) {
+        const couponData = selectedOption.getAttribute("data-price");
+        if (couponData) {
+            couponDiscount = parseInt(couponData.replace(/[^0-9]/g, ""), 10);
+        }
+    }
+
+    // 포인트 적용은 쿠폰 할인 후에 처리
+    let finalAmount = beforeTotal - couponDiscount - point;
+    if (finalAmount < 0) finalAmount = 0;
+
+    appliedPoint.value = point;
+    document.getElementById("after_total_amount").style.display = "inline";
+    document.getElementById("after_total_amount").innerText = finalAmount.toLocaleString();
+    document.getElementById("before_total_amount").style.display = "none";
+
+    // 총합 갱신
+    document.getElementById("total_amount").value = finalAmount;
+}

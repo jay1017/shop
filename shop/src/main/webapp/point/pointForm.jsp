@@ -51,7 +51,14 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				<div class="point-item">
 					<span class="label"><%=pd.getPtype()%> (<%=pd.getPstat() == 1 ? "적립" : "사용"%>)</span>
 					<span><%=pd.getPpoint()%>P</span>
-					<span class="date"><%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%></span>
+					<span class="date">
+						<%if(pd.getPcreate() != null){%>
+							<%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%>
+						<%}
+						  if(pd.getPuse() != null){%>
+							  <%=pd.getPuse() != null ? sdf.format(pd.getPcreate()) : "-"%>
+						  <%}%>
+					</span>
 				</div>
 				<%
 				}
