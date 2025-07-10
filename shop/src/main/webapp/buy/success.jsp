@@ -23,14 +23,14 @@
 		request.setCharacterEncoding("UTF-8");
 		String pg_token = request.getParameter("pg_token");
 		String sid = (String) session.getAttribute("sid");
-		String tp = request.getParameter("before_price");
+		int bprice = Integer.parseInt(request.getParameter("bprice"));
+		System.out.println("전체가격: "+ bprice);
 		CartDAO cadao = CartDAO.getInstance();
 		if(pg_token != null) { 
 			request.setCharacterEncoding("UTF-8");
 			
 			//카카오페이 결제 후 저장해야 하기에 success페이지에서 제작
-			int totalprice = Integer.parseInt(tp);
-			int point = totalprice / 100;
+			int point = bprice / 100;
 			String pname = "구매 적립포인트";
 
 			pointDAO pdao = new pointDAO();
@@ -42,7 +42,7 @@
 			
 			//사용상태는 사용 or 미사용이기에 미사용일때 1, 사용했을때 0으로 저장하기 위해
 			//적립만 했을 시엔 1로 기본값 저장
-			// pdao.InsertPoint(pdto);
+			
 
 			BuyDAO dao = BuyDAO.getDAO();
 			BuyDTO dto = new BuyDTO();
@@ -105,7 +105,7 @@
 			dto.setBuynum(num);
 			
 			// 금액 대입 및 쿠폰 소진(쿠폰 삭제)
-			int bprice = Integer.parseInt(request.getParameter("bprice"));
+			
 			int before_price = Integer.parseInt(request.getParameter("before_price"));
 			int cpnum = Integer.parseInt(request.getParameter("cpnum"));
 			CouponDAO cdao = CouponDAO.getDAO();
@@ -140,7 +140,8 @@
 						alert("정상 결제 되었습니다.");
 						location.href="/shop/main/main.jsp";
 					</script>
-					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum());
+					<%pdao.InsertPoint(pdto);
+					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum()); %>
 				<% }
 			} 
 		} else { %>
