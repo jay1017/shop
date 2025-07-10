@@ -66,10 +66,15 @@ function checkGoods2(event) {
 	}
 
 	var gprice = document.getElementById("gprice");
-	if (gprice.value.trim() == 0) {
+	if (gprice.value.trim() == "" || gprice.value.trim() == 0) {
 		alert("가격을 입력 하십시오.");
 		event.preventDefault();
 		return false;
+	}
+	
+	var discount = document.getElementById("discount");
+	if (discount.value.trim() == "") {
+		discount.value = 0;
 	}
 }
 

@@ -24,7 +24,6 @@
 <link href="/shop/resources/css/app.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
-<script language="JavaScript" src="/shop/resources/js/admin.js"></script>
 </head>
 <body>
 	<% String admin = (String) session.getAttribute("admin"); %>
@@ -180,6 +179,7 @@
 	</div>
 
 	<script src="/shop/resources/js/app.js"></script>
+	<script language="JavaScript" src="/shop/resources/js/admin.js"></script>
 	<% } %>
 </body>
 
