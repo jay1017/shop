@@ -101,7 +101,7 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">할인율</label>
-											<input type="number" name="discount" value="<%=dto.getDiscount()%>" class="form-control form-control-lg"/>
+											<input type="number" id="discount" name="discount" value="<%=dto.getDiscount()%>" class="form-control form-control-lg"/>
 										</div>
 										<input type="submit" value="저장하고 다음 화면으로" class="btn btn-primary mt-3"/>
 									</form>
