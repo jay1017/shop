@@ -182,6 +182,8 @@
                                 		int bcount = bcountList.get(i);
                                 		int gonum = gonumList.get(i);
 	                                    String gprice = numberFormat.format(goods.getGprice());
+	                                    int price = Integer.parseInt(gprice);
+	                                    int toprice = price * bcount;
 	                                    total += goods.getGprice();
 	                                    if(i == list.size() - 1) {
 	                                    	item_name += goods.getGname();
@@ -191,7 +193,7 @@
                                		%>
                                 		<li>
                                 			<%=goods.getGname() %> (<%=bcount %> 개) 
-                                			<span>&#8361; <%=gprice %></span>
+                                			<span>&#8361; <%=toprice %></span>
                                 			<input type="hidden" name="gnum" value="<%=goods.getGnum()%>"/>
                                 			<input type="hidden" name="bcount" value="<%=bcount %>" />
                                 			<input type="hidden" name="gonum" value="<%=gonum%>"/>
