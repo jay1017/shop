@@ -88,41 +88,38 @@ bnum불러오고 상품 이름, 사진, 가격정도만 불러오면 될듯?--%>
 								class="col-md-4 d-flex align-items-center justify-content-center">
 								<img src="/shop/resources/image/<%=dto.getGiname()%>"
 									alt="상품이미지" width="150">
-									</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<p class="card-text">
-									상품명:<%=dto.getGname()%></p>
-									<p>
-									사이즈:<%=dto.getGosize() %>
-									</p>
-								<p class="card-text">
-									가격: ₩<%=discount%></p>
-								<p class="card-text">
-									구매수량:<%=bcount%>개
-								</p>
-								<p class="card-text">
-									구매가: ₩<%=price%></p>
-									<form method="post" action="/shop/buy/buyInsert.jsp"
-									class="d-inline">
-									<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-									<input type="hidden" name="bcount" value="<%=bcount%>">
-									<input type="submit" value="재구매하기" class="btn btn-sm btn-dark">
-								</form>
 							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<p class="card-text">
+										상품명:<%=dto.getGname()%></p>
+									<p>
+										사이즈:<%=dto.getGosize() %>
+									</p>
+									<p class="card-text">
+										가격: ₩<%=discount%></p>
+									<p class="card-text">
+										구매수량:<%=bcount%>개
+									</p>
+									<p class="card-text">
+										구매가: ₩<%=price%></p>
+									<form method="post" action="/shop/buy/buyInsert.jsp"
+										class="d-inline">
+										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+										<input type="hidden" name="bcount" value="<%=bcount%>">
+										<input type="submit" value="재구매하기" class="btn btn-sm btn-dark">
+									</form>
+								</div>
+							</div>
+						</div>
 					</div>
+					<%
+							}//for 끝
+
+					 }//else 끝se끝
+							%>
 				</div>
 			</div>
-							<%
-							}//for 끝%>
-					
-			</div>
-							<%}//else 끝
-							%>
-							
-				
-			</div>
-		</div>
 	</section>
 
 	<jsp:include page="/include/footer.jsp" />
