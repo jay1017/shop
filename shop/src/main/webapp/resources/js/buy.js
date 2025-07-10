@@ -100,8 +100,8 @@ function selectPoint() {
     const hiddenPoint = document.getElementById("allpoint");
     const appliedPoint = document.getElementById("applied_point");
 
-    const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10);
-    const available = parseInt(hiddenPoint.value.trim(), 10);
+    const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10); //숫자값 10자리
+    const available = parseInt(hiddenPoint.value.trim(), 10); //10자리
 
     if (isNaN(point) || point <= 0) {
         alert("사용할 포인트를 입력하세요.");
@@ -130,7 +130,7 @@ function selectPoint() {
     }
 
     // 포인트 적용은 쿠폰 할인 후에 처리
-    let finalAmount = beforeTotal - couponDiscount - point;
+    let finalAmount = beforeTotal - couponDiscount - point; //전체가격 - 쿠폰할인값 - 포인트
     if (finalAmount < 0) finalAmount = 0;
 
     appliedPoint.value = point;

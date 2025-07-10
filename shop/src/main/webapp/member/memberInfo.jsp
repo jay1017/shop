@@ -26,7 +26,7 @@ String SetGender = mdao.setGender(sid);
 </head>
 <body class="memberInfo-body">
 	<jsp:include page="/include/header.jsp" />
-
+	<jsp:include page="/include/sidebar.jsp"></jsp:include>
 	<section class="memberInfo-section">
 		<h2>
 			안녕하세요. <%=mdto.getMname()%>님
