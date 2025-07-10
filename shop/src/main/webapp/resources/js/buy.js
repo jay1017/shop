@@ -58,14 +58,17 @@ function cpnumChange() {
 	// 사용자에게 보여주는 변경 전 가격과 변경 후 가격
 	const before_total_amount = document.getElementById("before_total_amount");
 	const after_total_amount = document.getElementById("after_total_amount");
+	const total_amount_wrap = document.getElementById("total_amount_wrap");
+	const won = document.getElementById("won");
 
 	if (cpnum != 0) {
 		fetch("/shop/buy/coupon.jsp?cpnum=" + cpnum + "&total=" + before_price.value)
 			.then(response => response.json())
 			.then(data => {
 				before_total_amount.classList.add("cancle");
-				after_total_amount.innerHTML = data.total_amount.toLocaleString('ko-KR');
 				total_amount.value = data.total_amount;
+				total_amount_wrap.style.display = "block";
+				after_total_amount.innerHTML = "&#8361;" + data.total_amount.toLocaleString('ko-KR');
 			})
 			.catch(error => {
 				console.error("쿠폰 계산 오류:", error);

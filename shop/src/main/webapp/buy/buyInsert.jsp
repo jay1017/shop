@@ -220,9 +220,13 @@
                                 </ul>
                                 <ul class="checkout__total__all">
                                     <li>총 가격 
-                                    	<span>&#8361; 
+                                    	<span id="total_amount_wrap" style="display: flex;">
+                                    		<span id="before_total_amount" style="display: flex;">
+                                    			<span id="won">&#8361; </span>
+                                    			<%=numberFormat.format(total) %>
+                                    		</span>
+                                    		<br />
                                     		<span id="after_total_amount"></span>
-                                    		<span id="before_total_amount"><%=numberFormat.format(total) %></span>
                                     	</span>
                                     </li>
                                 </ul>
