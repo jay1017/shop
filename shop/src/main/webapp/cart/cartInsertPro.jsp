@@ -60,13 +60,13 @@
 				if(confirm == true) {
 					location.href="/shop/cart/cart.jsp";
 				} else {
-					location.href="/shop/goods/goodslist.jsp";
+					history.go(-2);
 				}
 			</script>
 		<% } else {  %>
 			<script>
 				alert("장바구니에 상품이 담기지 않았습니다.");
-				location.href="/shop/goods/goodslist.jsp";
+				history.go(-2);
 			</script>
 		<% } %>
 </body>
