@@ -56,7 +56,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 							<%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%>
 						<%}
 						  if(pd.getPuse() != null){%>
-							  <%=pd.getPuse() != null ? sdf.format(pd.getPcreate()) : "-"%>
+							  <%=pd.getPuse() != null ? sdf.format(pd.getPuse()) : "-"%>
 						  <%}%>
 					</span>
 				</div>

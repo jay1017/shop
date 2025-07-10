@@ -253,6 +253,5 @@
     <!-- Checkout Section End -->
     <jsp:include page="/include/footer.jsp"></jsp:include>
     <% } %>
-    <script src="<%=request.getContextPath()%>/resources/js/buy.js"></script>
 </body>
 </html>
