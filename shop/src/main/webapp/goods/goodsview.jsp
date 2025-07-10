@@ -76,6 +76,8 @@
 <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
+
+<script src="/shop/resources/js/main.js"></script>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp" />
@@ -217,10 +219,6 @@
                               type="submit" value="구매하기" class="primary-btn"
                               style="border: none;" />
                         </form>
-                        <script>
-	                         
-                             
-                         </script>
                      </div>
                   </div>
                </div>
@@ -345,7 +343,6 @@
 	<script src="/shop/resources/js/jquery.slicknav.js"></script>
 	<script src="/shop/resources/js/mixitup.min.js"></script>
 	<script src="/shop/resources/js/owl.carousel.min.js"></script>
-	<script src="/shop/resources/js/main.js"></script>
-	<script src="/shop/goods.js/goodsview.js"></script>
+	<script src="/shop/resources/js/goodsview.js"></script>
 </body>
 </html>
