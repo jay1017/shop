@@ -184,10 +184,6 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        </div>
                         <h5>
                         	<del>&#8361;<%= dto.getGprice() %></del>
                         	<%= dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100) %>
@@ -222,10 +218,6 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        </div>
                         <h5>
                             <del>&#8361;<%= dto.getGprice() %></del>
                             <%= dto.getDiscount() %>
