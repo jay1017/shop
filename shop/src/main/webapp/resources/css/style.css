@@ -146,6 +146,8 @@ ul, ol {
 	color: #ffffff;
 	background: #000000;
 	letter-spacing: 4px;
+	border: none;
+	border-radius: 5px;
 }
 
 .site-btn {

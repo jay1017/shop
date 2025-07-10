@@ -164,7 +164,6 @@ if (goods != null) {
 						</ul>
 						<form id="selectedBuyForm" method="post"
 							action="/shop/buy/buyInsert.jsp">
-
 							<input type="submit" value="선택한 상품 구매" class="primary-btn">
 						</form>
 						<ul>
