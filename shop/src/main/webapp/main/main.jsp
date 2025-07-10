@@ -29,7 +29,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>사이트 이름</title>
+<title>ODEZ</title>
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
 <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
 	type="text/css">
