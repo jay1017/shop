@@ -33,7 +33,7 @@
                 <div class="footer__widget">
                     <h6>회사소개</h6>
                     <ul>
-                        <li><a href="#">회사소개</a></li>
+                        <li><a href="/shop/about/about.jsp">회사소개</a></li>
                     </ul>
                 </div>
             </div>

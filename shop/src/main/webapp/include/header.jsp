@@ -86,9 +86,6 @@
                         		<% for(CategoryDTO dto : list) { %>
                         			<li><a href="/shop/goods/goodslist.jsp?canum=<%=dto.getCanum()%>"><%=dto.getCaname() %></a></li>
                         		<% } %>
-                                <li><a href="/shop/goods/goodslist.jsp">상품 목록</a></li>
-                                <li><a href="/shop/cart/cart.jsp">장바구니</a></li>
-                                <li><a href="./checkout.html">주문서</a></li>
                             </ul>
                         </li>
                         <li><a href="/shop/about/about.jsp">회사 소개</a></li>

@@ -102,6 +102,7 @@ public class BuyerDAO {
 			while(rs.next()) {
 				BuyerDTO dto = new BuyerDTO();
 				dto.setBuynum(rs.getInt("buynum"));
+				dto.setBnum(rs.getInt("bnum"));
 				dto.setMid(rs.getString("mid"));
 				dto.setMname(rs.getString("mname"));
 				dto.setGname(rs.getString("gname"));

@@ -16,7 +16,7 @@
 		if(result == 1) { %>
 			<script>
 				alert("발송이 완료 되었습니다.");
-				history.go(-1);
+				location.href="/shop/admin/buyer.jsp";
 			</script>
 		<% } else { %>
 			<script>

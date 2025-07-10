@@ -78,10 +78,6 @@ System.out.println("검색된 상품 수: " + list.size());
               <div class="product__item__text">
                 <h6><%= dto.getGname() %></h6>
                 <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                </div>
                 <h5>&#8361;<%= dto.getGprice() %></h5>
                 <div class="product__color__select">
                   <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>

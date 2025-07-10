@@ -118,7 +118,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                         </div>
                         <div class="banner__item__text">
                             <h2>Clothing Collections 2030</h2>
-                            <a href="/shop/goods/categories.jsp?canum=1">Shop now</a>
+                            <a href="/shop/goods/goodslist.jsp?canum=1">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                         </div>
                         <div class="banner__item__text">
                             <h2>Accessories</h2>
-                            <a href="/shop/goods/categories.jsp?canum=23">Shop now</a>
+                            <a href="/shop/goods/goodslist.jsp?canum=23">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                         </div>
                         <div class="banner__item__text">
                             <h2>Shoes Spring 2030</h2>
-                            <a href="/shop/goods/categories.jsp?canum=22">Shop now</a>
+                            <a href="/shop/goods/goodslist.jsp?canum=22">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -184,11 +184,10 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        </div>
-                        <h5>&#8361;<%= dto.getGprice() %></h5>
+                        <h5>
+                        	<del>&#8361;<%= dto.getGprice() %></del>
+                        	<%= dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100) %>
+                        </h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                             <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
@@ -219,10 +218,6 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        </div>
                         <h5>
                             <del>&#8361;<%= dto.getGprice() %></del>
                             <%= dto.getDiscount() %>

@@ -171,34 +171,41 @@ public class MainDAO {
 		}
 		return list;
 	}
-	public List<GoodsDTO> getTrendGoods() { // 재고가 일정이하인 상품의 모든정보를 가져오는 메소드
-		List<GoodsDTO> list = new ArrayList<>();
-		try {
-			conn = getConnection();
-			String sql = "select g.*,go.gocount from goods g,goods_option go where go.gnum=g.gnum and go.gocount<=100";
-			pstmt = conn.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				GoodsDTO dto = new GoodsDTO();
-				dto.setGnum(rs.getInt("gnum"));
-				dto.setCanum(rs.getInt("canum"));
-				dto.setGname(rs.getString("gname"));
-				dto.setGprice(rs.getInt("gprice"));
-				dto.setGcontent(rs.getString("gcontent"));
-				dto.setGinum(rs.getInt("ginum"));
-				dto.setDiscount(rs.getInt("discount"));
-				dto.setGread(rs.getInt("gread"));
-				list.add(dto);
-			}
+	public List<GoodsDTO> getTrendGoods() {
+	    List<GoodsDTO> list = new ArrayList<>();
+	    try {
+	        conn = getConnection();
+	        String sql = "SELECT g.gnum, g.canum, g.gname, g.gprice, " +
+	                     "       g.discount, g.gcontent, g.ginum " +
+	                     "FROM goods g, goods_option go " +
+	                     "WHERE go.gnum = g.gnum " +
+	                     "  AND go.gocount <= 100 " +
+	                     "  AND g.discount IS NOT NULL " +
+	                     "  AND g.discount > 0";
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			endConnection();
-		}
-		return list;
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            GoodsDTO dto = new GoodsDTO();
+	            dto.setGnum(rs.getInt("gnum"));
+	            dto.setCanum(rs.getInt("canum"));
+	            dto.setGname(rs.getString("gname"));
+	            dto.setGprice(rs.getInt("gprice"));
+	            dto.setDiscount(rs.getInt("discount")); // 할인율
+	            dto.setGcontent(rs.getString("gcontent"));
+	            dto.setGinum(rs.getInt("ginum"));
+	            list.add(dto);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        endConnection();
+	    }
+	    return list;
 	}
+
 
 	public List<GoodsDTO> search(String key,int startRow,int endRow) { // 서치실행 메소드
 		List<GoodsDTO> list = new ArrayList<>();
