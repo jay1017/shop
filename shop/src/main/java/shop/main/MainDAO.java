@@ -30,7 +30,6 @@ public class MainDAO {
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "team02", "1234");
 		} catch (Exception e) {
-			System.out.print(e.toString());
 			e.printStackTrace();
 		}
 

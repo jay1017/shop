@@ -31,7 +31,6 @@ public class OptionDAO {
 				Class.forName("oracle.jdbc.driver.OracleDriver");
 				String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 				conn = DriverManager.getConnection(url, "team02", "1234");
-				System.out.println("DB연결");
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("연결 실패");

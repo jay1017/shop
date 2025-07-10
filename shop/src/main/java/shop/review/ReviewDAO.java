@@ -33,7 +33,6 @@ public class ReviewDAO {
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "team02", "1234");
 		} catch (Exception e) {
-			System.out.print(e.toString());
 			e.printStackTrace();
 		}
 
@@ -274,7 +273,6 @@ public class ReviewDAO {
 			rs.next();
 			rcount = rs.getInt(1);
 			
-			System.out.println(rcount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

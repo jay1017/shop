@@ -150,8 +150,6 @@ public class GoodsImageDAO {
 				giname = dto.getGiname();
 			}
 			
-			System.out.println(giname);
-			
 			if(dto.getGidetail1() == null || dto.getGidetail1().equals("")) {
 				sql = "select gidetail1 from goods_image where ginum = ?";
 				pstmt = conn.prepareStatement(sql);
