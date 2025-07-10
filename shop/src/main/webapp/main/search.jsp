@@ -74,8 +74,8 @@ System.out.println("검색된 상품 수: " + list.size());
               int ginum = dto.getGinum();
               GoodsImageDTO gi = idao.select(ginum); 
               String giname = gi.getGiname();
-              String gprice = numberFormat.format(dto.getGprice()); //포맷팅
-              String discount = numberFormat.format(dto.getDiscount());
+              int disprice = dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100); //할인된 가격
+              String discount = numberFormat.format(disprice);  //할인된 가격 포맷팅
         %>
           <div class="col-lg-3 col-md-4 col-sm-6 mix popular mb-4">
             <div class="product__item">
@@ -87,7 +87,7 @@ System.out.println("검색된 상품 수: " + list.size());
               <div class="product__item__text">
                 <h6><%= dto.getGname() %></h6>
                 <a href="#" class="add-cart">+ Add To Cart</a>
-                <h5>&#8361;<%=gprice%></h5>
+                <h5>&#8361;<%=discount%></h5>
                 <div class="product__color__select">
                   <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                   <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>

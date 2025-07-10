@@ -178,7 +178,7 @@ public class MainDAO {
 	                     "       g.discount, g.gcontent, g.ginum " +
 	                     "FROM goods g, goods_option go " +
 	                     "WHERE go.gnum = g.gnum " +
-	                     "  AND go.gocount <= 100 " +
+	                     "  AND go.gocount <= 90 " +
 	                     "  AND g.discount IS NOT NULL " +
 	                     "  AND g.discount > 0";
 
