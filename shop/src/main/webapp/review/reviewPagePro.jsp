@@ -98,4 +98,4 @@
     <% } %>
 </div>
 
-<script src="/shop/review.js/reviewPagePro.js"></script>
+<script src="/shop/resources/js/reviewPagePro.js"></script>
