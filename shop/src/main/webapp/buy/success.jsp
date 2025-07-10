@@ -35,7 +35,7 @@
 			int totalprice = Integer.parseInt(tp);
 			int point = totalprice / 100;
 			String pname = "구매 적립포인트";
-			String usepname = "사용 포인트";
+			String usepname = "구매 사용포인트";
 
 			pointDAO pdao = new pointDAO();
 			pointDTO pdto = new pointDTO(); //적립 포인트 저장 dto
@@ -135,7 +135,7 @@
 					//포인트 사용
 					if(buyPoint > 0){
 						usepdto.setMnum(mdto.getMnum());
-						usepdto.setPpoint(-buyPoint);
+						usepdto.setPpoint(-buyPoint); //사용포인트는 -로 변경해서 적용
 						usepdto.setPtype(usepname);
 						usepdto.setPstat(0);
 						pdao.InsertUsePoint(usepdto);
@@ -151,7 +151,6 @@
 						location.href="/shop/main/main.jsp";
 					</script>
 					<% 
-					pdao.InsertPoint(pdto);
 					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum());%>
 				<% }
 			} 

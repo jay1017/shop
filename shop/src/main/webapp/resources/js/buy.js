@@ -103,13 +103,13 @@ function selectPoint() {
     const hiddenPoint = document.getElementById("allpoint");
     const appliedPoint = document.getElementById("applied_point");
 
-    const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10); //숫자입력 + 10자이내
-    const available = parseInt(hiddenPoint.value.trim(), 10); //10자이내
+    const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10);
+    const available = parseInt(hiddenPoint.value.trim(), 10);
 
     const total_amount = document.getElementById("total_amount");
     const before_total_amount = document.getElementById("before_total_amount");
     const after_total_amount = document.getElementById("after_total_amount");
-	const total_amount_wrap = document.getElementById("total_amount_wrap");
+    const total_amount_wrap = document.getElementById("total_amount_wrap");
 
     if (isNaN(point) || point <= 0) {
         alert("사용할 포인트를 입력하세요.");
@@ -122,28 +122,16 @@ function selectPoint() {
         return;
     }
 
-    // 원래 가격
-    const beforeTotal = parseInt(document.getElementById("before_price").value.replace(/[^0-9]/g, ""), 10);
-	before_total_amount.classList.add("cancle"); //줄긋기
-    // 쿠폰 할인
-    let couponDiscount = 0;
-    const cpSelect = document.getElementById("cpnum");
-    const selectedOption = cpSelect.options[cpSelect.selectedIndex];
-    if (selectedOption) {
-        const couponData = selectedOption.getAttribute("data-price");
-        if (couponData) {
-            couponDiscount = parseInt(couponData.replace(/[^0-9]/g, ""), 10);
-        }
-    }
-
-    // 최종 가격
-    let finalAmount = beforeTotal - couponDiscount - point;
+    // 현재 total_amount는 쿠폰 할인 적용된 값임
+    const baseTotal = parseInt(total_amount.value, 10); // 여기가 변경됨
+    let finalAmount = baseTotal - point;
     if (finalAmount < 0) finalAmount = 0;
 
     // 값 반영
     appliedPoint.value = point;
     total_amount.value = finalAmount;
-	total_amount_wrap.style.display = "block";
-    // 기존 가격은 그대로 보여주고, 할인 후 가격만 새로 보여주기
-	after_total_amount.innerText = `₩${finalAmount.toLocaleString()}`;
+    total_amount_wrap.style.display = "block";
+    after_total_amount.innerText = `₩${finalAmount.toLocaleString()}`;
+
+    before_total_amount.classList.add("cancle"); // 줄긋기
 }
