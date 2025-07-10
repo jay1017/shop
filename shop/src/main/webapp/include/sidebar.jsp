@@ -20,6 +20,6 @@
 	<input type="button" value="홈" onclick="location.href='/shop/main/main.jsp'"> 
 	<input type="button" value="검색" onclick="location.href='/shop/main/search.jsp'"> 
 	<input type="button" value="장바구니" onclick="location.href='/shop/cart/cart.jsp'">
-	<input type="button" value="구매내역" onclick="location.href='/shop/buy/buyList.jsp'">
+	<input type="button" value="구매내역" onclick="location.href='/shop/buy/buyList.jsp'"> 
 	<input type="button" value="문의" onclick="location.href='/shop/qna/qnaList.jsp'">
 </div>
