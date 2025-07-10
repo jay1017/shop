@@ -54,8 +54,8 @@ if (goods != null) {
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
-	type="text/css" />	
-<script type="text/javascript" src="/shop/resources/js/header.js"></script>		
+	type="text/css" />
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>
 <title>장바구니</title>
 </head>
 <body>
@@ -75,113 +75,124 @@ if (goods != null) {
 		</div>
 	</section>
 	<section class="shopping-cart spad">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8">
-				<%
-				if (cart.isEmpty()) {
-				%>
-				<p>장바구니에 담긴 상품이 없습니다.</p>
-				<%
-				} else {
-				int total = 0;
-				for (CartDTO dto : cart) {
-					int gprice = dto.getGprice();
-					int discount = dto.getDiscount();
-					int count = dto.getCcount();
-					
-					total += discount*count;
-				%>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<%
+					if (cart.isEmpty()) {
+					%>
+					<p>장바구니에 담긴 상품이 없습니다.</p>
+					<%
+					} else {
+					int total = 0;
+					for (CartDTO dto : cart) {
+						int gprice = dto.getGprice();
+						int discount = dto.getDiscount();
+						int count = dto.getCcount();
 
-				<!-- 카드 하나 시작 -->
-				<div class="card mb-4">
-					<div class="row no-gutters">
-						<div
-							class="col-md-4 d-flex align-items-center justify-content-center">
-							<img src="/shop/resources/image/<%=dto.getGiname()%>"
-								class="card-img" alt="상품 이미지"
-								style="max-width: 100%; padding: 10px;">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">
-									상품명:
-									<%=dto.getGname()%></h5>
-								<p class="card-text">
-									사이즈:
-									<%=dto.getGosize()%></p>
-								<p class="card-text">
-									가격: ₩<%=dto.getGprice()%></p>
-								<p class="card-text">
-									할인가: ₩<%=dto.getDiscount()%></p>
-								<p class="card-text">
-									수량:
-									<%=dto.getCcount()%>개
-								</p>
+						total += discount * count;
+					%>
 
-								<form method="post" action="/shop/buy/buyInsert.jsp"
-									class="d-inline">
-									<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-									<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
-									<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
-									<input type="submit" value="구매하기" class="btn btn-sm btn-dark">
-								</form>
+					<!-- 카드 하나 시작 -->
+					<div class="card mb-4">
+						<div class="row no-gutters">
+							<div
+								class="col-md-4 d-flex align-items-center justify-content-center">
+								<img src="/shop/resources/image/<%=dto.getGiname()%>"
+									class="card-img" alt="상품 이미지"
+									style="max-width: 100%; padding: 10px;">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<input type="checkbox" name="selected"
+										value="<%=dto.getGnum()%>">
+									<h5 class="card-title">
+										상품명:
+										<%=dto.getGname()%></h5>
+									<p class="card-text">
+										사이즈:
+										<%=dto.getGosize()%></p>
+									<p class="card-text">
+										가격: ₩<%=dto.getGprice()%></p>
+									<p class="card-text">
+										할인가: ₩<%=dto.getDiscount()%></p>
+									<p class="card-text">
+										수량:
+										<%=dto.getCcount()%>개
+									</p>
 
-								<form method="post" action="cartUpdate.jsp"
-									class="d-inline ml-2">
-									<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-									<input type="number" name="ccount" min="1"
-										value="<%=dto.getCcount()%>"
-										class="form-control form-control-sm d-inline-block"
-										style="width: 60px;">
-									<button type="submit" class="btn btn-sm btn-secondary">수정</button>
-								</form>
+									<form method="post" action="/shop/buy/buyInsert.jsp"
+										class="d-inline">
+										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+										<input type="hidden" name="bcount"
+											value="<%=dto.getCcount()%>"> <input type="hidden"
+											name="gonum" value="<%=dto.getGonum()%>"> <input
+											type="submit" value="구매하기" class="btn btn-sm btn-dark">
+									</form>
 
-								<form method="post" action="cartDelete.jsp"
-									class="d-inline ml-2">
-									<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-									<button type="submit" class="btn btn-sm btn-danger">삭제</button>
-								</form>
+									<form method="post" action="cartUpdate.jsp"
+										class="d-inline ml-2">
+										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+										<input type="number" name="ccount" min="1"
+											value="<%=dto.getCcount()%>"
+											class="form-control form-control-sm d-inline-block"
+											style="width: 60px;">
+										<button type="submit" class="btn btn-sm btn-secondary">수정</button>
+									</form>
+
+									<form method="post" action="cartDelete.jsp"
+										class="d-inline ml-2">
+										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+										<button type="submit" class="btn btn-sm btn-danger">삭제</button>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<!-- 카드 하나 끝 -->
+					<!-- 카드 하나 끝 -->
 
-				<%
-				} // for
-				%>
-			</div>
-			<!-- col-lg-8 -->
-			<div class="col-lg-4">
-				<div class="cart__total">
-					<h6>총액</h6>
-					<ul>
-						<li>총 액<span>₩<%=total%></span></li>
-					</ul>
-					<form method="post" action="/shop/buy/buyInsert.jsp">
-						<%
-						for (CartDTO dto : cart) {
-						%>
-						<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
-						<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
-						<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
-						<%
-						}
-						%>
-						<input type="submit" value="모두 구매" class="primary-btn">
-					</form>
 					<%
-					} //else
+					} // for
 					%>
 				</div>
+				<!-- col-lg-8 -->
+				<div class="col-lg-4">
+					<div class="cart__total">
+						<h5>금액</h5>
+						<ul>
+							<li>체크된 상품 금액: <span id="selectedTotal">₩0</span></li>
+						</ul>
+						<form id="selectedBuyForm" method="post"
+							action="/shop/buy/buyInsert.jsp">
+
+							<input type="submit" value="선택한 상품 구매" class="primary-btn">
+						</form>
+						<ul>
+							<li>총 액<span>₩<%=String.format("%,d", total)%></span></li>
+						</ul>
+						<form method="post" action="/shop/buy/buyInsert.jsp">
+							<%
+							for (CartDTO dto : cart) {
+							%>
+							<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+							<input type="hidden" name="bcount" value="<%=dto.getCcount()%>">
+							<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
+							<%
+							}
+							%>
+							<input type="submit" value="모두 구매" class="primary-btn">
+						</form>
+						<%
+						} //else
+						%>
+					</div>
+				</div>
 			</div>
+			<!-- row -->
 		</div>
-		<!-- row -->
-	</div>
-	<!-- container -->
+		<!-- container -->
 	</section>
-	
+
 	<jsp:include page="/include/sidebar.jsp" />
 	<jsp:include page="/include/footer.jsp" />
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
@@ -194,5 +205,6 @@ if (goods != null) {
 	<script src="/shop/resources/js/mixitup.min.js"></script>
 	<script src="/shop/resources/js/owl.carousel.min.js"></script>
 	<script src="/shop/resources/js/main.js"></script>
+	<script src="/shop/resources/js/cart.js"></script>
 </body>
 </html>
