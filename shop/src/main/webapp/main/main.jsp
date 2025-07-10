@@ -42,6 +42,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" 
 	type="text/css"/>
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>

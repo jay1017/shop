@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 <%
     String clientId = "xlKrOZe43aUWrCldbgTq";
     String redirectURI = java.net.URLEncoder.encode("http://192.168.219.157:8080/shop/member/naverLogin.jsp", "UTF-8");

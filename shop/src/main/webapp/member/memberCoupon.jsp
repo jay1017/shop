@@ -27,6 +27,7 @@
     
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/shop/resources/js/member.js"></script>
+    <script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body>
 	<jsp:include page="/include/header.jsp" />

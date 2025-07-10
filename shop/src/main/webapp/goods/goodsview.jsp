@@ -78,6 +78,7 @@
 <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 
 <script src="/shop/resources/js/main.js"></script>
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body>
 	<jsp:include page="/include/header.jsp" />

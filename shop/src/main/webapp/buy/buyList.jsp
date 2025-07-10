@@ -46,12 +46,13 @@ List<BuyListDTO> buy = dao.getBuybyMnum(mnum);
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
 	type="text/css" />
-<jsp:include page="/include/header.jsp" />
-<jsp:include page="/include/sidebar.jsp" />
 
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>		
 <title>전체 주문 페이지</title>
 </head>
 <body>
+	<jsp:include page="/include/header.jsp" />
+	<jsp:include page="/include/sidebar.jsp" />
 	<section class="breadcrumb-option">
 		<div class="container">
 			<div class="row">

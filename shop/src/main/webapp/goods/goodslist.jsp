@@ -86,6 +86,7 @@ if (endPage > pageCount)
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
 	type="text/css" />
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>		
 </head>
 <body>
 	<jsp:include page="/include/header.jsp" />

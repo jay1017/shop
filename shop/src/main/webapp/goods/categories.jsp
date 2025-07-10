@@ -44,7 +44,8 @@ int canum = Integer.parseInt(request.getParameter("canum"));
 <link rel="stylesheet" href="/shop/resources/css/style.css"
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
-	</head>
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
+</head>
 	
 <title>카테고리 별 상품</title>
 <body>

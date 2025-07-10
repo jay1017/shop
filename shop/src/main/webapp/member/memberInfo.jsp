@@ -22,6 +22,7 @@ String SetGender = mdao.setGender(sid);
 <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font.css">
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body class="memberInfo-body">
 	<jsp:include page="/include/header.jsp" />

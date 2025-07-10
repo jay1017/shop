@@ -24,7 +24,7 @@
 		String pg_token = request.getParameter("pg_token");
 		String sid = (String) session.getAttribute("sid");
 		String tp = request.getParameter("before_price");
-		int buyPoint = Integer.parseInt(request.getParameter("applied_point"));//구매 포인트
+		int buyPoint = Integer.parseInt(request.getParameter("buypoint"));//구매 포인트
 		System.out.println("토탈 가격: "+ tp);
 		System.out.println ("사용 포인트: " + buyPoint);
 		CartDAO cadao = CartDAO.getInstance();
