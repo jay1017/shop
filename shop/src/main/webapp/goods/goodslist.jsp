@@ -213,10 +213,10 @@ if (endPage > pageCount)
 								<div class="card-body">
 									<h5 class="card-title"><%=dto.getGname()%></h5> 
 									<p class="card-text">
-										가격:<%=dto.getGprice()%>원
+										가격:<%=String.format("%,d", dto.getGprice())%>원
 									</p>
 									<p class="card-text">
-										판매가:<%=dto.getDiscount()%>원
+										판매가:<%=String.format("%,d", dto.getDiscount())%>원
 									</p>
 									<p class="card-text">
 									사이즈:<%=dto.getGosize() %>

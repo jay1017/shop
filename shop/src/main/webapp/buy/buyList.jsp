@@ -98,12 +98,12 @@ bnum불러오고 상품 이름, 사진, 가격정도만 불러오면 될듯?--%>
 										사이즈:<%=dto.getGosize() %>
 									</p>
 									<p class="card-text">
-										가격: ₩<%=discount%></p>
+										가격: ₩<%=String.format("%,d", discount)%></p>
 									<p class="card-text">
 										구매수량:<%=bcount%>개
 									</p>
 									<p class="card-text">
-										구매가: ₩<%=price%></p>
+										구매가: ₩<%=String.format("%,d", price)%></p>
 									<form method="post" action="/shop/buy/buyInsert.jsp"
 										class="d-inline">
 										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">

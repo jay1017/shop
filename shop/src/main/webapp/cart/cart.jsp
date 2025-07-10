@@ -113,9 +113,9 @@ if (goods != null) {
 										사이즈:
 										<%=dto.getGosize()%></p>
 									<p class="card-text">
-										가격: ₩<%=dto.getGprice()%></p>
+										가격: ₩<%=String.format("%,d", dto.getGprice())%></p>
 									<p class="card-text">
-										할인가: ₩<%=dto.getDiscount()%></p>
+										할인가: ₩<%=String.format("%,d", dto.getDiscount())%></p>
 									<p class="card-text">
 										수량:
 										<%=dto.getCcount()%>개
