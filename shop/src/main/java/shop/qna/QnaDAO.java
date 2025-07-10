@@ -7,42 +7,93 @@ import java.util.*;
 
 public class QnaDAO {
 
-	// DB 연결
-    private Connection getConnection() throws Exception {
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
-        String user = "team02";
-        String password = "1234";
-        return DriverManager.getConnection(url, user, password);
-    }
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	
+	 private static QnaDAO instance = new QnaDAO();
 
+	   public static QnaDAO getInstance() {
+	      return instance;
+	   }
+
+	   private QnaDAO() {
+	   }
+	   
+	// DB 접속
+	   private Connection getConnection() {
+	      try {
+	         Class.forName("oracle.jdbc.driver.OracleDriver");
+	         String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
+	         conn = DriverManager.getConnection(url, "team02", "1234");
+	         
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         System.out.println("연결 실패");
+	      }
+
+	      return conn;
+	   }
+
+	   // 연결끊는 메서드
+	   private void endConnection() {
+	      if (rs != null) {
+	         try {
+	            rs.close();
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	      if (pstmt != null) {
+	         try {
+	            pstmt.close();
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	      if (conn != null) {
+	         try {
+	            conn.close();
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         }
+	      }
+	   }
+	   
     // 1. 문의 등록
     public void insertQna(QnaDTO dto) {
-        String sql = "INSERT INTO QNA (qnum, mnum, qtitle, qcontent) VALUES (qna_seq.NEXTVAL, ?, ?, ?)";
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+        
+        try{
+        	Connection conn = getConnection();
+        	String sql = "INSERT INTO QNA (qnum, mnum, qtitle, qcontent, mid) VALUES (qna_seq.NEXTVAL, ?, ?, ?, ?)";
+        	pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, dto.getMnum());
             pstmt.setString(2, dto.getQtitle());
             pstmt.setString(3, dto.getQcontent());
-
+            pstmt.setString(4, dto.getMid());
             pstmt.executeUpdate();
             System.out.println("문의 등록 완료");
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+        	endConnection();
         }
     }
 
     // 2. 전체 목록
-    public List<QnaDTO> getQnaList() {
+    public List<QnaDTO> getQnaList(int mnum) {
         List<QnaDTO> list = new ArrayList<>();
+        
         String sql = "SELECT * FROM qna ORDER BY qnum DESC";
         
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-
+        try {
+        	Connection conn = getConnecteQuery()) {
+        		PreparedStatement pstmt = conn.prepareStatement(sql);
+        ){
+        pstmt.setInt(1, mnum);
+        
+        try (ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 QnaDTO dto = new QnaDTO();
                 dto.setQnum(rs.getInt("qnum"));
@@ -50,9 +101,11 @@ public class QnaDAO {
                 dto.setQtitle(rs.getString("qtitle"));
                 dto.setQcontent(rs.getString("qcontent"));
                 list.add(dto);
-                System.out.println("읽은 글: " + dto.getQtitle());  // 로그 추가
+                // System.out.println("읽은 글: " + dto.getQtitle());  // 로그 추가
             }
-        } catch (Exception e) {
+        }
+          
+      } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -111,5 +164,16 @@ public class QnaDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    // 6. 회원 번호에 맞는 아이디를 받아오는 메소드
+    public String getId(int mnum) {
+    	String id = "";
+    	try {
+    		Conn = getConnection();
+    		String sql = "delete from member2 where mid=?";
+    	}
+    }
+    	
     }
 }      

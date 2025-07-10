@@ -7,7 +7,7 @@ public class QnaDTO {
     private int mnum;
     private String qtitle;
     private String qcontent;
-    
+    private String mid;
 
     public int getQnum() {
         return qnum;
@@ -40,6 +40,14 @@ public class QnaDTO {
     public void setQcontent(String qcontent) {
         this.qcontent = qcontent;
     }
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
     
     
  

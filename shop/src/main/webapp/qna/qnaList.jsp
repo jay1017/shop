@@ -128,7 +128,7 @@
     %>
         <tr>
             <td><%= dto.getQnum() %></td>
-            <td><%= dto.getMnum() %></td>
+            <td><%= dto.getMid() %></td>
             <td>
              		<% if (dto.getMnum() == myMnum) { %>
                     	<a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
