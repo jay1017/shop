@@ -211,13 +211,12 @@ public class MainDAO {
 		try {
 			conn = getConnection();
 			String sql = "select * from ( select rownum as rnum,s.* from"
-					+ "(select * from goods where gname like ? or gcontent like ? order by gnum desc) S where rownum<=?) where rnum>=?";
+					+ "(select * from goods where gname like ? order by gnum desc) S where rownum<=?) where rnum>=?";
 			pstmt = conn.prepareStatement(sql);
 			
 				pstmt.setString(1 , "%" + key + "%");
-				pstmt.setString(2 , "%" + key + "%");
-				pstmt.setInt(3, endRow);
-				pstmt.setInt(4, startRow);
+				pstmt.setInt(2, endRow);
+				pstmt.setInt(3, startRow);
 				
 				
 			rs = pstmt.executeQuery();
@@ -244,11 +243,11 @@ public class MainDAO {
 	}
 	public int searchCount(String key) {	//검색된 결과의 수 카운팅용 페이징 처리시 사용
 	    int count = 0;
-	    String sql = "SELECT COUNT(*) FROM goods WHERE gname LIKE ? or gcontent like ?";
+	    String sql = "SELECT COUNT(*) FROM goods WHERE gname LIKE ? ";
 	    try (Connection conn = getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	        pstmt.setString(1, "%" + key + "%");
-	        pstmt.setString(2, "%" + key + "%");
+	        
 	        ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) count = rs.getInt(1);
 	    } catch (Exception e) {

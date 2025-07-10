@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
 <%@ page import="shop.admin.GoodsImageDTO,shop.admin.GoodsImageDAO" %>
+<%@ page import="java.text.NumberFormat"%>
+<%@ page import="java.util.Locale"%>
+
 
 
 
@@ -22,6 +25,10 @@ int endRow=currentPage*pageSize;
 
 List<GoodsDTO> list = dao.search(key,startRow,endRow); //검색된 상품정보를 가져옴
 int count=dao.searchCount(key);
+
+NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault()); //포맷팅 객체
+
+
 %>
 
 <%
@@ -67,6 +74,8 @@ System.out.println("검색된 상품 수: " + list.size());
               int ginum = dto.getGinum();
               GoodsImageDTO gi = idao.select(ginum); 
               String giname = gi.getGiname();
+              String gprice = numberFormat.format(dto.getGprice()); //포맷팅
+              String discount = numberFormat.format(dto.getDiscount());
         %>
           <div class="col-lg-3 col-md-4 col-sm-6 mix popular mb-4">
             <div class="product__item">
@@ -78,7 +87,7 @@ System.out.println("검색된 상품 수: " + list.size());
               <div class="product__item__text">
                 <h6><%= dto.getGname() %></h6>
                 <a href="#" class="add-cart">+ Add To Cart</a>
-                <h5>&#8361;<%= dto.getGprice() %></h5>
+                <h5>&#8361;<%=gprice%></h5>
                 <div class="product__color__select">
                   <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                   <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
