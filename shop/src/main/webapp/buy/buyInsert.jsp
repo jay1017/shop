@@ -181,10 +181,10 @@
                                 		GoodsDTO goods = list.get(i);
                                 		int bcount = bcountList.get(i);
                                 		int gonum = gonumList.get(i);
-	                                    String gprice = numberFormat.format(goods.getGprice());
+                                		String gprice = numberFormat.format(goods.getGprice()).replace(",", "");
 	                                    int price = Integer.parseInt(gprice);
 	                                    int toprice = price * bcount;
-	                                    total += goods.getGprice();
+	                                    total += toprice;
 	                                    if(i == list.size() - 1) {
 	                                    	item_name += goods.getGname();
 	                                    } else {
