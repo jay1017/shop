@@ -31,13 +31,6 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 
 %>
 
-<%
-System.out.println("검색 키워드: " + key);
-System.out.println("현재 페이지: " + currentPage);
-System.out.println("startRow = " + startRow + ", endRow = " + endRow);
-System.out.println("검색된 상품 수: " + list.size());
-%>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>

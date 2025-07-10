@@ -52,7 +52,6 @@ infoBr.close();
 JSONObject responseJson = new JSONObject(userInfo).getJSONObject("response");
 String nid = responseJson.getString("id");
 
-System.out.println("▶ 네이버 ID: " + nid);
 
 // DB에서 회원 정보 조회
 MemberDAO mdao = new MemberDAO();
@@ -61,7 +60,6 @@ MemberDTO mdto = mdao.getNaverMember(nid);  // 반드시 NAVER_ID 기준 조회
 if (mdto != null && mdto.getMid() != null) {
     session.setAttribute("sid", mdto.getMid());
     session.setAttribute("access_token", access_token);
-    System.out.println("▶ 네이버 로그인된 회원 MID: " + mdto.getMid());
 %>
     <form id="naverRedirectForm" action="/shop/member/memberDeletePro.jsp" method="post">
         <input type="hidden" name="mid" value="<%=mdto.getMid()%>" />

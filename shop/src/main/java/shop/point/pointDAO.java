@@ -53,9 +53,9 @@ public class pointDAO {
 					+ "values(point_seq.nextval, ?, ?, ?, ?, null, sysdate)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, usepdto.getMnum());
-			pstmt.setInt(1, usepdto.getPpoint());
-			pstmt.setString(1, usepdto.getPtype());
-			pstmt.setInt(1, usepdto.getPstat());
+			pstmt.setInt(2, usepdto.getPpoint());
+			pstmt.setString(3, usepdto.getPtype());
+			pstmt.setInt(4, usepdto.getPstat());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();

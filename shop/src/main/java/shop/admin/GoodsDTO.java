@@ -14,6 +14,7 @@ public class GoodsDTO {
 	private String gosize;
 	private int gocount;
 	private String gplot;
+	private String caname;
 	
 	public int getGnum() {
 		return gnum;
@@ -92,5 +93,11 @@ public class GoodsDTO {
 	}
 	public void setGplot(String gplot) {
 		this.gplot = gplot;
+	}
+	public String getCaname() {
+		return caname;
+	}
+	public void setCaname(String caname) {
+		this.caname = caname;
 	}
 }

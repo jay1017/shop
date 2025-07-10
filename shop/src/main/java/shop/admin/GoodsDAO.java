@@ -89,10 +89,10 @@ public class GoodsDAO {
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select r, gnum, canum, ginum, gname, gprice, discount, gonum, gocolor, gosize, gocount "
-					+ "from (select rownum r, gnum, canum, ginum, gname, gprice, discount, gonum, gocolor, gosize, gocount "
-					+ "from (select go.gnum, go.canum, go.ginum, g.gname, g.gprice, g.discount, go.gonum, go.gocolor, go.gosize, go.gocount "
-					+ "from goods g, goods_option go where g.gnum = go.gnum order by gnum desc) order by gnum desc) where r >= ? and r <= ?";
+			String sql = "select r, gnum, caname, ginum, gname, gprice, discount, gonum, gocolor, gosize, gocount "
+					+ "from (select rownum r, gnum, caname, ginum, gname, gprice, discount, gonum, gocolor, gosize, gocount "
+					+ "from (select go.gnum, ca.caname, go.ginum, g.gname, g.gprice, g.discount, go.gonum, go.gocolor, go.gosize, go.gocount "
+					+ "from goods g, goods_option go, category ca where g.gnum = go.gnum and ca.canum = go.canum order by gnum desc) order by gnum desc) where r >= ? and r <= ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -100,7 +100,7 @@ public class GoodsDAO {
 			while(rs.next()) {
 				GoodsDTO dto = new GoodsDTO();
 				dto.setGnum(rs.getInt("gnum"));
-				dto.setCanum(rs.getInt("canum"));
+				dto.setCaname(rs.getString("caname"));
 				dto.setGinum(rs.getInt("ginum"));
 				dto.setGname(rs.getString("gname"));
 				dto.setGprice(rs.getInt("gprice"));

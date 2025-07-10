@@ -63,13 +63,9 @@
 										<div class="mb-3">
 											<label class="form-label">카테고리</label>
 											<select name="canum" class="form-select">
-											<% for(CategoryDTO category : list) { %>
-												<% if(category.getCanum() == dto.getCanum()) { %>
-													<option value="<%=dto.getCanum()%>" selected><%=category.getCaname() %></option>
-												<% } else { %>
+												<% for(CategoryDTO category : list) { %>
 													<option value="<%=dto.getCanum()%>"><%=category.getCaname() %></option>
 												<% } %>
-											<% } %>
 											</select>
 										</div>
 										<div class="mb-3">
