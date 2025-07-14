@@ -18,6 +18,7 @@
     
 <div class="sidebar">
 	<input type="button" value="홈" onclick="location.href='/shop/main/main.jsp'"> 
+	<input type="button" value="상품전체" onclick="location.href='/shop/goods/goodslist.jsp'">
 	<input type="button" value="장바구니" onclick="location.href='/shop/cart/cart.jsp'">
 	<input type="button" value="구매내역" onclick="location.href='/shop/buy/buyList.jsp'"> 
 	<input type="button" value="문의" onclick="location.href='/shop/qna/qnaList.jsp'">
