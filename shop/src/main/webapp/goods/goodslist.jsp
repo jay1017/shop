@@ -268,7 +268,7 @@ if (endPage > pageCount)
 		}
 		%>
 		<form action="/shop/main/search.jsp" method="get">
-			<input type="text" placeholder="검색어 입력">
+			<input type="text" name="key" placeholder="검색어 입력">
 			<button type="submit" class="primary-btn"
 				style="border: none; border-radius: 5px">검색</button>
 		</form>
