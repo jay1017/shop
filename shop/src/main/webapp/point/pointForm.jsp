@@ -20,6 +20,19 @@ int PointCount = pdao.getAllPoint(mdto.getMnum());
 List<pointDTO> plist = pdao.getPointList(mdto.getMnum());
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+int pageSize = 10; //한 페이지에 보여줄 항목 수
+int pageNum = 1; // 현재 페이지 번호
+
+if(request.getParameter("pageNum") != null){
+	pageNum = Integer.parseInt(request.getParameter("pageNum"));
+}
+
+int totalPointCount = plist.size();//총 포인트 개수
+int pageCount = (int) Math.ceil((double) totalPointCount / pageSize);//총 페이지수
+
+int start = (pageNum - 1) * pageSize;
+int end = Math.min(start + pageSize, totalPointCount);
 %>
 <html>
 <head>
@@ -46,7 +59,8 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			<div class="point-history">
 				<%
 				if (plist != null && !plist.isEmpty()) {
-					for (pointDTO pd : plist) {
+					for (int i = start; i < end; i++) {
+						pointDTO pd = plist.get(i);
 				%>
 				<div class="point-item">
 					<span class="label"><%=pd.getPtype()%> (<%=pd.getPstat() == 1 ? "적립" : "사용"%>)</span>
@@ -66,6 +80,21 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				%>
 				<div class="point-empty">포인트 내역이 없습니다.</div>
 				<%
+				}
+				%>
+			</div>
+			<div class="point-paging" style="margin-top:20px;">
+				<%
+					for (int i = 1; i <= pageCount; i++) {
+						if (i == pageNum) {
+				%>
+						<strong>[<%=i %>]</strong>
+				<%
+					} else {
+				%>
+						<a href="pointForm.jsp?pageNum=<%=i %>">[<%=i %>]</a>
+				<%
+					}
 				}
 				%>
 			</div>

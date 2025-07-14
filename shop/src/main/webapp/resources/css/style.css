@@ -4559,6 +4559,17 @@ body.point-body {
   margin-bottom: 10px;
 }
 
+.point-paging {
+    text-align: center;
+}
+.point-paging a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #333;
+}
+.point-paging strong {
+    color: black;
+}
 
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 @media only screen and (min-width: 1200px) {

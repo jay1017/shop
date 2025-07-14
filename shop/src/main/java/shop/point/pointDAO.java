@@ -71,7 +71,7 @@ public class pointDAO {
 		int result = 0;
 		try {
 			conn = getConnection();
-			String sql = "select sum(ppoint) from point where mnum=? and pstat = 1";
+			String sql = "select sum(ppoint) from point where mnum=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -93,7 +93,7 @@ public class pointDAO {
 		List<pointDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from point where mnum=? order by pcreate DESC";
+			String sql = "select * from point where mnum=? order by pnum DESC";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
