@@ -108,6 +108,7 @@ bnum불러오고 상품 이름, 사진, 가격정도만 불러오면 될듯?--%>
 										class="d-inline">
 										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
 										<input type="hidden" name="bcount" value="<%=bcount%>">
+										<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
 										<input type="submit" value="재구매하기" class="btn btn-sm btn-dark">
 									</form>
 								</div>

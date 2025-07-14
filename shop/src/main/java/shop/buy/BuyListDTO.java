@@ -12,7 +12,14 @@ public class BuyListDTO {
 	private String giname;
 	private int gprice;
 	private String gosize;
+	private int gonum;
 	
+	public int getGonum() {
+		return gonum;
+	}
+	public void setGonum(int gonum) {
+		this.gonum = gonum;
+	}
 	public String getGosize() {
 		return gosize;
 	}
