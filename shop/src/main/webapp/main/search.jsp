@@ -117,8 +117,15 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
                 <a href="search.jsp?key=<%= key %>&pageNum=<%= endPage + 1 %>">다음 ▶</a>
             <% } %>
         </div>
+        <div class="text-center mt-4">
+        	<form action="/shop/main/search.jsp" method="get">
+				<input type="text" name="key" placeholder="검색어 입력">
+				<button type="submit" class="primary-btn"
+					style="border: none; border-radius: 5px">검색</button>
+			</form>
+		</div>
     </div>
-	
+    	
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
