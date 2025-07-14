@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
 <%@ page import="shop.main.CategoryDTO"%>
 <%@ page import="shop.admin.GoodsImageDAO,shop.admin.GoodsImageDTO"%>
@@ -7,52 +6,43 @@
 <%@ page import="java.util.Locale"%>
 
 <%
-String sid = (String) session.getAttribute("sid");
-MainDAO dao = MainDAO.getInstance();
-GoodsImageDAO idao = GoodsImageDAO.getDAO();
+    String sid = (String) session.getAttribute("sid");
+    MainDAO dao = MainDAO.getInstance();
+    GoodsImageDAO idao = GoodsImageDAO.getDAO();
 
-List<CategoryDTO> list = dao.getCate();
-List<GoodsDTO> list2 = dao.getGoods(); //모든 상품의 정보를 출력
-List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력 
-List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
+    List<CategoryDTO> list = dao.getCate();
+    List<GoodsDTO> list2 = dao.getGoods(); //모든 상품의 정보를 출력
+    List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력 
+    List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 
-NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault()); //포맷팅
-
+    NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault()); //포맷팅
 %>
-
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Male_Fashion Template">
-<meta name="keywords" content="Male_Fashion, unica, creative, html">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>ODEZ</title>
-<link rel="stylesheet" href="/shop/resources/css/font.css" />
-<link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/elegant-icons.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/magnific-popup.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/nice-select.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/slicknav.min.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/style.css"
-	type="text/css">
-<link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" 
-	type="text/css"/>
-<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
+    <meta charset="UTF-8">
+    <meta name="description" content="Male_Fashion Template">
+    <meta name="keywords" content="Male_Fashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ODEZ</title>
+    <link rel="stylesheet" href="/shop/resources/css/font.css" />
+    <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+    <script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body>
-	<jsp:include page="/include/header.jsp"></jsp:include>
-	<%--헤더--%>
-	<jsp:include page="/include/sidebar.jsp"></jsp:include>
+    <jsp:include page="/include/header.jsp"></jsp:include>
+    <%--헤더--%>
+    <jsp:include page="/include/sidebar.jsp"></jsp:include>
+    
 	<section class="hero">
 		<div class="hero__slider owl-carousel">
 			<div class="hero__items set-bg"
@@ -110,10 +100,11 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
 			</div>
 		</div>
 	</section>
-	<%--여기까지가 배너--%>
-	<!-- Hero Section End -->
 	
-	<!-- Banner Section Begin -->
+    <%--여기까지가 배너--%>
+    <!-- Hero Section End -->
+    
+    <!-- Banner Section Begin -->
     <section class="banner spad">
         <div class="container">
             <div class="row">
@@ -153,118 +144,129 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
             </div>
         </div>
     </section>
-	<!-- Banner Section End -->
+    <!-- Banner Section End -->
 
-	<!-- Product Section Begin -->
-<section class="product spad">
-    <div class="container">
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="filter__controls">
+                        <li class="active" data-filter="*">전체 상품</li>
+                        <li data-filter=".popular">인기 상품</li>
+                        <li data-filter=".sale">할인 상품</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row product__filter">
+                <%-- 인기 상품 출력 --%>
+                <%
+                    int count = 0;
+                    for (GoodsDTO dto : tlist) {
+                        int ginum = dto.getGinum();
+                        GoodsImageDTO gi = idao.select(ginum);
+                        String giname = gi.getGiname();
+                        int disprice = dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100); //할인된 가격
+                        String discount = numberFormat.format(disprice); //할인된 가격 포맷팅
+                        String gprice = numberFormat.format(dto.getGprice()); //원가 포맷팅
+                        if (count >= 12) break;
+                        count++;
+                %>
+                <div class="col-lg-3 col-md-6 col-sm-6 mix popular">
+                    <div class="product__item">
+                        <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
+                            <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
+                                <span class="label">Hot</span>
+                            </div>
+                        </a>
+                        <div class="product__item__text">
+                            <h6><%= dto.getGname() %></h6>
+                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <h5>
+                                <del>&#8361;<%= gprice %></del>
+                                <%= discount %>
+                            </h5>
+                            <div class="product__color__select">
+                                <label for="pc-<%= dto.getGnum() %>a">
+                                    <input type="radio" id="pc-<%= dto.getGnum() %>a">
+                                </label>
+                                <label class="active black" for="pc-<%= dto.getGnum() %>b">
+                                    <input type="radio" id="pc-<%= dto.getGnum() %>b">
+                                </label>
+                                <label class="grey" for="pc-<%= dto.getGnum() %>c">
+                                    <input type="radio" id="pc-<%= dto.getGnum() %>c">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <%-- 할인 상품 출력 --%>
+                <%	
+                    int count2 = 0;
+                    for (GoodsDTO dto : slist) {
+                        int ginum = dto.getGinum();
+                        GoodsImageDTO gi = idao.select(ginum);
+                        String giname = gi.getGiname();
+                        String gprice = numberFormat.format(dto.getGprice()); //원가 포맷팅
+                        String discount = numberFormat.format(dto.getDiscount());// 할인된 가격 포맷팅
+                        
+                        if (count2 >= 12) break;
+                        count2++;
+                %>
+                <div class="col-lg-3 col-md-6 col-sm-6 mix sale">
+                    <div class="product__item">
+                        <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
+                            <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
+                                <span class="label">Sale</span>
+                            </div>
+                        </a>
+                        <div class="product__item__text">
+                            <h6><%= dto.getGname() %></h6>
+                            <a href="#" class="add-cart">+ Add To Cart</a>
+                            <h5>
+                                <del>&#8361;<%= gprice %></del>
+                                <%= discount %>
+                            </h5>
+                            <div class="product__color__select">
+                                <label for="pc-<%= dto.getGnum() %>a">
+                                    <input type="radio" id="pc-<%= dto.getGnum() %>a">
+                                </label>
+                                <label class="active black" for="pc-<%= dto.getGnum() %>b">
+                                    <input type="radio" id="pc-<%= dto.getGnum() %>b">
+                                </label>
+                                <label class="grey" for="pc-<%= dto.getGnum() %>c">
+                                    <input type="radio" id="pc-<%= dto.getGnum() %>c">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+        
         <div class="row">
-            <div class="col-lg-12">
-                <ul class="filter__controls">
-                	<li class="active" data-filter="*">전체 상품</li>
-                    <li data-filter=".popular">인기 상품</li>
-                    <li data-filter=".sale">할인 상품</li>
-                </ul>
+            <div class="col-lg-12 text-center">
+                <a href="/shop/goods/goodslist.jsp" class="primary-btn">전체 상품 보기</a>
             </div>
         </div>
-
-        <div class="row product__filter">
-
-            <%-- 인기 상품 출력 --%>
-            <%
-                int count = 0;
-                for (GoodsDTO dto : tlist) {
-                    int ginum = dto.getGinum();
-                    GoodsImageDTO gi = idao.select(ginum);
-                    String giname = gi.getGiname();
-                    int disprice = dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100); //할인된 가격
-                    String discount = numberFormat.format(disprice); //할인된 가격 포맷팅
-                    String gprice=numberFormat.format(dto.getGprice()); //원가 포맷팅
-                    if (count >= 12) break;
-                    count++;
-            %>
-            <div class="col-lg-3 col-md-6 col-sm-6 mix popular">
-                <div class="product__item">
-                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
-                        <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
-                            <span class="label">Hot</span>
-                        </div>
-                    </a>
-                    <div class="product__item__text">
-                        <h6><%= dto.getGname() %></h6>
-                        <a href="#" class="add-cart">+ Add To Cart</a>
-                        <h5>
-                        	<del>&#8361;<%= gprice %></del>
-                        	<%=discount%>
-                        </h5>
-                        <div class="product__color__select">
-                            <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
-                            <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
-                            <label class="grey" for="pc-<%= dto.getGnum() %>c"><input type="radio" id="pc-<%= dto.getGnum() %>c"></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-
-            <%-- 할인 상품 출력 --%>
-            <%	
-            	int count2=0;
-                for (GoodsDTO dto : slist) {
-                    int ginum = dto.getGinum();
-                    GoodsImageDTO gi = idao.select(ginum);
-                    String giname = gi.getGiname();
-                    String gprice=numberFormat.format(dto.getGprice()); //원가 포맷팅
-                    String discount=numberFormat.format(dto.getDiscount());// 할인된 가격 포맷팅
-                    
-                    if (count2 >= 12) break;
-                    count2++;
-            %>
-            <div class="col-lg-3 col-md-6 col-sm-6 mix sale">
-                <div class="product__item">
-                    <a href="/shop/goods/goodsview.jsp?gnum=<%= dto.getGnum() %>">
-                        <div class="product__item__pic set-bg" data-setbg="/shop/resources/image/<%= giname %>">
-                            <span class="label">Sale</span>
-                        </div>
-                    </a>
-                    <div class="product__item__text">
-                        <h6><%= dto.getGname() %></h6>
-                        <a href="#" class="add-cart">+ Add To Cart</a>
-                        <h5>
-                            <del>&#8361;<%= gprice %></del>
-                            <%= discount%>
-                        </h5>
-                        <div class="product__color__select">
-                            <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
-                            <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
-                            <label class="grey" for="pc-<%= dto.getGnum() %>c"><input type="radio" id="pc-<%= dto.getGnum() %>c"></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <% } %>
-        </div>
-    </div>
-	<div class="row">
-		<div class="col-lg-12 text-center">
-        	<a href="/shop/goods/goodslist.jsp" class="primary-btn">전체 상품 보기</a>
-       	</div>
-	</div>
-</section>
-<jsp:include page="/include/footer.jsp"></jsp:include>
-
-<!-- Product Section End -->
-	
-	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
-	<script src="/shop/resources/js/bootstrap.min.js"></script>
-	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
-	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
-	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
-	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
-	<script src="/shop/resources/js/jquery.slicknav.js"></script>
-	<script src="/shop/resources/js/mixitup.min.js"></script>
-	<script src="/shop/resources/js/owl.carousel.min.js"></script>
-	<script src="/shop/resources/js/main.js"></script>
-
+    </section>
+    
+    <jsp:include page="/include/footer.jsp"></jsp:include>
+    <!-- Product Section End -->
+        
+    <script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+    <script src="/shop/resources/js/bootstrap.min.js"></script>
+    <script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+    <script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+    <script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+    <script src="/shop/resources/js/jquery.countdown.min.js"></script>
+    <script src="/shop/resources/js/jquery.slicknav.js"></script>
+    <script src="/shop/resources/js/mixitup.min.js"></script>
+    <script src="/shop/resources/js/owl.carousel.min.js"></script>
+    <script src="/shop/resources/js/main.js"></script>
 </body>
 </html>
