@@ -39,7 +39,7 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	<jsp:include page="/include/header.jsp" />
 	<form align="center">
 		<div class="point-box">
-			<h2>안녕하세요. <%=mdto.getMname()%>님</h2>
+			<h2><%=mdto.getMname()%>님의 포인트내역</h2>
 			<div class="point-summary">
 				사용 가능 포인트: <strong><%=PointCount%>P</strong>
 			</div>
@@ -53,10 +53,10 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					<span><%=pd.getPpoint()%>P</span>
 					<span class="date">
 						<%if(pd.getPcreate() != null){%>
-							<%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%>
+							<span>적립일자: </span><%=pd.getPcreate() != null ? sdf.format(pd.getPcreate()) : "-"%>
 						<%}
 						  if(pd.getPuse() != null){%>
-							  <%=pd.getPuse() != null ? sdf.format(pd.getPuse()) : "-"%>
+							  <span>사용일자: </span><%=pd.getPuse() != null ? sdf.format(pd.getPuse()) : "-"%>
 						  <%}%>
 					</span>
 				</div>
@@ -72,7 +72,6 @@ SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		</div>
 	</form>
 	<jsp:include page="/include/footer.jsp" />
-
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>

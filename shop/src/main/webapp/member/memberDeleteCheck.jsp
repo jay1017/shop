@@ -2,9 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@page import="shop.member.LoginDAO" %>
 <%@page import="shop.member.MemberDTO" %>
-
-
-
 <html>
 	<head>
 		<title>회원탈퇴 확인</title>
