@@ -45,6 +45,27 @@ public class pointDAO {
 		}
 	}
 	
+	//구매후 사용 포인트 메서드
+	public void InsertUsePoint(pointDTO usepdto) {
+		try {
+			conn = getConnection();
+			String sql = "insert into point(pnum, mnum, ppoint, ptype, pstat, pcreate, puse) "
+					+ "values(point_seq.nextval, ?, ?, ?, ?, null, sysdate)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, usepdto.getMnum());
+			pstmt.setInt(2, usepdto.getPpoint());
+			pstmt.setString(3, usepdto.getPtype());
+			pstmt.setInt(4, usepdto.getPstat());
+			pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn!=null)try {conn.close();}catch(Exception e) {}
+			if(pstmt!=null)try {pstmt.close();}catch(Exception e) {}
+			if(rs!=null)try {rs.close();}catch(Exception e) {}
+		}
+	}
+	
 	//해당 회원의 사용가능 포인트 금액 표시
 	public int getAllPoint(int mnum) {
 		int result = 0;

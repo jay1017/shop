@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/shop/resources/css/font.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=abea6492f5174947013829a53f0d8a37"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+    <script type="text/javascript" src="/shop/resources/js/about.js"></script>
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
@@ -55,28 +56,6 @@
             </div>
             <div class="row">
             	<div id="map" style="width:1200px;height:400px;"></div>
-            	<script>
-			        window.onload = function () {
-			            var container = document.getElementById('map');
-			            var options = {
-			                center: new kakao.maps.LatLng(37.4809094, 126.9520957), // 서울시청 좌표
-			                level: 3
-			            };
-			
-			            var map = new kakao.maps.Map(container, options);
-			            
-			         	// 마커가 표시될 위치입니다 
-			            var markerPosition  = new kakao.maps.LatLng(37.4809094, 126.9520957); 
-
-			            // 마커를 생성합니다
-			            var marker = new kakao.maps.Marker({
-			                position: markerPosition
-			            });
-
-			            // 마커가 지도 위에 표시되도록 설정합니다
-			            marker.setMap(map);
-			        };
-		    </script>
             </div>
         </div>
     </section>

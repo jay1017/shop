@@ -66,31 +66,67 @@ function checkGoods2(event) {
 	}
 
 	var gprice = document.getElementById("gprice");
-	if (gprice.value.trim() == 0) {
+	if (gprice.value.trim() == "" || gprice.value.trim() == 0) {
 		alert("가격을 입력 하십시오.");
 		event.preventDefault();
 		return false;
 	}
+
+	var discount = document.getElementById("discount");
+	if (discount.value.trim() == "") {
+		discount.value = 0;
+	}
 }
 
 function checkGoods3(event) {
-	var gname = document.getElementById("gosize");
-	if (gname.value.trim() == "") {
+	var gosize = document.getElementById("gosize");
+	if (gosize.value.trim() == "") {
 		alert("사이즈를 입력 하십시오.");
 		event.preventDefault();
 		return false;
 	}
 
-	var gprice = document.getElementById("gocolor");
-	if (gprice.value.trim() == "") {
+	var gocolor = document.getElementById("gocolor");
+	if (gocolor.value.trim() == "") {
 		alert("색상을 입력 하십시오.");
 		event.preventDefault();
 		return false;
 	}
 
-	var gprice = document.getElementById("gocount");
-	if (gprice.value.trim() <= 10) {
+	var gocount = document.getElementById("gocount");
+	if (gocount.value.trim() <= 10) {
 		alert("최소 수량은 10개 이상입니다.");
+		event.preventDefault();
+		return false;
+	}
+}
+
+// 쿠폰 등록 유효성 검사
+function checkCoupon(event) {
+	var cpname = document.getElementById("cpname");
+	if (cpname.value.trim() == "") {
+		alert("쿠폰명을 입력 하십시오.");
+		event.preventDefault();
+		return false;
+	}
+
+	var cpvalue = document.getElementById("cpvalue");
+	if (cpvalue.value.trim() == 0 || cpvalue.value.trim() == "") {
+		alert("할인율이나 할인 금액은 1 이상 입력 하십시오.");
+		event.preventDefault();
+		return false;
+	}
+
+	var cpmop = document.getElementById("cpmop");
+	if (cpmop.value.trim() == 0 || cpmop.value.trim() == "") {
+		alert("최소 주문 금액을 1 이상 입력하세요.");
+		event.preventDefault();
+		return false;
+	}
+
+	var cpdate = document.getElementById("cpdate");
+	if (cpdate.value.trim() == 0 || cpdate.value.trim() == "") {
+		alert("발급일 기준 유효일을 1 이상으로 입력하세요");
 		event.preventDefault();
 		return false;
 	}
@@ -111,3 +147,64 @@ function deleteGoods(num1, num2, num3, url1, url2, url3) {
 		window.location = url1 + num1 + url2 + num2 + url3 + num3;
 	}
 }
+
+// 어드민 탭 이벤트
+function showTab(index) {
+	const buttons = document.querySelectorAll('.tab-button');
+	const contents = document.querySelectorAll('.tab-content2');
+
+	buttons.forEach((btn, i) => {
+		btn.classList.toggle('active', i === index);
+	});
+
+	contents.forEach((content, i) => {
+		content.classList.toggle('active', i === index);
+	});
+}
+
+// canames 에 caname 대입 / gcounts에 gcount 대입
+var canames = document.getElementsByClassName("caname");
+var gcounts = document.getElementsByClassName("gcount");
+var caname = [];
+var gcount = [];
+
+for (i = 0; i < canames.length; i++) {
+	caname.push(canames[i].innerHTML);
+}
+
+for (i = 0; i < gcounts.length; i++) {
+	gcount.push(gcounts[i].innerHTML);
+}
+
+// 메인의 차트 로드
+document.addEventListener("DOMContentLoaded", function() {
+	// Pie chart
+	new Chart(document.getElementById("chartjs-dashboard-pie"), {
+		type: "pie",
+		data: {
+			labels: caname,
+			datasets: [{
+				data: gcount,
+				backgroundColor: [
+					window.theme.primary,
+					window.theme.warning,
+					window.theme.danger,
+					window.theme.success,
+					window.theme.primary,
+					window.theme.warning,
+					window.theme.danger,
+					window.theme.success,
+				],
+				borderWidth: 5
+			}]
+		},
+		options: {
+			responsive: !window.MSInputMethodContext,
+			maintainAspectRatio: false,
+			legend: {
+				display: false
+			},
+			cutoutPercentage: 75
+		}
+	});
+});

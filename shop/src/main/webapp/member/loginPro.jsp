@@ -16,8 +16,6 @@
 	//DAO의 객체를 생성하여 result에 로그인이 성공했을때 1 실패했을때 0을 반환
 	LoginDAO ldao = LoginDAO.getInstance();
 	int result = ldao.LoginCheck(ldto);
-	System.out.println("Mid:"+mid);
-	System.out.println("Pw:"+mpw);
 	if(result == 1){
 		//로그인 성공
 		session.setAttribute("sid", ldto.getMid()); //세션에 로그인한 아이디값을 sid로 저장

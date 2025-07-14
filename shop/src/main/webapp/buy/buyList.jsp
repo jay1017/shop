@@ -46,66 +46,93 @@ List<BuyListDTO> buy = dao.getBuybyMnum(mnum);
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
 	type="text/css" />
-<jsp:include page="/include/header.jsp" />
-<jsp:include page="/include/sidebar.jsp" />
 
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>		
 <title>전체 주문 페이지</title>
-<div class="container">
-	<div class="row">
-		<div class="col-lg-3">
-			<h1>주문내역</h1>
+</head>
+<body>
+	<jsp:include page="/include/header.jsp" />
+	<jsp:include page="/include/sidebar.jsp" />
+	<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h4>주문내역</h4>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
-<%-- 주문내역 페이지로 돌아가는 버튼하나 만들기
+	</section>
+	<%-- 주문내역 페이지로 돌아가는 버튼하나 만들기
 buy 테이블에서 전체불러오기(주문 상세내역)
 bnum불러오고 상품 이름, 사진, 가격정도만 불러오면 될듯?--%>
-<div class="container">
-	<div class="row">
-		<div class="col-lg-3">
-<%
-if (buy.isEmpty()) {
-%>
-<p>구매한 상품이 없습니다.</p>
-<%
-} else {
-for (BuyListDTO dto : buy) {
+	<section class="shopping-cart spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<%
+					if (buy.isEmpty()) {
+					%>
+					<p>구매한 상품이 없습니다.</p>
+					<%
+					} else {
+					for (BuyListDTO dto : buy) {
 
-	int discount = dto.getDiscount();
-	int bcount = dto.getBcount();
-	int price = discount * bcount;
-%>
+						int discount = dto.getDiscount();
+						int bcount = dto.getBcount();
+						int price = discount * bcount;
+					%>
+					<div class="card mb-4">
+						<div class="row no-gutters">
+							<div
+								class="col-md-4 d-flex align-items-center justify-content-center">
+								<img src="/shop/resources/image/<%=dto.getGiname()%>"
+									alt="상품이미지" width="150">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<p class="card-text">
+										상품명:<%=dto.getGname()%></p>
+									<p>
+										사이즈:<%=dto.getGosize() %>
+									</p>
+									<p class="card-text">
+										가격: ₩<%=String.format("%,d", discount)%></p>
+									<p class="card-text">
+										구매수량:<%=bcount%>개
+									</p>
+									<p class="card-text">
+										구매가: ₩<%=String.format("%,d", price)%></p>
+									<form method="post" action="/shop/buy/buyInsert.jsp"
+										class="d-inline">
+										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+										<input type="hidden" name="bcount" value="<%=bcount%>">
+										<input type="submit" value="재구매하기" class="btn btn-sm btn-dark">
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<%
+							}//for 끝
 
-			<img src="/shop/resources/image/<%=dto.getGiname()%>" alt="상품이미지"
-				width="150">
+					 }//else 끝se끝
+							%>
+				</div>
+			</div>
+	</section>
 
-			<p>
-				상품명:<%=dto.getGname()%></p>
-			<p>
-				가격: ₩<%=discount%></p>
-			<p>
-				구매수량:<%=bcount%>개
-			</p>
-			<p>
-				구매가: ₩<%=price%></p>
-		</div>
-		<%
-		}
-		}
-		%>
-	</div>
-</div>
-
-<jsp:include page="/include/footer.jsp" />
-<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
-<script src="/shop/resources/js/bootstrap.min.js"></script>
-<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
-<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
-<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
-<script src="/shop/resources/js/jquery.countdown.min.js"></script>
-<script src="/shop/resources/js/jquery.slicknav.js"></script>
-<script src="/shop/resources/js/mixitup.min.js"></script>
-<script src="/shop/resources/js/owl.carousel.min.js"></script>
-<script src="/shop/resources/js/main.js"></script>
+	<jsp:include page="/include/footer.jsp" />
+	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
+	<script src="/shop/resources/js/bootstrap.min.js"></script>
+	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
+	<script src="/shop/resources/js/jquery.nicescroll.min.js"></script>
+	<script src="/shop/resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="/shop/resources/js/jquery.countdown.min.js"></script>
+	<script src="/shop/resources/js/jquery.slicknav.js"></script>
+	<script src="/shop/resources/js/mixitup.min.js"></script>
+	<script src="/shop/resources/js/owl.carousel.min.js"></script>
+	<script src="/shop/resources/js/main.js"></script>
 </body>
 </html>

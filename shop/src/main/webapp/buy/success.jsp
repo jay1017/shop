@@ -11,6 +11,7 @@
 <%@ page import="shop.point.pointDAO" %>  
 <%@ page import="shop.coupon.CouponDAO" %> 
 <%@ page import="shop.coupon.CouponDTO" %>    
+<%@ page import="shop.cart.CartDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,10 @@
 		String pg_token = request.getParameter("pg_token");
 		String sid = (String) session.getAttribute("sid");
 		String tp = request.getParameter("before_price");
-		
+		int buyPoint = Integer.parseInt(request.getParameter("buypoint"));//구매 포인트
+		System.out.println("토탈 가격: "+ tp);
+		System.out.println ("사용 포인트: " + buyPoint);
+		CartDAO cadao = CartDAO.getInstance();
 		if(pg_token != null) { 
 			request.setCharacterEncoding("UTF-8");
 			
@@ -31,17 +35,11 @@
 			int totalprice = Integer.parseInt(tp);
 			int point = totalprice / 100;
 			String pname = "구매 적립포인트";
+			String usepname = "구매 사용포인트";
 
 			pointDAO pdao = new pointDAO();
-			pointDTO pdto = new pointDTO();
-			
-			pdto.setPpoint(point);
-			pdto.setPtype(pname);
-			pdto.setPstat(1);
-			
-			//사용상태는 사용 or 미사용이기에 미사용일때 1, 사용했을때 0으로 저장하기 위해
-			//적립만 했을 시엔 1로 기본값 저장
-			// pdao.InsertPoint(pdto);
+			pointDTO pdto = new pointDTO(); //적립 포인트 저장 dto
+			pointDTO usepdto = new pointDTO(); //구매 포인트 저장 dto
 
 			BuyDAO dao = BuyDAO.getDAO();
 			BuyDTO dto = new BuyDTO();
@@ -52,7 +50,6 @@
 			
 			// 회원 번호 대입
 			dto.setMnum(mdto.getMnum()); 
-			pdto.setMnum(mdto.getMnum());
 			
 			// 상품 번호 배열로 정리
 			String[] gnumArr = request.getParameter("gnum").split(",");
@@ -134,11 +131,27 @@
 						alert("구매 중 오류가 발생했습니다.");
 						location.href="/shop/goods/goodsview.jsp?gnum=" + gnumes.get(i);
 					</script>
-				<% } else { %>
+				<% } else { 
+					//포인트 사용
+					if(buyPoint > 0){
+						usepdto.setMnum(mdto.getMnum());
+						usepdto.setPpoint(-buyPoint); //사용포인트는 -로 변경해서 적용
+						usepdto.setPtype(usepname);
+						usepdto.setPstat(0);
+						pdao.InsertUsePoint(usepdto);
+					}
+						pdto.setMnum(mdto.getMnum());
+						pdto.setPpoint(point);
+						pdto.setPtype(pname);
+						pdto.setPstat(1);
+						pdao.InsertPoint(pdto);
+					%>
 					<script>
 						alert("정상 결제 되었습니다.");
 						location.href="/shop/main/main.jsp";
 					</script>
+					<% 
+					cadao.deleteByBuy(gnumes.get(i),mdto.getMnum());%>
 				<% }
 			} 
 		} else { %>

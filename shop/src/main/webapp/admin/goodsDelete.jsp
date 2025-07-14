@@ -20,11 +20,8 @@
 		int ginum = Integer.parseInt(request.getParameter("ginum"));
 		
 		int result1 = dao1.delete(gonum); 
-		System.out.println(result1);
 		int result2 = dao2.delete(gnum); 
-		System.out.println(result2);
 		int result3 = dao3.delete(ginum);
-		System.out.println(result3);
 		
 		if(result1 == 1 && result2 == 1 && result3 == 1) { %>
 			<script>

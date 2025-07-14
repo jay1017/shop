@@ -38,11 +38,11 @@
 									<h5 class="card-title mb-0">쿠폰 등록</h5>
 								</div>
 								<div class="card-body">
-									<form action="couponInsertPro.jsp" method="post">
+									<form action="couponInsertPro.jsp" method="post" onsubmit="checkCoupon(event)">
 										<div class="mb-3">
 											<label class="form-label"> 할인 방식 </label><br />
 											<label class="form-check form-check-inline">
-           										<input class="form-check-input" type="radio" name="cptype" value="할인율">
+           										<input class="form-check-input" type="radio" name="cptype" value="할인율" checked>
             									<span class="form-check-label">할인율</span>
           									</label>
           									<label class="form-check form-check-inline">
@@ -52,19 +52,19 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">할인 금액 또는 할인율</label>
-											<input type="number" name="cpvalue" class="form-control form-control-lg"/>
+											<input type="number" id="cpvalue" name="cpvalue" class="form-control form-control-lg" value="0"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">쿠폰명</label>
-											<input type="text" name="cpname" class="form-control form-control-lg"/>
+											<input type="text" id="cpname" name="cpname" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">최소 주문 금액</label>
-											<input type="number" name="cpmop" class="form-control form-control-lg"/>
+											<input type="number" id="cpmop" name="cpmop" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">발급일 기준 유효일</label>
-											<input type="number" name="cpdate" class="form-control form-control-lg"/>
+											<input type="number" id="	" name="cpdate" class="form-control form-control-lg" value="0"/>
 										</div>
 										<input type="submit" value="저장" class="btn btn-primary mt-3"/>
 									</form>

@@ -51,7 +51,7 @@
                             <button type="button" class="btn btn-sm btn-outline-primary" onclick="editReview(<%=review.getRnum()%>, '<%=review.getRcontent().replace("'", "\\'").replace("\n", "\\n").replace("\"", "\\\"").replace("\r", "")%>')">
                                 수정
                             </button>
-                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteReview(<%=review.getRnum()%>)" style="margin-left: 5px;">
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteReview(<%=review.getRnum()%>,<%=review.getGnum() %>)" style="margin-left: 5px;">
                                 삭제
                             </button>
                         </div>
@@ -98,47 +98,4 @@
     <% } %>
 </div>
 
-<script>
-// 상위 페이지의 loadReviewPage 함수를 호출하는 헬퍼 함수
-function loadReviewPageFromContainer(gnum, pageNum) {
-    try {
-        // 상위 창의 함수 호출 시도
-        if (window.parent && window.parent.loadReviewPage) {
-            window.parent.loadReviewPage(gnum, pageNum);
-        } else if (window.loadReviewPage) {
-            window.loadReviewPage(gnum, pageNum);
-        } else {
-            // 직접 페이지 로딩
-            fetch("/shop/review/reviewPagePro.jsp?gnum=" + gnum + "&pageNum=" + pageNum)
-                .then(response => response.text())
-                .then(html => {
-                    const container = document.getElementById("reviewContainer");
-                    if (container) {
-                        container.innerHTML = html;
-                    }
-                })
-                .catch(err => {
-                    console.error("리뷰 로딩 실패:", err);
-                });
-        }
-    } catch(e) {
-        console.error('loadReviewPageFromContainer error:', e);
-    }
-}
-//리뷰 삭제 함수 (reviewPagePro.jsp용)
-function deleteReview(rnum) {
-    try {
-        // 상위 창의 함수 호출 시도
-        if (window.parent && window.parent.deleteReview) {
-            window.parent.deleteReview(rnum);
-        } else if (window.deleteReview) {
-            window.deleteReview(rnum);
-        } else {
-            alert('삭제 기능을 사용할 수 없습니다.');
-        }
-    } catch(e) {
-        console.error('deleteReview error:', e);
-        alert('리뷰 삭제 중 오류가 발생했습니다.');
-    }
-}
-</script>
+<script src="/shop/resources/js/reviewPagePro.js"></script>

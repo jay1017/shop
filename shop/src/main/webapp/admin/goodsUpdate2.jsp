@@ -63,13 +63,9 @@
 										<div class="mb-3">
 											<label class="form-label">카테고리</label>
 											<select name="canum" class="form-select">
-											<% for(CategoryDTO category : list) { %>
-												<% if(category.getCanum() == dto.getCanum()) { %>
-													<option value="<%=dto.getCanum()%>" selected><%=category.getCaname() %></option>
-												<% } else { %>
+												<% for(CategoryDTO category : list) { %>
 													<option value="<%=dto.getCanum()%>"><%=category.getCaname() %></option>
 												<% } %>
-											<% } %>
 											</select>
 										</div>
 										<div class="mb-3">
@@ -101,7 +97,7 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">할인율</label>
-											<input type="number" name="discount" value="<%=dto.getDiscount()%>" class="form-control form-control-lg"/>
+											<input type="number" id="discount" name="discount" value="<%=dto.getDiscount()%>" class="form-control form-control-lg"/>
 										</div>
 										<input type="submit" value="저장하고 다음 화면으로" class="btn btn-primary mt-3"/>
 									</form>

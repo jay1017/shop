@@ -29,8 +29,6 @@
 		int gonum = Integer.parseInt(request.getParameter("gonum"));
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		
-		System.out.println(gonum);
-		
 		OptionDAO dao = OptionDAO.getDAO();
 		OptionDTO dto = dao.select(gonum);
 		

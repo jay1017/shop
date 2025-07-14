@@ -86,19 +86,23 @@ if (endPage > pageCount)
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css"
 	type="text/css" />
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>		
 </head>
 <body>
 	<jsp:include page="/include/header.jsp" />
 	<jsp:include page="/include/sidebar.jsp" />
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-3">
-				<h2>상품 목록</h2>
-				<input type="button" value="전체 상품 보기"
-					onclick="location.href='goodslist.jsp'">
+	<section class="breadcrumb-option">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb__text">
+						<h4>카테고리 별 상품</h4>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</section>
+	<section class="shopping-cart spad">
 	<div class="container">
 		<div class="row">
 
@@ -107,12 +111,7 @@ if (endPage > pageCount)
 				<div>
 					<%--selection  --%>
 					<div class="shop__sidebar">
-						<div class="shop__sidebar__search">
-							<form action="/shop/main/search.jsp">
-								<input type="text" placeholder="검색">
-								<button type="submit"></button>
-							</form>
-						</div>
+						
 						<div class="shop__sidebar__accordion">
 							<div class="accordion" id="accordionExample">
 								<div class="card">
@@ -148,15 +147,14 @@ if (endPage > pageCount)
 										<div class="card-body">
 											<div class="shop__sidebar__price">
 												<ul>
-													<li><a href="goodslist.jsp?price=0">~₩500,000</a></li>
-													<li><a href="goodslist.jsp?price=500000">₩500000 -
-															₩1000000</a></li>
-													<li><a href="goodslist.jsp?price=1000000">₩1000000
-															- ₩1500000</a></li>
-													<li><a href="goodslist.jsp?price=1500000">₩1500000
-															- ₩2000000</a></li>
-													<li><a href="goodslist.jsp?price=2000000">₩2000000
-															- ₩2500000</a></li>
+													
+													<li><a href="goodslist.jsp?price=0">~ ₩500,000</a></li>
+													<li><a href="goodslist.jsp?price=500000">₩500,000
+															- ₩1,000,000</a></li>
+													<li><a href="goodslist.jsp?price=1000000">₩1,000,000
+															- ₩1,500,000</a></li>
+													<li><a href="goodslist.jsp?price=1500000">₩1,500,000
+															~</a></li>
 												</ul>
 											</div>
 										</div>
@@ -212,13 +210,10 @@ if (endPage > pageCount)
 								<div class="card-body">
 									<h5 class="card-title"><%=dto.getGname()%></h5> 
 									<p class="card-text">
-										가격:<%=dto.getGprice()%>원
+										가격:<%=String.format("%,d", dto.getGprice())%>원
 									</p>
 									<p class="card-text">
-										판매가:<%=dto.getDiscount()%>원
-									</p>
-									<p class="card-text">
-									사이즈:<%=dto.getGosize() %>
+										판매가:<%=String.format("%,d", dto.getDiscount())%>원
 									</p>
 							</a>
 						</div>
@@ -239,6 +234,7 @@ if (endPage > pageCount)
 	<%--row 닫기 --%>
 	</div>
 	<%--container 닫기 --%>
+	</section>
 	<div style="text-align: center;">
 		<%
 		if (startPage > 1) {

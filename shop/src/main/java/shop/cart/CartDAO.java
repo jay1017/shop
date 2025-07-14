@@ -30,7 +30,7 @@ public class CartDAO {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "team02", "1234");
-			System.out.println("DB연결");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("연결 실패");
@@ -183,7 +183,7 @@ public class CartDAO {
 			conn = getConnection();
 			String sql = "select c.cnum,c.gnum,c.canum,c.ccount, c.ginum, c.gonum, g.gname, g.gprice, "
 					+ " (g.gprice - (g.gprice * g.discount / 100)) AS discount,gi.giname,go.gosize "
-					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on go.gnum=g.gnum where c.mnum=?";
+					+ " from cart c join goods g on c.gnum = g.gnum join goods_image gi on g.ginum=gi.ginum join goods_option go on go.gnum=g.gnum where c.mnum=? order by cnum desc";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -238,38 +238,39 @@ public class CartDAO {
 			pstmt.setInt(1, gnum);
 			pstmt.setInt(2, mnum);
 			result = pstmt.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 		return result;
 	}
-	
-	//장바구니에 기존 상품 조회
+
+	// 장바구니에 기존 상품 조회
 	public boolean goodsEquals(int gnum, int mnum) {
 		try {
 			conn = getConnection();
 			String sql = "select count(*) from cart where gnum=? and mnum=?";
-			pstmt= conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gnum);
 			pstmt.setInt(2, mnum);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				int count = rs.getInt(1);
-				if(count > 0) {
+				if (count > 0) {
 					return true;
-					//상품이 있으면 true
+					// 상품이 있으면 true
 				}
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
-		}//상품 없으면 false
+		} // 상품 없으면 false
 		return false;
 	}
-	//기존상품이 있으면 장바구니에 수량증가
+
+	// 기존상품이 있으면 장바구니에 수량증가
 	public void updateCount(int mnum, int gnum, int count) {
 		try {
 			conn = getConnection();
@@ -279,13 +280,14 @@ public class CartDAO {
 			pstmt.setInt(2, mnum);
 			pstmt.setInt(3, gnum);
 			pstmt.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 	}
-	//구매 후 cart에서 삭제
+
+	// 구매 후 cart에서 삭제
 	public int deleteByBuy(int gnum, int mnum) {
 		int result = 0;
 		try {
@@ -295,14 +297,15 @@ public class CartDAO {
 			pstmt.setInt(1, gnum);
 			pstmt.setInt(2, mnum);
 			result = pstmt.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 		return result;
 	}
-	//gonum에 해당하는 상품번호 가져오기
+
+	// gonum에 해당하는 상품번호 가져오기
 	public int getGnumByGonum(int gonum) {
 		int gnum = 0;
 		try {
@@ -311,12 +314,12 @@ public class CartDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, gonum);
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				gnum = rs.getInt("gnum");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			endConnection();
 		}
 		return gnum;

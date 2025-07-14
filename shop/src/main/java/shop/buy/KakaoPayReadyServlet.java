@@ -36,6 +36,7 @@ public class KakaoPayReadyServlet extends HttpServlet {
         int cpnum = Integer.parseInt(request.getParameter("cpnum"));
         
         int before_price = Integer.parseInt(request.getParameter("before_price"));
+        int applied_point = Integer.parseInt(request.getParameter("applied_point"));
         
         for(String b : bcountArr) {
         	bcount += (b + ",");
@@ -58,7 +59,7 @@ public class KakaoPayReadyServlet extends HttpServlet {
         + gnum + "&bcount=" + bcount + "&address=" + address + "&address2=" 
         + address2 + "&address3=" + address3 + "&note=" + note + "&gonum="
         + gonum + "&bprice=" + total_amount + "&zip=" + zip + "&before_price=" + 
-        before_price + "&cpnum=" + cpnum, "UTF-8");
+        before_price + "&cpnum=" + cpnum + "&buypoint=" + applied_point, "UTF-8");
         
         // URL로 외부와 연결
         URL url = new URL("https://kapi.kakao.com/v1/payment/ready");

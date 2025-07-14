@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
 <%@ page import="shop.admin.GoodsImageDTO,shop.admin.GoodsImageDAO" %>
+<%@ page import="java.text.NumberFormat"%>
+<%@ page import="java.util.Locale"%>
+
 
 
 
@@ -22,13 +25,10 @@ int endRow=currentPage*pageSize;
 
 List<GoodsDTO> list = dao.search(key,startRow,endRow); //검색된 상품정보를 가져옴
 int count=dao.searchCount(key);
-%>
 
-<%
-System.out.println("검색 키워드: " + key);
-System.out.println("현재 페이지: " + currentPage);
-System.out.println("startRow = " + startRow + ", endRow = " + endRow);
-System.out.println("검색된 상품 수: " + list.size());
+NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault()); //포맷팅 객체
+
+
 %>
 
 <!DOCTYPE html>
@@ -67,6 +67,8 @@ System.out.println("검색된 상품 수: " + list.size());
               int ginum = dto.getGinum();
               GoodsImageDTO gi = idao.select(ginum); 
               String giname = gi.getGiname();
+              int disprice = dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100); //할인된 가격
+              String discount = numberFormat.format(disprice);  //할인된 가격 포맷팅
         %>
           <div class="col-lg-3 col-md-4 col-sm-6 mix popular mb-4">
             <div class="product__item">
@@ -78,11 +80,7 @@ System.out.println("검색된 상품 수: " + list.size());
               <div class="product__item__text">
                 <h6><%= dto.getGname() %></h6>
                 <a href="#" class="add-cart">+ Add To Cart</a>
-                <div class="rating">
-                  <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                  <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                </div>
-                <h5>&#8361;<%= dto.getGprice() %></h5>
+                <h5>&#8361;<%=discount%></h5>
                 <div class="product__color__select">
                   <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                   <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>

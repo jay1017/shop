@@ -179,10 +179,10 @@
 		$button.parent().find('input').val(newVal);
 	});
 
-	var proQty = $('.pro-qty-2');
-	proQty.prepend('<span class="fa fa-angle-left dec qtybtn"></span>');
-	proQty.append('<span class="fa fa-angle-right inc qtybtn"></span>');
-	proQty.on('click', '.qtybtn', function() {
+	var proQty2 = $('.pro-qty-2');
+	proQty2.prepend('<span class="fa fa-angle-left dec qtybtn2"></span>');
+	proQty2.append('<span class="fa fa-angle-right inc qtybtn2"></span>');
+	proQty2.on('click', '.qtybtn2', function() {
 		var $button = $(this);
 		var oldValue = $button.parent().find('input').val();
 		if ($button.hasClass('inc')) {

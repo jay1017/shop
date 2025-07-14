@@ -50,29 +50,29 @@ if (emailnull == null) {
 
 			<div class="update-form-row">
 				<div class="update-label">비밀번호</div>
-				<input type="button" value="비밀번호 설정" class="update-btn" onclick="updateMpw()">
-				<input type="hidden" id="originalmpw" name="originalmpw" value="<%=mdto.getMpw()%>">
-				<input type="hidden" id="mpw" name="mpw" value="">
+					<input type="button" value="비밀번호 설정" class="update-btn" onclick="updateMpw()">
+					<input type="hidden" id="originalmpw" name="originalmpw" value="<%=mdto.getMpw()%>">
+					<input type="hidden" id="mpw" name="mpw" value="">
 				<div class="update-msg">*비밀번호 변경 시 설정 후 '변경사항 저장' 버튼을 누르세요.</div>
 			</div>
 
 			<div class="update-form-row">
 				<div class="update-label">이름*</div>
-				<input type="text" id="mname" name="mname" class="update-input"
+					<input type="text" id="mname" name="mname" class="update-input"
 					value="<%=mdto.getMname()%>" placeholder="이름 입력*" oninput="namecheck()">
 				<div id="namemsg" class="update-msg"></div>
 			</div>
 
 			<div class="update-form-row">
 				<div class="update-label">전화번호*</div>
-				<input type="text" id="mphone" name="mphone" class="update-input"
+					<input type="text" id="mphone" name="mphone" class="update-input"
 					value="<%=mdto.getMphone()%>" placeholder="전화번호 입력*" oninput="phonecheck()">
 				<div id="phonemsg" class="update-msg"></div>
 			</div>
 
 			<div class="update-form-row">
 				<div class="update-label">이메일</div>
-				<input type="text" id="memail" name="memail" class="update-input"
+					<input type="text" id="memail" name="memail" class="update-input"
 					value="<%=emailnull%>" placeholder="이메일 입력" oninput="emailcheck()">
 				<div id="emailmsg" class="update-msg"></div>
 			</div>
@@ -80,8 +80,12 @@ if (emailnull == null) {
 			<div class="update-form-row">
 				<div class="update-label">성별*</div>
 				<div class="update-radio-group">
-					<label><input type="radio" name="mgender" value="1" <%=mdto.getMgender() == 1 ? "checked" : ""%>> 남</label>
-					<label><input type="radio" name="mgender" value="2" <%=mdto.getMgender() == 2 ? "checked" : ""%>> 여</label>
+					<label>
+						<input type="radio" name="mgender" value="1" <%=mdto.getMgender() == 1 ? "checked" : ""%>> 남
+					</label>
+					<label>
+						<input type="radio" name="mgender" value="2" <%=mdto.getMgender() == 2 ? "checked" : ""%>> 여
+					</label>
 				</div>
 			</div>
 

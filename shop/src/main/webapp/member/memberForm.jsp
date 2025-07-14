@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="/shop/resources/css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/style.css" type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body class="join-body">
 	<jsp:include page="/include/header.jsp"></jsp:include>

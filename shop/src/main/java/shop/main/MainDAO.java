@@ -30,7 +30,6 @@ public class MainDAO {
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "team02", "1234");
 		} catch (Exception e) {
-			System.out.print(e.toString());
 			e.printStackTrace();
 		}
 
@@ -171,47 +170,64 @@ public class MainDAO {
 		}
 		return list;
 	}
-	public List<GoodsDTO> getTrendGoods() { // 재고가 일정이하인 상품의 모든정보를 가져오는 메소드
-		List<GoodsDTO> list = new ArrayList<>();
-		try {
-			conn = getConnection();
-			String sql = "select g.*,go.gocount from goods g,goods_option go where go.gnum=g.gnum and go.gocount<=100";
-			pstmt = conn.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				GoodsDTO dto = new GoodsDTO();
-				dto.setGnum(rs.getInt("gnum"));
-				dto.setCanum(rs.getInt("canum"));
-				dto.setGname(rs.getString("gname"));
-				dto.setGprice(rs.getInt("gprice"));
-				dto.setGcontent(rs.getString("gcontent"));
-				dto.setGinum(rs.getInt("ginum"));
-				dto.setDiscount(rs.getInt("discount"));
-				dto.setGread(rs.getInt("gread"));
-				list.add(dto);
-			}
+	public List<GoodsDTO> getTrendGoods() {
+	    List<GoodsDTO> list = new ArrayList<>();
+	    try {
+	        conn = getConnection();
+	        String sql = "SELECT g.gnum, g.canum, g.gname, g.gprice, " +
+	                     "       g.discount, g.gcontent, g.ginum " +
+	                     "FROM goods g, goods_option go " +
+	                     "WHERE go.gnum = g.gnum " +
+	                     "  AND go.gocount <= 90 " +
+	                     "  AND g.discount IS NOT NULL " +
+	                     "  AND g.discount > 0";
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			endConnection();
-		}
-		return list;
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            GoodsDTO dto = new GoodsDTO();
+	            dto.setGnum(rs.getInt("gnum"));
+	            dto.setCanum(rs.getInt("canum"));
+	            dto.setGname(rs.getString("gname"));
+	            dto.setGprice(rs.getInt("gprice"));
+	            dto.setDiscount(rs.getInt("discount")); // 할인율
+	            dto.setGcontent(rs.getString("gcontent"));
+	            dto.setGinum(rs.getInt("ginum"));
+	            list.add(dto);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        endConnection();
+	    }
+	    return list;
 	}
+
 
 	public List<GoodsDTO> search(String key,int startRow,int endRow) { // 서치실행 메소드
 		List<GoodsDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
-			String sql = "select * from ( select rownum as rnum,s.* from"
-					+ "(select * from goods where gname like ? or gcontent like ? order by gnum desc) S where rownum<=?) where rnum>=?";
+			String sql = "SELECT * FROM ("
+			           + " SELECT rownum AS rnum, data.*"
+			           + " FROM ("
+			           + "     SELECT gnum, canum, gname, gprice, gcontent, ginum, discount, gread,"
+			           + "            ROW_NUMBER() OVER (PARTITION BY gname ORDER BY gnum DESC) AS rn"
+			           + "     FROM goods"
+			           + "     WHERE gname LIKE ?"
+			           + " ) data"
+			           + " WHERE rn = 1"
+			           + " ORDER BY gnum DESC"
+			           + ")"
+			           + " WHERE rnum >= ? AND rnum <= ?";
+
 			pstmt = conn.prepareStatement(sql);
-			
-				pstmt.setString(1 , "%" + key + "%");
-				pstmt.setString(2 , "%" + key + "%");
-				pstmt.setInt(3, endRow);
-				pstmt.setInt(4, startRow);
+			pstmt.setString(1 , "%" + key + "%");
+			pstmt.setInt(2, startRow); // 시작
+			pstmt.setInt(3, endRow);   // 끝
+
 				
 				
 			rs = pstmt.executeQuery();
@@ -236,13 +252,20 @@ public class MainDAO {
 		return list;
 		
 	}
-	public int searchCount(String key) {	//검색된 결과의 수 카운팅용 페이징 처리시 사용
+	public int searchCount(String key) { // 중복 제거된 검색 결과 수 카운트
 	    int count = 0;
-	    String sql = "SELECT COUNT(*) FROM goods WHERE gname LIKE ? or gcontent like ?";
+	    String sql = 
+	        "SELECT COUNT(*) FROM ( " +
+	        "   SELECT ROW_NUMBER() OVER (PARTITION BY gname ORDER BY gnum DESC) AS rn " +
+	        "   FROM goods " +
+	        "   WHERE gname LIKE ? " +
+	        ") " +
+	        "WHERE rn = 1";
+	    
 	    try (Connection conn = getConnection();
 	         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 	        pstmt.setString(1, "%" + key + "%");
-	        pstmt.setString(2, "%" + key + "%");
+	        
 	        ResultSet rs = pstmt.executeQuery();
 	        if (rs.next()) count = rs.getInt(1);
 	    } catch (Exception e) {
@@ -250,6 +273,7 @@ public class MainDAO {
 	    }
 	    return count;
 	}
+
 
 	public List<CategoryDTO> getCate() { // 카테고리명들을 리스트로 받아오는 작업
 		List<CategoryDTO> list = new ArrayList<>();

@@ -216,23 +216,6 @@ public class MemberDAO {
 		return result;
 	}
 	
-	//회원 db삭제 메서드
-	public void DeleteMember(String mid) {
-		try {
-			conn = getConnection();
-			String sql = "delete from member2 where mid=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mid);
-			pstmt.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			if(conn != null)try {conn.close();}catch(Exception e) {}
-			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
-			if(rs != null)try {rs.close();}catch(Exception e) {}
-		}
-	}
-	
 	//세션의 mnum값을 통한 회원의 비밀번호 재설정
 	public void PwUpdateMember(int mnum,String pw) {
 		try {
@@ -339,13 +322,13 @@ public class MemberDAO {
 	}
 	
 	//네이버고유id를 통한 회원정보 조회 메서드
-	public MemberDTO getNaverMember(String naver_id) {
+	public MemberDTO getNaverMember(String nid) {
 		MemberDTO mdto = null;
 		try {
 			conn = getConnection();
 			String sql = "select * from member2 where naver_id=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, naver_id);
+			pstmt.setString(1, nid);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				mdto = new MemberDTO();
@@ -378,7 +361,7 @@ public class MemberDAO {
 					+"&access_token="+access_token
 					+"&service_provider=NAVER");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
+			conn.setRequestMethod("POST");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			while(br.readLine() != null) {
@@ -392,6 +375,64 @@ public class MemberDAO {
 			if(rs != null)try {rs.close();}catch(Exception e) {}
 		}
 	}
+	
+	//아이디값으로 회원번호 조회(회원탈퇴시 사용)
+	public int getMnumByMid(String mid) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			String sql = "select mnum from member2 where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+			if(rs != null)try {rs.close();}catch(Exception e) {}
+		}
+		return result;
+	}
+	
+	//회원번호를 가지고 있는 모든 정보 삭제
+	public int DeleteMemberFromMnum(int number) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			String[] sqlList = {"delete from review where mnum=?",
+								"delete from buyer where mnum=?",
+								"delete from qna where mnum=?",
+								"delete from point where mnum=?",
+								"delete from cart where mnum=?",
+								"delete from user_coupon where mnum=?",
+								"delete from member2 where mnum=?"};
+			for(String sql : sqlList) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, number);
+				pstmt.executeUpdate();
+				pstmt.close();
+			}
+			conn.commit();
+			result = 1;
+		}catch(Exception e) {
+			try {
+				if(conn != null)conn.rollback();
+			}catch(Exception ex) {
+				ex.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally {
+			if(conn != null)try {conn.close();}catch(Exception e) {}
+			if(pstmt != null)try {pstmt.close();}catch(Exception e) {}
+		}
+		return result;
+	}
+	
 	// =========================== admin ==========================================
 	// 회원의 수
 	public int selectCount() {

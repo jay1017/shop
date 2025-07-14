@@ -32,7 +32,6 @@ MemberDTO mdto = mdao.getInfo(sid);
 		<input type="hidden" id="Orimpw" name="Orimpw" value="<%=mdto.getMpw()%>" />
 		<input type="submit" value="확인" class="memberDelete-submit" />
 	</form>
-
 	<script src="<%=request.getContextPath()%>/resources/js/memberDelete.js"></script>
 </body>
 </html>

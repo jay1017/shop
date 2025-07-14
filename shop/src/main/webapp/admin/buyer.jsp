@@ -165,20 +165,6 @@
 			</main>
 		</div>
 	</div>
-	<script>
-		function showTab(index) {
-		    const buttons = document.querySelectorAll('.tab-button');
-		    const contents = document.querySelectorAll('.tab-content2');
-		
-		    buttons.forEach((btn, i) => {
-		        btn.classList.toggle('active', i === index);
-		    });
-		
-		    contents.forEach((content, i) => {
-		        content.classList.toggle('active', i === index);
-		    });
-		}
-	</script>
 	<script src="js/app.js"></script>
 	<% } %>
 </body>

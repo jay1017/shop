@@ -86,8 +86,6 @@ public class ReviewDAO {
 	
 	// 리뷰의 목록을 조회하는 메소드
 	public List<ReviewDTO> selectList(int startRow, int endRow) {
-		System.out.println(startRow);
-		System.out.println(endRow);
 		List<ReviewDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();

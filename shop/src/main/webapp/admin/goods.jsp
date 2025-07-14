@@ -47,9 +47,6 @@
 			list = dao.selectList(startRow, endRow);   
 		}
 		
-		System.out.println("startRow : " + startRow);
-		System.out.println("endRow : " + endRow);
-		
 		String admin = (String) session.getAttribute("admin");
 	%>
 	<% if(admin == null) { %>
@@ -82,7 +79,8 @@
 								<table class="table table-hover my-0">
 									<colgroup>
 										<col width="10%" />
-										<col width="30%" />
+										<col width="10%" />
+										<col width="20%" />
 										<col width="10%" />
 										<col width="10%" />
 										<col width="10%" />
@@ -93,6 +91,7 @@
 									<thead>
 										<tr>
 											<th>번호</th>
+											<th>상품 카테고리</th>
 											<th>상품명</th>
 											<th>가격</th>
 											<th>색상</th>
@@ -106,6 +105,7 @@
 										<% for(GoodsDTO dto : list) { %>
 											<tr>
 												<td class="ps-3"><%=number-- %></td>
+												<td><%=dto.getCaname() %></td>
 												<td><%=dto.getGname() %></td> 
 												<td><%=dto.getGprice() %></td> 
 												<td><%=dto.getGocolor() %></td> 

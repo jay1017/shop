@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="shop.member.MemberDAO,shop.member.MemberDTO"%>
 <%@ page import="shop.review.ReviewDAO,shop.review.ReviewDTO" %>
+<%@ page import="shop.buy.BuyDTO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,8 @@
 	int canum=Integer.parseInt(request.getParameter("canum"));	//카테고리번호
 	int ginum=Integer.parseInt(request.getParameter("ginum"));	//상품대표이미지번호
 	String rcontent=request.getParameter("rcontent"); //리뷰 내용
+	int bnum=Integer.parseInt(request.getParameter("bnum"));
+	int gonum=Integer.parseInt(request.getParameter("gonum"));
 	
 	if(sid!=null) {
 	ReviewDTO dto=new ReviewDTO();
@@ -26,6 +29,8 @@
 	dto.setCanum(canum);
 	dto.setGinum(ginum);
 	dto.setRcontent(rcontent);
+	dto.setBnum(bnum);
+	dto.setGonum(gonum);
 	 
 	dao.writeReview(dto); %>
 	<script>

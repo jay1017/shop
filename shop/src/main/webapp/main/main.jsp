@@ -3,6 +3,8 @@
 <%@ page import="shop.main.MainDAO,shop.main.GoodsDTO,java.util.List"%>
 <%@ page import="shop.main.CategoryDTO"%>
 <%@ page import="shop.admin.GoodsImageDAO,shop.admin.GoodsImageDTO"%>
+<%@ page import="java.text.NumberFormat"%>
+<%@ page import="java.util.Locale"%>
 
 <%
 String sid = (String) session.getAttribute("sid");
@@ -13,6 +15,9 @@ List<CategoryDTO> list = dao.getCate();
 List<GoodsDTO> list2 = dao.getGoods(); //모든 상품의 정보를 출력
 List<GoodsDTO> tlist = dao.getTrendGoods(); //인기상품 정보 출력 
 List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
+
+NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault()); //포맷팅
+
 %>
 
 
@@ -24,7 +29,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 <meta name="keywords" content="Male_Fashion, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>사이트 이름</title>
+<title>ODEZ</title>
 <link rel="stylesheet" href="/shop/resources/css/font.css" />
 <link rel="stylesheet" href="/shop/resources/css/bootstrap.min.css"
 	type="text/css">
@@ -42,6 +47,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
 	type="text/css">
 <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" 
 	type="text/css"/>
+<script type="text/javascript" src="/shop/resources/js/header.js"></script>	
 </head>
 <body>
 	<jsp:include page="/include/header.jsp"></jsp:include>
@@ -118,7 +124,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                         </div>
                         <div class="banner__item__text">
                             <h2>Clothing Collections 2030</h2>
-                            <a href="/shop/goods/categories.jsp?canum=1">Shop now</a>
+                            <a href="/shop/goods/goodslist.jsp?canum=1">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +135,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                         </div>
                         <div class="banner__item__text">
                             <h2>Accessories</h2>
-                            <a href="/shop/goods/categories.jsp?canum=23">Shop now</a>
+                            <a href="/shop/goods/goodslist.jsp?canum=23">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -140,7 +146,7 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                         </div>
                         <div class="banner__item__text">
                             <h2>Shoes Spring 2030</h2>
-                            <a href="/shop/goods/categories.jsp?canum=22">Shop now</a>
+                            <a href="/shop/goods/goodslist.jsp?canum=22">Shop now</a>
                         </div>
                     </div>
                 </div>
@@ -171,6 +177,9 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     int ginum = dto.getGinum();
                     GoodsImageDTO gi = idao.select(ginum);
                     String giname = gi.getGiname();
+                    int disprice = dto.getGprice() - (dto.getGprice() * dto.getDiscount() / 100); //할인된 가격
+                    String discount = numberFormat.format(disprice); //할인된 가격 포맷팅
+                    String gprice=numberFormat.format(dto.getGprice()); //원가 포맷팅
                     if (count >= 12) break;
                     count++;
             %>
@@ -184,11 +193,10 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        </div>
-                        <h5>&#8361;<%= dto.getGprice() %></h5>
+                        <h5>
+                        	<del>&#8361;<%= gprice %></del>
+                        	<%=discount%>
+                        </h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>
                             <label class="active black" for="pc-<%= dto.getGnum() %>b"><input type="radio" id="pc-<%= dto.getGnum() %>b"></label>
@@ -206,6 +214,9 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     int ginum = dto.getGinum();
                     GoodsImageDTO gi = idao.select(ginum);
                     String giname = gi.getGiname();
+                    String gprice=numberFormat.format(dto.getGprice()); //원가 포맷팅
+                    String discount=numberFormat.format(dto.getDiscount());// 할인된 가격 포맷팅
+                    
                     if (count2 >= 12) break;
                     count2++;
             %>
@@ -219,13 +230,9 @@ List<GoodsDTO> slist = dao.getSaleGoods();//세일중인 상품 리스트 출력
                     <div class="product__item__text">
                         <h6><%= dto.getGname() %></h6>
                         <a href="#" class="add-cart">+ Add To Cart</a>
-                        <div class="rating">
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
-                        </div>
                         <h5>
-                            <del>&#8361;<%= dto.getGprice() %></del>
-                            <%= dto.getDiscount() %>
+                            <del>&#8361;<%= gprice %></del>
+                            <%= discount%>
                         </h5>
                         <div class="product__color__select">
                             <label for="pc-<%= dto.getGnum() %>a"><input type="radio" id="pc-<%= dto.getGnum() %>a"></label>

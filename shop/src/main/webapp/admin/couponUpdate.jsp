@@ -45,7 +45,7 @@
 									<h5 class="card-title mb-0">쿠폰 수정</h5>
 								</div>
 								<div class="card-body">
-									<form action="couponUpdatePro.jsp" method="post">
+									<form action="couponUpdatePro.jsp" method="post" onsubmit="checkCoupon(event)">
 										<input type="hidden" value="<%=cpnum %>" name="cpnum"/>
 										<div class="mb-3">
 											<label class="form-label"> 할인 방식 </label><br />
@@ -74,19 +74,19 @@
 										</div>
 										<div class="mb-3">
 											<label class="form-label">할인 금액 또는 할인율</label>
-											<input type="number" name="cpvalue" value="<%=dto.getCpvalue() %>" class="form-control form-control-lg"/>
+											<input type="number" id="cpvalue" name="cpvalue" value="<%=dto.getCpvalue() %>" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">쿠폰명</label>
-											<input type="text" name="cpname" value="<%=dto.getCpname() %>" class="form-control form-control-lg"/>
+											<input type="text" id="cpname" name="cpname" value="<%=dto.getCpname() %>" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">최소 주문 금액</label>
-											<input type="number" name="cpmop" value="<%=dto.getCpmop() %>" class="form-control form-control-lg"/>
+											<input type="number" id="cpmop" name="cpmop" value="<%=dto.getCpmop() %>" class="form-control form-control-lg"/>
 										</div>
 										<div class="mb-3">
 											<label class="form-label">발급일 기준 유효일</label>
-											<input type="number" name="cpdate" value="<%=dto.getCpdate() %>" class="form-control form-control-lg"/>
+											<input type="number" id="cpdate" name="cpdate" value="<%=dto.getCpdate() %>" class="form-control form-control-lg"/>
 										</div>
 										<input type="submit" value="저장" class="btn btn-primary mt-3"/>
 									</form>

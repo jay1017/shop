@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import shop.buy.BuyDTO;
+
 public class ReviewDAO {
 	private static ReviewDAO instance = new ReviewDAO();
 
@@ -31,7 +33,6 @@ public class ReviewDAO {
 			String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 			conn = DriverManager.getConnection(url, "team02", "1234");
 		} catch (Exception e) {
-			System.out.print(e.toString());
 			e.printStackTrace();
 		}
 
@@ -66,13 +67,15 @@ public class ReviewDAO {
 	public void writeReview(ReviewDTO dto) { //리뷰 작성 메소드
 		try {
 			conn = getConnection();
-			String sql = "insert into review values(review_seq.NEXTVAL,?,?,?,?,?)";
+			String sql = "insert into review values(review_seq.NEXTVAL,?,?,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, dto.getGnum());
-			pstmt.setInt(2, dto.getMnum());
-			pstmt.setInt(3, dto.getCanum());
-			pstmt.setInt(4, dto.getGinum());
-			pstmt.setString(5, dto.getRcontent());
+			pstmt.setInt(1, dto.getBnum());
+			pstmt.setInt(2, dto.getGonum());
+			pstmt.setInt(3, dto.getGnum());
+			pstmt.setInt(4, dto.getMnum());
+			pstmt.setInt(5, dto.getCanum());
+			pstmt.setInt(6, dto.getGinum());
+			pstmt.setString(7, dto.getRcontent());			
 			pstmt.executeUpdate();
 			
 		} catch (Exception e) {
@@ -81,7 +84,6 @@ public class ReviewDAO {
 			endConnection();
 		}
 	}
-	
 	public List<ReviewDTO> getReview(int gnum, int startRow, int endRow) { //리뷰 출력 메소드
 		List<ReviewDTO> list = new ArrayList<>();
 		try {
@@ -113,6 +115,53 @@ public class ReviewDAO {
 			endConnection();
 		}
 		return list;
+	}
+	public boolean reviewCheck(int mnum,int gnum) { //리뷰 작성 가능한 bnum인지 체크
+		boolean reviewCheck=false;
+		try {
+			conn=getConnection();
+			String sql="select b.bnum from buyer b Left join review r ON b.bnum=r.bnum where b.mnum =? and b.gnum=? and r.bnum is null";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			pstmt.setInt(2, gnum);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				reviewCheck=true;
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return reviewCheck;
+	}
+	public BuyDTO buyCheck(int mnum,int gnum) { //리뷰 작성 가능한 bnum인지 체크
+			BuyDTO bdto=new BuyDTO();
+		try {
+			conn=getConnection();
+			String sql="select b.bnum,b.gonum from buyer b Left join review r ON b.bnum=r.bnum where b.mnum =? and b.gnum=? and r.bnum is null";
+			
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			pstmt.setInt(2, gnum);
+			
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				bdto.setBnum(rs.getInt("bnum"));
+				bdto.setGonum(rs.getInt("gonum"));
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			endConnection();
+		}
+		return bdto;
 	}
 	
 	public ReviewDTO getUserReview(int gnum, int mnum) { //내 리뷰가져오는 메소드
@@ -224,7 +273,6 @@ public class ReviewDAO {
 			rs.next();
 			rcount = rs.getInt(1);
 			
-			System.out.println(rcount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
