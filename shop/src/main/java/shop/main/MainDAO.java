@@ -140,47 +140,19 @@ public class MainDAO {
 		}
 		return list;
 	}
-	public List<GoodsDTO> getSaleGoods() { // 세일된 상품의 모든정보를 가져오는 메소드
-		List<GoodsDTO> list = new ArrayList<>();
-		try {
-			conn = getConnection();
-			String sql = "select gnum,canum,gname,(gprice - (gprice * (discount / 100.0))) as discount,gprice,gcontent,ginum,gread from goods where "
-					+ "discount is not null and discount>0";
-			pstmt = conn.prepareStatement(sql);
-			
-
-			rs = pstmt.executeQuery();
-			while (rs.next()) {
-				GoodsDTO dto = new GoodsDTO();
-				dto.setGnum(rs.getInt("gnum"));
-				dto.setCanum(rs.getInt("canum"));
-				dto.setGname(rs.getString("gname"));
-				dto.setGprice(rs.getInt("gprice"));
-				dto.setGcontent(rs.getString("gcontent"));
-				dto.setGinum(rs.getInt("ginum"));
-				dto.setDiscount(rs.getInt("discount"));
-				dto.setGread(rs.getInt("gread"));
-				list.add(dto);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			endConnection();
-		}
-		return list;
-	}
-	public List<GoodsDTO> getTrendGoods() {
+	public List<GoodsDTO> getSaleGoods() { //할인된 상품의 정보 출력
 	    List<GoodsDTO> list = new ArrayList<>();
 	    try {
 	        conn = getConnection();
-	        String sql = "SELECT g.gnum, g.canum, g.gname, g.gprice, " +
-	                     "       g.discount, g.gcontent, g.ginum " +
-	                     "FROM goods g, goods_option go " +
-	                     "WHERE go.gnum = g.gnum " +
-	                     "  AND go.gocount <= 90 " +
-	                     "  AND g.discount IS NOT NULL " +
-	                     "  AND g.discount > 0";
+	        String sql = "SELECT * FROM (" +
+	                     "    SELECT gnum, canum, gname, " +
+	                     "           (gprice - (gprice * (discount / 100.0))) as discount, " +
+	                     "           gprice, gcontent, ginum, gread, " +
+	                     "           ROW_NUMBER() OVER (PARTITION BY gname ORDER BY gnum DESC) AS rn " +
+	                     "    FROM goods " +
+	                     "    WHERE discount IS NOT NULL AND discount > 0" +
+	                     ") WHERE rn = 1 " +
+	                     "ORDER BY gnum DESC";
 
 	        pstmt = conn.prepareStatement(sql);
 	        rs = pstmt.executeQuery();
@@ -191,7 +163,46 @@ public class MainDAO {
 	            dto.setCanum(rs.getInt("canum"));
 	            dto.setGname(rs.getString("gname"));
 	            dto.setGprice(rs.getInt("gprice"));
-	            dto.setDiscount(rs.getInt("discount")); // 할인율
+	            dto.setGcontent(rs.getString("gcontent"));
+	            dto.setGinum(rs.getInt("ginum"));
+	            dto.setDiscount(rs.getInt("discount"));
+	            dto.setGread(rs.getInt("gread"));
+	            list.add(dto);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        endConnection();
+	    }
+	    return list;
+	}
+	public List<GoodsDTO> getTrendGoods() {  //인기 상품의 정보 출력 재고가 90이하이면 인기상품
+	    List<GoodsDTO> list = new ArrayList<>();
+	    try {
+	        conn = getConnection();
+	        String sql = "SELECT * FROM (" +
+	                     "    SELECT g.gnum, g.canum, g.gname, g.gprice, " +
+	                     "           g.discount, g.gcontent, g.ginum, " +
+	                     "           ROW_NUMBER() OVER (PARTITION BY g.gname ORDER BY g.gnum DESC) AS rn " +
+	                     "    FROM goods g, goods_option go " +
+	                     "    WHERE go.gnum = g.gnum " +
+	                     "      AND go.gocount <= 90 " +
+	                     "      AND g.discount IS NOT NULL " +
+	                     "      AND g.discount > 0" +
+	                     ") WHERE rn = 1 " +
+	                     "ORDER BY gnum DESC";
+
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            GoodsDTO dto = new GoodsDTO();
+	            dto.setGnum(rs.getInt("gnum"));
+	            dto.setCanum(rs.getInt("canum"));
+	            dto.setGname(rs.getString("gname"));
+	            dto.setGprice(rs.getInt("gprice"));
+	            dto.setDiscount(rs.getInt("discount"));
 	            dto.setGcontent(rs.getString("gcontent"));
 	            dto.setGinum(rs.getInt("ginum"));
 	            list.add(dto);
