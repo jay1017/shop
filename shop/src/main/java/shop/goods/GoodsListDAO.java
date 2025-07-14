@@ -157,7 +157,7 @@ public class GoodsListDAO {
 		int count = 0;
 		try {
 			conn = getConnection();
-			String sql = "select count(*) from select gname from goods group by gname";
+			String sql = "select count(*) from (select gname from goods group by gname)";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
