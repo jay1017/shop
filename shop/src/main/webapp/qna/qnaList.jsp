@@ -116,7 +116,7 @@
     <table class="qnaTable">
         <tr>
             <th>번호</th>
-            <th>회원번호</th>
+            <th>회원 아이디</th>
             <th>제목</th>
         </tr>
     <%

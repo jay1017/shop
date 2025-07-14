@@ -5,9 +5,11 @@ import java.sql.Timestamp;
 public class QnaDTO {
     private int qnum;
     private int mnum;
+    private String mid;
     private String qtitle;
     private String qcontent;
-    private String mid;
+    private Timestamp regdate;   // 등록일
+    private String answer;       // 답변 내용 (또는 상태)
 
     public int getQnum() {
         return qnum;

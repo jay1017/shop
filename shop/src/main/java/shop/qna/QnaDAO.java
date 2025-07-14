@@ -61,8 +61,7 @@ public class QnaDAO {
 	   }
 	   
     // 1. 문의 등록
-    public void insertQna(QnaDTO dto) {
-        
+    public void insertQna(QnaDTO dto) {   
         try{
         	Connection conn = getConnection();
         	String sql = "INSERT INTO QNA (qnum, mnum, qtitle, qcontent, mid) VALUES (qna_seq.NEXTVAL, ?, ?, ?, ?)";
@@ -84,33 +83,58 @@ public class QnaDAO {
     // 2. 전체 목록
     public List<QnaDTO> getQnaList(int mnum) {
         List<QnaDTO> list = new ArrayList<>();
-        
         String sql = "SELECT * FROM qna ORDER BY qnum DESC";
         
-        try {
-        	Connection conn = getConnecteQuery()) {
-        		PreparedStatement pstmt = conn.prepareStatement(sql);
-        ){
-        pstmt.setInt(1, mnum);
-        
-        try (ResultSet rs = pstmt.executeQuery()) {
+        try (
+            Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+            ResultSet rs = pstmt.executeQuery();		
+        ) {
             while (rs.next()) {
                 QnaDTO dto = new QnaDTO();
                 dto.setQnum(rs.getInt("qnum"));
                 dto.setMnum(rs.getInt("mnum"));
                 dto.setQtitle(rs.getString("qtitle"));
                 dto.setQcontent(rs.getString("qcontent"));
-                list.add(dto);
-                // System.out.println("읽은 글: " + dto.getQtitle());  // 로그 추가
+                list.add(dto);  
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+            return list;
         }
-          
-      } catch (Exception e) {
+    
+ // 2-2. 특정 회원의 문의 목록
+    public List<QnaDTO> getQnaList(int mnum) {
+        List<QnaDTO> list = new ArrayList<>();
+        String sql = "SELECT * FROM qna WHERE mnum = ? ORDER BY qnum DESC";
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setInt(1, mnum);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    QnaDTO dto = new QnaDTO();
+                    dto.setQnum(rs.getInt("qnum"));
+                    dto.setMnum(rs.getInt("mnum"));
+                    dto.setMid(rs.getString("mid"));
+                    dto.setQtitle(rs.getString("qtitle"));
+                    dto.setQcontent(rs.getString("qcontent"));
+                    list.add(dto);
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         return list;
     }
-
+    
+    
     // 3. 특정 문의글 조회
     public QnaDTO getQna(int qnum) {
         QnaDTO dto = null;
@@ -156,11 +180,14 @@ public class QnaDAO {
     // 5. 문의글 삭제
     public void deleteQna(int qnum) {
         String sql = "DELETE FROM qna WHERE qnum = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+        try (
+            Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
             pstmt.setInt(1, qnum);
             pstmt.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,12 +195,23 @@ public class QnaDAO {
     
     // 6. 회원 번호에 맞는 아이디를 받아오는 메소드
     public String getId(int mnum) {
-    	String id = "";
-    	try {
-    		Conn = getConnection();
-    		String sql = "delete from member2 where mid=?";
-    	}
+        String id = null;
+        String sql = "SELECT mid FROM member WHERE mnum = ?";
+
+        try (
+            Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
+            pstmt.setInt(1, mnum);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    id = rs.getString("mid");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
-    	
-    }
-}      
+}
