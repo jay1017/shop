@@ -132,7 +132,7 @@ public class GoodsListDAO {
 	}
 	//카테고리 번호,이름 받기
 	public List<GoodsListDTO> getCate(){
-		List<GoodsListDTO> list = null;
+		List<GoodsListDTO> list = new ArrayList<>();
 		try {
 			conn = getConnection();
 			String sql = "select * from category";

@@ -122,16 +122,13 @@ if (endPage > pageCount)
 										data-parent="#accordionExample">
 										<div class="card-body">
 											<div class="shop__sidebar__categories">
-												<ul class="nice-scroll" tabindex="1"
-													style="overflow-y: hidden; outline: none;">
-													<li><a href="goodslist.jsp?canum=22">신발</a></li>
-													<li><a href="goodslist.jsp?canum=23">쥬얼리</a></li>
-													<li><a href="goodslist.jsp?canum=24">가방</a></li>
-													<li><a href="goodslist.jsp?canum=1">셔츠</a></li>
-													<li><a href="goodslist.jsp?canum=4">티셔츠</a></li>
-													<li><a href="goodslist.jsp?canum=5">아우터</a></li>
-													<li><a href="goodslist.jsp?canum=6">바지</a></li>
-													<li><a href="goodslist.jsp?canum=7">치마</a></li>
+												<ul>
+												<%
+												List<GoodsListDTO> calist = dao.getCate();
+												for(GoodsListDTO cate : calist){%>
+													<li><a href="goodslist.jsp?canum=<%=cate.getCanum() %>"><%=cate.getCaname() %></a></li>
+												<%}
+												%>
 												</ul>
 											</div>
 										</div>
