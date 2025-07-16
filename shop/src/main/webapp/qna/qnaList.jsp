@@ -25,7 +25,7 @@
         myMnum = mdto.getMnum();
     }
     
-    QnaDAO dao = new QnaDAO();
+    QnaDAO dao = QnaDAO.getInstance();
     List<QnaDTO> list = dao.getQnaList();
 %>
 
@@ -114,33 +114,52 @@
         } else {
     %>
     <table class="qnaTable">
-        <tr>
-            <th>번호</th>
-            <th>회원 아이디</th>
-            <th>제목</th>
-        </tr>
-    <%
-        for (QnaDTO dto : list) {
-            String title = dto.getQtitle();
-            if (title == null || title.trim().equals("")) {
-                title = "(제목 없음)";
-            }
-    %>
-        <tr>
-            <td><%= dto.getQnum() %></td>
-            <td><%= dto.getMid() %></td>
-            <td>
-             		<% if (dto.getMnum() == myMnum) { %>
-                    	<a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
-                	<% } else { %>
-                    	<a href="#" onclick="alert('비공개 글입니다.'); this.blur(); return false;"><%= title %></a>
-            		<% } %>
-            </td>
-        </tr>
-    <%
+    <tr>
+        <th>번호</th>
+        <th>회원 아이디</th>
+        <th>제목</th>
+    </tr>
+<%
+    for (QnaDTO dto : list) {
+        String title = dto.getQtitle();
+        if (title == null || title.trim().equals("")) {
+            title = "(제목 없음)";
         }
-    %>
-    </table>
+%>
+    <tr>
+        <td><%= dto.getQnum() %></td>
+
+        <!-- 회원 아이디 출력 부분 -->
+        <td>
+        <%
+            if (sid.equals(dto.getMid())) {
+                out.print(sid);  // 내가 쓴 글이면 로그인한 아이디 표시
+            } else {
+                out.print(dto.getMid());  // 남이 쓴 글이면 DB에서 가져온 mid 표시
+            }
+        %>
+        </td>
+
+        <!-- 제목 출력 부분 -->
+        <td>
+        <%
+            if (sid.equals(dto.getMid())) {
+        %>
+            <a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
+        <%
+            } else {
+        %>
+            <a href="#" onclick="alert('비공개 글입니다.'); return false;"><%= title %></a>
+        <%
+            }
+        %>
+        </td>
+    </tr>
+<%
+    }
+%>
+</table>
+    
     <%
         }
     %>

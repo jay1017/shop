@@ -19,7 +19,7 @@
     }
 
     // 글 데이터 조회
-    QnaDAO dao = new QnaDAO();
+    QnaDAO dao = QnaDAO.getInstance();  // 싱글톤 방식으로 호출해야 함
     QnaDTO dto = dao.getQna(qnum);
     if (dto == null) {
 %>

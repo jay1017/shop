@@ -11,31 +11,31 @@ public class QnaDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	 private static QnaDAO instance = new QnaDAO();
+	// Singleton instance
+	private static QnaDAO instance = new QnaDAO();
 
-	   public static QnaDAO getInstance() {
+	// 외부에서 생성 못 하도록 private 생성자
+	private QnaDAO() {}
+	 
+	// Singleton 객체 얻는 메서드
+	public static QnaDAO getInstance() {
 	      return instance;
 	   }
-
-	   private QnaDAO() {
-	   }
 	   
-	// DB 접속
+	// DB 연결 메서드
 	   private Connection getConnection() {
 	      try {
 	         Class.forName("oracle.jdbc.driver.OracleDriver");
 	         String url = "jdbc:oracle:thin:@192.168.219.198:1521:orcl";
 	         conn = DriverManager.getConnection(url, "team02", "1234");
-	         
 	      } catch (Exception e) {
 	         e.printStackTrace();
 	         System.out.println("연결 실패");
 	      }
-
 	      return conn;
 	   }
 
-	   // 연결끊는 메서드
+	   //   연결끊는 메서드
 	   private void endConnection() {
 	      if (rs != null) {
 	         try {
@@ -63,7 +63,7 @@ public class QnaDAO {
     // 1. 문의 등록
     public void insertQna(QnaDTO dto) {   
         try{
-        	Connection conn = getConnection();
+        	conn = getConnection();  // ✅ 클래스 필드 사용
         	String sql = "INSERT INTO QNA (qnum, mnum, qtitle, qcontent, mid) VALUES (qna_seq.NEXTVAL, ?, ?, ?, ?)";
         	pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, dto.getMnum());
@@ -80,39 +80,45 @@ public class QnaDAO {
         }
     }
 
-    // 2. 전체 목록
-    public List<QnaDTO> getQnaList(int mnum) {
+    // 2-1. 전체 문의 목록 (파라미터 없는 버전)
+    public List<QnaDTO> getQnaList() {
         List<QnaDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM qna ORDER BY qnum DESC";
         
-        try (
-            Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)
-            ResultSet rs = pstmt.executeQuery();		
-        ) {
+        try {
+            conn = getConnection();  // 클래스 필드 사용
+            pstmt = conn.prepareStatement(sql); 
+            rs = pstmt.executeQuery();
+            
             while (rs.next()) {
                 QnaDTO dto = new QnaDTO();
                 dto.setQnum(rs.getInt("qnum"));
                 dto.setMnum(rs.getInt("mnum"));
+                dto.setMid(rs.getString("mid"));
                 dto.setQtitle(rs.getString("qtitle"));
                 dto.setQcontent(rs.getString("qcontent"));
-                list.add(dto);  
+                
+                list.add(dto); 
+                
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                endConnection();
             }
 
             return list;
         }
     
- // 2-2. 특정 회원의 문의 목록
+    // 2-2. 특정 회원의 문의 목록
     public List<QnaDTO> getQnaList(int mnum) {
         List<QnaDTO> list = new ArrayList<>();
         String sql = "SELECT * FROM qna WHERE mnum = ? ORDER BY qnum DESC";
 
         try (
             Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql)
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+         
         ) {
             pstmt.setInt(1, mnum);
 
@@ -121,9 +127,9 @@ public class QnaDAO {
                     QnaDTO dto = new QnaDTO();
                     dto.setQnum(rs.getInt("qnum"));
                     dto.setMnum(rs.getInt("mnum"));
-                    dto.setMid(rs.getString("mid"));
                     dto.setQtitle(rs.getString("qtitle"));
                     dto.setQcontent(rs.getString("qcontent"));
+                    dto.setMid(rs.getString("mid"));
                     list.add(dto);
                 }
             }
@@ -135,14 +141,14 @@ public class QnaDAO {
     }
     
     
-    // 3. 특정 문의글 조회
+ // 3. 특정 문의글 조회
     public QnaDTO getQna(int qnum) {
         QnaDTO dto = null;
         String sql = "SELECT * FROM qna WHERE qnum = ?";
         
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
+             PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
             pstmt.setInt(1, qnum);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -151,25 +157,30 @@ public class QnaDAO {
                     dto.setMnum(rs.getInt("mnum"));
                     dto.setQtitle(rs.getString("qtitle"));
                     dto.setQcontent(rs.getString("qcontent"));
-                    
+                    dto.setMid(rs.getString("mid"));  // ✅ 이 줄 추가!
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         return dto;
     }
+
 
 
     // 4. 문의글 수정
     public void updateQna(QnaDTO dto) {
         String sql = "UPDATE qna SET qtitle = ?, qcontent = ? WHERE qnum = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (
+        	Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)
+        ) {
 
             pstmt.setString(1, dto.getQtitle());
             pstmt.setString(2, dto.getQcontent());
             pstmt.setInt(3, dto.getQnum());
+            pstmt.setString(4, dto.getMid());     
 
             pstmt.executeUpdate();
         } catch (Exception e) {

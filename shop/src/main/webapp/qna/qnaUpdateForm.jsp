@@ -17,10 +17,10 @@
     </script>
 <%
         return;
-    }
+    }  
 
     // 글 정보 조회
-    QnaDAO dao = new QnaDAO();
+    QnaDAO dao = QnaDAO.getInstance();
     QnaDTO dto = dao.getQna(qnum);
     if (dto == null) {
 %>

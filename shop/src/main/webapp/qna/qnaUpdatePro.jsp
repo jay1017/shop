@@ -14,7 +14,7 @@
     dto.setQtitle(qtitle);
     dto.setQcontent(qcontent);
 
-    QnaDAO dao = new QnaDAO();
+    QnaDAO dao = QnaDAO.getInstance();   
     dao.updateQna(dto);
 %>
 
