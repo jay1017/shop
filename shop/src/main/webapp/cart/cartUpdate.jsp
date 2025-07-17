@@ -12,7 +12,7 @@ String sid = (String) session.getAttribute("sid");
 int mnum = dao.getMnum(sid);
 
 int result = dao.updateCart(ccount, gnum);
-if (result == 1) {
+if (result >0) {
 %>
 
 <script>
