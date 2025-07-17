@@ -71,22 +71,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function hiddenInput(checkbox) {
     // hidden input id 정의 (체크박스 value에 기반)
-    const hiddenId = 'hidden_' + checkbox.value;
+	const hiddenContainer = document.getElementById('selectedHiddenInputs');
+	const gnum = checkbox.value;
+	const bcount = checkbox.dataset.bcount;
+	const gonum = checkbox.dataset.gonum;
+	
     if (checkbox.checked) {
       // hidden input 없으면 생성해서 삽입
-      if (!document.getElementById(hiddenId)) {
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'hiddenSelected';
-        hiddenInput.value = checkbox.value;
-        hiddenInput.id = hiddenId;
-        checkbox.parentNode.appendChild(hiddenInput);
+	  if (!document.getElementById('hidden_gnum_' + gnum)) {
+	        const gnumInput = document.createElement('input');
+	        gnumInput.type = 'hidden';
+	        gnumInput.name = 'gnum';
+	        gnumInput.value = gnum;
+	        gnumInput.id = 'hidden_gnum_' + gnum;
+
+	        const bcountInput = document.createElement('input');
+	        bcountInput.type = 'hidden';
+	        bcountInput.name = 'bcount';
+	        bcountInput.value = bcount;
+	        bcountInput.id = 'hidden_bcount_' + gnum;
+
+	        const gonumInput = document.createElement('input');
+	        gonumInput.type = 'hidden';
+	        gonumInput.name = 'gonum';
+	        gonumInput.value = gonum;
+	        gonumInput.id = 'hidden_gonum_' + gnum;
+
+	        hiddenContainer.appendChild(gnumInput);
+	        hiddenContainer.appendChild(bcountInput);
+	        hiddenContainer.appendChild(gonumInput);
       }
     } else {
       // 체크 해제 시 hidden input 제거
-      const hiddenInput = document.getElementById(hiddenId);
-      if (hiddenInput) {
-        hiddenInput.remove();
-      }
-    }
-  }
+	  ['gnum', 'bcount', 'gonum'].forEach(field => {
+	        const el = document.getElementById(`hidden_${field}_${gnum}`);
+	        if (el) el.remove();
+	      });
+	    }
+	  }
