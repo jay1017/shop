@@ -102,6 +102,7 @@ function selectPoint() {
     const pointInput = document.getElementById("minusPoint");
     const hiddenPoint = document.getElementById("allpoint");
     const appliedPoint = document.getElementById("applied_point");
+    const applyBtn = document.getElementById("pointApplyBtn"); // 버튼 DOM 가져오기
 
     const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10);
     const available = parseInt(hiddenPoint.value.trim(), 10);
@@ -110,6 +111,8 @@ function selectPoint() {
     const before_total_amount = document.getElementById("before_total_amount");
     const after_total_amount = document.getElementById("after_total_amount");
     const total_amount_wrap = document.getElementById("total_amount_wrap");
+
+    const before_price = parseInt(document.getElementById("before_price").value, 10);
 
     if (isNaN(point) || point <= 0) {
         alert("사용할 포인트를 입력하세요.");
@@ -122,16 +125,17 @@ function selectPoint() {
         return;
     }
 
-    // 현재 total_amount는 쿠폰 할인 적용된 값임
-    const baseTotal = parseInt(total_amount.value, 10); // 여기가 변경됨
-    let finalAmount = baseTotal - point;
+    let finalAmount = before_price - point;
     if (finalAmount < 0) finalAmount = 0;
 
-    // 값 반영
     appliedPoint.value = point;
     total_amount.value = finalAmount;
     total_amount_wrap.style.display = "block";
     after_total_amount.innerText = `₩${finalAmount.toLocaleString()}`;
+    before_total_amount.classList.add("cancle");
 
-    before_total_amount.classList.add("cancle"); // 줄긋기
+    // ✅ 버튼 비활성화
+    applyBtn.disabled = true;
+    applyBtn.classList.add("disabled"); // 필요 시 시각적 효과용
 }
+

@@ -4570,7 +4570,11 @@ body.point-body {
 .point-paging strong {
     color: black;
 }
-
+#pointApplyBtn.disabled{
+	background-color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+}
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 @media only screen and (min-width: 1200px) {
 	.container {

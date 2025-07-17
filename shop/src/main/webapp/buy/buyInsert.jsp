@@ -120,7 +120,7 @@
 		                                <p>사용 가능 포인트: <%=pdao.getAllPoint(mnum) %>원</p>
 		                                <input type="text" id="minusPoint" name="minusPoint" placeholder="포인트 입력">
 		                                <input type="hidden" id="allpoint" name="allpoint" value="<%=pdao.getAllPoint(mnum) %>">
-		                                <input type="button" class="site-btn" name="PointBtn" value="적용" onclick="selectPoint()">
+		                                <input type="button" class="site-btn" id="pointApplyBtn" name="PointBtn" value="적용" onclick="selectPoint()">
 		                            </div>
 		                        </div>
 		                    </div>
