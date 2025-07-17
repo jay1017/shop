@@ -171,16 +171,17 @@ public class QnaDAO {
 
     // 4. 문의글 수정
     public void updateQna(QnaDTO dto) {
-        String sql = "UPDATE qna SET qtitle = ?, qcontent = ? WHERE qnum = ?";
+    	String sql = "UPDATE qna SET qtitle = ?, qcontent = ? WHERE qnum = ? AND mid = ?";
+
         try (
         	Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)
         ) {
 
-            pstmt.setString(1, dto.getQtitle());
-            pstmt.setString(2, dto.getQcontent());
-            pstmt.setInt(3, dto.getQnum());
-            pstmt.setString(4, dto.getMid());     
+        	pstmt.setString(1, dto.getQtitle());
+        	pstmt.setString(2, dto.getQcontent());
+        	pstmt.setInt(3, dto.getQnum());
+        	pstmt.setString(4, dto.getMid());
 
             pstmt.executeUpdate();
         } catch (Exception e) {

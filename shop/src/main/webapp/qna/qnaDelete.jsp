@@ -27,7 +27,7 @@
     
     int myMnum = (mdto != null) ? mdto.getMnum() : 0;
     
-    QnaDAO dao = new QnaDAO();
+    QnaDAO dao = QnaDAO.getInstance();
     QnaDTO dto = dao.getQna(qnum);
   
     if (dto == null) {

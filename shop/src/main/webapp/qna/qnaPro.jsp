@@ -30,7 +30,7 @@
         return;
     }
 
-    // 3. QnaDTO에 값 설정
+    // 3. QnaDTO 에 값 설정
     QnaDTO dto = new QnaDTO();
     dto.setMnum(mnum);
     dto.setQtitle(qtitle);

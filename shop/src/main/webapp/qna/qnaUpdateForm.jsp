@@ -102,7 +102,8 @@
     <h2>문의 수정</h2>
     <form action="qnaUpdatePro.jsp" method="post">
         <input type="hidden" name="qnum" value="<%= dto.getQnum() %>">
-
+		<input type="hidden" name="mid" value="<%= dto.getMid() %>">
+		
         <label>제목</label>
         <input type="text" name="qtitle" value="<%= dto.getQtitle() %>" required>
 
