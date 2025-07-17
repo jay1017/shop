@@ -190,6 +190,13 @@
                                 			gonumList.add(Integer.parseInt(g));
                                 		}
                                 		
+                                		List<Integer> gnumList = new ArrayList<>();
+                                		
+                                		for(String gnum : gnumArr) {
+                                			System.out.println(gnum);
+                                			gnumList.add(Integer.parseInt(gnum));
+                                		}
+                                		
                                 		int total = 0;
                                			String item_name = "";
                                			int totalCnt = list.size();
@@ -199,6 +206,7 @@
                                 		GoodsDTO goods = list.get(i);
                                 		int bcount = bcountList.get(i);
                                 		int gonum = gonumList.get(i);
+                                		int gnum = gnumList.get(i);
                                 		String gprice = numberFormat.format(goods.getGprice()).replace(",", "");
 	                                    int price = Integer.parseInt(gprice);
 	                                    int toprice = price * bcount;
@@ -212,7 +220,7 @@
                                 		<li>
                                 			<%=goods.getGname() %> (<%=bcount %> 개) 
                                 			<span>&#8361; <%=toprice %></span>
-                                			<input type="hidden" name="gnum" value="<%=goods.getGnum()%>"/>
+                                			<input type="hidden" name="gnum" value="<%=gnum%>"/>
                                 			<input type="hidden" name="bcount" value="<%=bcount %>" />
                                 			<input type="hidden" name="gonum" value="<%=gonum%>"/>
                                 		</li>

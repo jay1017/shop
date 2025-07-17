@@ -29,9 +29,14 @@ public class KakaoPayReadyServlet extends HttpServlet {
         String total_amount = request.getParameter("total_amount").trim();
         String quantity = request.getParameter("quantity").trim();
 
-        String gnum = request.getParameter("gnum");
+        String[] gnumArr = request.getParameterValues("gnum");
+        String gnum = "";
         String[] bcountArr = request.getParameterValues("bcount");
         String bcount = "";
+        
+        for(String g : gnumArr) {
+        	gnum += (g + ",");
+        }
         
         int cpnum = Integer.parseInt(request.getParameter("cpnum"));
         

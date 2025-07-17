@@ -55,6 +55,7 @@
 			String[] gnumArr = request.getParameter("gnum").split(",");
 			List<Integer> gnumes = new ArrayList<>();
 			for(String num : gnumArr) {
+				System.out.println("gnum : " + num);
 				int gnum = Integer.parseInt(num);
 				gnumes.add(gnum);
 			}
