@@ -105,7 +105,7 @@ if (goods != null) {
 							<div class="col-md-8">
 								<div class="card-body">
 									<input type="checkbox" name="selected"
-										value="<%=dto.getGnum()%>">
+										value="<%=dto.getGnum()%>" onchange="hiddenInput(this)">
 									<h5 class="card-title">
 										상품명:
 										<%=dto.getGname()%></h5>
