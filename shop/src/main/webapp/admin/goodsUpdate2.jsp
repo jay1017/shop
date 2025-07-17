@@ -64,7 +64,9 @@
 											<label class="form-label">카테고리</label>
 											<select name="canum" class="form-select">
 												<% for(CategoryDTO category : list) { %>
-													<option value="<%=dto.getCanum()%>"><%=category.getCaname() %></option>
+													<option value="<%=dto.getCanum()%>">
+														<%=category.getCaname() %>
+													</option>
 												<% } %>
 											</select>
 										</div>

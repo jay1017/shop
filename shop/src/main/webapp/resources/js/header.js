@@ -18,7 +18,12 @@ function findQuestion(cate, button) {
 	const mc = msg.childNodes;
 	for (let i = 0; i < mc.length; i++) {
 		button.classList.add('hide');
-		button.nextElementSibling.classList.add('hide');
+		if (button.previousElementSibling != null) {
+			button.previousElementSibling.classList.add('hide');
+		}
+		if (button.nextElementSibling != null) {
+			button.nextElementSibling.classList.add('hide');
+		}
 	}
 
 	// 사용자가 클릭한 내용을 토대로 조회
@@ -38,7 +43,7 @@ function findQuestion(cate, button) {
 				back.classList.add('primary-btn');
 				back.classList.add('chatbotBtn');
 				back.classList.add('mr-2');
-				back.onclick = () => backMenu(back);
+				back.onclick = () => backMenu(back, msgType);
 				div.appendChild(back);
 
 				// btn 생성
@@ -52,7 +57,6 @@ function findQuestion(cate, button) {
 					btn.classList.add('mr-2');
 					div.appendChild(btn);
 				}
-
 				idx++;
 			})
 			.catch(err => {
@@ -67,10 +71,20 @@ function findQuestion(cate, button) {
 }
 
 // 처음으로 돌아가는 버튼
-function backMenu(back) {
+function backMenu(back, msg) {
+	debugger;
 	const chatbox = document.getElementById("chat-box");
 	const msgType = document.getElementById("msgType");
 	const backMenu = back.innerHTML;
+
+	if (msg != undefined) {
+		for (let i = 0; i < msg.childElementCount; i++) {
+			let msgChild = msg.childNodes[i];
+			msgChild.classList.add("hide");
+		}
+	} else {
+		back.classList.add("hide");
+	}
 
 	// 보낸 내용 대입
 	setTimeout(function() {
@@ -159,12 +173,14 @@ function findAnswer(question, category) {
 	}, 1000);
 }
 
-// 버튼 이벤트 : 버튼 클릭 시 챗봇 박스 보여주거나 사라지게 하는 것
-const toggleBtn = document.getElementById('chatBot');
-const chatContainer = document.getElementById('chatBotBox');
+window.onload = function() {
+	// 버튼 이벤트 : 버튼 클릭 시 챗봇 박스 보여주거나 사라지게 하는 것
+	const toggleBtn = document.getElementById('chatBot');
+	const chatContainer = document.getElementById('chatBotBox');
 
-toggleBtn.addEventListener('click', () => {
-	const isVisible = chatContainer.style.display === 'block';
-	chatContainer.style.display = isVisible ? 'none' : 'block';
-	toggleBtn.innerHTML = isVisible ? "<i class='fa fa-commenting-o'></i>" : "<i class='fa fa-times' aria-hidden='true'></i>";
-});
+	toggleBtn.addEventListener('click', () => {
+		const isVisible = chatContainer.style.display === 'block';
+		chatContainer.style.display = isVisible ? 'none' : 'block';
+		toggleBtn.innerHTML = isVisible ? "<i class='fa fa-commenting-o'></i>" : "<i class='fa fa-times' aria-hidden='true'></i>";
+	});
+}
