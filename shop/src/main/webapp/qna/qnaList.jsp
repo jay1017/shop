@@ -92,9 +92,39 @@
             background-color: #f2f2f2;
             font-weight: bold;
         }
+        
+        
+        
+        
+        a {
+    color: white !important;           /* 평상시 글자색 흰색 */
+    text-decoration: none !important; /* 밑줄 없애기 */
+}
+
+a:hover {
+    color: white !important;           /* 마우스 올려도 흰색 유지 */
+    text-decoration: none !important; /* 밑줄 안 보이게 */
+}
+
+a:visited, a:focus, a:active {
+    color: white !important;
+    text-decoration: none !important;
+}
+        
+        
+        
+        
+        
     </style>
     
     <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
+
+
+
+
+
+
+
 </head>
 <body>
 
@@ -104,7 +134,12 @@
 
 <div class="body-container">
     <h2>문의 목록 (<%= sid %>)</h2>
-    <a href="qnaForm.jsp">[문의 작성]</a>
+    <a href="qnaForm.jsp" style="color: black; text-decoration: none;"
+   onmouseover="this.style.textDecoration='underline'"
+   onmouseout="this.style.textDecoration='none'">
+   [문의 작성]
+</a>
+    
 
     <%
         if (list.isEmpty()) {
@@ -140,20 +175,32 @@
         %>
         </td>
 
-        <!-- 제목 출력 부분 -->
-        <td>
-        <%
-            if (sid.equals(dto.getMid())) {
-        %>
-            <a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>"><%= title %></a>
-        <%
-            } else {
-        %>
-            <a href="#" onclick="alert('비공개 글입니다.'); return false;"><%= title %></a>
-        <%
-            }
-        %>
-        </td>
+     <!-- 제목 출력 부분 -->
+<td>
+<%
+    if (sid.equals(dto.getMid())) {
+%>
+    <a href="qnaContent.jsp?qnum=<%= dto.getQnum() %>" 
+   style="color: black; text-decoration: none;"
+   onmouseover="this.style.textDecoration='underline'" 
+   onmouseout="this.style.textDecoration='none'">
+   <%= title %>
+</a>
+    
+<%
+    } else {
+%>
+    <a href="#" style="color: black; text-decoration: none;" 
+       onmouseover="this.style.textDecoration='underline'" 
+       onmouseout="this.style.textDecoration='none'" 
+       onclick="alert('비공개 글입니다.'); return false;">
+       <%= title %>
+    </a>
+<%
+    }
+%>
+</td>
+        
     </tr>
 <%
     }

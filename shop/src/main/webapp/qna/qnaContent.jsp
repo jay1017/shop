@@ -135,12 +135,10 @@
 <div class="detail-container">
     <h2><%= dto.getQtitle() != null ? dto.getQtitle() : "(제목 없음)" %></h2>
     <div class="qna-info">
-        문의 번호: <%= dto.getQnum() %> |
+        문의 번호: <%= dto.getQnum() %>
         회원 번호: <%= dto.getMnum() %>
     </div>
-    <div class="qna-content">
-        <%= dto.getQcontent() != null ? dto.getQcontent() : "(내용 없음)" %>
-    </div>
+    <div class="qna-content"><%=dto.getQcontent()!= null?dto.getQcontent():"(내용 없음)"%></div>
 
     <a href="qnaList.jsp" class="back-button">← 목록으로 돌아가기</a>
 

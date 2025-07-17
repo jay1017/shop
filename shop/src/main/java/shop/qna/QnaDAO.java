@@ -157,7 +157,7 @@ public class QnaDAO {
                     dto.setMnum(rs.getInt("mnum"));
                     dto.setQtitle(rs.getString("qtitle"));
                     dto.setQcontent(rs.getString("qcontent"));
-                    dto.setMid(rs.getString("mid"));  // ✅ 이 줄 추가!
+                    dto.setMid(rs.getString("mid"));
                 }
             }
         } catch (Exception e) {
