@@ -79,19 +79,19 @@
         <div class="pagination-container" style="text-align: center; margin-top: 30px;">
             <div class="pagination" style="display: inline-block;">
                 <% if(currentPage > 1) { %>
-                    <a href="javascript:void(0)" onclick="loadReviewPageFromContainer(<%=gnum%>, <%=currentPage-1%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;">이전</a>
+                    <a href="javascript:void(0)" onclick="loadReviewPage(<%=gnum%>, <%=currentPage-1%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;">이전</a>
                 <% } %>
                 
                 <% for(int i = startPage; i <= endPage; i++) { %>
                     <% if(i == currentPage) { %>
                         <span style="display: inline-block; padding: 8px 12px; margin: 0 2px; background-color: #007bff; color: white; border: 1px solid #007bff;"><%=i%></span>
                     <% } else { %>
-                        <a href="javascript:void(0)" onclick="loadReviewPageFromContainer(<%=gnum%>, <%=i%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;"><%=i%></a>
+                        <a href="javascript:void(0)" onclick="loadReviewPage(<%=gnum%>, <%=i%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;"><%=i%></a>
                     <% } %>
                 <% } %>
                 
                 <% if(currentPage < pageCount) { %>
-                    <a href="javascript:void(0)" onclick="loadReviewPageFromContainer(<%=gnum%>, <%=currentPage+1%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;">다음</a>
+                    <a href="javascript:void(0)" onclick="loadReviewPage(<%=gnum%>, <%=currentPage+1%>)" style="display: inline-block; padding: 8px 12px; margin: 0 2px; text-decoration: none; border: 1px solid #ddd; color: #333;">다음</a>
                 <% } %>
             </div>
         </div>
