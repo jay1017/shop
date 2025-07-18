@@ -43,10 +43,11 @@
 
 			BuyDAO dao = BuyDAO.getDAO();
 			BuyDTO dto = new BuyDTO();
-			
+
 			// 회원 번호 조회
 			MemberDAO mdao = new MemberDAO();
 			MemberDTO mdto = mdao.getInfo(sid);
+			
 			
 			// 회원 번호 대입
 			dto.setMnum(mdto.getMnum()); 
@@ -108,13 +109,15 @@
 			CouponDAO cdao = CouponDAO.getDAO();
 			
 			if(bprice != before_price) {
-				int result = cdao.delete(cpnum, mdto.getMnum()); 
-				if(result == 0) { %>
-					<script>
-						alert("쿠폰 사용 중 오류가 발생했습니다.");
-						location.href="/shop/goods/goodsview.jsp?gnum=" + gnumes.get(i);
-					</script>
-				<% }
+				if(cpnum != 0) {
+					int result = cdao.delete(cpnum, mdto.getMnum()); 
+					if(result == 0) { %>
+						<script>
+							alert("쿠폰 사용 중 오류가 발생했습니다.");
+							location.href="/shop/goods/goodsview.jsp?gnum=" + gnumes.get(i);
+						</script>
+					<% }
+				}
 			}
 			
 			dto.setBprice(bprice);

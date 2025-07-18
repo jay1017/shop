@@ -20,7 +20,7 @@
 	<%
 		request.setCharacterEncoding("UTF-8");
 		KakaoPayReadyServlet kakao = new KakaoPayReadyServlet();
-		kakao.doPost(request, response);
+		kakao.doPost(request, response, session);
 	%>
 </body>
 </html>

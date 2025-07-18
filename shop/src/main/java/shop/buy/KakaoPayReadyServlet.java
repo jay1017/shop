@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 
@@ -22,8 +23,9 @@ public class KakaoPayReadyServlet extends HttpServlet {
     private static final String ADMIN_KEY = "8060ceb8b44371ba06fe9af9ee591a81";
     private static final String CID = "TC0ONETIME"; // 테스트용 CID
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
     	request.setCharacterEncoding("UTF-8");
+    	
         // 가져온 파라미터 대입
     	String item_name = URLEncoder.encode(request.getParameter("item_name"), "UTF-8");
         String total_amount = request.getParameter("total_amount").trim();
@@ -64,7 +66,7 @@ public class KakaoPayReadyServlet extends HttpServlet {
         + gnum + "&bcount=" + bcount + "&address=" + address + "&address2=" 
         + address2 + "&address3=" + address3 + "&note=" + note + "&gonum="
         + gonum + "&bprice=" + total_amount + "&zip=" + zip + "&before_price=" + 
-        before_price + "&cpnum=" + cpnum + "&buypoint=" + applied_point, "UTF-8");
+        before_price + "&cpnum=" + cpnum + "&buypoint=" + applied_point + "&sid=" + session.getAttribute("sid"), "UTF-8");
         
         // URL로 외부와 연결
         URL url = new URL("https://kapi.kakao.com/v1/payment/ready");

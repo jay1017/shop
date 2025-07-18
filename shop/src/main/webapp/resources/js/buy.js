@@ -48,6 +48,7 @@ function zipFind() {
 }
 
 // 쿠폰 변경 이벤트
+let priceBuy = 0;
 function cpnumChange() {
 	// 쿠폰 번호
 	const cpnum = document.getElementById("cpnum").value;
@@ -61,14 +62,22 @@ function cpnumChange() {
 	const total_amount_wrap = document.getElementById("total_amount_wrap");
 	const won = document.getElementById("won");
 
+	let paramPrice = 0;
+
+	if (priceBuy == 0) {
+		paramPrice = before_price.value;
+	} else {
+		paramPrice = priceBuy;
+	}
 	if (cpnum != 0) {
-		fetch("/shop/buy/coupon.jsp?cpnum=" + cpnum + "&total=" + before_price.value)
+		fetch("/shop/buy/coupon.jsp?cpnum=" + cpnum + "&total=" + paramPrice)
 			.then(response => response.json())
 			.then(data => {
 				before_total_amount.classList.add("cancle");
 				total_amount.value = data.total_amount;
 				total_amount_wrap.style.display = "block";
 				after_total_amount.innerHTML = "&#8361;" + data.total_amount.toLocaleString('ko-KR');
+				priceBuy = data.total_amount;
 			})
 			.catch(error => {
 				console.error("쿠폰 계산 오류:", error);
@@ -99,43 +108,52 @@ function checkBuy(event) {
 
 //포인트 사용 계산식(쿠폰 포함)
 function selectPoint() {
-    const pointInput = document.getElementById("minusPoint");
-    const hiddenPoint = document.getElementById("allpoint");
-    const appliedPoint = document.getElementById("applied_point");
-    const applyBtn = document.getElementById("pointApplyBtn"); // 버튼 DOM 가져오기
+	const pointInput = document.getElementById("minusPoint");
+	const hiddenPoint = document.getElementById("allpoint");
+	const appliedPoint = document.getElementById("applied_point");
+	const applyBtn = document.getElementById("pointApplyBtn"); // 버튼 DOM 가져오기
 
-    const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10);
-    const available = parseInt(hiddenPoint.value.trim(), 10);
+	const point = parseInt(pointInput.value.trim().replace(/[^0-9]/g, ""), 10);
+	const available = parseInt(hiddenPoint.value.trim(), 10);
 
-    const total_amount = document.getElementById("total_amount");
-    const before_total_amount = document.getElementById("before_total_amount");
-    const after_total_amount = document.getElementById("after_total_amount");
-    const total_amount_wrap = document.getElementById("total_amount_wrap");
+	const total_amount = document.getElementById("total_amount");
+	const before_total_amount = document.getElementById("before_total_amount");
+	const after_total_amount = document.getElementById("after_total_amount");
+	const total_amount_wrap = document.getElementById("total_amount_wrap");
 
-    const before_price = parseInt(document.getElementById("before_price").value, 10);
+	const before_price = parseInt(document.getElementById("before_price").value, 10);
 
-    if (isNaN(point) || point <= 0) {
-        alert("사용할 포인트를 입력하세요.");
-        return;
-    }
+	let paramPrice = 0;
 
-    if (point > available) {
-        alert("포인트는 " + available + "원까지만 사용 가능합니다.");
-        pointInput.value = "";
-        return;
-    }
+	if (priceBuy == 0) {
+		paramPrice = before_price;
+	} else {
+		paramPrice = priceBuy;
+	}
 
-    let finalAmount = before_price - point;
-    if (finalAmount < 0) finalAmount = 0;
+	if (isNaN(point) || point <= 0) {
+		alert("사용할 포인트를 입력하세요.");
+		return;
+	}
 
-    appliedPoint.value = point;
-    total_amount.value = finalAmount;
-    total_amount_wrap.style.display = "block";
-    after_total_amount.innerText = `₩${finalAmount.toLocaleString()}`;
-    before_total_amount.classList.add("cancle");
+	if (point > available) {
+		alert("포인트는 " + available + "원까지만 사용 가능합니다.");
+		pointInput.value = "";
+		return;
+	}
 
-    // ✅ 버튼 비활성화
-    applyBtn.disabled = true;
-    applyBtn.classList.add("disabled"); // 필요 시 시각적 효과용
+	let finalAmount = paramPrice - point;
+	if (finalAmount < 0) finalAmount = 0;
+
+	appliedPoint.value = point;
+	total_amount.value = finalAmount;
+	total_amount_wrap.style.display = "block";
+	after_total_amount.innerText = `₩${finalAmount.toLocaleString()}`;
+	before_total_amount.classList.add("cancle");
+
+	// ✅ 버튼 비활성화
+	applyBtn.disabled = true;
+	applyBtn.classList.add("disabled"); // 필요 시 시각적 효과용
+	priceBuy = finalAmount;
 }
 
