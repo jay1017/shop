@@ -111,6 +111,10 @@ bnum불러오고 상품 이름, 사진, 가격정도만 불러오면 될듯?--%>
 										<input type="hidden" name="gonum" value="<%=dto.getGonum()%>">
 										<input type="submit" value="재구매하기" class="btn btn-sm btn-dark">
 									</form>
+									<form method="post" action="/shop/goods/goodsview.jsp?gnum=<%=dto.getGnum() %>#scrollTarget" class="d-inline">
+										<input type="hidden" name="gnum" value="<%=dto.getGnum()%>">
+										<input type="submit" value="리뷰 등록" class="btn btn-sm btn-dark">
+									</form>
 								</div>
 							</div>
 						</div>

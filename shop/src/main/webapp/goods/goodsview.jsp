@@ -227,7 +227,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#tabs-5" role="tab">상품 설명</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item" id="scrollTarget">
                                     <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">리뷰(<%=rcount%>)</a>
                                 </li>
                             </ul>
