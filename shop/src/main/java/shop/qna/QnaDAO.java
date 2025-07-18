@@ -30,7 +30,7 @@ public class QnaDAO {
 	         conn = DriverManager.getConnection(url, "team02", "1234");
 	      } catch (Exception e) {
 	         e.printStackTrace();
-	         System.out.println("연결 실패");
+	         
 	      }
 	      return conn;
 	   }
@@ -140,6 +140,59 @@ public class QnaDAO {
         return list;
     }
     
+    
+ // 2-3. 전체 목록 (페이징 포함)
+    public List<QnaDTO> getQnaList(int startRow, int endRow) {
+        List<QnaDTO> list = new ArrayList<>();
+        String sql = "SELECT * FROM (SELECT qna.*, ROWNUM r FROM (SELECT * FROM qna ORDER BY qnum DESC) qna) WHERE r >= ? AND r <= ?";
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, startRow);
+            pstmt.setInt(2, endRow);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                QnaDTO dto = new QnaDTO();
+                dto.setQnum(rs.getInt("qnum"));
+                dto.setMnum(rs.getInt("mnum"));
+                dto.setMid(rs.getString("mid"));
+                dto.setQtitle(rs.getString("qtitle"));
+                dto.setQcontent(rs.getString("qcontent"));
+                list.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            endConnection();
+        }
+
+        return list;
+    }
+
+    // 전체 게시글 개수 반환
+    public int getQnaCount() {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM qna";
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            endConnection();
+        }
+
+        return count;
+    }
+
     
  // 3. 특정 문의글 조회
     public QnaDTO getQna(int qnum) {

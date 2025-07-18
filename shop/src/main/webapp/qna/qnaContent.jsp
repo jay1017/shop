@@ -123,6 +123,13 @@
         .back-button:hover {
             text-decoration: underline;
         }
+        
+        
+        /* 깜빡임 방지를 위한 흰색 텍스트 고정 */
+        .sidebar-menu {
+            color: white !important;
+        }
+        
     </style>
     
     <link rel="stylesheet" href="/shop/resources/css/font-awesome.min.css" type="text/css"/>
@@ -160,6 +167,21 @@ function confirmDelete(qnum) {
 }
 </script>
 
+`````````````
+<!-- 지정된 메뉴 텍스트만 흰색 고정 -->
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    const whiteLinks = ["로그아웃", "마이페이지", "문의게시판", "FAQ"];
+    document.querySelectorAll("a").forEach(function (aTag) {
+      if (whiteLinks.includes(aTag.textContent.trim())) {
+        aTag.classList.add("sidebar-menu");
+      }
+    });
+  });
+</script>
+
+
+<!-- JS Resources -->
 	<script src="/shop/resources/js/jquery-3.3.1.min.js"></script>
 	<script src="/shop/resources/js/bootstrap.min.js"></script>
 	<script src="/shop/resources/js/jquery.nice-select.min.js"></script>
